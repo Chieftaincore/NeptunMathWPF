@@ -1,0 +1,25 @@
+﻿<Window x:Class="NeptunMathWPF.LatexTestPencere"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeptunMathWPF"
+        xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+        mc:Ignorable="d"
+        Title="LatexTestPencere" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="146.013"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="tusCevir" Content="Çevir" HorizontalAlignment="Left" Margin="296,77,0,0" VerticalAlignment="Top" Height="59" Width="106" Click="tusCevir_Click"/>
+        <controls:FormulaControl x:Name="LatexCikti" Formula="\left(x^2 + 2 \cdot x + 2\right) = 0" Grid.Column="1" Margin="10,30,30,10"/>
+        <Label x:Name="labelLatex" Grid.Column="1" Content="LaTex Görünüm" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Height="20" FontSize="9" Width="72"/>
+        <TextBox x:Name="LatexGirdi" HorizontalAlignment="Left" TextWrapping="Wrap" Text="\frac{10 * 6}{12}" VerticalAlignment="Top" Height="106" Width="279" Margin="10,30,0,0" FontSize="18"/>
+        <TextBox x:Name="orneklerBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Latex Yazım örnekleri:&#xA;&#xA;\frac{2+2}{2}&#xA;\int_0^1 x^2 + y^2 &#xA;\sqrt[4]{4ac} = \sqrt{4ac}\sqrt{4ac}&#xA; a_1^2 + a_2^2 = a_3^2" VerticalAlignment="Top" Width="324" Height="151" IsReadOnly="True" BorderThickness="0" Grid.Row="1"/>
+    </Grid>
+</Window>
