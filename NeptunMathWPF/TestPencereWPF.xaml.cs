@@ -19,6 +19,7 @@ namespace NeptunMathWPF
     /// </summary>
     public partial class TestPencereWPF : Window
     {
+        //Mergelendi
         public TestPencereWPF()
         {
             InitializeComponent();
@@ -32,6 +33,5 @@ namespace NeptunMathWPF
             //WPF'de Close() kaynakları siler Hide() ise gizler
             this.Close();
         }
-        //HUSEYİN PUSH
     }
 }
