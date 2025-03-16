@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF
 {
+    // deneme yazısı
     //Ortak ve çok yönlu kullanımı olan fonksiyonlar bu sınıfa yazılacaktır
     //bu fonksiyonlara yerel loglama, try catch, hata dialogbox vs örnek gösterilebilir
     static class Genel
