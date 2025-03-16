@@ -32,5 +32,6 @@ namespace NeptunMathWPF
             //WPF'de Close() kaynakları siler Hide() ise gizler
             this.Close();
         }
+        //HUSEYİN PUSH
     }
 }
