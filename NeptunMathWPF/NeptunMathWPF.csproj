@@ -65,13 +65,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="LatexTestPencere.xaml.cs">
+    <Compile Include="Baglanti.cs" />
+    <Compile Include="Genel.cs" />
+    <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SoruGenerator.cs" />
-    <Compile Include="TestPencereWPF.xaml.cs">
+    <Compile Include="Secenek.cs" />
+    <Compile Include="Soru.cs" />
+    <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SoruUretici.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -101,14 +105,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="LatexTestPencere.xaml">
+    <Page Include="Formlar\LatexTestPencere.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TestPencereWPF.xaml">
+    <Page Include="Formlar\TestPencereWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kaynaklar\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

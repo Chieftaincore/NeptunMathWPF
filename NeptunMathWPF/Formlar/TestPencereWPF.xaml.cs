@@ -33,5 +33,10 @@ namespace NeptunMathWPF
             //WPF'de Close() kaynakları siler Hide() ise gizler
             this.Close();
         }
+
+        private void BasitSoruTus(object sender, RoutedEventArgs e)
+        {
+            new Soru(Soru.Turler.islem, 4);
+        }
     }
 }
