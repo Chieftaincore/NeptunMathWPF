@@ -15,6 +15,7 @@ namespace NeptunMathWPF
     static class Genel
     {
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
+        static string YerelLogPath = "..\\Loglar\\";
 
         internal static void Handle(Action action) //Hata yönetimi için hazır try-catch blokları
         /***********************
@@ -53,5 +54,41 @@ namespace NeptunMathWPF
             // TAMAMLANACAK
         }
 
+        //Yerel Hata Logu (Hüseyin E)
+        //Catchin kendisini göstermenizde yeter
+        //Kullanım 
+        /***********
+         * try(){
+         * }catch(exception ex){
+         * Genel.YerelMetinKaydet(ex);
+         *  YA DA 
+         * Genel.YerelMetinKaydet(ex, true, "Bağlantı kısmı SQL bulunamadı")
+         * }
+         ***********/
+        internal static void YerelMetinKaydet(Exception err, bool goster = false, string ekyazi = "")
+        {
+            if (goster)
+            {
+                MessageBox.Show($"HATA :: Yerel dosyaya kaydediliyor {err.HResult}\nKayıt Konumu {YerelLogPath}");
+            }
+
+            string logDosyaPath = YerelLogPath + System.DateTime.Today.ToString("yyyy-MM-dd") + ".txt";
+            string Mesaj = $"[{System.DateTime.Today.ToString("dd-MMMM-yyyy")} :: {DateTime.Now.Hour}] HATA | {ekyazi} | HRESULT : {err.HResult} MESAJ :: {err.Message}";
+
+            FileInfo logDosyaInfo = new FileInfo(logDosyaPath);
+            DirectoryInfo logDirInfo = new DirectoryInfo(logDosyaInfo.DirectoryName);
+
+            //Dosya yoksa yenisini oluşturur.
+            if (!logDirInfo.Exists) logDirInfo.Create();
+
+            //Dosya içine yazma. yeni mesaj olarak içine yazar eskisini silmez
+            using (FileStream fileStream = new FileStream(logDosyaPath, FileMode.Append))
+            {
+                using (StreamWriter logYazici = new StreamWriter(fileStream))
+                {
+                    logYazici.WriteLine(Mesaj);
+                }
+            }
+        }
     }
 }
