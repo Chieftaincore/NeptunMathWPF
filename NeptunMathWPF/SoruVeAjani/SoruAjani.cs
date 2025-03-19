@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -46,26 +47,46 @@ namespace NeptunMathWPF.SoruVeAjani
 
             for (int i = 0; i < ifadeler.Count; i++)
             {
-                islemString += ifadeler[i].getir();
+                
         
-                if (i < ifadeler.Count - 1)
+                if (i == 1)
                 {
-                    if (i == 1)
+                    char rngC = KarakterDondur(new char[] { '*', '-', '+' });
+
+
+                    if (rngC == '/')
                     {
-                        islemString += KarakterDondur(new char[] { '*', '-' });
+                        //DT.Compute bölme işlemini Hatalı sonuç çıkarıyor.
+
+                        //int birinci = int.Parse(ifadeler[i].getir());
+                        //int tamsayicarp = birinci * rng.Next(2, 8);
+                        //islemString += $"{tamsayicarp} / {ifadeler[i].getir()}";
+                        //int a = tamsayicarp / int.Parse(ifadeler[i].getir());
+                        //MessageBox.Show(a.ToString());
+                        //MessageBox.Show($"{tamsayicarp} / {ifadeler[i].getir()}");
+                        //i++;
                     }
                     else
                     {
-                        islemString += KarakterDondur(new char[] { '+', '-' });
+                        islemString += ifadeler[i].getir();
+                        islemString += rngC;
                     }
+                    
                 }
+                else
+                {
+                    islemString += ifadeler[i].getir();
+
+                    if (i != ifadeler.Count - 1)
+                    islemString += KarakterDondur(new char[] { '+', '-' });
+                }
+                
             }
 
             List<int> diger = new List<int>();
             DataTable dt = new DataTable();
             object son;
-
-            MessageBox.Show(islemString);
+     
             son = dt.Compute(islemString,"");
             MessageBox.Show(son.ToString());
             int sonuc = int.Parse(son.ToString());
@@ -78,7 +99,6 @@ namespace NeptunMathWPF.SoruVeAjani
                     i++;
                     diger.Add(rand);
                 }
-         
             }
             return new Soru(islemString, sonuc, diger.ToArray());
         }
@@ -99,9 +119,9 @@ namespace NeptunMathWPF.SoruVeAjani
         }
 
 
+        //Seçilelerden Rastgele char döndür
         public static char KarakterDondur(char[] charlar)
         {
-            //rastgele karakter döndür
             Random rng = new Random();
 
             return charlar[rng.Next(0, charlar.Length)];
@@ -122,11 +142,6 @@ namespace NeptunMathWPF.SoruVeAjani
         public string getir()
         {
             return islemS;
-        }
-
-        internal void setOzellikler()
-        {
-
         }
     }
 }
