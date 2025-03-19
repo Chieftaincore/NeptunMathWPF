@@ -70,11 +70,12 @@
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Soru.cs" />
+    <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SoruUretici.cs" />
+    <Compile Include="SoruVeAjani\SoruAjani.cs" />
+    <Compile Include="SoruVeAjani\SoruUretici.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

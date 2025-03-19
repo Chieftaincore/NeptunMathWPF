@@ -9,6 +9,17 @@ using System.Windows;
 
 namespace NeptunMathWPF
 {
+    //Herhangi bir sınıfdan çekilebilecek terimler -Hüseyin
+    public struct SoruTerimleri
+    {
+        public enum ifadeTurleri
+        {
+            sayi,
+            kesir,
+            degisken,
+        }
+    }
+
     // deneme yazısı
     //Ortak ve çok yönlu kullanımı olan fonksiyonlar bu sınıfa yazılacaktır
     //bu fonksiyonlara yerel loglama, try catch, hata dialogbox vs örnek gösterilebilir
