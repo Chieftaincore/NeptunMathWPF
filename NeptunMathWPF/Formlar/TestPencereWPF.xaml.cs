@@ -1,4 +1,5 @@
-﻿using NeptunMathWPF.SoruVeAjani;
+﻿using NeptunMathWPF.Formlar;
+using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,12 @@ namespace NeptunMathWPF
         private void BasitSoruTus(object sender, RoutedEventArgs e)
         {
             Soru soru = SoruAjani.YerelSoruOlustur(SoruTerimleri.ifadeTurleri.sayi,seceneksayisi:7);
+        }
+
+        private void SoruTestPaneliTikla(object sender, RoutedEventArgs e)
+        {
+            (new SoruNesneTestWPF()).Show();
+            this.Close();
         }
     }
 }
