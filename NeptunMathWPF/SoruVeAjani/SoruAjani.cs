@@ -24,7 +24,12 @@ namespace NeptunMathWPF.SoruVeAjani
     //Bunlar lambdaya çevirilmesi lazım(try/catch'de kullanılan)
     public static class SoruAjani
     {
-        //Deneysel Olusturucu sınırlı ve kötü. kaldırılacak
+        //Tamsayı Random Atma Aralığı
+        //Zorluk derecesi veya başka parametreler tarafından değiştirilebilir
+        internal static int[] tamsayirange = new int[2] { 0,50 };
+
+
+        //Deneysel Olusturucu sınırlı ve kötü. yakında kaldırılacak
         public static Soru YerelSoruOlustur(ifadeTuru ifadeTur, int ifadesayisi = 4, int seviye = 0,int seceneksayisi = 4)
         {
             Random rng = new Random();
@@ -38,7 +43,7 @@ namespace NeptunMathWPF.SoruVeAjani
                 switch (ifadeTur)
                 {
                     case ifadeTuru.sayi:
-                        ifadeTamSayiUret(ifadeTuru.sayi, toplayan: ifadeler, rng.Next(0, 50));
+                        ifadeler.Add( ifadeTamSayiUret(ifadeTuru.sayi, rng.Next(0, 50)));
                         break;
                     case ifadeTuru.kesir:
 
@@ -117,7 +122,32 @@ namespace NeptunMathWPF.SoruVeAjani
                 switch (ifadeTur)
                 {
                     case ifadeTuru.sayi:
-                        ifadeTamSayiUret(ifadeTuru.sayi, toplayan: ifadeler, rng.Next(0, 50));
+                        ifadeler.Add(ifadeTamSayiUret(ifadeTuru.sayi, rng.Next(tamsayirange[0], tamsayirange[1])));
+                        break;
+                    case ifadeTuru.kesir:
+                        MessageBox.Show("Diğer İfadeler Üzerinde Çalışılıyor::");
+                        break;
+                    case ifadeTuru.degisken:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return ifadeler;
+        }
+
+        internal static List<ifade> CokluIfadeListesiOlustur(List<ifadeTuru>olusturulacak)
+        {
+            Random rng = new Random();
+            List<ifade> ifadeler = new List<ifade>();
+
+            for (int i = 0; i < olusturulacak.Count; i++)
+            {
+                switch (olusturulacak[i])
+                {
+                    case ifadeTuru.sayi:
+                        ifadeler.Add(ifadeTamSayiUret(ifadeTuru.sayi, rng.Next(tamsayirange[0], tamsayirange[1])));
                         break;
                     case ifadeTuru.kesir:
 
@@ -132,7 +162,6 @@ namespace NeptunMathWPF.SoruVeAjani
             return ifadeler;
         }
 
-        
         //Temiz ve Daha iyi Oluşturucu
         public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman=null)
         {
@@ -148,10 +177,11 @@ namespace NeptunMathWPF.SoruVeAjani
                 {
                     if(araeleman == null)
                     {
-                        char dortislem;
+                        //manuel i++ korumak için ileride farklı bir yöntem bulunuca kaldırılacak
+                        bool kilit = false;
                         if (i == 1)
                         {
-                            dortislem = KarakterDondur(new char[] { '+', '-' , '*', '/' });
+                            char dortislem = KarakterDondur(new char[] { '+', '-' , '*', '/' });
                             
                             //Tamsayı bölen oluşturmak için
                             if(dortislem == '/')
@@ -160,21 +190,38 @@ namespace NeptunMathWPF.SoruVeAjani
                                 int bolunen = rng.Next(2,9) * bolen;
 
                                 islemString += $"{bolunen}/{bolen}";
+                                islemString += KarakterDondur(new char[] { '+', '-', '*'});
+                            }
+                            else
+                            {
+                                islemString += ifadeler[i].getir();
+                                islemString += dortislem;
                             }
                         }
                         else
                         {
-                            dortislem = KarakterDondur(new char[] { '*', '-', '+' });
-                            islemString += ifadeler[i].getir(); 
+                            char dortislem = KarakterDondur(new char[] { '*', '-', '+' });
+                        
+                            MessageBox.Show($"Eklendi :: {ifadeler[i].getir()} :: {i} / {ifadeler.Count}");
+                               
+
+                            islemString += ifadeler[i].getir();
+
+                            if (i != ifadeler.Count - 1)
+                            {
+                                islemString += dortislem;
+                            }
                         }
                     }
                     else
                     {
                         //Devam edilecek kısım
                         //Özel dıştan parametreler ile araelemanlar
-                        araeleman = (hiya) =>
+                        araeleman = (islem) =>
                         {
 
+
+                            islemString = islem;
                         };
                     }
                 }
@@ -198,22 +245,14 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
                 oldu = true;
             });
-
-            if (oldu)
-            {
+            oldu = true;
+          
                 return new Soru(islem: islemString, sonuc, diger.ToArray());
-            }
-            else
-            {
-                throw new Exception();
-            }
         }
         
-        public static ifade ifadeTamSayiUret(ifadeTuru ifadeTur, List<ifade> toplayan, int sayi)
+        public static ifade ifadeTamSayiUret(ifadeTuru ifadeTur, int sayi)
         {
             ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString());
-            toplayan.Add(ifadeNesne);
-
             return ifadeNesne;
         }
         

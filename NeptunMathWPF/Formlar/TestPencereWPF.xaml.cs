@@ -38,7 +38,10 @@ namespace NeptunMathWPF
 
         private void BasitSoruTus(object sender, RoutedEventArgs e)
         {
-            Soru soru = SoruAjani.YerelSoruOlustur(SoruTerimleri.ifadeTurleri.sayi,seceneksayisi:7);
+            //Soru soru = SoruAjani.YerelSoruOlustur(SoruTerimleri.ifadeTurleri.sayi,seceneksayisi:7);
+
+            List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi,4);
+            Soru soru = SoruAjani.YerelSoruBirlestir(liste);
         }
 
         private void SoruTestPaneliTikla(object sender, RoutedEventArgs e)
