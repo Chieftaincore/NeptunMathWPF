@@ -16,23 +16,18 @@ namespace NeptunMathWPF
     public class Soru
     {
         string islemMetin;
-        ifade[] secenekler; 
+     
         string sonuc;
         string LatexMetin;
+        string OlusturmaLogu;
+
         int Seviye;
+        ifade[] secenekler;
 
         //ifadeler bir soruya eklenecek ifadeleri temsil eder
         List<ifadeTuru> ifadeler;
 
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
-        public Soru(ifadeTuru tur, int soruseceneksayisi=3 ,int seviye=0)
-        {
-            //Aşağıdaki farklı tür soruları nasıl aynı nesneyle yapabileceğimizin örneğidir.
-            Seviye = seviye;
-
-            //SoruAjani.YerelSoruOlustur(this,ifadeTuru.sayi);
-        }
-
         public Soru(string islem, string sonuc, int[] secenekler) {
             string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";
             for(int i=0;i < secenekler.Length; i++)
@@ -45,6 +40,16 @@ namespace NeptunMathWPF
             this.sonuc = sonuc;
         }
 
+        internal void SetOlusturmaLogu(string Metin)
+        {
+            OlusturmaLogu = Metin;
+        }
+
+        public string GetOlusturmaLogu()
+        {
+            return OlusturmaLogu;
+        }
+
         public int GetSeviye()
         {
             return Seviye;
@@ -52,6 +57,10 @@ namespace NeptunMathWPF
         public string GetMetin()
         {
             return islemMetin;
+        }
+        public string GetLaTex()
+        {
+            return LatexMetin;
         }
     }
 }

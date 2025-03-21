@@ -41,8 +41,9 @@ namespace NeptunMathWPF.Formlar
             ParametreGuncelle();
 
             List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi, (int)sliderIfade.Value);
-            Soru soru = SoruAjani.YerelSoruBirlestir(liste, text: SoruLOG, seceneksayisi: (int)sliderSecenek.Value);
+            Soru soru = SoruAjani.YerelSoruBirlestir(liste, seceneksayisi: (int)sliderSecenek.Value);
 
+            SoruLOG.Text = soru.GetOlusturmaLogu();
             LatexCikti.Formula = soru.GetMetin();
         }
 
@@ -53,8 +54,7 @@ namespace NeptunMathWPF.Formlar
             {
                 ParametreGuncelle();
 
-                //Kutuları Değiştir
-            
+                //Kutuları Günceller
                 min.Text = SoruAjani.Araliklar[(sender as ComboBox).SelectedItem.ToString()][0].ToString();
                 max.Text = SoruAjani.Araliklar[(sender as ComboBox).SelectedItem.ToString()][1].ToString();
             });
@@ -87,6 +87,15 @@ namespace NeptunMathWPF.Formlar
                     }
                 }
             }
+        }
+
+        private void TusKesiSayiOlustur(object sender, RoutedEventArgs e)
+        {
+            List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.kesir, (int)sliderIfade.Value);
+            Soru soru = SoruAjani.YerelSoruBirlestir(liste, seceneksayisi: (int)sliderSecenek.Value);
+
+            SoruLOG.Text = soru.GetOlusturmaLogu();
+            LatexCikti.Formula = soru.GetLaTex();
         }
     }
 }

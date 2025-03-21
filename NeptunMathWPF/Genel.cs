@@ -15,6 +15,7 @@ namespace NeptunMathWPF
         public enum ifadeTurleri
         {
             sayi,
+            faktoriyel,
             kesir,
             degisken,
         }
@@ -57,6 +58,7 @@ namespace NeptunMathWPF
             {
                 LogToDatabase("ERROR", $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
                 MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
             }
         }
 

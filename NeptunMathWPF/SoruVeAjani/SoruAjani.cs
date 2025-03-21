@@ -15,27 +15,25 @@ using static AngouriMath.MathS.Numbers;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
-    //19.03.2025 Hüseyin
-    //ifade türü kullanması için kısaltma
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
-    
     //Şuan da genel kullanım bir sistem hazırlanmaya çalışıyorum Bu yüzden nesne üstüne sistem kuracağım
     //Kullandığım Terimler
     //Parametre Aralık
     //İfade = Sayı/Kesir gibi
     //Arabirim = işlem veya matematik fonksiyonu
-    
+    //Hedef hem karma hem de tekli tür Soru Yapabilecek bir sistem
+
     public static class SoruAjani
     {
         //Tamsayı Random Atma Aralığı
-
         //Yeni PARAMETRE olarak fikir Uygulanabilir
         public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
         {
-            {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} }
+            {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
+            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15}}
         };
+        internal static Random random = new Random(); 
 
-        
         //Yenileri Versiyon
         internal static List<ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
         {
@@ -47,10 +45,13 @@ namespace NeptunMathWPF.SoruVeAjani
                 switch (ifadeTur)
                 {
                     case ifadeTuru.sayi:
-                        ifadeler.Add(ifadeTamSayiUret(ifadeTuru.sayi, rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        break;
+                    case ifadeTuru.faktoriyel:
+
                         break;
                     case ifadeTuru.kesir:
-                        MessageBox.Show("Diğer İfadeler Üzerinde Çalışılıyor::");
+                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
                         break;
                     case ifadeTuru.degisken:
                         break;
@@ -58,7 +59,6 @@ namespace NeptunMathWPF.SoruVeAjani
                         break;
                 }
             }
-
             return ifadeler;
         }
 
@@ -72,7 +72,9 @@ namespace NeptunMathWPF.SoruVeAjani
                 switch (olusturulacak[i])
                 {
                     case ifadeTuru.sayi:
-                        ifadeler.Add(ifadeTamSayiUret(ifadeTuru.sayi, rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        break;
+                    case ifadeTuru.faktoriyel:
                         break;
                     case ifadeTuru.kesir:
 
@@ -88,7 +90,7 @@ namespace NeptunMathWPF.SoruVeAjani
         }
 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
-        public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null, TextBlock text=null)
+        public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string ajanLOG = string.Empty;
 
@@ -162,14 +164,15 @@ namespace NeptunMathWPF.SoruVeAjani
                         };
                     }
                 }
-
+                //Hesaplama Kısmı AngourioMath Kütüphanesi kullanılıyor
                 Entity entity = islemString;
                 Entity son = entity.EvalNumerical();
 
                 ajanLOG += $"{islemString}\n";
                 ajanLOG += $"{son.ToString()}\n";
                 sonuc = int.Parse(son.ToString());
-
+                
+   
 
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
@@ -181,22 +184,31 @@ namespace NeptunMathWPF.SoruVeAjani
                     }
                 }
             });
-      
-            //PARAMETRELER ve Olusturucu LOGU
-            if (text != null)
-            {
-                ajanLOG += "PARAMETRELER \n";
-                for (int i = 0; i < Araliklar.Count; i++)
-                {
-                    ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
-                }
+            //Nesnenin Olusutğu AN;
+            Soru soru=new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
 
-                text.Text = ajanLOG;
+            //PARAMETRELER ve Olusturucu LOGU
+            ajanLOG += "PARAMETRELER \n";
+            for (int i = 0; i < Araliklar.Count; i++)
+            {
+                ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
             }
-            return new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
+            soru.SetOlusturmaLogu(ajanLOG);
+            
+            return soru;
         }
-        
-        public static ifade ifadeTamSayiUret(ifadeTuru ifadeTur, int sayi)
+
+        public static ifade IfadeKesirSayiUret(int pay)
+        {
+            int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
+            string LaTex = $"frac({{{pay}}}, {{{payda}}})";
+            MessageBox.Show(LaTex);
+            string islem = $"({pay}/{payda})";
+            ifade ifadeNesne = new ifade(islem, LaTex);
+            return ifadeNesne;
+        }
+
+        public static ifade IfadeTamSayiUret(int sayi)
         {
             ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString());
             return ifadeNesne;
