@@ -15,7 +15,9 @@ namespace NeptunMathWPF
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
     public class Soru
     {
-        string Metin;
+        string islemMetin;
+        ifade[] secenekler; 
+        string sonuc;
         string LatexMetin;
         int Seviye;
 
@@ -31,13 +33,16 @@ namespace NeptunMathWPF
             //SoruAjani.YerelSoruOlustur(this,ifadeTuru.sayi);
         }
 
-        public Soru(string islem, int cozum, int[] secenekler) {
-            string mesaj = $"islem :: {islem} \n sonuc :: {cozum} \n secenekler :: ";
+        public Soru(string islem, string sonuc, int[] secenekler) {
+            string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";
             for(int i=0;i < secenekler.Length; i++)
             {
                 mesaj += $"({secenekler[i]})";
             }
             MessageBox.Show(mesaj);
+
+            islemMetin = islem;
+            this.sonuc = sonuc;
         }
 
         public int GetSeviye()
@@ -46,7 +51,7 @@ namespace NeptunMathWPF
         }
         public string GetMetin()
         {
-            return Metin;
+            return islemMetin;
         }
     }
 }
