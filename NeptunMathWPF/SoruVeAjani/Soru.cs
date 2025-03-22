@@ -1,4 +1,5 @@
-﻿using NeptunMathWPF.SoruVeAjani;
+﻿using AngouriMath;
+using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,7 @@ namespace NeptunMathWPF
         List<ifadeTuru> ifadeler;
 
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
-        public Soru(string islem, string sonuc, int[] secenekler) {
+        public Soru(string islem, string sonuc, Entity[] secenekler) {
             string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";
             for(int i=0;i < secenekler.Length; i++)
             {
@@ -43,6 +44,10 @@ namespace NeptunMathWPF
         internal void SetOlusturmaLogu(string Metin)
         {
             OlusturmaLogu = Metin;
+        }
+        internal void SetLaTexMetin(string LaTex)
+        {
+            LatexMetin = LaTex;
         }
 
         public string GetOlusturmaLogu()

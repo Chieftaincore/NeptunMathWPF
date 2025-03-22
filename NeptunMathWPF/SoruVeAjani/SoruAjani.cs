@@ -1,4 +1,5 @@
 ﻿using AngouriMath;
+using AngouriMath.Extensions;
 using HonkSharp.Functional;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,7 @@ namespace NeptunMathWPF.SoruVeAjani
                     case ifadeTuru.faktoriyel:
                         break;
                     case ifadeTuru.kesir:
-
+                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
                         break;
                     case ifadeTuru.degisken:
                         break;
@@ -90,13 +91,14 @@ namespace NeptunMathWPF.SoruVeAjani
         }
 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
+        //Buradaki Bazı Mantıklar Geliştirilecektir
         public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string ajanLOG = string.Empty;
 
             string islemString = string.Empty;
-            int sonuc = 0;
-            List<int> diger = new List<int>();
+            Entity sonuc = 0;
+            List<Entity> diger = new List<Entity>();
 
             Genel.Handle(() =>
             {
@@ -113,15 +115,28 @@ namespace NeptunMathWPF.SoruVeAjani
                             //Bölüm tamsayı çıkması için başka bir tamsayı ile çarpılır ve bolen bölünen olarak eklenir
                             if(dortislem == '/')
                             {
-                                int bolen = ifadeler[i].parseGetir();
-                                int bolunen = rng.Next(Araliklar["TAMSAYIBOLME"][0], Araliklar["TAMSAYIBOLME"][1]) * bolen;
+                                bool alindi = false;
+                                if (ifadeler[i].TurGetir() == ifadeTuru.sayi)
+                                {
+                                    int bolen = ifadeler[i].parseGetir();
+                                    int bolunen = rng.Next(Araliklar["TAMSAYIBOLME"][0], Araliklar["TAMSAYIBOLME"][1]) * bolen;
 
-                                islemString += $"{bolunen}/{bolen}";
-                                ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i+1].getir()} kaldırıldı] \n";
-                                i++;
-                                if (i < ifadeler.Count - 1) {
+                                    islemString += $"{bolunen}/{bolen}";
+                                    ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i + 1].getir()} kaldırıldı] \n";
+                                    i++;
+                                }
+                                else
+                                {
+                                    if (ifadeler[i].TurGetir() == ifadeTuru.kesir)
+                                    {
+                                        islemString += ifadeler[i].getir() + '/';
+                                        ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
+                                        alindi = true;
+                                    }
+                                }
+
+                                if (i < ifadeler.Count - 1 && !alindi) {
                                     islemString += KarakterDondur(new char[] { '-', '+' });
-                                  
                                 }
                                 continue;
                             }
@@ -167,26 +182,29 @@ namespace NeptunMathWPF.SoruVeAjani
                 //Hesaplama Kısmı AngourioMath Kütüphanesi kullanılıyor
                 Entity entity = islemString;
                 Entity son = entity.EvalNumerical();
+                sonuc = son;
 
                 ajanLOG += $"{islemString}\n";
                 ajanLOG += $"{son.ToString()}\n";
-                sonuc = int.Parse(son.ToString());
-                
-   
+               
 
+                MessageBox.Show(son.ToString());
+                
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
-                    int rand = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
-                    if (!diger.Contains(rand) && rand != sonuc)
+                    Entity randEntity = son + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
+                    randEntity = randEntity.EvalNumerical();
+
+                    if (!diger.Contains(randEntity) && randEntity != sonuc)
                     {
                         i++;
-                        diger.Add(rand);
+                        diger.Add(randEntity);
                     }
                 }
             });
             //Nesnenin Olusutğu AN;
             Soru soru=new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
-
+            
             //PARAMETRELER ve Olusturucu LOGU
             ajanLOG += "PARAMETRELER \n";
             for (int i = 0; i < Araliklar.Count; i++)
@@ -194,7 +212,7 @@ namespace NeptunMathWPF.SoruVeAjani
                 ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
             }
             soru.SetOlusturmaLogu(ajanLOG);
-            
+            soru.SetLaTexMetin(islemString.Latexise());
             return soru;
         }
 
@@ -202,15 +220,15 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
             string LaTex = $"frac({{{pay}}}, {{{payda}}})";
-            MessageBox.Show(LaTex);
             string islem = $"({pay}/{payda})";
-            ifade ifadeNesne = new ifade(islem, LaTex);
+            ifade ifadeNesne = new ifade(islem, LaTex, ifadeTuru.kesir);
             return ifadeNesne;
         }
 
         public static ifade IfadeTamSayiUret(int sayi)
         {
-            ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString());
+            ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString(),ifadeTuru.sayi);
+            
             return ifadeNesne;
         }
         
@@ -225,13 +243,15 @@ namespace NeptunMathWPF.SoruVeAjani
 
     public class ifade
     {
+        ifadeTuru Tur;
         string islemS;
         string LaTeXS;
 
-        public ifade(string islem, string LaTeX)
+        public ifade(string islem, string LaTeX, ifadeTuru tur)
         {
             islemS = islem;
             LaTeXS = LaTeX;
+            Tur = tur;
         }
 
         public ifade(int Sayi)
@@ -243,7 +263,10 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             return LaTeXS;
         }
-
+        public ifadeTuru TurGetir()
+        {
+            return Tur;
+        }
         public string getir()
         {
             return islemS;
