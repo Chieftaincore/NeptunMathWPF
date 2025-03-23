@@ -25,6 +25,9 @@ namespace NeptunMathWPF.Formlar
         //Huseyin
         //Reddedilenler
         private static readonly Regex _redler = new Regex("[^0-9.-]+");
+        List<RadioButton> Secenekler = new List<RadioButton>();
+        Soru seciliSoru;
+
         public SoruNesneTestWPF()
         {
             InitializeComponent();
@@ -45,6 +48,9 @@ namespace NeptunMathWPF.Formlar
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
             LatexCikti.Formula = soru.GetMetin();
+
+            seciliSoru = soru;
+            WrapPanelYenile();
         }
 
         private void comboBoxParametreler_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -96,6 +102,30 @@ namespace NeptunMathWPF.Formlar
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
             LatexCikti.Formula = soru.GetLaTex();
+            seciliSoru = soru;
+            WrapPanelYenile();
+        }
+
+        internal void WrapPanelYenile()
+        {
+            SeceneklerWrapPanel.Children.Clear();
+
+            for (int i = 0; i < seciliSoru.GetSecenekler().Length; i++)
+            {
+                RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetSecenekler()[i], FontSize = 22, Width = 139, Height = 59 };
+
+                SeceneklerWrapPanel.Children.Add(Rad);
+                Secenekler.Add(Rad);
+
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = "Secenek", FontSize = 22, Width = 139, Height = 59};
+           
+            SeceneklerWrapPanel.Children.Add(Rad);
+            Secenekler.Add(Rad);
         }
     }
 }

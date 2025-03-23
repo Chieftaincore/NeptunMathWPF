@@ -99,12 +99,15 @@ namespace NeptunMathWPF.SoruVeAjani
             string islemString = string.Empty;
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
-
+          
             Genel.Handle(() =>
             {
+                ifadeTuru Tur = ifadeler[0].TurGetir();
+
                 Random rng = new Random();
                 for (int i=0; i < ifadeler.Count; i++)
                 {
+               
                     if(araeleman == null)
                     {
                         if (i == 0)
@@ -192,7 +195,18 @@ namespace NeptunMathWPF.SoruVeAjani
                 
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
-                    Entity randEntity = son + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
+                    Entity randEntity;
+
+                    if (Tur == ifadeTuru.sayi)
+                    {
+                        randEntity = son + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
+                    }
+                    else
+                    {
+                        
+                        int rastg = random.Next(-2,2);
+                        randEntity = son + ((son / 3) * rastg);
+                    }
                     randEntity = randEntity.EvalNumerical();
 
                     if (!diger.Contains(randEntity) && randEntity != sonuc)
@@ -258,6 +272,7 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             islemS = Sayi.ToString();
             LaTeXS = Sayi.ToString();
+            Tur = ifadeTuru.sayi;
         }
         public string LaTeXgetir()
         {

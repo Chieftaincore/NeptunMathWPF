@@ -23,7 +23,7 @@ namespace NeptunMathWPF
         string OlusturmaLogu;
 
         int Seviye;
-        ifade[] secenekler;
+        Entity[] secenekler;
 
         //ifadeler bir soruya eklenecek ifadeleri temsil eder
         List<ifadeTuru> ifadeler;
@@ -39,6 +39,7 @@ namespace NeptunMathWPF
 
             islemMetin = islem;
             this.sonuc = sonuc;
+            this.secenekler = secenekler;
         }
 
         internal void SetOlusturmaLogu(string Metin)
@@ -48,6 +49,19 @@ namespace NeptunMathWPF
         internal void SetLaTexMetin(string LaTex)
         {
             LatexMetin = LaTex;
+        }
+
+        public string[] GetSecenekler()
+        {
+            List<String> Cikti = new List<string>();
+
+            for(int i = 0; i < secenekler.Length; i++)
+            {
+                Cikti.Add(secenekler[i].Stringize());
+            }
+            Cikti.Add(sonuc);
+
+            return Cikti.ToArray();
         }
 
         public string GetOlusturmaLogu()
