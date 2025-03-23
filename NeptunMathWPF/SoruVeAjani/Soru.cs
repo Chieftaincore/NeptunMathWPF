@@ -51,7 +51,7 @@ namespace NeptunMathWPF
             LatexMetin = LaTex;
         }
 
-        public string[] GetSecenekler()
+        public string[] GetDigerSecenekler()
         {
             List<String> Cikti = new List<string>();
 
@@ -59,11 +59,13 @@ namespace NeptunMathWPF
             {
                 Cikti.Add(secenekler[i].Stringize());
             }
-            Cikti.Add(sonuc);
 
             return Cikti.ToArray();
         }
-
+        public string GetSonucSecenek()
+        {
+            return sonuc;
+        }
         public string GetOlusturmaLogu()
         {
             return OlusturmaLogu;

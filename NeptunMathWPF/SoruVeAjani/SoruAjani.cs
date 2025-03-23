@@ -90,8 +90,16 @@ namespace NeptunMathWPF.SoruVeAjani
             return ifadeler;
         }
 
+
+        //Bunlarla Neyi Hedefliyorum 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
+
+        //Bu Metot'u Birkaç parçaya ayırıp sayıları ve işlemleri zorluk parametresine uygun hale getirmeliyiz
+        //Aynı zamanda karma soru yapıcı yapmalıyız (aynı soruda Kesir + Faktoriyel + Tamsayı) gibi farklı tür ifadeler aynı soruda yer alabilmeli
+        //Matematik işlemlerde AngourioMath'ın Entity nesnesi kullanılabilir
         //Buradaki Bazı Mantıklar Geliştirilecektir
+
+        //Daha iyisi için yollar var yakında yapılabileceğini ümit ediyorum -Hüseyin
         public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string ajanLOG = string.Empty;
@@ -203,9 +211,9 @@ namespace NeptunMathWPF.SoruVeAjani
                     }
                     else
                     {
-                        
-                        int rastg = random.Next(-2,2);
-                        randEntity = son + ((son / 3) * rastg);
+                        son = son.Simplify();
+                        int rastg = random.Next(-2, 2);
+                        randEntity = son + ((son / 3) * rastg);   
                     }
                     randEntity = randEntity.EvalNumerical();
 

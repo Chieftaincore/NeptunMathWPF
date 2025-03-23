@@ -20,10 +20,12 @@ namespace NeptunMathWPF.Formlar
     /// <summary>
     /// SoruNesneTestWPF.xaml etkileşim mantığı
     /// </summary>
+    
     public partial class SoruNesneTestWPF : Window
     {
         //Huseyin
-        //Reddedilenler
+        //Soru, Nesne, Parametre ve Sonuç Test etme formu
+        //Reddedilen karakterler
         private static readonly Regex _redler = new Regex("[^0-9.-]+");
         List<RadioButton> Secenekler = new List<RadioButton>();
         Soru seciliSoru;
@@ -39,7 +41,7 @@ namespace NeptunMathWPF.Formlar
         }
 
         //SORU OLUSTUR DORT İŞLEM
-        private void TamSayiSoruOlustur(object sender, RoutedEventArgs e)
+        private void TusTamSayiSoruOlustur(object sender, RoutedEventArgs e)
         {
             ParametreGuncelle();
 
@@ -95,7 +97,7 @@ namespace NeptunMathWPF.Formlar
             }
         }
 
-        private void TusKesiSayiOlustur(object sender, RoutedEventArgs e)
+        private void TusKesirSayiOlustur(object sender, RoutedEventArgs e)
         {
             List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.kesir, (int)sliderIfade.Value);
             Soru soru = SoruAjani.YerelSoruBirlestir(liste, seceneksayisi: (int)sliderSecenek.Value);
@@ -106,26 +108,61 @@ namespace NeptunMathWPF.Formlar
             WrapPanelYenile();
         }
 
+        //Wrap Panel (Sorunun altındaki yer)'e  Secenekleri ekleme)
         internal void WrapPanelYenile()
         {
+            //Sıfırla sonra tekrar ekle
             SeceneklerWrapPanel.Children.Clear();
+            //Rastgale bir sıraya sıkıştır
+            Random rng = new Random();
+            int rand = rng.Next(0,seciliSoru.GetDigerSecenekler().Length);
 
-            for (int i = 0; i < seciliSoru.GetSecenekler().Length; i++)
+            for (int i = 0; i < seciliSoru.GetDigerSecenekler().Length;i++)
             {
-                RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetSecenekler()[i], FontSize = 22, Width = 139, Height = 59 };
+                string icerik;
+                //Sonucu Rastgele bir noktaya koymak için
+                if(i == rand)
+                {
+                    icerik = seciliSoru.GetSonucSecenek();
+
+                    RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", Content = icerik, FontSize = 22, Width = 139, Height = 59 };
+                    SeceneklerWrapPanel.Children.Add(Randy);
+                    Secenekler.Add(Randy);
+                }
+
+                //Listedeki Diğer Seçenekler
+                icerik = seciliSoru.GetDigerSecenekler()[i];
+                RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = icerik, FontSize = 22, Width = 139, Height = 59 };
 
                 SeceneklerWrapPanel.Children.Add(Rad);
                 Secenekler.Add(Rad);
-
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void tusCevapla_Click(object sender, RoutedEventArgs e)
         {
-            RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = "Secenek", FontSize = 22, Width = 139, Height = 59};
-           
-            SeceneklerWrapPanel.Children.Add(Rad);
-            Secenekler.Add(Rad);
+            //DAHA iyi bir seçenek buluna kadar DOĞRU/YANLIŞ kontrolü
+            RadioButton CevapFetch = null;
+
+            foreach(RadioButton r in Secenekler)
+            {
+                if (r.IsChecked == true)
+                {
+                    CevapFetch = r;
+                }
+            }
+
+            if (CevapFetch != null)
+            {
+                if (CevapFetch.Content.ToString() == seciliSoru.GetSonucSecenek())
+                {
+                    MessageBox.Show($"DOĞRU CEVAP :: Seçilen Cevap {CevapFetch.Content.ToString()}");
+                }
+                else
+                {
+                    MessageBox.Show($"YANLIŞ CEVAP :: Seçilen Cevap {CevapFetch.Content.ToString()}");
+                }
+            }
         }
     }
 }
