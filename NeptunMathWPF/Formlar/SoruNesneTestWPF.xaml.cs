@@ -160,7 +160,8 @@ namespace NeptunMathWPF.Formlar
                 }
                 else
                 {
-                    MessageBox.Show($"YANLIŞ CEVAP :: Seçilen Cevap {CevapFetch.Content.ToString()}");
+                    MessageBox.Show($"YANLIŞ CEVAP :: Seçilen Cevap {CevapFetch.Content.ToString()} \n DOĞRU CEVAP :: {seciliSoru.GetSonucSecenek()}");
+                    // Soruya yanlış cevap verildiğinde, doğru cevabı göstermeyi ekledim.
                 }
             }
         }
