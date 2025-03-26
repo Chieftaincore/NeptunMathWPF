@@ -57,6 +57,7 @@ namespace NeptunMathWPF.SoruVeAjani
                     case ifadeTuru.degisken:
                         break;
                     default:
+                        MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
                         break;
                 }
             }
@@ -76,7 +77,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
                         break;
                     case ifadeTuru.faktoriyel:
-                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(2, 10)));
+                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
                         break;
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
@@ -202,10 +203,11 @@ namespace NeptunMathWPF.SoruVeAjani
                 sonuc = son;
 
                 ajanLOG += $"{islemString}\n";
-                ajanLOG += $"{son.ToString()}\n";
+                ajanLOG += $"{son}\n";
                
 
                 //MessageBox.Show(son.ToString());
+               
                 
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
@@ -218,8 +220,19 @@ namespace NeptunMathWPF.SoruVeAjani
                     else
                     {
                         son = son.Simplify();
-                        int rastg = random.Next(-2, 2);
-                        randEntity = son + ((son / 3) * rastg);   
+                       
+                        if (Tur == ifadeTuru.kesir)
+                        {
+                            int rastg = random.Next(-2, 2);
+                            randEntity = son + ((son / 3) * rastg);
+                        }
+                        else
+                        {
+                            int r;
+                         
+                            r = random.Next(20, 126);
+                            randEntity = (son + r);
+                        }
                     }
                     randEntity = randEntity.EvalNumerical();
 
@@ -239,8 +252,14 @@ namespace NeptunMathWPF.SoruVeAjani
             {
                 ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
             }
+            
+            //NOT: Bazı LaTeX'leri doğru çeviremiyor 
+            //Ornek = 12+22*6! Çarpmayı' yokediyor ya bir çözüm ya da daha iyi bir LaTeX convertor bulacağız
+            //Sorun Çoklu Ifade' üçüncü çarpmaya gelince görülüyor
+            string LaTeX = islemString.Latexise();
+            soru.SetLaTexMetin(LaTeX);
+            ajanLOG += $"LaTex ÇIKTI :: {LaTeX}";
             soru.SetOlusturmaLogu(ajanLOG);
-            soru.SetLaTexMetin(islemString.Latexise());
             return soru;
         }
 
@@ -318,6 +337,20 @@ namespace NeptunMathWPF.SoruVeAjani
             return int.Parse(islemS);
         }
 
+    }
+    public class Kesir : ifade
+    {
+        Entity pay;
+        Entity payda;
+        string islem;
+        string LaTex;
+
+        public Kesir(int pay, int payda) : base(Sayi:pay){
+            
+            string LaTex = $"frac({{{pay}}}, {{{payda}}})";
+            string islemS = $"({pay}/{payda})";
+          
+        }
     }
     public class Faktoriyel : ifade
     {
