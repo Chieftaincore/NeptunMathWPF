@@ -31,7 +31,7 @@ namespace NeptunMathWPF.SoruVeAjani
         public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
         {
             {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
-            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15}}
+            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } } 
         };
         internal static Random random = new Random(); 
 
@@ -49,7 +49,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
                         break;
                     case ifadeTuru.faktoriyel:
-
+                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
                         break;
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
@@ -76,6 +76,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
                         break;
                     case ifadeTuru.faktoriyel:
+                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(2, 10)));
                         break;
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
@@ -134,7 +135,6 @@ namespace NeptunMathWPF.SoruVeAjani
 
                                     islemString += $"{bolunen}/{bolen}";
                                     ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i + 1].getir()} kaldırıldı] \n";
-                                    i++;
                                 }
                                 else
                                 {
@@ -143,6 +143,12 @@ namespace NeptunMathWPF.SoruVeAjani
                                         islemString += ifadeler[i].getir() + '/';
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
+                                    }
+
+                                    if(ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
+                                    {
+                                        islemString += ifadeler[i].getir();
+                                        ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
                                     }
                                 }
 
@@ -199,7 +205,7 @@ namespace NeptunMathWPF.SoruVeAjani
                 ajanLOG += $"{son.ToString()}\n";
                
 
-                MessageBox.Show(son.ToString());
+                //MessageBox.Show(son.ToString());
                 
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
@@ -247,6 +253,11 @@ namespace NeptunMathWPF.SoruVeAjani
             return ifadeNesne;
         }
 
+        public static ifade IfadeFaktoriyelUret(int sayi)
+        {
+            return new Faktoriyel(sayi);
+        }
+
         public static ifade IfadeTamSayiUret(int sayi)
         {
             ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString(),ifadeTuru.sayi);
@@ -282,6 +293,13 @@ namespace NeptunMathWPF.SoruVeAjani
             LaTeXS = Sayi.ToString();
             Tur = ifadeTuru.sayi;
         }
+
+        public ifade(int Sayi, ifadeTuru tur)
+        {
+            islemS = Sayi.ToString();
+            LaTeXS = Sayi.ToString();
+            Tur = tur;
+        }
         public string LaTeXgetir()
         {
             return LaTeXS;
@@ -290,7 +308,7 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             return Tur;
         }
-        public string getir()
+        public virtual string getir()
         {
             return islemS;
         }
@@ -298,6 +316,21 @@ namespace NeptunMathWPF.SoruVeAjani
         public int parseGetir()
         {
             return int.Parse(islemS);
+        }
+
+    }
+    public class Faktoriyel : ifade
+    {
+        Entity faq;
+
+        public Faktoriyel(int sayi) : base(sayi, tur: ifadeTuru.faktoriyel)
+        {
+            faq = Factorial(sayi);
+        }
+       
+        public override string getir()
+        {
+            return faq.Stringize();
         }
     }
 }

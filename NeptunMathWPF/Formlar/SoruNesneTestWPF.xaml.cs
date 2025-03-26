@@ -190,7 +190,6 @@ namespace NeptunMathWPF.Formlar
         private void TusEkleClick(object sender, RoutedEventArgs e)
         {
             string a = CokluIfadeComboBox.SelectedValue.ToString();
-            MessageBox.Show(a);
             if (a != null)
             {
                 ifadeTuru tur;
