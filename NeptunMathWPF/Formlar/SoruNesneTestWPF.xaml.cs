@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 
 namespace NeptunMathWPF.Formlar
 {
-  
+
     /// <summary>
     /// SoruNesneTestWPF.xaml etkileşim mantığı
     /// </summary>
-    
+    using ifadeTuru = SoruTerimleri.ifadeTurleri;
     public partial class SoruNesneTestWPF : Window
     {
         //Huseyin
@@ -28,6 +28,8 @@ namespace NeptunMathWPF.Formlar
         //Reddedilen karakterler
         private static readonly Regex _redler = new Regex("[^0-9.-]+");
         List<RadioButton> Secenekler = new List<RadioButton>();
+        List<ifadeTuru> CokluIfadeIstegi = new List<ifadeTuru>();
+
         Soru seciliSoru;
 
         public SoruNesneTestWPF()
@@ -38,6 +40,9 @@ namespace NeptunMathWPF.Formlar
             {
                 comboBoxParametreler.Items.Add(SoruAjani.Araliklar.ElementAt(i).Key);
             }
+            CokluIfadeListBox.ItemsSource = CokluIfadeIstegi;
+            CokluIfadeComboBox.ItemsSource = Enum.GetNames(typeof(ifadeTuru));
+            
         }
 
         //SORU OLUSTUR DORT İŞLEM
@@ -111,32 +116,32 @@ namespace NeptunMathWPF.Formlar
         //Wrap Panel (Sorunun altındaki yer)'e  Secenekleri ekleme)
         internal void WrapPanelYenile()
         {
-            //Sıfırla sonra tekrar ekle
-            SeceneklerWrapPanel.Children.Clear();
-            //Rastgale bir sıraya sıkıştır
-            Random rng = new Random();
-            int rand = rng.Next(0,seciliSoru.GetDigerSecenekler().Length);
-
-            for (int i = 0; i < seciliSoru.GetDigerSecenekler().Length;i++)
+            Genel.Handle(() =>
             {
-                string icerik;
-                //Sonucu Rastgele bir noktaya koymak için
-                if(i == rand)
+                //Sıfırla sonra tekrar ekle
+                SeceneklerWrapPanel.Children.Clear();
+                //Rastgale bir sıraya sıkıştır
+                Random rng = new Random();
+                int rand = rng.Next(0, seciliSoru.GetDigerSecenekler().Length);
+
+                for (int i = 0; i < seciliSoru.GetDigerSecenekler().Length; i++)
                 {
-                    icerik = seciliSoru.GetSonucSecenek();
+                    string icerik;
+                    //Sonucu Rastgele bir noktaya koymak için
+                    if (i == rand)
+                    {
+                        RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetSonucSecenek(), FontSize = 22, Width = 139, Height = 59 };
+                        SeceneklerWrapPanel.Children.Add(Randy);
+                        Secenekler.Add(Randy);
+                    }
 
-                    RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", Content = icerik, FontSize = 22, Width = 139, Height = 59 };
-                    SeceneklerWrapPanel.Children.Add(Randy);
-                    Secenekler.Add(Randy);
+                    //Listedeki Diğer Seçenekler
+                    RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetDigerSecenekler()[i], FontSize = 22, Width = 139, Height = 59 };
+
+                    SeceneklerWrapPanel.Children.Add(Rad);
+                    Secenekler.Add(Rad);
                 }
-
-                //Listedeki Diğer Seçenekler
-                icerik = seciliSoru.GetDigerSecenekler()[i];
-                RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = icerik, FontSize = 22, Width = 139, Height = 59 };
-
-                SeceneklerWrapPanel.Children.Add(Rad);
-                Secenekler.Add(Rad);
-            }
+            });
         }
 
         private void tusCevapla_Click(object sender, RoutedEventArgs e)
@@ -161,6 +166,49 @@ namespace NeptunMathWPF.Formlar
                 else
                 {
                     MessageBox.Show($"YANLIŞ CEVAP :: Seçilen Cevap {CevapFetch.Content.ToString()}");
+                }
+            }
+        }
+
+        private void TusCokluIfadeSoruOlustur(object sender, RoutedEventArgs e)
+        {
+            Genel.Handle(() =>
+            {
+                if (CokluIfadeIstegi.Count != 0)
+                {
+                    List<ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(CokluIfadeIstegi);
+                    Soru soru = SoruAjani.YerelSoruBirlestir(Liste);
+
+                    SoruLOG.Text = soru.GetOlusturmaLogu();
+                    LatexCikti.Formula = soru.GetLaTex();
+                    seciliSoru = soru;
+                    WrapPanelYenile();
+                }
+            });
+        }
+
+        private void TusEkleClick(object sender, RoutedEventArgs e)
+        {
+            string a = CokluIfadeComboBox.SelectedValue.ToString();
+            MessageBox.Show(a);
+            if (a != null)
+            {
+                ifadeTuru tur;
+                Enum.TryParse<ifadeTuru>(a, out tur);
+
+                CokluIfadeIstegi.Add(tur);
+            }
+            CokluIfadeListBox.Items.Refresh();
+        }
+
+        private void CokluIfadeListBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Delete)
+            {
+                if (CokluIfadeListBox.SelectedItem != null && CokluIfadeListBox.SelectedItems.Count < 2)
+                {
+                    CokluIfadeIstegi.RemoveAt(CokluIfadeListBox.SelectedIndex);
+                    CokluIfadeListBox.Items.Refresh();
                 }
             }
         }
