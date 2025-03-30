@@ -188,18 +188,27 @@ namespace NeptunMathWPF.Formlar
             });
         }
 
+        
         private void TusEkleClick(object sender, RoutedEventArgs e)
         {
+            if (CokluIfadeComboBox.SelectedValue == null)
+            {
+                MessageBox.Show("Lütfen bir ifade türü seçin.");
+                return;
+            }
+
             string a = CokluIfadeComboBox.SelectedValue.ToString();
+            
             if (a != null)
             {
                 ifadeTuru tur;
                 Enum.TryParse<ifadeTuru>(a, out tur);
 
                 CokluIfadeIstegi.Add(tur);
-            }
+            }           
             CokluIfadeListBox.Items.Refresh();
         }
+             
 
         private void CokluIfadeListBox_KeyDown(object sender, KeyEventArgs e)
         {
