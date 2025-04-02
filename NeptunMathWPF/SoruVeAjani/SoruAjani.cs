@@ -199,39 +199,34 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
                 //Hesaplama Kısmı AngourioMath Kütüphanesi kullanılıyor
                 Entity entity = islemString;
-                Entity son = entity.EvalNumerical();
-                sonuc = son;
+                sonuc = entity.EvalNumerical();
 
                 ajanLOG += $"{islemString}\n";
-                ajanLOG += $"{son}\n";
-               
-
-                //MessageBox.Show(son.ToString());
-               
-                
+                ajanLOG += $"{sonuc}\n";
+                 
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
                     Entity randEntity;
 
                     if (Tur == ifadeTuru.sayi)
                     {
-                        randEntity = son + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
+                        randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
                     }
                     else
                     {
-                        son = son.Simplify();
+                        sonuc = sonuc.Simplify();
                        
                         if (Tur == ifadeTuru.kesir)
                         {
                             int rastg = random.Next(-2, 2);
-                            randEntity = son + ((son / 3) * rastg);
+                            randEntity = sonuc + ((sonuc / 3) * rastg);
                         }
                         else
                         {
                             int r;
                          
                             r = random.Next(20, 126);
-                            randEntity = (son + r);
+                            randEntity = (sonuc + r);
                         }
                     }
                     randEntity = randEntity.EvalNumerical();
