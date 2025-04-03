@@ -50,7 +50,7 @@ namespace NeptunMathWPF.Formlar
         {
             ParametreGuncelle();
 
-            List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi, (int)sliderIfade.Value);
+            List<Ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi, (int)sliderIfade.Value);
             Soru soru = SoruAjani.YerelSoruBirlestir(liste, seceneksayisi: (int)sliderSecenek.Value);
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
@@ -104,7 +104,7 @@ namespace NeptunMathWPF.Formlar
 
         private void TusKesirSayiOlustur(object sender, RoutedEventArgs e)
         {
-            List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.kesir, (int)sliderIfade.Value);
+            List<Ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.kesir, (int)sliderIfade.Value);
             Soru soru = SoruAjani.YerelSoruBirlestir(liste, seceneksayisi: (int)sliderSecenek.Value);
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
@@ -177,7 +177,7 @@ namespace NeptunMathWPF.Formlar
             {
                 if (CokluIfadeIstegi.Count != 0)
                 {
-                    List<ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(CokluIfadeIstegi);
+                    List<Ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(CokluIfadeIstegi);
                     Soru soru = SoruAjani.YerelSoruBirlestir(Liste);
 
                     SoruLOG.Text = soru.GetOlusturmaLogu();

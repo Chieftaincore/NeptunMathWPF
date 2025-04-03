@@ -31,15 +31,15 @@ namespace NeptunMathWPF.SoruVeAjani
         public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
         {
             {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
-            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } } 
+            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } }
         };
-        internal static Random random = new Random(); 
+        internal static Random random = new Random();
 
         //Yenileri Versiyon
-        internal static List<ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
+        internal static List<Ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
         {
             Random rng = new Random();
-            List<ifade> ifadeler = new List<ifade>();
+            List<Ifade> ifadeler = new List<Ifade>();
 
             for (int i = 0; i < ifadesayisi; i++)
             {
@@ -64,10 +64,10 @@ namespace NeptunMathWPF.SoruVeAjani
             return ifadeler;
         }
 
-        internal static List<ifade> CokluIfadeListesiOlustur(List<ifadeTuru>olusturulacak)
+        internal static List<Ifade> CokluIfadeListesiOlustur(List<ifadeTuru> olusturulacak)
         {
             Random rng = new Random();
-            List<ifade> ifadeler = new List<ifade>();
+            List<Ifade> ifadeler = new List<Ifade>();
 
             for (int i = 0; i < olusturulacak.Count; i++)
             {
@@ -102,31 +102,33 @@ namespace NeptunMathWPF.SoruVeAjani
         //Buradaki Bazı Mantıklar Geliştirilecektir
 
         //Daha iyisi için yollar var yakında yapılabileceğini ümit ediyorum -Hüseyin
-        public static Soru YerelSoruBirlestir(List<ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
+
+
+        public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string ajanLOG = string.Empty;
 
             string islemString = string.Empty;
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
-          
+
             Genel.Handle(() =>
             {
                 ifadeTuru Tur = ifadeler[0].TurGetir();
 
                 Random rng = new Random();
-                for (int i=0; i < ifadeler.Count; i++)
+                for (int i = 0; i < ifadeler.Count; i++)
                 {
-               
-                    if(araeleman == null)
+
+                    if (araeleman == null)
                     {
                         if (i == 0)
                         {
-                            char dortislem = KarakterDondur(new char[] { '+', '-' , '*', '/' });
-                            
+                            char dortislem = KarakterDondur(new char[] { '+', '-', '*', '/' });
+
                             //Tamsayı bölen oluşturmak için
                             //Bölüm tamsayı çıkması için başka bir tamsayı ile çarpılır ve bolen bölünen olarak eklenir
-                            if(dortislem == '/')
+                            if (dortislem == '/')
                             {
                                 bool alindi = false;
                                 if (ifadeler[i].TurGetir() == ifadeTuru.sayi)
@@ -146,14 +148,15 @@ namespace NeptunMathWPF.SoruVeAjani
                                         alindi = true;
                                     }
 
-                                    if(ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
+                                    if (ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
                                     {
                                         islemString += ifadeler[i].getir();
                                         ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
                                     }
                                 }
 
-                                if (i < ifadeler.Count - 1 && !alindi) {
+                                if (i < ifadeler.Count - 1 && !alindi)
+                                {
                                     islemString += KarakterDondur(new char[] { '-', '+' });
                                 }
                                 continue;
@@ -203,7 +206,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
                 ajanLOG += $"{islemString}\n";
                 ajanLOG += $"{sonuc}\n";
-                 
+
                 for (int i = 0; i < seceneksayisi - 1;)
                 {
                     Entity randEntity;
@@ -215,7 +218,7 @@ namespace NeptunMathWPF.SoruVeAjani
                     else
                     {
                         sonuc = sonuc.Simplify();
-                       
+
                         if (Tur == ifadeTuru.kesir)
                         {
                             int rastg = random.Next(-2, 2);
@@ -224,7 +227,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         else
                         {
                             int r;
-                         
+
                             r = random.Next(20, 126);
                             randEntity = (sonuc + r);
                         }
@@ -239,15 +242,15 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
             });
             //Nesnenin Olusutğu AN;
-            Soru soru=new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
-            
+            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
+
             //PARAMETRELER ve Olusturucu LOGU
             ajanLOG += "PARAMETRELER \n";
             for (int i = 0; i < Araliklar.Count; i++)
             {
                 ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
             }
-            
+
             //NOT: Bazı LaTeX'leri doğru çeviremiyor 
             //Ornek = 12+22*6! Çarpmayı' yokediyor ya bir çözüm ya da daha iyi bir LaTeX convertor bulacağız
             //Sorun Çoklu Ifade' üçüncü çarpmaya gelince görülüyor
@@ -258,27 +261,28 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
-        public static ifade IfadeKesirSayiUret(int pay)
+
+        public static Ifade IfadeKesirSayiUret(int pay)
         {
             int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
             string LaTex = $"frac({{{pay}}}, {{{payda}}})";
             string islem = $"({pay}/{payda})";
-            ifade ifadeNesne = new ifade(islem, LaTex, ifadeTuru.kesir);
+            Ifade ifadeNesne = new Ifade(islem, LaTex, ifadeTuru.kesir);
             return ifadeNesne;
         }
 
-        public static ifade IfadeFaktoriyelUret(int sayi)
+        public static Ifade IfadeFaktoriyelUret(int sayi)
         {
             return new Faktoriyel(sayi);
         }
 
-        public static ifade IfadeTamSayiUret(int sayi)
+        public static Ifade IfadeTamSayiUret(int sayi)
         {
-            ifade ifadeNesne = new ifade(sayi.ToString(),sayi.ToString(),ifadeTuru.sayi);
-            
+            Ifade ifadeNesne = new Ifade(sayi.ToString(), sayi.ToString(), ifadeTuru.sayi);
+
             return ifadeNesne;
         }
-        
+
         //Seçilelerden Rastgele char döndür
         public static char KarakterDondur(char[] charlar)
         {
@@ -288,77 +292,8 @@ namespace NeptunMathWPF.SoruVeAjani
         }
     }
 
-    public class ifade
-    {
-        ifadeTuru Tur;
-        string islemS;
-        string LaTeXS;
-
-        public ifade(string islem, string LaTeX, ifadeTuru tur)
-        {
-            islemS = islem;
-            LaTeXS = LaTeX;
-            Tur = tur;
-        }
-
-        public ifade(int Sayi)
-        {
-            islemS = Sayi.ToString();
-            LaTeXS = Sayi.ToString();
-            Tur = ifadeTuru.sayi;
-        }
-
-        public ifade(int Sayi, ifadeTuru tur)
-        {
-            islemS = Sayi.ToString();
-            LaTeXS = Sayi.ToString();
-            Tur = tur;
-        }
-        public string LaTeXgetir()
-        {
-            return LaTeXS;
-        }
-        public ifadeTuru TurGetir()
-        {
-            return Tur;
-        }
-        public virtual string getir()
-        {
-            return islemS;
-        }
-
-        public int parseGetir()
-        {
-            return int.Parse(islemS);
-        }
-
-    }
-    public class Kesir : ifade
-    {
-        Entity pay;
-        Entity payda;
-        string islem;
-        string LaTex;
-
-        public Kesir(int pay, int payda) : base(Sayi:pay){
-            
-            string LaTex = $"frac({{{pay}}}, {{{payda}}})";
-            string islemS = $"({pay}/{payda})";
-          
-        }
-    }
-    public class Faktoriyel : ifade
-    {
-        Entity faq;
-
-        public Faktoriyel(int sayi) : base(sayi, tur: ifadeTuru.faktoriyel)
-        {
-            faq = Factorial(sayi);
-        }
-       
-        public override string getir()
-        {
-            return faq.Stringize();
-        }
-    }
+    //Nesneler okuma koyaylığı için farklı bir Dosya'yw aktarılmışdır -Hüseyin
+    //Nesneler SoruVeAjanı->Ifade.cs' içindedir
 }
+
+    

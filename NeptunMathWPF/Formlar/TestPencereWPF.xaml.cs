@@ -40,7 +40,7 @@ namespace NeptunMathWPF
         {
             //Soru soru = SoruAjani.YerelSoruOlustur(SoruTerimleri.ifadeTurleri.sayi,seceneksayisi:7);
 
-            List<ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi,4);
+            List<Ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi,4);
             Soru soru = SoruAjani.YerelSoruBirlestir(liste);
         }
 

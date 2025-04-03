@@ -107,6 +107,7 @@
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SoruVeAjani\Ifade.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
