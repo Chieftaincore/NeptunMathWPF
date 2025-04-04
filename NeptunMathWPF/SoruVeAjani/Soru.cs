@@ -25,9 +25,6 @@ namespace NeptunMathWPF
         int Seviye;
         Entity[] secenekler;
 
-        //ifadeler bir soruya eklenecek ifadeleri temsil eder
-        List<ifadeTuru> ifadeler;
-
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
         public Soru(string islem, string sonuc, Entity[] secenekler) {
             string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";

@@ -96,13 +96,8 @@ namespace NeptunMathWPF.SoruVeAjani
         //Bunlarla Neyi Hedefliyorum 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
 
-        //Bu Metot'u Birkaç parçaya ayırıp sayıları ve işlemleri zorluk parametresine uygun hale getirmeliyiz
         //Aynı zamanda karma soru yapıcı yapmalıyız (aynı soruda Kesir + Faktoriyel + Tamsayı) gibi farklı tür ifadeler aynı soruda yer alabilmeli
-        //Matematik işlemlerde AngourioMath'ın Entity nesnesi kullanılabilir
-        //Buradaki Bazı Mantıklar Geliştirilecektir
-
         //Daha iyisi için yollar var yakında yapılabileceğini ümit ediyorum -Hüseyin
-
 
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
@@ -261,6 +256,78 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
+        //Yeni Deneme daha iyi yollar için arama denemesi
+        //Henüz tuşlara bağlanmadı
+        public static Soru YeniSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, List<AraIslem> islemler = null)
+        {
+            string ajanLOG = string.Empty;
+
+            string islemString = string.Empty;
+            string LaTeXString = string.Empty;
+
+            Entity sonuc = 0;
+            List<Entity> diger = new List<Entity>();
+
+            Genel.Handle(() =>
+            {
+                Random rng = new Random();
+                for (int i = 0; i < ifadeler.Count; i++)
+                {
+                    if (i < islemler.Count)
+                    {
+                        if (!islemler[i].OzelYapiGetir())
+                        {
+                            islemString += ifadeler[i].getir();
+                            ajanLOG += $"{ifadeler[i].TurGetir()} Eklendi :: {ifadeler[i].getir()}";
+
+                            islemString += islemler[i].IslemGetir();
+                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
+                        }
+                        else
+                        {
+                            string Ozel = islemler[i].OzelYapiCalistir(ifadeler[i]);
+                            islemString += Ozel;
+                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
+                        }
+
+                        LaTeXString += islemler[i].LaTeXGetir();
+                    }
+                    else
+                    {
+                        if(i < 4)
+                        {
+                            char ekislem = KarakterDondur(new char[] { '+', '-', '*' });
+
+                            islemString += ifadeler[i].getir();
+                            islemString += ekislem;
+
+                            if(ekislem == '*')
+                            {
+                                LaTeXString += "\\cdot";
+                            }
+                            else
+                            {
+                                LaTeXString += ekislem;
+                            }
+                        }
+                    }
+
+                }
+            });
+
+            Entity entity = islemString;
+            sonuc = entity.EvalNumerical();
+
+            ajanLOG += $"{islemString}\n";
+            ajanLOG += $"{sonuc}\n";
+
+
+            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
+
+            soru.SetLaTexMetin(LaTeXString);
+
+            return soru;
+        }
 
         public static Ifade IfadeKesirSayiUret(int pay)
         {
