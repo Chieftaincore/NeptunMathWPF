@@ -1,4 +1,5 @@
-﻿using NeptunMathWPF.SoruVeAjani;
+﻿using AngouriMath.Extensions;
+using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfMath.Controls;
 
 namespace NeptunMathWPF.Formlar
 {
@@ -127,18 +129,27 @@ namespace NeptunMathWPF.Formlar
                 for (int i = 0; i < seciliSoru.GetDigerSecenekler().Length; i++)
                 {
                     string icerik;
+                   
                     //Sonucu Rastgele bir noktaya koymak için
                     if (i == rand)
                     {
-                        RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetSonucSecenek(), FontSize = 22, Width = 139, Height = 59 };
+                        RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", FontSize = 22, Width = 139, Height = 59};
+                        FormulaControl formula = new FormulaControl();
+
                         SeceneklerWrapPanel.Children.Add(Randy);
+                        formula.Formula = seciliSoru.GetSonucSecenek().Latexise();
+                        Randy.Content = formula;
+                     
                         Secenekler.Add(Randy);
                     }
 
                     //Listedeki Diğer Seçenekler
-                    RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", Content = seciliSoru.GetDigerSecenekler()[i], FontSize = 22, Width = 139, Height = 59 };
+                    RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", FontSize = 22, Width = 139, Height = 59 };
+                    FormulaControl Rformula = new FormulaControl();
 
                     SeceneklerWrapPanel.Children.Add(Rad);
+                    Rformula.Formula = seciliSoru.GetDigerSecenekler()[i].Latexise();
+                    Rad.Content = Rformula;
                     Secenekler.Add(Rad);
                 }
             });

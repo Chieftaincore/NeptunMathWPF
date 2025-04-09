@@ -54,8 +54,6 @@ namespace NeptunMathWPF.SoruVeAjani
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
                         break;
-                    case ifadeTuru.degisken:
-                        break;
                     default:
                         MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
                         break;
@@ -81,8 +79,6 @@ namespace NeptunMathWPF.SoruVeAjani
                         break;
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
-                        break;
-                    case ifadeTuru.degisken:
                         break;
                     default:
                         break;
@@ -256,7 +252,7 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
-        //Yeni Deneme daha iyi yollar için arama denemesi
+        //YEDEK GELİŞTİRİLİYOR Yeni Deneme daha iyi yollar için arama denemesi
         //Henüz tuşlara bağlanmadı
         public static Soru YeniSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, List<AraIslem> islemler = null)
         {

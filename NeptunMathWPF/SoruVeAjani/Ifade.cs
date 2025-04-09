@@ -71,7 +71,6 @@ namespace NeptunMathWPF.SoruVeAjani
         string islem;
         string LaTex;
 
-
         public Kesir(int pay, int payda)
         {
             string islemS = $"({pay}/{payda})";
@@ -95,6 +94,7 @@ namespace NeptunMathWPF.SoruVeAjani
         }
     }
 
+    //Yeni Deneme SoruBirleştiriciyle ilgili ilgili
     public class AraIslem
     {
         private string Islem;

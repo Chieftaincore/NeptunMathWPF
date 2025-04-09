@@ -100,6 +100,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Baglanti.cs" />
+    <Compile Include="Formlar\EtkilesimPencereWPF.xaml.cs">
+      <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
       <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Formlar\EtkilesimPencereWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\LatexTestPencere.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

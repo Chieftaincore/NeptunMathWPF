@@ -49,5 +49,11 @@ namespace NeptunMathWPF
             (new SoruNesneTestWPF()).Show();
             this.Close();
         }
+
+        private void EtkilesimSayfasi_Click(object sender, RoutedEventArgs e)
+        {
+            (new EtkilesimPencereWPF()).Show();
+            this.Close();
+        }
     }
 }
