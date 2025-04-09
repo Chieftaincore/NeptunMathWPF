@@ -110,7 +110,6 @@ namespace NeptunMathWPF.SoruVeAjani
 
         }
 
-        
         public AraIslem(string islem, string latex)
         {
             Islem = islem;

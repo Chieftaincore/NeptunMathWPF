@@ -303,7 +303,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
                             if(ekislem == '*')
                             {
-                                LaTeXString += "\\cdot";
+                                LaTeXString += " \\cdot ";
                             }
                             else
                             {
@@ -311,7 +311,30 @@ namespace NeptunMathWPF.SoruVeAjani
                             }
                         }
                     }
+                }
+                for (int i = 0; i < seceneksayisi - 1;)
+                {
+                    Entity randEntity;
+                    int.TryParse(sonuc.Stringize(), out int s);
 
+                    if ((s % 1) == 0)
+                    {
+                        randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
+                    }
+                    else
+                    {
+                        sonuc = sonuc.Simplify();
+
+                        int rastg = random.Next(-2, 2);
+                        randEntity = sonuc + ((sonuc / 3) * rastg);
+                    }
+                    randEntity = randEntity.EvalNumerical();
+
+                    if (!diger.Contains(randEntity) && randEntity != sonuc)
+                    {
+                        i++;
+                        diger.Add(randEntity);
+                    }
                 }
             });
 
