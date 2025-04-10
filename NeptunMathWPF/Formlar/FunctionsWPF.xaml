@@ -1,0 +1,17 @@
+﻿<Window x:Class="NeptunMathWPF.Formlar.FunctionsWPF"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
+        mc:Ignorable="d"
+        Title="FunctionsWPF" Height="450" Width="800">
+    <Grid>
+        <Button Content="Button" HorizontalAlignment="Center" Margin="0,69,0,0" VerticalAlignment="Top" Height="48" Width="98" Click="Button_Click"/>
+        <Label Content="Soru:" HorizontalAlignment="Left" Margin="123,151,0,0" VerticalAlignment="Top"/>
+        <Label Content="Cevap:" HorizontalAlignment="Left" Margin="115,199,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblQuestion" Content="" HorizontalAlignment="Left" Margin="231,151,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblAnswer" Content="" HorizontalAlignment="Left" Margin="231,199,0,0" VerticalAlignment="Top"/>
+
+    </Grid>
+</Window>

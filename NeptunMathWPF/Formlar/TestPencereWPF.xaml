@@ -22,6 +22,8 @@
         <Button x:Name="tusLaTeXtestformu" Grid.Column="1" Content="Latex Test Formu" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="LaTeXtestformuTikla"/>
         <Button x:Name="soruUreticiPanel_Huseyin_" Grid.Column="1" Content="Soru Test Paneli" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="SoruTestPaneliTikla"/>
         <Button x:Name="tusEtkilesimSayfasi" Grid.Column="1" Content="Etkileşim Sayfası" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
+        <Button x:Name="tusEtkilesimSayfasi_Copy" Grid.Column="1" Content="Etkileşim Sayfası" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
+        <Button x:Name="fonksiyonSayfasi" Content="Fonksiyon Test" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Height="49" Width="148" Grid.Column="1" Click="fonksiyonSayfasi_Click"/>
 
     </Grid>
 </Window>

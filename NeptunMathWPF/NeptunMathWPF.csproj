@@ -100,8 +100,17 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Baglanti.cs" />
+    <Compile Include="Fonksiyonlar\DomainRangeGenerator.cs" />
+    <Compile Include="Fonksiyonlar\FunctionCompositionGenerator.cs" />
+    <Compile Include="Fonksiyonlar\FunctionQuestionGenerator.cs" />
+    <Compile Include="Fonksiyonlar\FunctionValueGenerator.cs" />
+    <Compile Include="Fonksiyonlar\InverseFunctionGenerator.cs" />
+    <Compile Include="Fonksiyonlar\Question.cs" />
     <Compile Include="Formlar\EtkilesimPencereWPF.xaml.cs">
       <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\FunctionsWPF.xaml.cs">
+      <DependentUpon>FunctionsWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
       <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
@@ -147,6 +156,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Formlar\EtkilesimPencereWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\FunctionsWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
