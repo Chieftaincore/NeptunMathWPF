@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Media;
-using System.IO;
 //Enes
 //Genel ses islemleri için oluşturduğum class buradan metodları çağırıp kullanıcaz mesela soru yanlışsa if komuduyla yanlış
 //sesi oynatıcaz bunu da sesler klasörüne ses ekleriz yanlış sesini koyup oradan dosya yoluyla çağırırız SesIslemleri.sesOynat()
@@ -12,53 +11,10 @@ using System.IO;
 //örnek dosya yolu  C:/Users/Sounds/yanlisSesi.wav
 public static class SesIslemleri
 {
-    private static SoundPlayer _player = new SoundPlayer(); // SoundPlayer nesnesini sınıf düzeyinde tanımlayalım
-
     public static void sesOynat(string DosyaYolu)
     {
-        try
-        {
-            _player.SoundLocation = @"" + DosyaYolu;
-            _player.Play();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Ses çalınırken bir hata oluştu: {ex.Message}");
-        }
+        SoundPlayer player = new SoundPlayer(@"" + DosyaYolu);
+        player.Play();
+        
     }
-    //örnek kullanım SesIslemleri.sesDurdur();
-    public static void sesDurdur()
-    {
-        _player.Stop();
-    }
-    public static void sesDonguyeAl(string DosyaYolu)
-    {
-        try
-        {
-            _player.SoundLocation = @"" + DosyaYolu;
-            _player.PlayLooping();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Ses döngüye alınırken bir hata oluştu: {ex.Message}");
-        }
-    }
-    //Ses dosyası olup olmadığını kontrol edip çaldırmak daha mantıklı önce dosyanın varlığını kontrol eder sonra çaldırabilir
-    public static bool sesDosyasiVarMi(string DosyaYolu)
-    {
-        return File.Exists(DosyaYolu);
-    }
-    //Örnek Kullanım
-    /*string dosyaYolu = "C:/Users/Sounds/dogruSesi.wav";
-
-        if (SesIslemleri.sesDosyasiVarMi(dosyaYolu))
-        {
-          Console.WriteLine($"'{dosyaYolu}' dosyası mevcut.");
-          SesIslemleri.sesOynat(dosyaYolu); // Dosya varsa çal
-            }
-        else
-        {
-        Console.WriteLine($"'{dosyaYolu}' dosyası bulunamadı!");
-        }*/
-
 }
