@@ -1,0 +1,828 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NeptunDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BildirimLog">
+          <Key>
+            <PropertyRef Name="zaman" />
+            <PropertyRef Name="kullnID" />
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="zaman" Type="datetime" Nullable="false" />
+          <Property Name="kullnID" Type="int" Nullable="false" />
+          <Property Name="num" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoruTuru" Type="char" MaxLength="3" />
+          <Property Name="icerik" Type="text" />
+        </EntityType>
+        <EntityType Name="Eposta">
+          <Key>
+            <PropertyRef Name="E_posta" />
+          </Key>
+          <Property Name="E_posta" Type="varchar" MaxLength="320" Nullable="false" />
+          <Property Name="kullkarsilik" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EtkilesimDegerlendirme">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="zaman" />
+          </Key>
+          <Property Name="kullID" Type="int" Nullable="false" />
+          <Property Name="zaman" Type="datetime" Nullable="false" />
+          <Property Name="puanlama" Type="int" Nullable="false" />
+          <Property Name="oneri" Type="text" />
+        </EntityType>
+        <EntityType Name="HavuzSoru">
+          <Key>
+            <PropertyRef Name="sorutur" />
+            <PropertyRef Name="havzID" />
+          </Key>
+          <Property Name="sorutur" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="havzID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="metin" Type="text" />
+          <Property Name="sorudenklemi" Type="varchar" MaxLength="64" />
+          <Property Name="dogrusonuc" Type="varchar" MaxLength="16" />
+          <Property Name="LaTeX" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Konular">
+          <Key>
+            <PropertyRef Name="anahtar" />
+          </Key>
+          <Property Name="anahtar" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="yazi" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="KonuPuanlama">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="konuanahtar" />
+          </Key>
+          <Property Name="kullID" Type="int" Nullable="false" />
+          <Property Name="konuanahtar" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="puanlama" Type="int" />
+          <Property Name="sonGuncellenme" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="kimlik" />
+          </Key>
+          <Property Name="kimlik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ad" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="soyad" Type="varchar" MaxLength="64" />
+          <Property Name="karsilik" Type="int" Nullable="false" />
+          <Property Name="tur" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="KullaniciTurleri">
+          <Key>
+            <PropertyRef Name="kullAnahtar" />
+          </Key>
+          <Property Name="kullAnahtar" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="kullTur" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="LoginKull">
+          <Key>
+            <PropertyRef Name="loginKull" />
+          </Key>
+          <Property Name="loginKull" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kullaniciadi" Type="varchar" MaxLength="32" />
+          <Property Name="sifre" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="SablonSoru">
+          <Key>
+            <PropertyRef Name="sorutur" />
+            <PropertyRef Name="sablID" />
+          </Key>
+          <Property Name="sorutur" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="sablID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="metin" Type="text" />
+          <Property Name="sorudenklemi" Type="varchar" MaxLength="64" />
+          <Property Name="LaTeX" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="SistemikHataLog">
+          <Key>
+            <PropertyRef Name="zaman" />
+            <PropertyRef Name="kullnID" />
+            <PropertyRef Name="hatakod" />
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="zaman" Type="datetime" Nullable="false" />
+          <Property Name="kullnID" Type="int" Nullable="false" />
+          <Property Name="hatakod" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="num" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hatamesaj" Type="text" />
+        </EntityType>
+        <EntityType Name="SoruProfili">
+          <Key>
+            <PropertyRef Name="kullId" />
+            <PropertyRef Name="soruTur" />
+            <PropertyRef Name="havzID" />
+          </Key>
+          <Property Name="kullId" Type="int" Nullable="false" />
+          <Property Name="soruTur" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="havzID" Type="int" Nullable="false" />
+          <Property Name="dogruluk" Type="bit" />
+        </EntityType>
+        <EntityType Name="SoruTurleri">
+          <Key>
+            <PropertyRef Name="anahtar" />
+          </Key>
+          <Property Name="anahtar" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="tur_karsilik" Type="varchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="TokenKullanimi">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="oturum" />
+          </Key>
+          <Property Name="kullID" Type="int" Nullable="false" />
+          <Property Name="oturum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="girdiTOKEN" Type="float" />
+          <Property Name="ciktiTOKEN" Type="float" />
+          <Property Name="zaman" Type="datetime" />
+        </EntityType>
+        <Association Name="epostuye_fk">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="Eposta" Type="Self.Eposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="Eposta">
+              <PropertyRef Name="kullkarsilik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EtkilKullaniciFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="EtkilesimDegerlendirme" Type="Self.EtkilesimDegerlendirme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="EtkilesimDegerlendirme">
+              <PropertyRef Name="kullID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="havzsorutur_fk">
+          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
+          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoruTurleri">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="HavuzSoru">
+              <PropertyRef Name="sorutur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KullaniciLoginFK">
+          <End Role="LoginKull" Type="Self.LoginKull" Multiplicity="1" />
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginKull">
+              <PropertyRef Name="loginKull" />
+            </Principal>
+            <Dependent Role="Kullanici">
+              <PropertyRef Name="karsilik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KullaniciTurFK">
+          <End Role="KullaniciTurleri" Type="Self.KullaniciTurleri" Multiplicity="0..1" />
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTurleri">
+              <PropertyRef Name="kullAnahtar" />
+            </Principal>
+            <Dependent Role="Kullanici">
+              <PropertyRef Name="tur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PuanKonuFK">
+          <End Role="Konular" Type="Self.Konular" Multiplicity="1" />
+          <End Role="KonuPuanlama" Type="Self.KonuPuanlama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konular">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="KonuPuanlama">
+              <PropertyRef Name="konuanahtar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sabsorutur_fk">
+          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
+          <End Role="SablonSoru" Type="Self.SablonSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoruTurleri">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="SablonSoru">
+              <PropertyRef Name="sorutur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soruprofilHavzFK">
+          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="1" />
+          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HavuzSoru">
+              <PropertyRef Name="sorutur" />
+              <PropertyRef Name="havzID" />
+            </Principal>
+            <Dependent Role="SoruProfili">
+              <PropertyRef Name="soruTur" />
+              <PropertyRef Name="havzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soruprofilKullFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="SoruProfili">
+              <PropertyRef Name="kullId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ToknKullaniciFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="TokenKullanimi" Type="Self.TokenKullanimi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="TokenKullanimi">
+              <PropertyRef Name="kullID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NeptunDBModelStoreContainer">
+          <EntitySet Name="BildirimLog" EntityType="Self.BildirimLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Eposta" EntityType="Self.Eposta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EtkilesimDegerlendirme" EntityType="Self.EtkilesimDegerlendirme" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HavuzSoru" EntityType="Self.HavuzSoru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Konular" EntityType="Self.Konular" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KonuPuanlama" EntityType="Self.KonuPuanlama" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullaniciTurleri" EntityType="Self.KullaniciTurleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoginKull" EntityType="Self.LoginKull" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SablonSoru" EntityType="Self.SablonSoru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SistemikHataLog" EntityType="Self.SistemikHataLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SoruProfili" EntityType="Self.SoruProfili" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SoruTurleri" EntityType="Self.SoruTurleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TokenKullanimi" EntityType="Self.TokenKullanimi" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="epostuye_fk" Association="Self.epostuye_fk">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Eposta" EntitySet="Eposta" />
+          </AssociationSet>
+          <AssociationSet Name="EtkilKullaniciFK" Association="Self.EtkilKullaniciFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="EtkilesimDegerlendirme" EntitySet="EtkilesimDegerlendirme" />
+          </AssociationSet>
+          <AssociationSet Name="havzsorutur_fk" Association="Self.havzsorutur_fk">
+            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
+            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+          </AssociationSet>
+          <AssociationSet Name="KullaniciLoginFK" Association="Self.KullaniciLoginFK">
+            <End Role="LoginKull" EntitySet="LoginKull" />
+            <End Role="Kullanici" EntitySet="Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="KullaniciTurFK" Association="Self.KullaniciTurFK">
+            <End Role="KullaniciTurleri" EntitySet="KullaniciTurleri" />
+            <End Role="Kullanici" EntitySet="Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="PuanKonuFK" Association="Self.PuanKonuFK">
+            <End Role="Konular" EntitySet="Konular" />
+            <End Role="KonuPuanlama" EntitySet="KonuPuanlama" />
+          </AssociationSet>
+          <AssociationSet Name="sabsorutur_fk" Association="Self.sabsorutur_fk">
+            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
+            <End Role="SablonSoru" EntitySet="SablonSoru" />
+          </AssociationSet>
+          <AssociationSet Name="soruprofilHavzFK" Association="Self.soruprofilHavzFK">
+            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          </AssociationSet>
+          <AssociationSet Name="soruprofilKullFK" Association="Self.soruprofilKullFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          </AssociationSet>
+          <AssociationSet Name="ToknKullaniciFK" Association="Self.ToknKullaniciFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="TokenKullanimi" EntitySet="TokenKullanimi" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NeptunDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BildirimLog">
+          <Key>
+            <PropertyRef Name="zaman" />
+            <PropertyRef Name="kullnID" />
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="kullnID" Type="Int32" Nullable="false" />
+          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SoruTuru" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Eposta">
+          <Key>
+            <PropertyRef Name="E_posta" />
+          </Key>
+          <Property Name="E_posta" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="kullkarsilik" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.epostuye_fk" FromRole="Eposta" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="EtkilesimDegerlendirme">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="zaman" />
+          </Key>
+          <Property Name="kullID" Type="Int32" Nullable="false" />
+          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="puanlama" Type="Int32" Nullable="false" />
+          <Property Name="oneri" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.EtkilKullaniciFK" FromRole="EtkilesimDegerlendirme" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="HavuzSoru">
+          <Key>
+            <PropertyRef Name="sorutur" />
+            <PropertyRef Name="havzID" />
+          </Key>
+          <Property Name="sorutur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="havzID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="metin" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sorudenklemi" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="dogrusonuc" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="LaTeX" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SoruTurleri" Relationship="Self.havzsorutur_fk" FromRole="HavuzSoru" ToRole="SoruTurleri" />
+          <NavigationProperty Name="SoruProfili" Relationship="Self.soruprofilHavzFK" FromRole="HavuzSoru" ToRole="SoruProfili" />
+        </EntityType>
+        <EntityType Name="Konular">
+          <Key>
+            <PropertyRef Name="anahtar" />
+          </Key>
+          <Property Name="anahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="yazi" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KonuPuanlama" Relationship="Self.PuanKonuFK" FromRole="Konular" ToRole="KonuPuanlama" />
+        </EntityType>
+        <EntityType Name="KonuPuanlama">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="konuanahtar" />
+          </Key>
+          <Property Name="kullID" Type="Int32" Nullable="false" />
+          <Property Name="konuanahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="puanlama" Type="Int32" />
+          <Property Name="sonGuncellenme" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Konular" Relationship="Self.PuanKonuFK" FromRole="KonuPuanlama" ToRole="Konular" />
+        </EntityType>
+        <EntityType Name="Kullanici">
+          <Key>
+            <PropertyRef Name="kimlik" />
+          </Key>
+          <Property Name="kimlik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ad" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="soyad" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="karsilik" Type="Int32" Nullable="false" />
+          <Property Name="tur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="Eposta" Relationship="Self.epostuye_fk" FromRole="Kullanici" ToRole="Eposta" />
+          <NavigationProperty Name="EtkilesimDegerlendirme" Relationship="Self.EtkilKullaniciFK" FromRole="Kullanici" ToRole="EtkilesimDegerlendirme" />
+          <NavigationProperty Name="LoginKull" Relationship="Self.KullaniciLoginFK" FromRole="Kullanici" ToRole="LoginKull" />
+          <NavigationProperty Name="KullaniciTurleri" Relationship="Self.KullaniciTurFK" FromRole="Kullanici" ToRole="KullaniciTurleri" />
+          <NavigationProperty Name="SoruProfili" Relationship="Self.soruprofilKullFK" FromRole="Kullanici" ToRole="SoruProfili" />
+          <NavigationProperty Name="TokenKullanimi" Relationship="Self.ToknKullaniciFK" FromRole="Kullanici" ToRole="TokenKullanimi" />
+        </EntityType>
+        <EntityType Name="KullaniciTurleri">
+          <Key>
+            <PropertyRef Name="kullAnahtar" />
+          </Key>
+          <Property Name="kullAnahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="kullTur" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.KullaniciTurFK" FromRole="KullaniciTurleri" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="LoginKull">
+          <Key>
+            <PropertyRef Name="loginKull1" />
+          </Key>
+          <Property Name="loginKull1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kullaniciadi" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="sifre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.KullaniciLoginFK" FromRole="LoginKull" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="SablonSoru">
+          <Key>
+            <PropertyRef Name="sorutur" />
+            <PropertyRef Name="sablID" />
+          </Key>
+          <Property Name="sorutur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="sablID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="metin" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sorudenklemi" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="LaTeX" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SoruTurleri" Relationship="Self.sabsorutur_fk" FromRole="SablonSoru" ToRole="SoruTurleri" />
+        </EntityType>
+        <EntityType Name="SistemikHataLog">
+          <Key>
+            <PropertyRef Name="zaman" />
+            <PropertyRef Name="kullnID" />
+            <PropertyRef Name="hatakod" />
+            <PropertyRef Name="num" />
+          </Key>
+          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="kullnID" Type="Int32" Nullable="false" />
+          <Property Name="hatakod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hatamesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SoruProfili">
+          <Key>
+            <PropertyRef Name="kullId" />
+            <PropertyRef Name="soruTur" />
+            <PropertyRef Name="havzID" />
+          </Key>
+          <Property Name="kullId" Type="Int32" Nullable="false" />
+          <Property Name="soruTur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="havzID" Type="Int32" Nullable="false" />
+          <Property Name="dogruluk" Type="Boolean" />
+          <NavigationProperty Name="HavuzSoru" Relationship="Self.soruprofilHavzFK" FromRole="SoruProfili" ToRole="HavuzSoru" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.soruprofilKullFK" FromRole="SoruProfili" ToRole="Kullanici" />
+        </EntityType>
+        <EntityType Name="SoruTurleri">
+          <Key>
+            <PropertyRef Name="anahtar" />
+          </Key>
+          <Property Name="anahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="tur_karsilik" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="HavuzSoru" Relationship="Self.havzsorutur_fk" FromRole="SoruTurleri" ToRole="HavuzSoru" />
+          <NavigationProperty Name="SablonSoru" Relationship="Self.sabsorutur_fk" FromRole="SoruTurleri" ToRole="SablonSoru" />
+        </EntityType>
+        <EntityType Name="TokenKullanimi">
+          <Key>
+            <PropertyRef Name="kullID" />
+            <PropertyRef Name="oturum" />
+          </Key>
+          <Property Name="kullID" Type="Int32" Nullable="false" />
+          <Property Name="oturum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="girdiTOKEN" Type="Double" />
+          <Property Name="ciktiTOKEN" Type="Double" />
+          <Property Name="zaman" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Kullanici" Relationship="Self.ToknKullaniciFK" FromRole="TokenKullanimi" ToRole="Kullanici" />
+        </EntityType>
+        <Association Name="epostuye_fk">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="Eposta" Type="Self.Eposta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="Eposta">
+              <PropertyRef Name="kullkarsilik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EtkilKullaniciFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="EtkilesimDegerlendirme" Type="Self.EtkilesimDegerlendirme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="EtkilesimDegerlendirme">
+              <PropertyRef Name="kullID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="havzsorutur_fk">
+          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
+          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoruTurleri">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="HavuzSoru">
+              <PropertyRef Name="sorutur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soruprofilHavzFK">
+          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="1" />
+          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HavuzSoru">
+              <PropertyRef Name="sorutur" />
+              <PropertyRef Name="havzID" />
+            </Principal>
+            <Dependent Role="SoruProfili">
+              <PropertyRef Name="soruTur" />
+              <PropertyRef Name="havzID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PuanKonuFK">
+          <End Role="Konular" Type="Self.Konular" Multiplicity="1" />
+          <End Role="KonuPuanlama" Type="Self.KonuPuanlama" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Konular">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="KonuPuanlama">
+              <PropertyRef Name="konuanahtar" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KullaniciLoginFK">
+          <End Role="LoginKull" Type="Self.LoginKull" Multiplicity="1" />
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginKull">
+              <PropertyRef Name="loginKull1" />
+            </Principal>
+            <Dependent Role="Kullanici">
+              <PropertyRef Name="karsilik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="KullaniciTurFK">
+          <End Role="KullaniciTurleri" Type="Self.KullaniciTurleri" Multiplicity="0..1" />
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTurleri">
+              <PropertyRef Name="kullAnahtar" />
+            </Principal>
+            <Dependent Role="Kullanici">
+              <PropertyRef Name="tur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="soruprofilKullFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="SoruProfili">
+              <PropertyRef Name="kullId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ToknKullaniciFK">
+          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
+          <End Role="TokenKullanimi" Type="Self.TokenKullanimi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanici">
+              <PropertyRef Name="kimlik" />
+            </Principal>
+            <Dependent Role="TokenKullanimi">
+              <PropertyRef Name="kullID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="sabsorutur_fk">
+          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
+          <End Role="SablonSoru" Type="Self.SablonSoru" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoruTurleri">
+              <PropertyRef Name="anahtar" />
+            </Principal>
+            <Dependent Role="SablonSoru">
+              <PropertyRef Name="sorutur" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NeptunDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BildirimLog" EntityType="Self.BildirimLog" />
+          <EntitySet Name="Eposta" EntityType="Self.Eposta" />
+          <EntitySet Name="EtkilesimDegerlendirme" EntityType="Self.EtkilesimDegerlendirme" />
+          <EntitySet Name="HavuzSoru" EntityType="Self.HavuzSoru" />
+          <EntitySet Name="Konular" EntityType="Self.Konular" />
+          <EntitySet Name="KonuPuanlama" EntityType="Self.KonuPuanlama" />
+          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
+          <EntitySet Name="KullaniciTurleri" EntityType="Self.KullaniciTurleri" />
+          <EntitySet Name="LoginKull" EntityType="Self.LoginKull" />
+          <EntitySet Name="SablonSoru" EntityType="Self.SablonSoru" />
+          <EntitySet Name="SistemikHataLog" EntityType="Self.SistemikHataLog" />
+          <EntitySet Name="SoruProfili" EntityType="Self.SoruProfili" />
+          <EntitySet Name="SoruTurleri" EntityType="Self.SoruTurleri" />
+          <EntitySet Name="TokenKullanimi" EntityType="Self.TokenKullanimi" />
+          <AssociationSet Name="epostuye_fk" Association="Self.epostuye_fk">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="Eposta" EntitySet="Eposta" />
+          </AssociationSet>
+          <AssociationSet Name="EtkilKullaniciFK" Association="Self.EtkilKullaniciFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="EtkilesimDegerlendirme" EntitySet="EtkilesimDegerlendirme" />
+          </AssociationSet>
+          <AssociationSet Name="havzsorutur_fk" Association="Self.havzsorutur_fk">
+            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
+            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+          </AssociationSet>
+          <AssociationSet Name="soruprofilHavzFK" Association="Self.soruprofilHavzFK">
+            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          </AssociationSet>
+          <AssociationSet Name="PuanKonuFK" Association="Self.PuanKonuFK">
+            <End Role="Konular" EntitySet="Konular" />
+            <End Role="KonuPuanlama" EntitySet="KonuPuanlama" />
+          </AssociationSet>
+          <AssociationSet Name="KullaniciLoginFK" Association="Self.KullaniciLoginFK">
+            <End Role="LoginKull" EntitySet="LoginKull" />
+            <End Role="Kullanici" EntitySet="Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="KullaniciTurFK" Association="Self.KullaniciTurFK">
+            <End Role="KullaniciTurleri" EntitySet="KullaniciTurleri" />
+            <End Role="Kullanici" EntitySet="Kullanici" />
+          </AssociationSet>
+          <AssociationSet Name="soruprofilKullFK" Association="Self.soruprofilKullFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          </AssociationSet>
+          <AssociationSet Name="ToknKullaniciFK" Association="Self.ToknKullaniciFK">
+            <End Role="Kullanici" EntitySet="Kullanici" />
+            <End Role="TokenKullanimi" EntitySet="TokenKullanimi" />
+          </AssociationSet>
+          <AssociationSet Name="sabsorutur_fk" Association="Self.sabsorutur_fk">
+            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
+            <End Role="SablonSoru" EntitySet="SablonSoru" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NeptunDBModelStoreContainer" CdmEntityContainer="NeptunDBEntities">
+          <EntitySetMapping Name="BildirimLog">
+            <EntityTypeMapping TypeName="NeptunDBModel.BildirimLog">
+              <MappingFragment StoreEntitySet="BildirimLog">
+                <ScalarProperty Name="zaman" ColumnName="zaman" />
+                <ScalarProperty Name="kullnID" ColumnName="kullnID" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="SoruTuru" ColumnName="SoruTuru" />
+                <ScalarProperty Name="icerik" ColumnName="icerik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Eposta">
+            <EntityTypeMapping TypeName="NeptunDBModel.Eposta">
+              <MappingFragment StoreEntitySet="Eposta">
+                <ScalarProperty Name="E_posta" ColumnName="E_posta" />
+                <ScalarProperty Name="kullkarsilik" ColumnName="kullkarsilik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EtkilesimDegerlendirme">
+            <EntityTypeMapping TypeName="NeptunDBModel.EtkilesimDegerlendirme">
+              <MappingFragment StoreEntitySet="EtkilesimDegerlendirme">
+                <ScalarProperty Name="kullID" ColumnName="kullID" />
+                <ScalarProperty Name="zaman" ColumnName="zaman" />
+                <ScalarProperty Name="puanlama" ColumnName="puanlama" />
+                <ScalarProperty Name="oneri" ColumnName="oneri" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HavuzSoru">
+            <EntityTypeMapping TypeName="NeptunDBModel.HavuzSoru">
+              <MappingFragment StoreEntitySet="HavuzSoru">
+                <ScalarProperty Name="sorutur" ColumnName="sorutur" />
+                <ScalarProperty Name="havzID" ColumnName="havzID" />
+                <ScalarProperty Name="metin" ColumnName="metin" />
+                <ScalarProperty Name="sorudenklemi" ColumnName="sorudenklemi" />
+                <ScalarProperty Name="dogrusonuc" ColumnName="dogrusonuc" />
+                <ScalarProperty Name="LaTeX" ColumnName="LaTeX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Konular">
+            <EntityTypeMapping TypeName="NeptunDBModel.Konular">
+              <MappingFragment StoreEntitySet="Konular">
+                <ScalarProperty Name="anahtar" ColumnName="anahtar" />
+                <ScalarProperty Name="yazi" ColumnName="yazi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KonuPuanlama">
+            <EntityTypeMapping TypeName="NeptunDBModel.KonuPuanlama">
+              <MappingFragment StoreEntitySet="KonuPuanlama">
+                <ScalarProperty Name="kullID" ColumnName="kullID" />
+                <ScalarProperty Name="konuanahtar" ColumnName="konuanahtar" />
+                <ScalarProperty Name="puanlama" ColumnName="puanlama" />
+                <ScalarProperty Name="sonGuncellenme" ColumnName="sonGuncellenme" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanici">
+            <EntityTypeMapping TypeName="NeptunDBModel.Kullanici">
+              <MappingFragment StoreEntitySet="Kullanici">
+                <ScalarProperty Name="kimlik" ColumnName="kimlik" />
+                <ScalarProperty Name="ad" ColumnName="ad" />
+                <ScalarProperty Name="soyad" ColumnName="soyad" />
+                <ScalarProperty Name="karsilik" ColumnName="karsilik" />
+                <ScalarProperty Name="tur" ColumnName="tur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KullaniciTurleri">
+            <EntityTypeMapping TypeName="NeptunDBModel.KullaniciTurleri">
+              <MappingFragment StoreEntitySet="KullaniciTurleri">
+                <ScalarProperty Name="kullAnahtar" ColumnName="kullAnahtar" />
+                <ScalarProperty Name="kullTur" ColumnName="kullTur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoginKull">
+            <EntityTypeMapping TypeName="NeptunDBModel.LoginKull">
+              <MappingFragment StoreEntitySet="LoginKull">
+                <ScalarProperty Name="loginKull1" ColumnName="loginKull" />
+                <ScalarProperty Name="kullaniciadi" ColumnName="kullaniciadi" />
+                <ScalarProperty Name="sifre" ColumnName="sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SablonSoru">
+            <EntityTypeMapping TypeName="NeptunDBModel.SablonSoru">
+              <MappingFragment StoreEntitySet="SablonSoru">
+                <ScalarProperty Name="sorutur" ColumnName="sorutur" />
+                <ScalarProperty Name="sablID" ColumnName="sablID" />
+                <ScalarProperty Name="metin" ColumnName="metin" />
+                <ScalarProperty Name="sorudenklemi" ColumnName="sorudenklemi" />
+                <ScalarProperty Name="LaTeX" ColumnName="LaTeX" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SistemikHataLog">
+            <EntityTypeMapping TypeName="NeptunDBModel.SistemikHataLog">
+              <MappingFragment StoreEntitySet="SistemikHataLog">
+                <ScalarProperty Name="zaman" ColumnName="zaman" />
+                <ScalarProperty Name="kullnID" ColumnName="kullnID" />
+                <ScalarProperty Name="hatakod" ColumnName="hatakod" />
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="hatamesaj" ColumnName="hatamesaj" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SoruProfili">
+            <EntityTypeMapping TypeName="NeptunDBModel.SoruProfili">
+              <MappingFragment StoreEntitySet="SoruProfili">
+                <ScalarProperty Name="kullId" ColumnName="kullId" />
+                <ScalarProperty Name="soruTur" ColumnName="soruTur" />
+                <ScalarProperty Name="havzID" ColumnName="havzID" />
+                <ScalarProperty Name="dogruluk" ColumnName="dogruluk" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SoruTurleri">
+            <EntityTypeMapping TypeName="NeptunDBModel.SoruTurleri">
+              <MappingFragment StoreEntitySet="SoruTurleri">
+                <ScalarProperty Name="anahtar" ColumnName="anahtar" />
+                <ScalarProperty Name="tur_karsilik" ColumnName="tur_karsilik" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TokenKullanimi">
+            <EntityTypeMapping TypeName="NeptunDBModel.TokenKullanimi">
+              <MappingFragment StoreEntitySet="TokenKullanimi">
+                <ScalarProperty Name="kullID" ColumnName="kullID" />
+                <ScalarProperty Name="oturum" ColumnName="oturum" />
+                <ScalarProperty Name="girdiTOKEN" ColumnName="girdiTOKEN" />
+                <ScalarProperty Name="ciktiTOKEN" ColumnName="ciktiTOKEN" />
+                <ScalarProperty Name="zaman" ColumnName="zaman" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

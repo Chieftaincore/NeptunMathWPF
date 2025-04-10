@@ -61,5 +61,11 @@ namespace NeptunMathWPF
             (new FunctionsWPF()).Show();
             this.Close();
         }
+
+        private void dbTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            (new dbTestWPF()).Show();
+            this.Close();
+        }
     }
 }
