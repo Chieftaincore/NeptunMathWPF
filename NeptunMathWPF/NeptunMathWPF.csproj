@@ -70,7 +70,6 @@
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Secenek.cs" />
     <Compile Include="SesIslemleri.cs" />
     <Compile Include="Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
