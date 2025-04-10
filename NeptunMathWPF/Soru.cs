@@ -26,7 +26,8 @@ namespace NeptunMathWPF
         Stream MetinStream;
         
         //Soru Seçenekleri başka bir nesne olan Secenek'le yapılacaktır farklı sayılarda olabilmesi için list yapıldı
-        //Enes : seçenek bozuluyordu yorum satırına aldım
+        //Sınıf silindiği için yoruma alındı
+
         //List<Secenek>Secenekler;
         int Seviye;
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
@@ -44,7 +45,6 @@ namespace NeptunMathWPF
                     break;
             }
         }
-
         public int GetSeviye()
         {
             return Seviye;
