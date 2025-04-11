@@ -1,6 +1,7 @@
 ﻿using AngouriMath;
 using AngouriMath.Extensions;
 using HonkSharp.Functional;
+using NeptunMathWPF.Fonksiyonlar;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -33,9 +34,18 @@ namespace NeptunMathWPF.SoruVeAjani
             {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
             {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } }
         };
+
+        //Fonksiyon oluşturucu Generatörleri
+        public static List<FunctionQuestionGenerator> generators = new List<FunctionQuestionGenerator>
+        {
+            new FunctionValueGenerator(),
+            new FunctionCompositionGenerator(),
+            new InverseFunctionGenerator(),
+            new DomainRangeGenerator()
+        };
+
         internal static Random random = new Random();
 
-        //Yenileri Versiyon
         internal static List<Ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
         {
             Random rng = new Random();
@@ -88,6 +98,91 @@ namespace NeptunMathWPF.SoruVeAjani
             return ifadeler;
         }
 
+        //Fonksiyon sorusunu çoklu kullanıma dönüştürme ve secenekler eklemek için
+        //Birden fazla metota ayırabilirim -Hüseyin
+        internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi=4)
+        {
+            FunctionQuestionGenerator Secili = generators[new Random().Next(generators.Count)];
+            Question question = Secili.GenerateQuestion();
+
+            List<string> Secenekler = new List<string>();
+            Func<string> dongu;
+
+            MessageBox.Show(question.Answer);
+
+            switch (Secili)
+            {
+                //case FunctionValueGenerator f:
+                    
+                //    break;
+                //case FunctionCompositionGenerator f:
+
+                //    break;
+                //case InverseFunctionGenerator f:
+                    
+                //    break;
+                case DomainRangeGenerator f:
+                    dongu = delegate ()
+                    {
+                        //ileride tanım kümesi yapıcı ve sonuç filtreleyici eklemeliyim  eklenmeli
+                        //Uydurunca ben -Hüseyin
+                        string[] ciktilar = { "Tüm Reel Sayılar", "Tanımsız", "Tüm reel sayılar, x ≠ -c", "Tüm reel sayılar, x ≠ c", "[1,+∞]",
+                            "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]"};
+
+                        string cikti = ciktilar[random.Next(0, ciktilar.Length - 1)];
+
+                        if (!Secenekler.Contains(cikti))
+                        {
+                            return cikti;
+                        }
+                        else
+                        {
+                            //hatalı olunca boş gönderip tekrar başlatacak
+                            return string.Empty;
+                        }
+                    };
+                    break;
+                default:
+                    dongu = delegate ()
+                    {
+                        double sonuc;
+                        string cikti;
+                        if (double.TryParse(question.Answer, out sonuc))
+                        {
+                            double rand = sonuc + random.Next(-10, 20);
+                            cikti = rand.ToString();
+                        }
+                        else
+                        {
+                            double rand = random.Next(10, 30);
+                            cikti = rand.ToString();
+                        }
+
+                        if (!Secenekler.Contains(cikti.ToString()))
+                        {
+                            return cikti.ToString();
+                        }
+                        else
+                        {
+                            //hatalı olunca boş gönderip tekrar başlatacak
+                            return string.Empty;
+                        }
+                    };
+                    break;
+            }
+
+            for (int i=0; i<seceneksayisi;)
+            {
+                string cikti = dongu();
+
+                if(cikti != string.Empty)
+                {
+                    Secenekler.Add(cikti);
+                    i++;
+                }
+            }
+            return new Soru(question, Secenekler.ToArray());
+        }
 
         //Bunlarla Neyi Hedefliyorum 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™

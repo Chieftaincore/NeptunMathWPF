@@ -114,9 +114,9 @@ namespace NeptunMathWPF.Formlar
             seciliSoru = soru;
             WrapPanelYenile();
         }
-
+        
         //Wrap Panel (Sorunun altındaki yer)'e  Secenekleri ekleme)
-        internal void WrapPanelYenile()
+        internal void WrapPanelYenile(bool Latexleme=false)
         {
             Genel.Handle(() =>
             {
@@ -129,28 +129,42 @@ namespace NeptunMathWPF.Formlar
                 for (int i = 0; i < seciliSoru.GetDigerSecenekler().Length; i++)
                 {
                     string icerik;
-                   
+                    FormulaControl formula;
+                    RadioButton Randy;
                     //Sonucu Rastgele bir noktaya koymak için
                     if (i == rand)
                     {
-                        RadioButton Randy = new RadioButton() { GroupName = "Sonuclar", FontSize = 22, Width = 139, Height = 59};
-                        FormulaControl formula = new FormulaControl();
+                        Randy = new RadioButton() { GroupName = "Sonuclar", Width = 152, Height = 90, Margin = new Thickness(5,10,5,5)};
+                        formula = new FormulaControl();
 
                         SeceneklerWrapPanel.Children.Add(Randy);
-                        formula.Formula = seciliSoru.GetSonucSecenek().Latexise();
+                        if (Latexleme)
+                        {
+                            formula.Content = seciliSoru.GetSonucSecenek();
+                        }
+                        else
+                        {
+                            formula.Formula = seciliSoru.GetSonucSecenek().Latexise();
+                        }
                         Randy.Content = formula;
-                     
+
                         Secenekler.Add(Randy);
                     }
 
                     //Listedeki Diğer Seçenekler
-                    RadioButton Rad = new RadioButton() { GroupName = "Sonuclar", FontSize = 22, Width = 139, Height = 59 };
-                    FormulaControl Rformula = new FormulaControl();
+                    formula = new FormulaControl();
+                    Randy = new RadioButton() { GroupName = "Sonuclar", Width = 152, Height = 90 };
 
-                    SeceneklerWrapPanel.Children.Add(Rad);
-                    Rformula.Formula = seciliSoru.GetDigerSecenekler()[i].Latexise();
-                    Rad.Content = Rformula;
-                    Secenekler.Add(Rad);
+                    SeceneklerWrapPanel.Children.Add(Randy);
+
+                    if (Latexleme) { 
+                        formula.Content = seciliSoru.GetDigerSecenekler()[i];
+                    }else{ 
+                        formula.Formula = seciliSoru.GetDigerSecenekler()[i].Latexise();
+                    }
+
+                    Randy.Content = formula;
+                    Secenekler.Add(Randy);
                 }
             });
         }
@@ -189,7 +203,7 @@ namespace NeptunMathWPF.Formlar
                 if (CokluIfadeIstegi.Count != 0)
                 {
                     List<Ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(CokluIfadeIstegi);
-                    Soru soru = SoruAjani.YerelSoruBirlestir(Liste);
+                    Soru soru = SoruAjani.YerelSoruBirlestir(Liste, (int)sliderSecenek.Value);
 
                     SoruLOG.Text = soru.GetOlusturmaLogu();
                     LatexCikti.Formula = soru.GetLaTex();
@@ -231,6 +245,17 @@ namespace NeptunMathWPF.Formlar
                     CokluIfadeListBox.Items.Refresh();
                 }
             }
+        }
+
+        private void TusFonksiyonSoruOlustur(object sender, RoutedEventArgs e)
+        {
+            Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur(seceneksayisi: (int)sliderIfade.Value);
+
+            SoruLOG.Text = soru.GetOlusturmaLogu();
+            LatexCikti.Formula = string.Empty;
+            LatexCikti.Content = soru.GetMetin();
+            seciliSoru = soru;
+            WrapPanelYenile(true);
         }
     }
 }

@@ -45,6 +45,8 @@
                 </Expander>
                 <Button Content="Tam Sayi Soru Olustur" Height="43" Margin="2,10,2,0" Click="TusTamSayiSoruOlustur"/>
                 <Button Content="Kesir Soru Olustur" Height="38" Margin="2,5,2,0" Click="TusKesirSayiOlustur"/>
+                <Button Content="Fonksiyon Sorusu Oluştur" Height="38" Margin="2,5,2,0" Click="TusFonksiyonSoruOlustur"/>
+
                 <Expander Header="Coklu İfade">
                     <StackPanel Background="White">
                         <ListBox x:Name="CokluIfadeListBox" Height="100" KeyDown="CokluIfadeListBox_KeyDown" />
