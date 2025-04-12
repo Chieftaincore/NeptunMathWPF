@@ -10,55 +10,72 @@ namespace NeptunMathWPF.Fonksiyonlar
     {
         protected Random random = new Random();
 
-        public abstract Question GenerateQuestion();
+        internal abstract List<FunctionRepository> GenerateQuestion();
         protected abstract string GenerateAnswer(string question);
 
-        protected (string function, Func<double, double> func) GetRandomFunction()
+        internal (string function, Func<double, double> func, List<int> parameters, FunctionType functionType) GetRandomFunction()
         {
             // Rastgele fonksiyon tipi seç (Lineer, Karesel, Köklü, Mutlak, Üstel, Rasyonel)
-            int functionType = random.Next(0, 6);
+            int rnd = random.Next(0, 6);
+            FunctionType functionType = (FunctionType)rnd; // Fonksiyon tipini rastgele seçer
 
             // Parametre sınırları
             int a = random.Next(1, 5);
             int b = random.Next(0, 6);
             int c = random.Next(1, 4);
 
+            string returnQuestion;
+            Func<double, double> returnFunc;
+
             switch (functionType)
             {
-                case 0: // Lineer: f(x) = ax + b
-                    return ($"f(x) = {a}x {(b > 0 ? $"+ {b}" : "")}".Trim(),
-                            x => a * x + b);
+                case FunctionType.Linear: // Lineer: f(x) = ax + b
+                    returnQuestion = $"f(x) = {a}x {(b > 0 ? $"+ {b}" : "")}".Trim();
+                    returnFunc = x => a * x + b;
+                    break;
 
-                case 1: // Karesel: f(x) = ax² ± bx ± c
+                case FunctionType.Quadratic: // Karesel: f(x) = ax² ± bx ± c
                     bool isNegative1 = random.Next(2) == 0;
                     bool isNegative2 = random.Next(2) == 0;
 
-                    return ($"f(x) = {a}x² {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}",
-                            x => a * x * x + (isNegative1 ? -b : b) * x + (isNegative2 ? -c : c));
+                    returnQuestion = $"f(x) = {a}x² {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
+                    returnFunc = x => a * x * x + (isNegative1 ? -b : b) * x + (isNegative2 ? -c : c);
+                    break;
 
-                case 2: // Köklü: f(x) = √(ax + b)
+                case FunctionType.Root: // Köklü: f(x) = √(ax + b)
                     b = random.Next(1, 5);
-                    return ($"f(x) = √({a}x + {b})",
-                            x => Math.Sqrt(a * x + b));
+                    returnQuestion = $"f(x) = √({a}x + {b})";
+                    returnFunc = x => Math.Sqrt(a * x + b);
+                    break;
 
-                case 3: // Mutlak: f(x) = |ax - b|
-                    return ($"f(x) = |{a}x - {b}|",
-                            x => Math.Abs(a * x - b));
+                case FunctionType.Absolute: // Mutlak: f(x) = |ax - b|
+                    returnQuestion = $"f(x) = |{a}x - {b}|";
+                    returnFunc = x => Math.Abs(a * x - b);
+                    break;
 
-                case 4: // Üstel: f(x) = a^(x +- b)
+                case FunctionType.Exponential: // Üstel: f(x) = a^(x +- b)
                     string operation = random.Next(2) == 0 ? "+" : "-";
-                    return ($"f(x) = {a}^(x {operation} {b})",
-                            x => Math.Pow(a, operation == "+" ? x + b : x - b));
+                    returnQuestion = $"f(x) = {a}^(x {operation} {b})";
+                    returnFunc = x => Math.Pow(a, operation == "+" ? x + b : x - b);
+                    break;
 
-                case 5: // Rasyonel: f(x) = (ax + b)/(x ± c)
+                case FunctionType.Rational: // Rasyonel: f(x) = (ax + b)/(x ± c)
                     int denominatorOffset = random.Next(1, 4);
                     string denomSign = random.Next(2) == 0 ? "+" : "-";
-                    return ($"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})",
-                            x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset)));
+                    returnQuestion = $"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})";
+                    returnFunc = x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset));
+                    break;
 
                 default:
-                    return ("f(x) = x", x => x);
+                    returnQuestion = "f(x) = x";
+                    returnFunc = x => x;
+                    break;
             }
+
+            List<int> parameters = new List<int> { a, b, c };
+
+            return (returnQuestion, returnFunc, parameters, functionType);
+
         }
     }
 }

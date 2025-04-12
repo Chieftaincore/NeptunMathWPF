@@ -100,6 +100,9 @@ namespace NeptunMathWPF.SoruVeAjani
 
         //Fonksiyon sorusunu çoklu kullanıma dönüştürme ve secenekler eklemek için
         //Birden fazla metota ayırabilirim -Hüseyin
+
+        //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
+        /*
         internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi=4)
         {
             FunctionQuestionGenerator Secili = generators[new Random().Next(generators.Count)];
@@ -183,6 +186,7 @@ namespace NeptunMathWPF.SoruVeAjani
             }
             return new Soru(question, Secenekler.ToArray());
         }
+        */
 
         //Bunlarla Neyi Hedefliyorum 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™

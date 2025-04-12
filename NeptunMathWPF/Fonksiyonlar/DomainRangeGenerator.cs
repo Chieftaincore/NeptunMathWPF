@@ -8,7 +8,7 @@ namespace NeptunMathWPF.Fonksiyonlar
 {
     public class DomainRangeGenerator : FunctionQuestionGenerator
     {
-        public override Question GenerateQuestion()
+        internal override List<FunctionRepository> GenerateQuestion()
         {
             var function = GetRandomFunction();
             string questionText;
@@ -39,7 +39,20 @@ namespace NeptunMathWPF.Fonksiyonlar
                 answer = "Tüm reel sayılar";
             }
 
-            return new Question { QuestionText = questionText, Answer = answer };
+            Question qst = new Question { QuestionText = questionText, Answer = answer };
+
+            return new List<FunctionRepository>
+            {
+                new FunctionRepository
+                {
+                    a = function.parameters.ElementAt(0),
+                    b = function.parameters.ElementAt(1),
+                    c = function.parameters.ElementAt(2),
+                    question = function.function,
+                    functionType = function.functionType,
+                    questionObject = qst
+                }
+            };
         }
 
         protected override string GenerateAnswer(string question)

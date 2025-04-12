@@ -249,6 +249,8 @@ namespace NeptunMathWPF.Formlar
 
         private void TusFonksiyonSoruOlustur(object sender, RoutedEventArgs e)
         {
+            //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
+            /*
             Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur(seceneksayisi: (int)sliderIfade.Value);
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
@@ -256,6 +258,7 @@ namespace NeptunMathWPF.Formlar
             LatexCikti.Content = soru.GetMetin();
             seciliSoru = soru;
             WrapPanelYenile(true);
+            */
         }
     }
 }

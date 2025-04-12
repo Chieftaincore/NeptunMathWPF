@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NeptunDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NeptunDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BildirimLog">
           <Key>
             <PropertyRef Name="zaman" />
@@ -109,7 +109,7 @@
           <Property Name="zaman" Type="datetime" Nullable="false" />
           <Property Name="kullnID" Type="int" Nullable="false" />
           <Property Name="hatakod" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="num" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="num" Type="tinyint" Nullable="false" StoreGeneratedPattern="None" />
           <Property Name="hatamesaj" Type="text" />
         </EntityType>
         <EntityType Name="SoruProfili">
@@ -319,8 +319,7 @@
             <End Role="TokenKullanimi" EntitySet="TokenKullanimi" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="NeptunDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -443,7 +442,7 @@
           <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="kullnID" Type="Int32" Nullable="false" />
           <Property Name="hatakod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Name="hatamesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="SoruProfili">
@@ -602,7 +601,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NeptunDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="NeptunDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BildirimLog" EntityType="Self.BildirimLog" />
           <EntitySet Name="Eposta" EntityType="Self.Eposta" />
           <EntitySet Name="EtkilesimDegerlendirme" EntityType="Self.EtkilesimDegerlendirme" />
@@ -663,7 +662,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NeptunDBModelStoreContainer" CdmEntityContainer="NeptunDBEntities">
+        <EntityContainerMapping StorageEntityContainer="NeptunDBModelStoreContainer" CdmEntityContainer="NeptunDB">
           <EntitySetMapping Name="BildirimLog">
             <EntityTypeMapping TypeName="NeptunDBModel.BildirimLog">
               <MappingFragment StoreEntitySet="BildirimLog">
@@ -818,7 +817,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

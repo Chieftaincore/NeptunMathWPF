@@ -27,18 +27,10 @@ namespace NeptunMathWPF.Formlar
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<FunctionQuestionGenerator> generators = new List<FunctionQuestionGenerator>
-        {
-            new FunctionValueGenerator(),
-            new FunctionCompositionGenerator(),
-            new InverseFunctionGenerator(),
-            new DomainRangeGenerator()
-        };
-            var generator = generators[new Random().Next(generators.Count)];
-            var question = generator.GenerateQuestion();
-
-            lblQuestion.Content = question.QuestionText;
-            lblAnswer.Content = question.Answer;
+            GeneratedFunction function = new GeneratedFunction();
+            foreach (var item in function.repository)
+            {
+            }
         }
     }
 }

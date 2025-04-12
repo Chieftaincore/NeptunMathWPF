@@ -108,11 +108,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="aktifKullanici.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Baglanti.cs" />
     <Compile Include="BildirimLog.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
@@ -125,7 +125,10 @@
     <Compile Include="Fonksiyonlar\DomainRangeGenerator.cs" />
     <Compile Include="Fonksiyonlar\FunctionCompositionGenerator.cs" />
     <Compile Include="Fonksiyonlar\FunctionQuestionGenerator.cs" />
+    <Compile Include="Fonksiyonlar\FunctionRepository.cs" />
+    <Compile Include="Fonksiyonlar\FunctionType.cs" />
     <Compile Include="Fonksiyonlar\FunctionValueGenerator.cs" />
+    <Compile Include="Fonksiyonlar\GeneratedFunction.cs" />
     <Compile Include="Fonksiyonlar\InverseFunctionGenerator.cs" />
     <Compile Include="Fonksiyonlar\Question.cs" />
     <Compile Include="Formlar\dbTestWPF.xaml.cs">
@@ -265,19 +268,19 @@
     <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>NeptunDB.Context.cs</LastGenOutput>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
+      <LastGenOutput>NeptunDB.Context.cs</LastGenOutput>
     </Content>
     <Content Include="NeptunDB.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
       <LastGenOutput>NeptunDB.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
