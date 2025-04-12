@@ -71,9 +71,9 @@ namespace NeptunMathWPF.Fonksiyonlar
                     returnFunc = x => x;
                     break;
             }
-
+            
             List<int> parameters = new List<int> { a, b, c };
-
+                
             return (returnQuestion, returnFunc, parameters, functionType);
 
         }

@@ -30,6 +30,8 @@ namespace NeptunMathWPF.Formlar
             GeneratedFunction function = new GeneratedFunction();
             foreach (var item in function.repository)
             {
+                lblQuestion.Content = item.questionObject.QuestionText;
+                lblAnswer.Content = item.questionObject.Answer;
             }
         }
     }
