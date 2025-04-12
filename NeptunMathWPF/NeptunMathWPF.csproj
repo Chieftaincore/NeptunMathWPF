@@ -134,9 +134,12 @@
     <Compile Include="Formlar\dbTestWPF.xaml.cs">
       <DependentUpon>dbTestWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\EtkilesimPencereWPF.xaml.cs">
+    <Compile Include="Formlar\EtkilesimWPF\EtkilesimPencereWPF.xaml.cs">
       <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\EtkilesimMVM.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardModel.cs" />
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
     </Compile>
@@ -198,7 +201,6 @@
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\SoruAjani.cs" />
-    <Compile Include="SoruVeAjani\SoruUretici.cs" />
     <Compile Include="TokenKullanimi.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
@@ -242,7 +244,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\EtkilesimPencereWPF.xaml">
+    <Page Include="Formlar\EtkilesimWPF\EtkilesimPencereWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -255,17 +257,24 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\SoruNesneTestWPF.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Formlar\TestPencereWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\SoruCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\SoruSeceneklerCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Kaynaklar\" />
-    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

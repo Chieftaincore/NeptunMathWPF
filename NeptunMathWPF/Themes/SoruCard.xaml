@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+
+    <Style TargetType="ListView" x:Key="SoruCard">
+        <Setter Property="Background" Value="CadetBlue"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                <Border Background="Aqua"
+                        CornerRadius="4"
+                        Margin="10,2,2,5"
+                        >
+
+                    <StackPanel>
+                        <Label Content="{Binding Baslik}" FontSize="6"/>
+                        <Controls:FormulaControl Formula= "{Binding LaTeXstring}"/>
+        
+                    </StackPanel>
+                </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+</ResourceDictionary>

@@ -3,19 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
         mc:Ignorable="d"
         Title="EtkilesimPencereWPF" Height="450" Width="800">
+   
+    <Window.DataContext>
+        <mvvm:EtkilesimMVM/>
+    </Window.DataContext>
+    
     <Grid x:Name="SayfaGrid" Background="#FFFFFCFC">
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="317*"/>
+            <RowDefinition Height="117*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="160*"/>
-            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="56*"/>
+            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="91*"/>
         </Grid.ColumnDefinitions>
+        
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
             <Ellipse.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -24,20 +30,29 @@
                 </LinearGradientBrush>
             </Ellipse.Fill>
         </Ellipse>
+        
         <Expander x:Name="MenuExpander" Header="Menü" IsExpanded="True" Grid.RowSpan="2">
             <StackPanel>
                 <Button x:Name="tusTestEkle" Content="DENEME" Margin="5,10,5,10" Click="tusTestEkle_Click"/>
             </StackPanel>
         </Expander>
-        <ScrollViewer x:Name="DialogScrollViewer" Grid.Row="0" Grid.Column="1" >
+        
+        <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0" >
+
             <ScrollViewer.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFE3E3E3"/>
                     <GradientStop Color="#FFE0E0E0" Offset="1"/>
                 </LinearGradientBrush>
             </ScrollViewer.Background>
-            <StackPanel x:Name="DialogKismi" VerticalAlignment="Bottom"/>
+
+            <ListView x:Name="DialogListView" d:ItemsSource="{Binding Sorular}"
+                      ItemContainerStyle="{StaticResource SoruCard}">
+            </ListView>
+            
         </ScrollViewer>
+        
+        <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="1"/>
 
     </Grid>
 </Window>

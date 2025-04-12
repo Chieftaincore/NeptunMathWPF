@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:NeptunMathWPF"
              StartupUri="Formlar/TestPencereWPF.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/SoruCard.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

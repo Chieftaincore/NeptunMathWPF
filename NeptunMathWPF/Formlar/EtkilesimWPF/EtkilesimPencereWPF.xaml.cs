@@ -27,17 +27,7 @@ namespace NeptunMathWPF.Formlar
 
         private void tusTestEkle_Click(object sender, RoutedEventArgs e)
         {
-            
-        }
-
-        private void tusScrollViewerGenisle_Click(object sender, RoutedEventArgs e)
-        {
-          
-        }
-
-        private void tusScrollViewerDaral_Click(object sender, RoutedEventArgs e)
-        {
-
+                
         }
     }
 }
