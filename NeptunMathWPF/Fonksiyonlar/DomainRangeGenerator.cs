@@ -14,13 +14,12 @@ namespace NeptunMathWPF.Fonksiyonlar
             string questionText;
             string answer;
 
-            if (function.function.Contains("√"))
+            if (function.functionType==FunctionType.Root)
             {
                 questionText = $"{function.function} fonksiyonunun tanım kümesi nedir?";
-                string funcstring = function.function;
-                answer = "[-" + (funcstring.ElementAt(14).ToString() + "/" + funcstring.ElementAt(9).ToString()) + ", ∞)";
+                answer = "[-" + (function.parameters.ElementAt(1).ToString() + "/" + function.parameters.ElementAt(0).ToString()) + ", ∞)";
             }
-            else if (function.function.Contains("/"))
+            else if (function.functionType==FunctionType.Rational)
             {
                 questionText = $"{function.function} fonksiyonunun tanım kümesi nedir?";
                 var parts = function.function.Split('/')[1];
