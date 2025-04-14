@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    class SeceneklerModel
+    public class SeceneklerModel
     {
+        public List<string> strings { get; set; }
     }
 }

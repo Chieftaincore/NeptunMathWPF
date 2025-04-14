@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM" 
         mc:Ignorable="d"
-        Title="EtkilesimPencereWPF" Height="450" Width="800">
+        Title="EtkilesimPencereWPF" Height="900" Width="1600">
    
     <Window.DataContext>
         <mvvm:EtkilesimMVM/>
@@ -33,7 +33,7 @@
         
         <Expander x:Name="MenuExpander" Header="Menü" IsExpanded="True" Grid.RowSpan="2">
             <StackPanel>
-                <Button x:Name="tusTestEkle" Content="DENEME" Margin="5,10,5,10" Click="tusTestEkle_Click"/>
+                <Button x:Name="tusTestEkle" Content="DENEME" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
             </StackPanel>
         </Expander>
         
@@ -46,13 +46,13 @@
                 </LinearGradientBrush>
             </ScrollViewer.Background>
 
-            <ListView x:Name="DialogListView" d:ItemsSource="{Binding Sorular}"
+            <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}"
                       ItemContainerStyle="{StaticResource SoruCard}">
             </ListView>
             
         </ScrollViewer>
-        
-        <DockPanel Grid.Column="1" LastChildFill="False" Grid.Row="1"/>
+
+        <!--<ContentControl Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secilisoru}"/>-->
 
     </Grid>
 </Window>

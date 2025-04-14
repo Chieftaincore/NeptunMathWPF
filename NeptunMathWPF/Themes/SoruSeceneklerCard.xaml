@@ -1,4 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
+
+    <DataTemplate x:Key="SecenekCardTemplate">
+        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}">
+            <Controls:FormulaControl Content="{Binding secenekler}"/>
+        </RadioButton>
+    </DataTemplate>
+
+    <ItemsControl x:Key="SecenekCardControl"
+                  ItemsSource="{Binding secenekler}"
+                  ItemTemplate="{StaticResource SecenekCardTemplate}"
+                  />
+
+
 </ResourceDictionary>
+   

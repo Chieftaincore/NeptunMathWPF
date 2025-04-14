@@ -2,23 +2,33 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
-    <Style TargetType="ListView" x:Key="SoruCard">
+    <Style TargetType="ListViewItem" x:Key="SoruCard">
+       
         <Setter Property="Background" Value="CadetBlue"/>
-
+            
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
-                <Border Background="Aqua"
-                        CornerRadius="4"
-                        Margin="10,2,2,5"
+                    <Border Background="SlateGray"
+                        Margin="20,2,2,5"
                         >
+                        <Grid Height="150px">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="18*"/>
+                            </Grid.RowDefinitions>
 
-                    <StackPanel>
-                        <Label Content="{Binding Baslik}" FontSize="6"/>
-                        <Controls:FormulaControl Formula= "{Binding LaTeXstring}"/>
-        
-                    </StackPanel>
-                </Border>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="10*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}"  FontSize="6" Grid.Row="0" Grid.Column="0"/>
+                            <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="4" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <Controls:FormulaControl Formula= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}" Grid.Row="1" Grid.Column="0"/>
+
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

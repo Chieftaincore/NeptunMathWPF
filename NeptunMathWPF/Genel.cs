@@ -78,9 +78,11 @@ namespace NeptunMathWPF
                     hatamesaj = message
                 });
                 dbEntities.SaveChanges();
-
-            
         }
 
+        public static void Shutdown()
+        {
+            System.Environment.Exit(110);
+        }
     }
 }

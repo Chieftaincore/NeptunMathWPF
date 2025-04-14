@@ -138,6 +138,7 @@
       <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\EtkilesimMVM.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ObservableObject.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardModel.cs" />
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">

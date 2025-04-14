@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,12 +23,16 @@ namespace NeptunMathWPF.Formlar
        
         public EtkilesimPencereWPF()
         {
-            InitializeComponent();
-        }
 
-        private void tusTestEkle_Click(object sender, RoutedEventArgs e)
-        {
-                
+            InitializeComponent();
+
+            var viewModel = new EtkilesimMVM();
+            this.DataContext = viewModel;
+
+            if (viewModel.Sorular?.Count == 0)
+            {
+                MessageBox.Show("No items in Sorular!");
+            }
         }
     }
 }
