@@ -23,16 +23,7 @@ namespace NeptunMathWPF.Formlar
        
         public EtkilesimPencereWPF()
         {
-
             InitializeComponent();
-
-            var viewModel = new EtkilesimMVM();
-            this.DataContext = viewModel;
-
-            if (viewModel.Sorular?.Count == 0)
-            {
-                MessageBox.Show("No items in Sorular!");
-            }
         }
     }
 }

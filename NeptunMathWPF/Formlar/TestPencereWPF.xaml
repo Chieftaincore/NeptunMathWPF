@@ -25,7 +25,7 @@
         <Button x:Name="tusEtkilesimSayfasi_Copy" Grid.Column="1" Content="Etkileşim Sayfası" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
         <Button x:Name="fonksiyonSayfasi" Content="Fonksiyon Test" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Height="49" Width="148" Grid.Column="1" Click="fonksiyonSayfasi_Click"/>
         <Button x:Name="dbTestButton" Content="Veritabanı Test" HorizontalAlignment="Center" Margin="0,226,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="dbTestButton_Click"/>
-        <Image Margin="-9,20,0,61" Source="/Kaynaklar/Neptun Math.png" Stretch="Fill"/>
+        <Image Margin="-9,20,0,61" Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Fill"/>
 
     </Grid>
 </Window>

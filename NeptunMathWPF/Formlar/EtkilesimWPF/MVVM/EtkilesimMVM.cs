@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
@@ -17,10 +18,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
     {
         internal enum Durum
         {
-            SoruSoruyor,
-            Promptluyor,
-            Cekiyor,
-            Geciste
+            SoruModu,
+            Proompter,
+            DialogModu,
         }
 
         List<SoruTerimleri.ifadeTurleri> turleris = new List<SoruTerimleri.ifadeTurleri>{
@@ -36,7 +36,18 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public SoruCardModel secilisoru { get; set; }
 
-        public List<string> secenekler { get; set; }
+        public ObservableCollection<string> secenekler { get; set; }
+
+        private Object _seciliTur;
+        public Object seciliTur{ get => _seciliTur ; set
+            {
+                if (_seciliTur != value)
+                {
+                    _seciliTur = value;
+                    OnPropertyChanged(nameof(seciliTur));
+                }
+            }
+        }
 
         public EtkilesimMVM()
         {
@@ -44,17 +55,16 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
             DenemeEkleKomut = new RelayCommand(o => Ekle());
+            seciliTur = "SoruModu";
             Ekle();
             OnPropertyChanged();
         }
-        
-       
+
         public void Ekle()
         {
             List<Ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(turleris);
             Soru soru = SoruAjani.YerelSoruBirlestir(Liste, 5);
 
-         
             secilisoru = new SoruCardModel(soru)
             {
                 zaman = DateTime.Now,
@@ -64,15 +74,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             secenekler = secilisoru.secenekler;
             Sorular.Add(secilisoru);
 
-            
             OnPropertyChanged();
         }
-
-        public void Dockla()
-        {
-            
-        }
-
+        
         //StackOverflow'dan aldım
         internal class RelayCommand : ICommand
         {
@@ -103,5 +107,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 _execute(parameter ?? "<N/A>");
             }
         }
+
+       
     }
 }

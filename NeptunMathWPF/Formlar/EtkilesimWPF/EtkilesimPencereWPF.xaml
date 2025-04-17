@@ -3,13 +3,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM" 
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
+        xmlns:local1="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
         mc:Ignorable="d"
         Title="EtkilesimPencereWPF" Height="900" Width="1600">
-   
+
     <Window.DataContext>
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
+
+
+    <Window.Resources>
+        <DataTemplate x:Key="SeceneklerControlDataTemplate" >
+            <ContentControl 
+                Grid.Row="1" Grid.Column="1"
+                Style="{StaticResource SecenekCardControl}" Content="{Binding RelativeSource={RelativeSource AncestorType=mvvm:EtkilesimMVM}, Path=secenekler, FallbackValue='Bulunamadı'}"/>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ProompterDataTemplate">
+            <ContentControl
+                Style="{StaticResource Proompter}"
+                />
+        </DataTemplate>
+        <local1:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
+                                  SoruModu="{StaticResource SeceneklerControlDataTemplate}"
+                                  Proompter="{StaticResource ProompterDataTemplate}"/>
+    </Window.Resources>
     
     <Grid x:Name="SayfaGrid" Background="#FFFFFCFC">
         <Grid.RowDefinitions>
@@ -21,7 +40,7 @@
             <ColumnDefinition Width="253*"/>
             <ColumnDefinition Width="91*"/>
         </Grid.ColumnDefinitions>
-        
+
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
             <Ellipse.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -30,13 +49,13 @@
                 </LinearGradientBrush>
             </Ellipse.Fill>
         </Ellipse>
-        
+
         <Expander x:Name="MenuExpander" Header="Menü" IsExpanded="True" Grid.RowSpan="2">
             <StackPanel>
                 <Button x:Name="tusTestEkle" Content="DENEME" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
             </StackPanel>
         </Expander>
-        
+
         <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0" >
 
             <ScrollViewer.Background>
@@ -49,10 +68,17 @@
             <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}"
                       ItemContainerStyle="{StaticResource SoruCard}">
             </ListView>
-            
+
         </ScrollViewer>
 
-        <ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler,FallbackValue=null}"/>
+  
+        <!--<ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler,FallbackValue=null}"/>-->
 
+        <ContentControl x:Name="EtkilesimPanel"
+                        Grid.Row="1" Grid.Column="1"
+                        ContentTemplateSelector="{StaticResource EtkilesimTemplateModel}"
+                        Content="{Binding seciliTur}">
+                        
+        </ContentControl>
     </Grid>
 </Window>

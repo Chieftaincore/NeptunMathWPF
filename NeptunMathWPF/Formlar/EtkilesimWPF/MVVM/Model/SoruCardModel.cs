@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     {
         public Soru soru { get; set; }
        
-        public List<string> secenekler { get; set; }
+        public ObservableCollection<string> secenekler { get; set; }
 
         public string LaTeX { get; set; }
         public string kaynak { get; set; }
@@ -29,16 +30,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 Random random = new Random();
                 int inject = random.Next(0, soru.GetDigerSecenekler().Length);
 
-                List<String> Liste = new List<string>();
+                secenekler = new ObservableCollection<string>();
                 for (int i=0; i<soru.GetDigerSecenekler().Length; i++)
                 {
                    if(i == inject)
-                       Liste.Add(soru.GetSonucSecenek());
+                       secenekler.Add(soru.GetSonucSecenek());
 
-                    Liste.Add(soru.GetDigerSecenekler()[i]);
+                    secenekler.Add(soru.GetDigerSecenekler()[i]);
                 }
-
-                secenekler = Liste;
             });
         }
     }

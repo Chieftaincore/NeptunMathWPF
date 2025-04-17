@@ -4,7 +4,7 @@
 
     <!--<DataTemplate x:Key="SecenekCardTemplate" >
         <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
-            <Controls:FormulaControl Formula="{Binding Source, FallbackValue='0', RelativeSource= {RelativeSource Mode=TemplatedParent}}"/>
+            <Controls:FormulaControl Formula="{Binding , FallbackValue='0', RelativeSource= {RelativeSource Mode=TemplatedParent}}"/>
         </RadioButton>
     </DataTemplate>
 
@@ -28,7 +28,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <ItemsControl ItemsSource="{Binding secenekler}">
+                    <ItemsControl Background="Teal" ItemsSource="{Binding secenekler}">
                         <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
@@ -42,6 +42,25 @@
         </Setter>
     </Style>
 
-    
+    <Style x:Key="Proompter" TargetType="{x:Type ContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Label Content="Proomptlayıcı" FontSize="8"/>
+
+                        <TextBox Text="SISISISISIISISIISISISIISISISIISISISISISSISISISISIISISIISISISIISISISIISISISISIS"
+                                 MaxLength="400"
+                                 Grid.Row="1"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>
    
