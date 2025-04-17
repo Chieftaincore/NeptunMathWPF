@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    public class SeceneklerModel
+    class EtkilesimKutuModel
     {
-        public List<string> strings { get; set; }
+        enum Tur
+        {
+
+        }
+
+
+
     }
 }

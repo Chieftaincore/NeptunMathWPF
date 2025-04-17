@@ -24,23 +24,25 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         }
 
         List<SoruTerimleri.ifadeTurleri> turleris = new List<SoruTerimleri.ifadeTurleri>{
-                SoruTerimleri.ifadeTurleri.sayi,
-                SoruTerimleri.ifadeTurleri.sayi,
                 SoruTerimleri.ifadeTurleri.faktoriyel,
+                SoruTerimleri.ifadeTurleri.sayi,
+                SoruTerimleri.ifadeTurleri.sayi,
+               
         };
 
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
 
         public ICommand DenemeEkleKomut { get; set; }
 
-        public SoruCardModel secilisoru;
+        public SoruCardModel secilisoru { get; set; }
 
-        public List<string> secenekler;
+        public List<string> secenekler { get; set; }
 
         public EtkilesimMVM()
         {
             Sorular = new ObservableCollection<SoruCardModel>();
 
+            //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
             DenemeEkleKomut = new RelayCommand(o => Ekle());
             Ekle();
             OnPropertyChanged();
@@ -52,27 +54,23 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             List<Ifade> Liste = SoruAjani.CokluIfadeListesiOlustur(turleris);
             Soru soru = SoruAjani.YerelSoruBirlestir(Liste, 5);
 
-
+         
             secilisoru = new SoruCardModel(soru)
             {
-                secenekler= new List<string>
-                {
-                    "TEST1","TEST'"
-                },
-  
-                kaynak = "Yerel",
                 zaman = DateTime.Now,
-                Aktif = true
+                kaynak = "Yerel"
             };
 
+            secenekler = secilisoru.secenekler;
             Sorular.Add(secilisoru);
- 
+
+            
             OnPropertyChanged();
         }
 
         public void Dockla()
         {
-
+            
         }
 
         //StackOverflow'dan aldım

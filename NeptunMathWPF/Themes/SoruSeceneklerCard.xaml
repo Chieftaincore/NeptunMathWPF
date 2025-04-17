@@ -2,17 +2,46 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
-    <DataTemplate x:Key="SecenekCardTemplate">
-        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}">
-            <Controls:FormulaControl Content="{Binding secenekler}"/>
+    <!--<DataTemplate x:Key="SecenekCardTemplate" >
+        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
+            <Controls:FormulaControl Formula="{Binding Source, FallbackValue='0', RelativeSource= {RelativeSource Mode=TemplatedParent}}"/>
         </RadioButton>
     </DataTemplate>
 
-    <ItemsControl x:Key="SecenekCardControl"
-                  ItemsSource="{Binding secenekler}"
-                  ItemTemplate="{StaticResource SecenekCardTemplate}"
-                  />
 
 
+    <Style x:Key="SecenekCardControl"  TargetType="{x:Type ContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ItemsControl
+                ItemsSource="{Binding secenekler}"
+                ItemTemplate="{StaticResource SecenekCardTemplate}"
+                />
+                </ControlTemplate>
+                
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+    <Style x:Key="SecenekCardControl" TargetType="{x:Type ContentControl}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ItemsControl ItemsSource="{Binding secenekler}">
+                        <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
+                                <Controls:FormulaControl Formula="{Binding}"/>
+                            </RadioButton>
+                        </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
 </ResourceDictionary>
    

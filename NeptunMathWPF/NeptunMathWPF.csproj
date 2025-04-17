@@ -138,8 +138,8 @@
       <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\EtkilesimMVM.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\EtkilesimKutuModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ObservableObject.cs" />
-    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardModel.cs" />
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
@@ -274,13 +274,12 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Kaynaklar\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Kaynaklar\Neptun Math.png" />
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NeptunDB.edmx</DependentUpon>

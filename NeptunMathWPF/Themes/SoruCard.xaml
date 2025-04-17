@@ -25,7 +25,12 @@
 
                             <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}"  FontSize="6" Grid.Row="0" Grid.Column="0"/>
                             <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="4" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
-                            <Controls:FormulaControl Formula= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}" Grid.Row="1" Grid.Column="0"/>
+                            
+                           
+                            <Controls:FormulaControl Formula= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}"
+                                                     Grid.Row="1"
+                                                     Grid.Column="0"
+                                                     Margin="10,10,5,5"/>
 
                         </Grid>
                     </Border>

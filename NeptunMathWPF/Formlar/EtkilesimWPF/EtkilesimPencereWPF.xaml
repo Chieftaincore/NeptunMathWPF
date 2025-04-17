@@ -52,7 +52,7 @@
             
         </ScrollViewer>
 
-        <!--<ContentControl Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secilisoru}"/>-->
+        <ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler,FallbackValue=null}"/>
 
     </Grid>
 </Window>
