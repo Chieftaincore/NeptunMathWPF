@@ -2,65 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
-    <!--<DataTemplate x:Key="SecenekCardTemplate" >
-        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
-            <Controls:FormulaControl Formula="{Binding , FallbackValue='0', RelativeSource= {RelativeSource Mode=TemplatedParent}}"/>
-        </RadioButton>
+    <DataTemplate x:Key="SeceneklerDataTemplate">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <ItemsControl Background="AliceBlue" ItemsSource="{Binding DataContext.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
+                      Grid.Row="0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
+                            <Controls:FormulaControl Formula="{Binding .}"/>
+                        </RadioButton>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Button Grid.Row="1" Content="Cevapla"/>
+        </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="Proompter">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
+            <Label Content="Proomptlayıcı" FontSize="8"/>
 
-    <Style x:Key="SecenekCardControl"  TargetType="{x:Type ContentControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <ItemsControl
-                ItemsSource="{Binding secenekler}"
-                ItemTemplate="{StaticResource SecenekCardTemplate}"
-                />
-                </ControlTemplate>
-                
-            </Setter.Value>
-        </Setter>
-    </Style>-->
-
-    <Style x:Key="SecenekCardControl" TargetType="{x:Type ContentControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <ItemsControl Background="Teal" ItemsSource="{Binding secenekler}">
-                        <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
-                                <Controls:FormulaControl Formula="{Binding}"/>
-                            </RadioButton>
-                        </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="Proompter" TargetType="{x:Type ContentControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-
-                        <Label Content="Proomptlayıcı" FontSize="8"/>
-
-                        <TextBox Text="SISISISISIISISIISISISIISISISIISISISISISSISISISISIISISIISISISIISISISIISISISISIS"
+            <TextBox Text="NOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPT"
                                  MaxLength="400"
                                  Grid.Row="1"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+        </Grid>
+    </DataTemplate>
 </ResourceDictionary>
    

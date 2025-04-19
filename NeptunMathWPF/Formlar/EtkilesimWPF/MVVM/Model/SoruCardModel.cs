@@ -13,7 +13,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     {
         public Soru soru { get; set; }
        
-        public ObservableCollection<string> secenekler { get; set; }
+        public ObservableCollection<string> NesneSecenekler { get; set; }
 
         public string LaTeX { get; set; }
         public string kaynak { get; set; }
@@ -30,13 +30,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 Random random = new Random();
                 int inject = random.Next(0, soru.GetDigerSecenekler().Length);
 
-                secenekler = new ObservableCollection<string>();
+                NesneSecenekler = new ObservableCollection<string>();
                 for (int i=0; i<soru.GetDigerSecenekler().Length; i++)
                 {
                    if(i == inject)
-                       secenekler.Add(soru.GetSonucSecenek());
+                       NesneSecenekler.Add(soru.GetSonucSecenek());
 
-                    secenekler.Add(soru.GetDigerSecenekler()[i]);
+                    NesneSecenekler.Add(soru.GetDigerSecenekler()[i]);
                 }
             });
         }

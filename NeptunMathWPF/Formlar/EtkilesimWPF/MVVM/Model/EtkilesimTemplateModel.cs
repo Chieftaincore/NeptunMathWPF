@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using System.Collections.ObjectModel;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
@@ -13,6 +14,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public DataTemplate SoruModu { get; set; }
         public DataTemplate Proompter { get; set; }
         public DataTemplate DialogModu { get; set; }
+
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -28,7 +30,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                     return DialogModu;
                 default:
                     return base.SelectTemplate(item, container);
-            };
+            }
+            ;
         }
     }
 }

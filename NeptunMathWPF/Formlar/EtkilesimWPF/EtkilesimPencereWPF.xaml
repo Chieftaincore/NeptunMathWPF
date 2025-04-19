@@ -4,36 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
-        xmlns:local1="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
+        xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
+        xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
-        Title="EtkilesimPencereWPF" Height="900" Width="1600">
+        Title="Etkilesim Penceresi" Height="900" Width="1600">
 
     <Window.DataContext>
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
 
-
     <Window.Resources>
-        <DataTemplate x:Key="SeceneklerControlDataTemplate" >
-            <ContentControl 
-                Grid.Row="1" Grid.Column="1"
-                Style="{StaticResource SecenekCardControl}" Content="{Binding RelativeSource={RelativeSource AncestorType=mvvm:EtkilesimMVM}, Path=secenekler, FallbackValue='Bulunamadı'}"/>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ProompterDataTemplate">
-            <ContentControl
-                Style="{StaticResource Proompter}"
-                />
-        </DataTemplate>
-        <local1:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
-                                  SoruModu="{StaticResource SeceneklerControlDataTemplate}"
-                                  Proompter="{StaticResource ProompterDataTemplate}"/>
+        <model:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
+                                  SoruModu="{StaticResource SeceneklerDataTemplate}"
+                                  Proompter="{StaticResource Proompter}"/>
     </Window.Resources>
-    
-    <Grid x:Name="SayfaGrid" Background="#FFFFFCFC">
+
+    <Grid x:Name="SayfaGrid" Background="#FFF4FAFF">
         <Grid.RowDefinitions>
-            <RowDefinition Height="317*"/>
-            <RowDefinition Height="117*"/>
+            <RowDefinition Height="568*"/>
+            <RowDefinition Height="241*"/>
+            <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="56*"/>
@@ -50,9 +40,17 @@
             </Ellipse.Fill>
         </Ellipse>
 
-        <Expander x:Name="MenuExpander" Header="Menü" IsExpanded="True" Grid.RowSpan="2">
-            <StackPanel>
-                <Button x:Name="tusTestEkle" Content="DENEME" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
+        <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
+        <Expander x:Name="MenuExpander" Header="DEBUG MENU" IsExpanded="True" Grid.RowSpan="3" Background="{x:Null}">
+            <StackPanel Background="White">
+                <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
+                        Height="32" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
+
+                <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle"
+                        Height="32" Margin="5,10,5,10" Command="{Binding TusFonksiyonEkle}" IsEnabled="False"/>
+
+                <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
+                        Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
             </StackPanel>
         </Expander>
 
@@ -65,20 +63,18 @@
                 </LinearGradientBrush>
             </ScrollViewer.Background>
 
-            <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}"
-                      ItemContainerStyle="{StaticResource SoruCard}">
-            </ListView>
+            <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}" 
+                      ItemContainerStyle="{StaticResource SoruCard}"/>
 
         </ScrollViewer>
 
-  
-        <!--<ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler,FallbackValue=null}"/>-->
+
+        <!--<ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler ,FallbackValue=null}"/>-->
 
         <ContentControl x:Name="EtkilesimPanel"
                         Grid.Row="1" Grid.Column="1"
                         ContentTemplateSelector="{StaticResource EtkilesimTemplateModel}"
-                        Content="{Binding seciliTur}">
-                        
-        </ContentControl>
+                        Content="{Binding seciliTur}"/>
+
     </Grid>
 </Window>

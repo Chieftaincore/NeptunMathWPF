@@ -270,8 +270,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\SoruSeceneklerCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup />

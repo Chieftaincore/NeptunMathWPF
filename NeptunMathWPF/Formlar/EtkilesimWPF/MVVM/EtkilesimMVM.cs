@@ -1,4 +1,4 @@
-﻿using HonkSharp.Fluency;
+﻿
 using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
 using System;
@@ -9,37 +9,35 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
     class EtkilesimMVM : ObservableObject
     {
-        internal enum Durum
-        {
-            SoruModu,
-            Proompter,
-            DialogModu,
-        }
-
         List<SoruTerimleri.ifadeTurleri> turleris = new List<SoruTerimleri.ifadeTurleri>{
                 SoruTerimleri.ifadeTurleri.faktoriyel,
                 SoruTerimleri.ifadeTurleri.sayi,
-                SoruTerimleri.ifadeTurleri.sayi,
-               
+                SoruTerimleri.ifadeTurleri.sayi
         };
 
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
 
+        private ObservableCollection<string> _secenekler;
+        public ObservableCollection<string> secenekler { get => _secenekler ; set { 
+              
+                if(_secenekler != value) { 
+                _secenekler = value; 
+                OnPropertyChanged(nameof(secenekler));
+                }
+            } 
+        }
         public ICommand DenemeEkleKomut { get; set; }
-
+        public ICommand SeciliTurDegistir { get; set; }
         public SoruCardModel secilisoru { get; set; }
 
-        public ObservableCollection<string> secenekler { get; set; }
-
-        private Object _seciliTur;
-        public Object seciliTur{ get => _seciliTur ; set
+        private string _seciliTur;
+        public string seciliTur{ get => _seciliTur ; set
             {
                 if (_seciliTur != value)
                 {
@@ -55,6 +53,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
             DenemeEkleKomut = new RelayCommand(o => Ekle());
+            SeciliTurDegistir = new RelayCommand(o => TurDegis());
+
             seciliTur = "SoruModu";
             Ekle();
             OnPropertyChanged();
@@ -71,12 +71,33 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 kaynak = "Yerel"
             };
 
-            secenekler = secilisoru.secenekler;
+            secenekler = secilisoru.NesneSecenekler;
+
+            //Aşağıdan Ekle
             Sorular.Add(secilisoru);
+
+            //Yukarıdan Ekle
+            //Sorular.Insert(0,secilisoru);
+            seciliTur = "SoruModu";
 
             OnPropertyChanged();
         }
         
+        public void TurDegis()
+        {
+            if(seciliTur == "SoruModu")
+            {
+                seciliTur = "Proompter";
+              
+            }
+            else
+            {
+                seciliTur = "SoruModu";
+            }
+
+            MessageBox.Show($"Panel Değişti {seciliTur}");
+        }
+
         //StackOverflow'dan aldım
         internal class RelayCommand : ICommand
         {
@@ -107,7 +128,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 _execute(parameter ?? "<N/A>");
             }
         }
-
-       
     }
+
 }
