@@ -32,7 +32,8 @@ namespace NeptunMathWPF.SoruVeAjani
         public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
         {
             {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
-            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } }
+            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } },
+            {"USLUNORMAL",new int[]{1,12}}, {"USTAMCARPAN",new int[] {0,5} }
         };
 
         //Fonksiyon oluşturucu Generatörleri
@@ -233,6 +234,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                 {
                                     if (ifadeler[i].TurGetir() == ifadeTuru.kesir)
                                     {
+                                        MessageBox.Show("DEBUG : silindi ");
                                         islemString += ifadeler[i].getir() + '/';
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
@@ -317,7 +319,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         else
                         {
                             int r;
-
+                            
                             r = random.Next(20, 126);
                             randEntity = (sonuc + r);
                         }
@@ -439,9 +441,7 @@ namespace NeptunMathWPF.SoruVeAjani
             ajanLOG += $"{islemString}\n";
             ajanLOG += $"{sonuc}\n";
 
-
             Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
-
             soru.SetLaTexMetin(LaTeXString);
 
             return soru;

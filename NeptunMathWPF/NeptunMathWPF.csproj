@@ -139,8 +139,10 @@
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\EtkilesimMVM.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\EtkilesimTemplateModel.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\FonksiyonSoruCardModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ObservableObject.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardModel.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardSelector.cs" />
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
     </Compile>

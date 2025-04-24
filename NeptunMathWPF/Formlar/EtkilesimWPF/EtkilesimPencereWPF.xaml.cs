@@ -18,6 +18,9 @@ namespace NeptunMathWPF.Formlar
     /// <summary>
     /// EtkilesimPencereWPF.xaml etkileşim mantığı
     /// </summary>
+    /// 
+
+    using ifadeTuru = SoruTerimleri.ifadeTurleri;
     public partial class EtkilesimPencereWPF : Window
     {
        
@@ -25,5 +28,7 @@ namespace NeptunMathWPF.Formlar
         {
             InitializeComponent();
         }
+
+      
     }
 }

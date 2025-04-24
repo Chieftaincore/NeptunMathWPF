@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar" 
+        xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
         xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
         xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
@@ -43,6 +44,28 @@
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
         <Expander x:Name="MenuExpander" Header="DEBUG MENU" IsExpanded="True" Grid.RowSpan="3" Background="{x:Null}">
             <StackPanel Background="White">
+                <Expander Header="Coklu İfade">
+                    <StackPanel Background="White">
+
+                        <ListBox x:Name="CokluIfadeListBox" Height="100" 
+                                 ItemsSource="{Binding CokluIfadeTurlerListColl, Mode=TwoWay}">
+                            <ListBox.InputBindings>
+                                <KeyBinding
+                                    Key="Delete"
+                                    Command="{Binding DebugCokluIfadeSil}"
+                                    CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                    />
+                            </ListBox.InputBindings>
+                        </ListBox>
+
+                        <ComboBox x:Name="CokluIfadeComboBox" Width="120" 
+                                  ItemsSource="{Binding DebugComboBoxTurler}" SelectedValue="{Binding cmBxSecilen, Mode=OneWayToSource}"/>
+
+                        <Button Content="Ekle" Margin="6,0,6,0" Command="{Binding DebugCokluIfadeEkle}"/>
+                        
+                    </StackPanel>
+                </Expander>
+                
                 <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
                         Height="32" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
 
