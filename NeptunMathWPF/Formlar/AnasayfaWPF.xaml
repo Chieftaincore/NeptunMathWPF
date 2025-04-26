@@ -30,7 +30,7 @@
 
                 <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="20 10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="DimGray" Foreground="White" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
                 <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="20 10" Padding="15" FontSize="12" FontWeight="SemiBold" Background="#f92020" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
-                
+
             </StackPanel>
         </ScrollViewer>
 

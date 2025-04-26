@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 
-
 namespace LoginApp
 {
     public partial class LoginForm : Window
@@ -27,16 +26,21 @@ namespace LoginApp
                 MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 AnasayfaWPF.AnaSayfa anaSayfa = new AnasayfaWPF.AnaSayfa();
-                
-                // Örnek: Ana pencereye geçiş
-                // MainWindow mainWindow = new MainWindow();
-                // mainWindow.Show();
-                // this.Close();
+                anaSayfa.Show();
+                this.Close();
             }
             else
             {
                 MessageBox.Show("Kullanıcı adı veya şifre hatalı.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void KayitOl_Click(object sender, RoutedEventArgs e)
+        {
+            AnasayfaWPF.KayitFormu kayitFormu = new AnasayfaWPF.KayitFormu();
+            kayitFormu.Show();
+            // İsteğe bağlı: Giriş formunu kapatmak isterseniz aşağıdaki satırı etkinleştirin
+            // this.Close();
         }
     }
 }
