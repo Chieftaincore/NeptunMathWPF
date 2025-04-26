@@ -90,8 +90,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Baglanti.cs" />
-    <Compile Include="Formlar\ANASAYFAFORM.xaml.cs">
-      <DependentUpon>ANASAYFAFORM.xaml</DependentUpon>
+    <Compile Include="Formlar\AnasayfaWPF.xaml.cs">
+      <DependentUpon>AnasayfaWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
@@ -141,7 +141,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Formlar\ANASAYFAFORM.xaml">
+    <Page Include="Formlar\AnasayfaWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

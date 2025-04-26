@@ -12,9 +12,10 @@
         <TextBlock Grid.Row="0" Text="Hangi Tür Soruyu Çözmek İstersiniz?" FontSize="24" FontWeight="Bold" Margin="20" HorizontalAlignment="Center"/>
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            
             <Button Content="Matematik Soruları" Click="MatematikSorulariButton_Click" Margin="20" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#3498db" Foreground="White" BorderThickness="0" Cursor="Hand" Width="250"/>
-            <Button Content="Tarih Soruları" Click="TarihSorulariButton_Click" Margin="20" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#2ecc71" Foreground="White" BorderThickness="0" Cursor="Hand" Width="250"/>
-            <Button Content="Coğrafya Soruları" Click="CografyaSorulariButton_Click" Margin="20" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#f39c12" Foreground="White" BorderThickness="0" Cursor="Hand" Width="250"/>
+            <!--<Button Content="Tarih Soruları" Click="TarihSorulariButton_Click" Margin="20" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#2ecc71" Foreground="White" BorderThickness="0" Cursor="Hand" Width="250"/>-->
+            <!-- <Button Content="Coğrafya Soruları" Click="CografyaSorulariButton_Click" Margin="20" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#f39c12" Foreground="White" BorderThickness="0" Cursor="Hand" Width="250"/>-->
         </StackPanel>
     </Grid>
 </Window>

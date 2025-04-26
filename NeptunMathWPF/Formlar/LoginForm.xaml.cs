@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 
+
 namespace LoginApp
 {
     public partial class LoginForm : Window
@@ -25,6 +26,8 @@ namespace LoginApp
             {
                 MessageBox.Show("Giriş başarılı!", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
 
+                AnasayfaWPF.AnaSayfa anaSayfa = new AnasayfaWPF.AnaSayfa();
+                
                 // Örnek: Ana pencereye geçiş
                 // MainWindow mainWindow = new MainWindow();
                 // mainWindow.Show();
