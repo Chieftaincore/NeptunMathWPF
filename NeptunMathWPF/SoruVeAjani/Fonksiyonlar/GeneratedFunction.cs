@@ -10,6 +10,10 @@ namespace NeptunMathWPF.Fonksiyonlar
     internal class GeneratedFunction
     {
         public List<FunctionRepository> repository { get; }
+
+        //Çevirme için gerekli generator type alma
+        public FunctionQuestionGenerator gen { get; }
+
         public bool HasMultipleFunctions => repository.Count > 1; // Listede 1den fazla eleman varsa true olur.
         internal GeneratedFunction()
         {
@@ -28,7 +32,9 @@ namespace NeptunMathWPF.Fonksiyonlar
                  };
                 var generator = generators[new Random().Next(generators.Count)];
                 repository = generator.GenerateQuestion();
-                
+
+                gen = generator;
+
                 foreach (var item in repository)
                 {
                     if (item.questionObject.Answer.ToString() != "NaN") //Payda 0 gelirse tekrar soru üretsin

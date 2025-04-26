@@ -103,35 +103,39 @@ namespace NeptunMathWPF.SoruVeAjani
         //Birden fazla metota ayırabilirim -Hüseyin
 
         //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
-        /*
-        internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi=4)
-        {
-            FunctionQuestionGenerator Secili = generators[new Random().Next(generators.Count)];
-            Question question = Secili.GenerateQuestion();
 
+        internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi = 4)
+        {
+            GeneratedFunction generated = new GeneratedFunction();
             List<string> Secenekler = new List<string>();
+            Question question;
+
             Func<string> dongu;
+
+            //Çoklu repository için hatırlatma
+            //if (generated.HasMultipleFunctions == false)
+            FunctionRepository rep = generated.repository[0];
+            question = rep.questionObject;
 
             MessageBox.Show(question.Answer);
 
-            switch (Secili)
+            switch (generated.gen)
             {
                 //case FunctionValueGenerator f:
-                    
+
                 //    break;
                 //case FunctionCompositionGenerator f:
 
                 //    break;
                 //case InverseFunctionGenerator f:
-                    
+
                 //    break;
                 case DomainRangeGenerator f:
                     dongu = delegate ()
                     {
                         //ileride tanım kümesi yapıcı ve sonuç filtreleyici eklemeliyim  eklenmeli
-                        //Uydurunca ben -Hüseyin
                         string[] ciktilar = { "Tüm Reel Sayılar", "Tanımsız", "Tüm reel sayılar, x ≠ -c", "Tüm reel sayılar, x ≠ c", "[1,+∞]",
-                            "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]"};
+                            "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]","[Reel Sayılar - 0]"};
 
                         string cikti = ciktilar[random.Next(0, ciktilar.Length - 1)];
 
@@ -175,11 +179,11 @@ namespace NeptunMathWPF.SoruVeAjani
                     break;
             }
 
-            for (int i=0; i<seceneksayisi;)
+            for (int i = 0; i < seceneksayisi;)
             {
                 string cikti = dongu();
 
-                if(cikti != string.Empty)
+                if (cikti != string.Empty && cikti != question.Answer)
                 {
                     Secenekler.Add(cikti);
                     i++;
@@ -187,7 +191,7 @@ namespace NeptunMathWPF.SoruVeAjani
             }
             return new Soru(question, Secenekler.ToArray());
         }
-        */
+
 
         //Bunlarla Neyi Hedefliyorum 
         //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
@@ -197,12 +201,14 @@ namespace NeptunMathWPF.SoruVeAjani
 
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
+            string islemString = string.Empty;
             string ajanLOG = string.Empty;
 
-            string islemString = string.Empty;
+            string latex = string.Empty;
+
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
-
+            
             Genel.Handle(() =>
             {
                 ifadeTuru Tur = ifadeler[0].TurGetir();
@@ -228,7 +234,11 @@ namespace NeptunMathWPF.SoruVeAjani
                                     int bolunen = rng.Next(Araliklar["TAMSAYIBOLME"][0], Araliklar["TAMSAYIBOLME"][1]) * bolen;
 
                                     islemString += $"{bolunen}/{bolen}";
+
+                                    latex += $"\\frac{{{bolunen}}}{{{bolen}}}";
                                     ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i + 1].getir()} kaldırıldı] \n";
+
+                                    
                                 }
                                 else
                                 {
@@ -236,27 +246,48 @@ namespace NeptunMathWPF.SoruVeAjani
                                     {
                                         MessageBox.Show("DEBUG : silindi ");
                                         islemString += ifadeler[i].getir() + '/';
+                                        latex += ifadeler[i].LaTeXString + '/';
+
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
                                     }
 
                                     if (ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
                                     {
-                                        islemString += ifadeler[i].getir();
+                                        islemString += ifadeler[i].getir() + " / ";
+                                        latex += ifadeler[i].LaTeXString + "/";
+
                                         ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
+
+                                        alindi = true;
                                     }
                                 }
 
                                 if (i < ifadeler.Count - 1 && !alindi)
                                 {
-                                    islemString += KarakterDondur(new char[] { '-', '+' });
+                                    char ekleme = KarakterDondur(new char[] { '-', '+' });
+                                    islemString += ekleme;
+                                    latex += ekleme;
+
                                 }
+                                
                                 continue;
                             }
                             else
                             {
                                 islemString += ifadeler[i].getir();
+                                latex += ifadeler[i].LaTeXString;
+                   
                                 islemString += dortislem;
+
+                                if(dortislem == '*')
+                                {
+                                    latex += "\\cdot";
+                                }
+                                else
+                                {
+                                    latex += dortislem;
+                                }
 
                                 ajanLOG += $"Eklendi :: {ifadeler[i].getir()} | ifade ::  {i + 1} / {ifadeler.Count} \n";
                             }
@@ -275,10 +306,20 @@ namespace NeptunMathWPF.SoruVeAjani
 
                             ajanLOG += $"Eklendi :: {ifadeler[i].getir()} :: {i + 1} / {ifadeler.Count} \n";
                             islemString += ifadeler[i].getir();
+                            latex += ifadeler[i].LaTeXString;
 
                             if (i != ifadeler.Count - 1)
                             {
                                 islemString += dortislem;
+
+                                if (dortislem == '*')
+                                {
+                                    latex += "\\cdot";
+                                }
+                                else
+                                {
+                                    latex += dortislem;
+                                }
                             }
                         }
                     }
@@ -343,12 +384,8 @@ namespace NeptunMathWPF.SoruVeAjani
                 ajanLOG += $"{Araliklar.ElementAt(i).Key} :: min({Araliklar.ElementAt(i).Value[0]}), max({Araliklar.ElementAt(i).Value[1]}) \n";
             }
 
-            //NOT: Bazı LaTeX'leri doğru çeviremiyor 
-            //Ornek = 12+22*6! Çarpmayı' yokediyor ya bir çözüm ya da daha iyi bir LaTeX convertor bulacağız
-            //Sorun Çoklu Ifade' üçüncü çarpmaya gelince görülüyor
-            string LaTeX = islemString.Latexise();
-            soru.SetLaTexMetin(LaTeX);
-            ajanLOG += $"LaTex ÇIKTI :: {LaTeX}";
+            soru.SetLaTexMetin(latex);
+            ajanLOG += $"LaTex ÇIKTI :: {latex}";
             soru.SetOlusturmaLogu(ajanLOG);
             return soru;
         }
@@ -447,10 +484,13 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
+
+        //Ifade oluştruma yöntemleri
+        #region Ifadeler 
         public static Ifade IfadeKesirSayiUret(int pay)
         {
             int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
-            string LaTex = $"frac({{{pay}}}, {{{payda}}})";
+            string LaTex = $"\\frac{{{pay}}}{{{payda}}}";
             string islem = $"({pay}/{payda})";
             Ifade ifadeNesne = new Ifade(islem, LaTex, ifadeTuru.kesir);
             return ifadeNesne;
@@ -467,6 +507,8 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return ifadeNesne;
         }
+
+        #endregion 
 
         //Seçilelerden Rastgele char döndür
         public static char KarakterDondur(char[] charlar)

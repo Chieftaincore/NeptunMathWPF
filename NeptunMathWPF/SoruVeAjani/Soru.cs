@@ -14,16 +14,19 @@ using System.Windows.Automation.Peers;
 namespace NeptunMathWPF
 {
 
-    using ifadeTuru = SoruTerimleri.ifadeTurleri;
+    using soruTuru = SoruTerimleri.soruTuru;
     public class Soru
     {
-        string islemMetin;
-     
-        string sonuc;
-        string LatexMetin;
+        public soruTuru SoruTuru { get; }
+        public string IslemMetin { get; set; }
+        public string LatexMetin { get; set; }
+
+        string Sonuc;
+       
         string OlusturmaLogu;
 
         int Seviye;
+
         List<string> secenekler = new List<string>();
 
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
@@ -31,31 +34,37 @@ namespace NeptunMathWPF
         //İşlem Sorusu
         public Soru(string islem, string sonuc, Entity[] secenekler) {
            
+            SoruTuru = soruTuru.islem;
+
+            //Loglama Debug Mesajı
             string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";
-            for(int i=0;i < secenekler.Length; i++)
+
+            for (int i=0;i < secenekler.Length; i++)
             {
                 mesaj += $"({secenekler[i]})";
-             
             }
             MessageBox.Show(mesaj);
 
+            //secenekleri listede toplama
             foreach (Entity e in secenekler)
             {
                 this.secenekler.Add(e.Stringize());
             }
-            islemMetin = islem;
-            this.sonuc = sonuc;
+
+            IslemMetin = islem;
+            this.Sonuc = sonuc;
         }
 
         //Fonksiyon Sorusu
         public Soru(Question question, string[] secenekler)
         {
-            islemMetin = question.QuestionText;
+            SoruTuru = soruTuru.fonksiyon;
+
+            IslemMetin = question.QuestionText;
             LatexMetin = question.QuestionText;
 
             this.secenekler = secenekler.ToList();
-            sonuc = question.Answer;
-
+            Sonuc = question.Answer;
         }
 
         internal void SetOlusturmaLogu(string Metin)
@@ -73,7 +82,7 @@ namespace NeptunMathWPF
         }
         public string GetSonucSecenek()
         {
-            return sonuc;
+            return Sonuc;
         }
         public string GetOlusturmaLogu()
         {
@@ -85,7 +94,7 @@ namespace NeptunMathWPF
         }
         public string GetMetin()
         {
-            return islemMetin;
+            return IslemMetin;
         }
         public string GetLaTex()
         {

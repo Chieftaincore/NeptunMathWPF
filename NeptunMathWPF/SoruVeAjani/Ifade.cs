@@ -17,8 +17,9 @@ namespace NeptunMathWPF.SoruVeAjani
     public class Ifade
     {
         ifadeTuru Tur;
-        string islemS;
-        string LaTeXS;
+        string IslemString;
+
+        public string LaTeXString { get; set; }
 
         public Ifade()
         {
@@ -27,27 +28,34 @@ namespace NeptunMathWPF.SoruVeAjani
 
         public Ifade(string islem, string LaTeX, ifadeTuru tur)
         {
-            islemS = islem;
-            LaTeXS = LaTeX;
+            IslemString = islem;
+            LaTeXString = LaTeX;
+            Tur = tur;
+        }
+
+        public Ifade(int Sayi, string LaTeX, ifadeTuru tur)
+        {
+            IslemString = Sayi.ToString();
+            LaTeXString = LaTeX;
             Tur = tur;
         }
 
         public Ifade(int Sayi)
         {
-            islemS = Sayi.ToString();
-            LaTeXS = Sayi.ToString();
+            IslemString = Sayi.ToString();
+            LaTeXString = Sayi.ToString();
             Tur = ifadeTuru.sayi;
         }
 
         public Ifade(int Sayi, ifadeTuru tur)
         {
-            islemS = Sayi.ToString();
-            LaTeXS = Sayi.ToString();
+            IslemString = Sayi.ToString();
+            LaTeXString = Sayi.ToString();
             Tur = tur;
         }
         public string LaTeXgetir()
         {
-            return LaTeXS;
+            return LaTeXString;
         }
         public ifadeTuru TurGetir()
         {
@@ -55,12 +63,12 @@ namespace NeptunMathWPF.SoruVeAjani
         }
         public virtual string getir()
         {
-            return islemS;
+            return IslemString;
         }
 
         public int parseGetir()
         {
-            return int.Parse(islemS);
+            return int.Parse(IslemString);
         }
 
     }
@@ -83,7 +91,7 @@ namespace NeptunMathWPF.SoruVeAjani
     {
         Entity faq;
 
-        public Faktoriyel(int sayi) : base(sayi, tur: ifadeTuru.faktoriyel)
+        public Faktoriyel(int sayi) : base(sayi, $"{sayi}!" ,tur: ifadeTuru.faktoriyel)
         {
             faq = Factorial(sayi);
         }

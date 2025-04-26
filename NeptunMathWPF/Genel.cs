@@ -19,9 +19,17 @@ namespace NeptunMathWPF
             faktoriyel,
             kesir,
         }
+
+        public enum soruTuru
+        {
+            islem,
+            fonksiyon,
+            limit,
+            polinom,
+            turev
+        }
     }
 
-    // deneme yazısı
     //Ortak ve çok yönlu kullanımı olan fonksiyonlar bu sınıfa yazılacaktır
     //bu fonksiyonlara yerel loglama, try catch, hata dialogbox vs örnek gösterilebilir
     static class Genel

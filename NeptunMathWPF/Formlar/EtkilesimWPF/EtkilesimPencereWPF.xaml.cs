@@ -20,7 +20,7 @@ namespace NeptunMathWPF.Formlar
     /// </summary>
     /// 
 
-    using ifadeTuru = SoruTerimleri.ifadeTurleri;
+    //Bu Formun özellikleri ve fonksiyonelliği için EtkilesimMVVM'e bakınız
     public partial class EtkilesimPencereWPF : Window
     {
        

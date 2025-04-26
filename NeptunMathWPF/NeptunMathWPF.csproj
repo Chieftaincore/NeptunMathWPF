@@ -122,15 +122,15 @@
     <Compile Include="EtkilesimDegerlendirme.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Fonksiyonlar\DomainRangeGenerator.cs" />
-    <Compile Include="Fonksiyonlar\FunctionCompositionGenerator.cs" />
-    <Compile Include="Fonksiyonlar\FunctionQuestionGenerator.cs" />
-    <Compile Include="Fonksiyonlar\FunctionRepository.cs" />
-    <Compile Include="Fonksiyonlar\FunctionType.cs" />
-    <Compile Include="Fonksiyonlar\FunctionValueGenerator.cs" />
-    <Compile Include="Fonksiyonlar\GeneratedFunction.cs" />
-    <Compile Include="Fonksiyonlar\InverseFunctionGenerator.cs" />
-    <Compile Include="Fonksiyonlar\Question.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\DomainRangeGenerator.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionCompositionGenerator.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionQuestionGenerator.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionRepository.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionType.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionValueGenerator.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\GeneratedFunction.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\InverseFunctionGenerator.cs" />
+    <Compile Include="SoruVeAjani\Fonksiyonlar\Question.cs" />
     <Compile Include="Formlar\dbTestWPF.xaml.cs">
       <DependentUpon>dbTestWPF.xaml</DependentUpon>
     </Compile>

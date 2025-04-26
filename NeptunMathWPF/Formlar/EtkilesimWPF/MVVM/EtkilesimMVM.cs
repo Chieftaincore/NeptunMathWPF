@@ -18,24 +18,30 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
     class EtkilesimMVM : ObservableObject
     {
-        //Debug:
+        //Debug Tools: 
         public string[] DebugComboBoxTurler { get; set; }
         public string cmBxSecilen { get; set; }
         public ObservableCollection<ifadeTuru> CokluIfadeTurlerListColl { get; set; }
         public ICommand DebugCokluIfadeEkle { get; set; }
         public ICommand DebugCokluIfadeSil { get; set; }
+        public ICommand DenemeEkleKomut { get; set; }
+
+        //ObservableCollectionlar
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
 
         private ObservableCollection<string> _secenekler;
-        public ObservableCollection<string> secenekler { get => _secenekler ; set { 
-              
-                if(_secenekler != value) { 
-                _secenekler = value; 
-                OnPropertyChanged(nameof(secenekler));
+        public ObservableCollection<string> secenekler
+        {
+            get => _secenekler; set
+            {
+
+                if (_secenekler != value)
+                {
+                    _secenekler = value;
+                    OnPropertyChanged(nameof(secenekler));
                 }
-            } 
+            }
         }
-        public ICommand DenemeEkleKomut { get; set; }
         public ICommand SeciliTurDegistir { get; set; }
 
         internal KeyEventHandler key;
@@ -190,8 +196,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.faktoriyel }),
                 ifadeTuru.sayi,
 
-                turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.kesir, ifadeTuru.faktoriyel }),
-                ifadeTuru.sayi
+                turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.kesir }),
+                
             };
 
             return ifadeTurleri;
