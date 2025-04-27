@@ -153,6 +153,9 @@
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SesIslemleri.cs" />
+
+    <Compile Include="Soru.cs" />
     <Compile Include="HavuzSoru.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
