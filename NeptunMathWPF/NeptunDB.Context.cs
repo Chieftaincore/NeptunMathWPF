@@ -13,10 +13,10 @@ namespace NeptunMathWPF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NeptunDB : DbContext
+    public partial class NEPTUN_DBEntities : DbContext
     {
-        public NeptunDB()
-            : base("name=NeptunDB")
+        public NEPTUN_DBEntities()
+            : base("name=NEPTUN_DBEntities")
         {
         }
     
@@ -25,19 +25,14 @@ namespace NeptunMathWPF
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<BildirimLog> BildirimLog { get; set; }
-        public virtual DbSet<Eposta> Eposta { get; set; }
-        public virtual DbSet<EtkilesimDegerlendirme> EtkilesimDegerlendirme { get; set; }
-        public virtual DbSet<HavuzSoru> HavuzSoru { get; set; }
-        public virtual DbSet<Konular> Konular { get; set; }
-        public virtual DbSet<KonuPuanlama> KonuPuanlama { get; set; }
-        public virtual DbSet<Kullanici> Kullanici { get; set; }
-        public virtual DbSet<KullaniciTurleri> KullaniciTurleri { get; set; }
-        public virtual DbSet<LoginKull> LoginKull { get; set; }
-        public virtual DbSet<SablonSoru> SablonSoru { get; set; }
-        public virtual DbSet<SistemikHataLog> SistemikHataLog { get; set; }
-        public virtual DbSet<SoruProfili> SoruProfili { get; set; }
-        public virtual DbSet<SoruTurleri> SoruTurleri { get; set; }
-        public virtual DbSet<TokenKullanimi> TokenKullanimi { get; set; }
+        public virtual DbSet<BOOKMARKED_QUESTIONS> BOOKMARKED_QUESTIONS { get; set; }
+        public virtual DbSet<FEEDBACK> FEEDBACK { get; set; }
+        public virtual DbSet<LOGS> LOGS { get; set; }
+        public virtual DbSet<QUESTION_POOL> QUESTION_POOL { get; set; }
+        public virtual DbSet<SUBTOPICS> SUBTOPICS { get; set; }
+        public virtual DbSet<TOPICS> TOPICS { get; set; }
+        public virtual DbSet<USER_SCORES> USER_SCORES { get; set; }
+        public virtual DbSet<USERS> USERS { get; set; }
+        public virtual DbSet<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
     }
 }

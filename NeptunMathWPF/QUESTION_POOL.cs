@@ -12,14 +12,17 @@ namespace NeptunMathWPF
     using System;
     using System.Collections.Generic;
     
-    public partial class SoruProfili
+    public partial class QUESTION_POOL
     {
-        public int kullId { get; set; }
-        public string soruTur { get; set; }
-        public int havzID { get; set; }
-        public Nullable<bool> dogruluk { get; set; }
+        public int POOL_ID { get; set; }
+        public int TOPIC_ID { get; set; }
+        public int SUBTOPIC_ID { get; set; }
+        public string QUESTION_TEXT { get; set; }
+        public string LATEX_TEXT { get; set; }
+        public string CORRECT_ANSWER { get; set; }
+        public string WRONG_ANSWERS { get; set; }
     
-        public virtual HavuzSoru HavuzSoru { get; set; }
-        public virtual Kullanici Kullanici { get; set; }
+        public virtual SUBTOPICS SUBTOPICS { get; set; }
+        public virtual TOPICS TOPICS { get; set; }
     }
 }

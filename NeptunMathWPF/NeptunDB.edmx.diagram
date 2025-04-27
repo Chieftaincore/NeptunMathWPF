@@ -4,31 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="31588e75f0154cc08350a416d277ac1e" Name="Diagram1" ZoomLevel="64">
-        <EntityTypeShape EntityType="NeptunDBModel.BildirimLog" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.Eposta" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.EtkilesimDegerlendirme" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.HavuzSoru" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.Konular" Width="1.5" PointX="8.75" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.KonuPuanlama" Width="1.5" PointX="11" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.Kullanici" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.KullaniciTurleri" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.LoginKull" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.SablonSoru" Width="1.5" PointX="6" PointY="15.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.SistemikHataLog" Width="1.5" PointX="7.75" PointY="10.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.SoruProfili" Width="1.5" PointX="8.25" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.SoruTurleri" Width="1.5" PointX="3.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="NeptunDBModel.TokenKullanimi" Width="1.5" PointX="5.25" PointY="12.375" IsExpanded="true" />
-        <AssociationConnector Association="NeptunDBModel.epostuye_fk" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.EtkilKullaniciFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.havzsorutur_fk" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.soruprofilHavzFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.PuanKonuFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.KullaniciLoginFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.KullaniciTurFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.soruprofilKullFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.ToknKullaniciFK" ManuallyRouted="false" />
-        <AssociationConnector Association="NeptunDBModel.sabsorutur_fk" ManuallyRouted="false" />
+      <Diagram DiagramId="eb9d69962a824d91a37a206d8ab79a87" Name="Diagram1">
+        <EntityTypeShape EntityType="NEPTUN_DBModel.BOOKMARKED_QUESTIONS" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.FEEDBACK" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.LOGS" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.QUESTION_POOL" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.SUBTOPICS" Width="1.5" PointX="3.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.TOPICS" Width="1.5" PointX="1.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.USER_SCORES" Width="1.5" PointX="6" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.USERS" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.WRONG_ANSWERED_QUESTIONS" Width="1.5" PointX="6" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__BOOKMARKE__SUBTO__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__BOOKMARKE__TOPIC__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__BOOKMARKE__USERI__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__FEEDBACK__USERID__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__LOGS__USERID__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__QUESTION___SUBTO__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__QUESTION___TOPIC__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__SUBTOPICS__TOPIC__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__USER_SCOR__SUBTO__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__WRONG_ANS__SUBTO__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__USER_SCOR__TOPIC__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__WRONG_ANS__TOPIC__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__USER_SCOR__USERI__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__WRONG_ANS__WRONG__52593CB8" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
