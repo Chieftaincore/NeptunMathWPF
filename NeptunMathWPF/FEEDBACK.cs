@@ -12,14 +12,16 @@ namespace NeptunMathWPF
     using System;
     using System.Collections.Generic;
     
-    public partial class SablonSoru
+    public partial class FEEDBACK
     {
-        public string sorutur { get; set; }
-        public int sablID { get; set; }
-        public string metin { get; set; }
-        public string sorudenklemi { get; set; }
-        public string LaTeX { get; set; }
+        public int FEEDBACK_ID { get; set; }
+        public int USERID { get; set; }
+        public string SUBJECT { get; set; }
+        public string MESSAGE { get; set; }
+        public string FEEDBACK_TYPE { get; set; }
+        public string STATUS { get; set; }
+        public Nullable<System.DateTime> CREATE_DATE { get; set; }
     
-        public virtual SoruTurleri SoruTurleri { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

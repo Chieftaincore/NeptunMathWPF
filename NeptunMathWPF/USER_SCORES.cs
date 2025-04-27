@@ -12,12 +12,16 @@ namespace NeptunMathWPF
     using System;
     using System.Collections.Generic;
     
-    public partial class SistemikHataLog
+    public partial class USER_SCORES
     {
-        public System.DateTime zaman { get; set; }
-        public int kullnID { get; set; }
-        public string hatakod { get; set; }
-        public byte num { get; set; }
-        public string hatamesaj { get; set; }
+        public int SCORE_ID { get; set; }
+        public int USERID { get; set; }
+        public int TOPIC_ID { get; set; }
+        public int SUBTOPIC_ID { get; set; }
+        public int SCORE { get; set; }
+    
+        public virtual SUBTOPICS SUBTOPICS { get; set; }
+        public virtual TOPICS TOPICS { get; set; }
+        public virtual USERS USERS { get; set; }
     }
 }

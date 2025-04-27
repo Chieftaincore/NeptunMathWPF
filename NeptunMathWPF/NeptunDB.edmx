@@ -4,657 +4,704 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="NeptunDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="BildirimLog">
+      <Schema Namespace="NEPTUN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BOOKMARKED_QUESTIONS">
           <Key>
-            <PropertyRef Name="zaman" />
-            <PropertyRef Name="kullnID" />
-            <PropertyRef Name="num" />
+            <PropertyRef Name="BOOKMARK_ID" />
           </Key>
-          <Property Name="zaman" Type="datetime" Nullable="false" />
-          <Property Name="kullnID" Type="int" Nullable="false" />
-          <Property Name="num" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SoruTuru" Type="char" MaxLength="3" />
-          <Property Name="icerik" Type="text" />
+          <Property Name="BOOKMARK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="CORRECT_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <EntityType Name="Eposta">
+        <EntityType Name="FEEDBACK">
           <Key>
-            <PropertyRef Name="E_posta" />
+            <PropertyRef Name="FEEDBACK_ID" />
           </Key>
-          <Property Name="E_posta" Type="varchar" MaxLength="320" Nullable="false" />
-          <Property Name="kullkarsilik" Type="int" Nullable="false" />
+          <Property Name="FEEDBACK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="SUBJECT" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MESSAGE" Type="varchar(max)" Nullable="false" />
+          <Property Name="FEEDBACK_TYPE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="STATUS" Type="varchar" MaxLength="15" />
+          <Property Name="CREATE_DATE" Type="datetime" />
         </EntityType>
-        <EntityType Name="EtkilesimDegerlendirme">
+        <EntityType Name="LOGS">
           <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="zaman" />
+            <PropertyRef Name="LOG_ID" />
           </Key>
-          <Property Name="kullID" Type="int" Nullable="false" />
-          <Property Name="zaman" Type="datetime" Nullable="false" />
-          <Property Name="puanlama" Type="int" Nullable="false" />
-          <Property Name="oneri" Type="text" />
+          <Property Name="LOG_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LOG_DATE" Type="datetime" />
+          <Property Name="LOG_LEVEL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MESSAGE" Type="varchar(max)" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="HavuzSoru">
+        <EntityType Name="QUESTION_POOL">
           <Key>
-            <PropertyRef Name="sorutur" />
-            <PropertyRef Name="havzID" />
+            <PropertyRef Name="POOL_ID" />
           </Key>
-          <Property Name="sorutur" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="havzID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="metin" Type="text" />
-          <Property Name="sorudenklemi" Type="varchar" MaxLength="64" />
-          <Property Name="dogrusonuc" Type="varchar" MaxLength="16" />
-          <Property Name="LaTeX" Type="varchar" MaxLength="128" />
+          <Property Name="POOL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="CORRECT_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <EntityType Name="Konular">
+        <EntityType Name="SUBTOPICS">
           <Key>
-            <PropertyRef Name="anahtar" />
+            <PropertyRef Name="SUBTOPIC_ID" />
           </Key>
-          <Property Name="anahtar" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="yazi" Type="varchar" MaxLength="32" />
+          <Property Name="SUBTOPIC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
-        <EntityType Name="KonuPuanlama">
+        <EntityType Name="TOPICS">
           <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="konuanahtar" />
+            <PropertyRef Name="TOPIC_ID" />
           </Key>
-          <Property Name="kullID" Type="int" Nullable="false" />
-          <Property Name="konuanahtar" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="puanlama" Type="int" />
-          <Property Name="sonGuncellenme" Type="datetime" />
+          <Property Name="TOPIC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TOPIC" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="Kullanici">
+        <EntityType Name="USER_SCORES">
           <Key>
-            <PropertyRef Name="kimlik" />
+            <PropertyRef Name="SCORE_ID" />
           </Key>
-          <Property Name="kimlik" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ad" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="soyad" Type="varchar" MaxLength="64" />
-          <Property Name="karsilik" Type="int" Nullable="false" />
-          <Property Name="tur" Type="char" MaxLength="3" />
+          <Property Name="SCORE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SCORE" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="KullaniciTurleri">
+        <EntityType Name="USERS">
           <Key>
-            <PropertyRef Name="kullAnahtar" />
+            <PropertyRef Name="USERID" />
           </Key>
-          <Property Name="kullAnahtar" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="kullTur" Type="varchar" MaxLength="64" />
+          <Property Name="USERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERNAME" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LAST_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="E_MAIL" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_ROLE" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="LoginKull">
+        <EntityType Name="WRONG_ANSWERED_QUESTIONS">
           <Key>
-            <PropertyRef Name="loginKull" />
+            <PropertyRef Name="WAQ_ID" />
           </Key>
-          <Property Name="loginKull" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="kullaniciadi" Type="varchar" MaxLength="32" />
-          <Property Name="sifre" Type="varchar" MaxLength="255" />
+          <Property Name="WAQ_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
+          <Property Name="ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="USERS_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
-        <EntityType Name="SablonSoru">
-          <Key>
-            <PropertyRef Name="sorutur" />
-            <PropertyRef Name="sablID" />
-          </Key>
-          <Property Name="sorutur" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="sablID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="metin" Type="text" />
-          <Property Name="sorudenklemi" Type="varchar" MaxLength="64" />
-          <Property Name="LaTeX" Type="varchar" MaxLength="128" />
-        </EntityType>
-        <EntityType Name="SistemikHataLog">
-          <Key>
-            <PropertyRef Name="zaman" />
-            <PropertyRef Name="kullnID" />
-            <PropertyRef Name="hatakod" />
-            <PropertyRef Name="num" />
-          </Key>
-          <Property Name="zaman" Type="datetime" Nullable="false" />
-          <Property Name="kullnID" Type="int" Nullable="false" />
-          <Property Name="hatakod" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="num" Type="tinyint" Nullable="false" StoreGeneratedPattern="None" />
-          <Property Name="hatamesaj" Type="text" />
-        </EntityType>
-        <EntityType Name="SoruProfili">
-          <Key>
-            <PropertyRef Name="kullId" />
-            <PropertyRef Name="soruTur" />
-            <PropertyRef Name="havzID" />
-          </Key>
-          <Property Name="kullId" Type="int" Nullable="false" />
-          <Property Name="soruTur" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="havzID" Type="int" Nullable="false" />
-          <Property Name="dogruluk" Type="bit" />
-        </EntityType>
-        <EntityType Name="SoruTurleri">
-          <Key>
-            <PropertyRef Name="anahtar" />
-          </Key>
-          <Property Name="anahtar" Type="char" MaxLength="3" Nullable="false" />
-          <Property Name="tur_karsilik" Type="varchar" MaxLength="64" />
-        </EntityType>
-        <EntityType Name="TokenKullanimi">
-          <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="oturum" />
-          </Key>
-          <Property Name="kullID" Type="int" Nullable="false" />
-          <Property Name="oturum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="girdiTOKEN" Type="float" />
-          <Property Name="ciktiTOKEN" Type="float" />
-          <Property Name="zaman" Type="datetime" />
-        </EntityType>
-        <Association Name="epostuye_fk">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="Eposta" Type="Self.Eposta" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__SUBTO__4F7CD00D">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="Eposta">
-              <PropertyRef Name="kullkarsilik" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="EtkilKullaniciFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="EtkilesimDegerlendirme" Type="Self.EtkilesimDegerlendirme" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__TOPIC__4E88ABD4">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="EtkilesimDegerlendirme">
-              <PropertyRef Name="kullID" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="havzsorutur_fk">
-          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
-          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__USERI__4D94879B">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SoruTurleri">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="HavuzSoru">
-              <PropertyRef Name="sorutur" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="KullaniciLoginFK">
-          <End Role="LoginKull" Type="Self.LoginKull" Multiplicity="1" />
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+        <Association Name="FK__FEEDBACK__USERID__4222D4EF">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FEEDBACK" Type="Self.FEEDBACK" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LoginKull">
-              <PropertyRef Name="loginKull" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="Kullanici">
-              <PropertyRef Name="karsilik" />
+            <Dependent Role="FEEDBACK">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="KullaniciTurFK">
-          <End Role="KullaniciTurleri" Type="Self.KullaniciTurleri" Multiplicity="0..1" />
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+        <Association Name="FK__LOGS__USERID__3C69FB99">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LOGS" Type="Self.LOGS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="KullaniciTurleri">
-              <PropertyRef Name="kullAnahtar" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="Kullanici">
-              <PropertyRef Name="tur" />
+            <Dependent Role="LOGS">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PuanKonuFK">
-          <End Role="Konular" Type="Self.Konular" Multiplicity="1" />
-          <End Role="KonuPuanlama" Type="Self.KonuPuanlama" Multiplicity="*" />
+        <Association Name="FK__QUESTION___SUBTO__4AB81AF0">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="QUESTION_POOL" Type="Self.QUESTION_POOL" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Konular">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="KonuPuanlama">
-              <PropertyRef Name="konuanahtar" />
+            <Dependent Role="QUESTION_POOL">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="sabsorutur_fk">
-          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
-          <End Role="SablonSoru" Type="Self.SablonSoru" Multiplicity="*" />
+        <Association Name="FK__QUESTION___TOPIC__49C3F6B7">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="QUESTION_POOL" Type="Self.QUESTION_POOL" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SoruTurleri">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="SablonSoru">
-              <PropertyRef Name="sorutur" />
+            <Dependent Role="QUESTION_POOL">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="soruprofilHavzFK">
-          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="1" />
-          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+        <Association Name="FK__SUBTOPICS__TOPIC__46E78A0C">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HavuzSoru">
-              <PropertyRef Name="sorutur" />
-              <PropertyRef Name="havzID" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="SoruProfili">
-              <PropertyRef Name="soruTur" />
-              <PropertyRef Name="havzID" />
+            <Dependent Role="SUBTOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="soruprofilKullFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+        <Association Name="FK__USER_SCOR__SUBTO__59063A47">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="SoruProfili">
-              <PropertyRef Name="kullId" />
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ToknKullaniciFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="TokenKullanimi" Type="Self.TokenKullanimi" Multiplicity="*" />
+        <Association Name="FK__USER_SCOR__TOPIC__5812160E">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="TokenKullanimi">
-              <PropertyRef Name="kullID" />
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NeptunDBModelStoreContainer">
-          <EntitySet Name="BildirimLog" EntityType="Self.BildirimLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Eposta" EntityType="Self.Eposta" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EtkilesimDegerlendirme" EntityType="Self.EtkilesimDegerlendirme" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="HavuzSoru" EntityType="Self.HavuzSoru" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Konular" EntityType="Self.Konular" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="KonuPuanlama" EntityType="Self.KonuPuanlama" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="KullaniciTurleri" EntityType="Self.KullaniciTurleri" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LoginKull" EntityType="Self.LoginKull" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SablonSoru" EntityType="Self.SablonSoru" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SistemikHataLog" EntityType="Self.SistemikHataLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SoruProfili" EntityType="Self.SoruProfili" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SoruTurleri" EntityType="Self.SoruTurleri" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TokenKullanimi" EntityType="Self.TokenKullanimi" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="epostuye_fk" Association="Self.epostuye_fk">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="Eposta" EntitySet="Eposta" />
+        <Association Name="FK__USER_SCOR__USERI__571DF1D5">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WRONG_ANS__SUBTO__5441852A">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Principal>
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WRONG_ANS__TOPIC__534D60F1">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Principal>
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WRONG_ANS__WRONG__52593CB8">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NEPTUN_DBModelStoreContainer">
+          <EntitySet Name="BOOKMARKED_QUESTIONS" EntityType="Self.BOOKMARKED_QUESTIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FEEDBACK" EntityType="Self.FEEDBACK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOGS" EntityType="Self.LOGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QUESTION_POOL" EntityType="Self.QUESTION_POOL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUBTOPICS" EntityType="Self.SUBTOPICS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TOPICS" EntityType="Self.TOPICS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_SCORES" EntityType="Self.USER_SCORES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WRONG_ANSWERED_QUESTIONS" EntityType="Self.WRONG_ANSWERED_QUESTIONS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BOOKMARKE__SUBTO__4F7CD00D" Association="Self.FK__BOOKMARKE__SUBTO__4F7CD00D">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="EtkilKullaniciFK" Association="Self.EtkilKullaniciFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="EtkilesimDegerlendirme" EntitySet="EtkilesimDegerlendirme" />
+          <AssociationSet Name="FK__BOOKMARKE__TOPIC__4E88ABD4" Association="Self.FK__BOOKMARKE__TOPIC__4E88ABD4">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="havzsorutur_fk" Association="Self.havzsorutur_fk">
-            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
-            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+          <AssociationSet Name="FK__BOOKMARKE__USERI__4D94879B" Association="Self.FK__BOOKMARKE__USERI__4D94879B">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="KullaniciLoginFK" Association="Self.KullaniciLoginFK">
-            <End Role="LoginKull" EntitySet="LoginKull" />
-            <End Role="Kullanici" EntitySet="Kullanici" />
+          <AssociationSet Name="FK__FEEDBACK__USERID__4222D4EF" Association="Self.FK__FEEDBACK__USERID__4222D4EF">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FEEDBACK" EntitySet="FEEDBACK" />
           </AssociationSet>
-          <AssociationSet Name="KullaniciTurFK" Association="Self.KullaniciTurFK">
-            <End Role="KullaniciTurleri" EntitySet="KullaniciTurleri" />
-            <End Role="Kullanici" EntitySet="Kullanici" />
+          <AssociationSet Name="FK__LOGS__USERID__3C69FB99" Association="Self.FK__LOGS__USERID__3C69FB99">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LOGS" EntitySet="LOGS" />
           </AssociationSet>
-          <AssociationSet Name="PuanKonuFK" Association="Self.PuanKonuFK">
-            <End Role="Konular" EntitySet="Konular" />
-            <End Role="KonuPuanlama" EntitySet="KonuPuanlama" />
+          <AssociationSet Name="FK__QUESTION___SUBTO__4AB81AF0" Association="Self.FK__QUESTION___SUBTO__4AB81AF0">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="QUESTION_POOL" EntitySet="QUESTION_POOL" />
           </AssociationSet>
-          <AssociationSet Name="sabsorutur_fk" Association="Self.sabsorutur_fk">
-            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
-            <End Role="SablonSoru" EntitySet="SablonSoru" />
+          <AssociationSet Name="FK__QUESTION___TOPIC__49C3F6B7" Association="Self.FK__QUESTION___TOPIC__49C3F6B7">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="QUESTION_POOL" EntitySet="QUESTION_POOL" />
           </AssociationSet>
-          <AssociationSet Name="soruprofilHavzFK" Association="Self.soruprofilHavzFK">
-            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
-            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          <AssociationSet Name="FK__SUBTOPICS__TOPIC__46E78A0C" Association="Self.FK__SUBTOPICS__TOPIC__46E78A0C">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
           </AssociationSet>
-          <AssociationSet Name="soruprofilKullFK" Association="Self.soruprofilKullFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          <AssociationSet Name="FK__USER_SCOR__SUBTO__59063A47" Association="Self.FK__USER_SCOR__SUBTO__59063A47">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
           </AssociationSet>
-          <AssociationSet Name="ToknKullaniciFK" Association="Self.ToknKullaniciFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="TokenKullanimi" EntitySet="TokenKullanimi" />
+          <AssociationSet Name="FK__USER_SCOR__TOPIC__5812160E" Association="Self.FK__USER_SCOR__TOPIC__5812160E">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_SCOR__USERI__571DF1D5" Association="Self.FK__USER_SCOR__USERI__571DF1D5">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WRONG_ANS__SUBTO__5441852A" Association="Self.FK__WRONG_ANS__SUBTO__5441852A">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WRONG_ANS__TOPIC__534D60F1" Association="Self.FK__WRONG_ANS__TOPIC__534D60F1">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WRONG_ANS__WRONG__52593CB8" Association="Self.FK__WRONG_ANS__WRONG__52593CB8">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="NeptunDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="BildirimLog">
+      <Schema Namespace="NEPTUN_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BOOKMARKED_QUESTIONS">
           <Key>
-            <PropertyRef Name="zaman" />
-            <PropertyRef Name="kullnID" />
-            <PropertyRef Name="num" />
+            <PropertyRef Name="BOOKMARK_ID" />
           </Key>
-          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="kullnID" Type="Int32" Nullable="false" />
-          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SoruTuru" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Name="icerik" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BOOKMARK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__BOOKMARKE__SUBTO__4F7CD00D" FromRole="BOOKMARKED_QUESTIONS" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="TOPICS" Relationship="Self.FK__BOOKMARKE__TOPIC__4E88ABD4" FromRole="BOOKMARKED_QUESTIONS" ToRole="TOPICS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__BOOKMARKE__USERI__4D94879B" FromRole="BOOKMARKED_QUESTIONS" ToRole="USERS" />
         </EntityType>
-        <EntityType Name="Eposta">
+        <EntityType Name="FEEDBACK">
           <Key>
-            <PropertyRef Name="E_posta" />
+            <PropertyRef Name="FEEDBACK_ID" />
           </Key>
-          <Property Name="E_posta" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="kullkarsilik" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.epostuye_fk" FromRole="Eposta" ToRole="Kullanici" />
+          <Property Name="FEEDBACK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="SUBJECT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MESSAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FEEDBACK_TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="STATUS" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="CREATE_DATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__FEEDBACK__USERID__4222D4EF" FromRole="FEEDBACK" ToRole="USERS" />
         </EntityType>
-        <EntityType Name="EtkilesimDegerlendirme">
+        <EntityType Name="LOGS">
           <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="zaman" />
+            <PropertyRef Name="LOG_ID" />
           </Key>
-          <Property Name="kullID" Type="Int32" Nullable="false" />
-          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="puanlama" Type="Int32" Nullable="false" />
-          <Property Name="oneri" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.EtkilKullaniciFK" FromRole="EtkilesimDegerlendirme" ToRole="Kullanici" />
+          <Property Name="LOG_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOG_DATE" Type="DateTime" Precision="3" />
+          <Property Name="LOG_LEVEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MESSAGE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__LOGS__USERID__3C69FB99" FromRole="LOGS" ToRole="USERS" />
         </EntityType>
-        <EntityType Name="HavuzSoru">
+        <EntityType Name="QUESTION_POOL">
           <Key>
-            <PropertyRef Name="sorutur" />
-            <PropertyRef Name="havzID" />
+            <PropertyRef Name="POOL_ID" />
           </Key>
-          <Property Name="sorutur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="havzID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="metin" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="sorudenklemi" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="dogrusonuc" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
-          <Property Name="LaTeX" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SoruTurleri" Relationship="Self.havzsorutur_fk" FromRole="HavuzSoru" ToRole="SoruTurleri" />
-          <NavigationProperty Name="SoruProfili" Relationship="Self.soruprofilHavzFK" FromRole="HavuzSoru" ToRole="SoruProfili" />
+          <Property Name="POOL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__QUESTION___SUBTO__4AB81AF0" FromRole="QUESTION_POOL" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="TOPICS" Relationship="Self.FK__QUESTION___TOPIC__49C3F6B7" FromRole="QUESTION_POOL" ToRole="TOPICS" />
         </EntityType>
-        <EntityType Name="Konular">
+        <EntityType Name="SUBTOPICS">
           <Key>
-            <PropertyRef Name="anahtar" />
+            <PropertyRef Name="SUBTOPIC_ID" />
           </Key>
-          <Property Name="anahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="yazi" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="KonuPuanlama" Relationship="Self.PuanKonuFK" FromRole="Konular" ToRole="KonuPuanlama" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BOOKMARKED_QUESTIONS" Relationship="Self.FK__BOOKMARKE__SUBTO__4F7CD00D" FromRole="SUBTOPICS" ToRole="BOOKMARKED_QUESTIONS" />
+          <NavigationProperty Name="QUESTION_POOL" Relationship="Self.FK__QUESTION___SUBTO__4AB81AF0" FromRole="SUBTOPICS" ToRole="QUESTION_POOL" />
+          <NavigationProperty Name="TOPICS" Relationship="Self.FK__SUBTOPICS__TOPIC__46E78A0C" FromRole="SUBTOPICS" ToRole="TOPICS" />
+          <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__SUBTO__59063A47" FromRole="SUBTOPICS" ToRole="USER_SCORES" />
+          <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__SUBTO__5441852A" FromRole="SUBTOPICS" ToRole="WRONG_ANSWERED_QUESTIONS" />
         </EntityType>
-        <EntityType Name="KonuPuanlama">
+        <EntityType Name="TOPICS">
           <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="konuanahtar" />
+            <PropertyRef Name="TOPIC_ID" />
           </Key>
-          <Property Name="kullID" Type="Int32" Nullable="false" />
-          <Property Name="konuanahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="puanlama" Type="Int32" />
-          <Property Name="sonGuncellenme" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Konular" Relationship="Self.PuanKonuFK" FromRole="KonuPuanlama" ToRole="Konular" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TOPIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BOOKMARKED_QUESTIONS" Relationship="Self.FK__BOOKMARKE__TOPIC__4E88ABD4" FromRole="TOPICS" ToRole="BOOKMARKED_QUESTIONS" />
+          <NavigationProperty Name="QUESTION_POOL" Relationship="Self.FK__QUESTION___TOPIC__49C3F6B7" FromRole="TOPICS" ToRole="QUESTION_POOL" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__SUBTOPICS__TOPIC__46E78A0C" FromRole="TOPICS" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__TOPIC__5812160E" FromRole="TOPICS" ToRole="USER_SCORES" />
+          <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__TOPIC__534D60F1" FromRole="TOPICS" ToRole="WRONG_ANSWERED_QUESTIONS" />
         </EntityType>
-        <EntityType Name="Kullanici">
+        <EntityType Name="USER_SCORES">
           <Key>
-            <PropertyRef Name="kimlik" />
+            <PropertyRef Name="SCORE_ID" />
           </Key>
-          <Property Name="kimlik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ad" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="soyad" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="karsilik" Type="Int32" Nullable="false" />
-          <Property Name="tur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
-          <NavigationProperty Name="Eposta" Relationship="Self.epostuye_fk" FromRole="Kullanici" ToRole="Eposta" />
-          <NavigationProperty Name="EtkilesimDegerlendirme" Relationship="Self.EtkilKullaniciFK" FromRole="Kullanici" ToRole="EtkilesimDegerlendirme" />
-          <NavigationProperty Name="LoginKull" Relationship="Self.KullaniciLoginFK" FromRole="Kullanici" ToRole="LoginKull" />
-          <NavigationProperty Name="KullaniciTurleri" Relationship="Self.KullaniciTurFK" FromRole="Kullanici" ToRole="KullaniciTurleri" />
-          <NavigationProperty Name="SoruProfili" Relationship="Self.soruprofilKullFK" FromRole="Kullanici" ToRole="SoruProfili" />
-          <NavigationProperty Name="TokenKullanimi" Relationship="Self.ToknKullaniciFK" FromRole="Kullanici" ToRole="TokenKullanimi" />
+          <Property Name="SCORE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SCORE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__USER_SCOR__SUBTO__59063A47" FromRole="USER_SCORES" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="TOPICS" Relationship="Self.FK__USER_SCOR__TOPIC__5812160E" FromRole="USER_SCORES" ToRole="TOPICS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__USER_SCOR__USERI__571DF1D5" FromRole="USER_SCORES" ToRole="USERS" />
         </EntityType>
-        <EntityType Name="KullaniciTurleri">
+        <EntityType Name="USERS">
           <Key>
-            <PropertyRef Name="kullAnahtar" />
+            <PropertyRef Name="USERID" />
           </Key>
-          <Property Name="kullAnahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="kullTur" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.KullaniciTurFK" FromRole="KullaniciTurleri" ToRole="Kullanici" />
+          <Property Name="USERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERNAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FIRST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LAST_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="E_MAIL" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_ROLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BOOKMARKED_QUESTIONS" Relationship="Self.FK__BOOKMARKE__USERI__4D94879B" FromRole="USERS" ToRole="BOOKMARKED_QUESTIONS" />
+          <NavigationProperty Name="FEEDBACK" Relationship="Self.FK__FEEDBACK__USERID__4222D4EF" FromRole="USERS" ToRole="FEEDBACK" />
+          <NavigationProperty Name="LOGS" Relationship="Self.FK__LOGS__USERID__3C69FB99" FromRole="USERS" ToRole="LOGS" />
+          <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__USERI__571DF1D5" FromRole="USERS" ToRole="USER_SCORES" />
+          <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__WRONG__52593CB8" FromRole="USERS" ToRole="WRONG_ANSWERED_QUESTIONS" />
         </EntityType>
-        <EntityType Name="LoginKull">
+        <EntityType Name="WRONG_ANSWERED_QUESTIONS">
           <Key>
-            <PropertyRef Name="loginKull1" />
+            <PropertyRef Name="WAQ_ID" />
           </Key>
-          <Property Name="loginKull1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="kullaniciadi" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="sifre" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.KullaniciLoginFK" FromRole="LoginKull" ToRole="Kullanici" />
+          <Property Name="WAQ_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USERS_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__WRONG_ANS__SUBTO__5441852A" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="TOPICS" Relationship="Self.FK__WRONG_ANS__TOPIC__534D60F1" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="TOPICS" />
+          <NavigationProperty Name="USERS" Relationship="Self.FK__WRONG_ANS__WRONG__52593CB8" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="USERS" />
         </EntityType>
-        <EntityType Name="SablonSoru">
-          <Key>
-            <PropertyRef Name="sorutur" />
-            <PropertyRef Name="sablID" />
-          </Key>
-          <Property Name="sorutur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="sablID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="metin" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="sorudenklemi" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <Property Name="LaTeX" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="SoruTurleri" Relationship="Self.sabsorutur_fk" FromRole="SablonSoru" ToRole="SoruTurleri" />
-        </EntityType>
-        <EntityType Name="SistemikHataLog">
-          <Key>
-            <PropertyRef Name="zaman" />
-            <PropertyRef Name="kullnID" />
-            <PropertyRef Name="hatakod" />
-            <PropertyRef Name="num" />
-          </Key>
-          <Property Name="zaman" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="kullnID" Type="Int32" Nullable="false" />
-          <Property Name="hatakod" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="num" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Name="hatamesaj" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="SoruProfili">
-          <Key>
-            <PropertyRef Name="kullId" />
-            <PropertyRef Name="soruTur" />
-            <PropertyRef Name="havzID" />
-          </Key>
-          <Property Name="kullId" Type="Int32" Nullable="false" />
-          <Property Name="soruTur" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="havzID" Type="Int32" Nullable="false" />
-          <Property Name="dogruluk" Type="Boolean" />
-          <NavigationProperty Name="HavuzSoru" Relationship="Self.soruprofilHavzFK" FromRole="SoruProfili" ToRole="HavuzSoru" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.soruprofilKullFK" FromRole="SoruProfili" ToRole="Kullanici" />
-        </EntityType>
-        <EntityType Name="SoruTurleri">
-          <Key>
-            <PropertyRef Name="anahtar" />
-          </Key>
-          <Property Name="anahtar" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
-          <Property Name="tur_karsilik" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="HavuzSoru" Relationship="Self.havzsorutur_fk" FromRole="SoruTurleri" ToRole="HavuzSoru" />
-          <NavigationProperty Name="SablonSoru" Relationship="Self.sabsorutur_fk" FromRole="SoruTurleri" ToRole="SablonSoru" />
-        </EntityType>
-        <EntityType Name="TokenKullanimi">
-          <Key>
-            <PropertyRef Name="kullID" />
-            <PropertyRef Name="oturum" />
-          </Key>
-          <Property Name="kullID" Type="Int32" Nullable="false" />
-          <Property Name="oturum" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="girdiTOKEN" Type="Double" />
-          <Property Name="ciktiTOKEN" Type="Double" />
-          <Property Name="zaman" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Kullanici" Relationship="Self.ToknKullaniciFK" FromRole="TokenKullanimi" ToRole="Kullanici" />
-        </EntityType>
-        <Association Name="epostuye_fk">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="Eposta" Type="Self.Eposta" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__SUBTO__4F7CD00D">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="Eposta">
-              <PropertyRef Name="kullkarsilik" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="EtkilKullaniciFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="EtkilesimDegerlendirme" Type="Self.EtkilesimDegerlendirme" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__TOPIC__4E88ABD4">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="EtkilesimDegerlendirme">
-              <PropertyRef Name="kullID" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="havzsorutur_fk">
-          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
-          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="*" />
+        <Association Name="FK__BOOKMARKE__USERI__4D94879B">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="BOOKMARKED_QUESTIONS" Type="Self.BOOKMARKED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SoruTurleri">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="HavuzSoru">
-              <PropertyRef Name="sorutur" />
+            <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="soruprofilHavzFK">
-          <End Role="HavuzSoru" Type="Self.HavuzSoru" Multiplicity="1" />
-          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+        <Association Name="FK__FEEDBACK__USERID__4222D4EF">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FEEDBACK" Type="Self.FEEDBACK" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="HavuzSoru">
-              <PropertyRef Name="sorutur" />
-              <PropertyRef Name="havzID" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="SoruProfili">
-              <PropertyRef Name="soruTur" />
-              <PropertyRef Name="havzID" />
+            <Dependent Role="FEEDBACK">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PuanKonuFK">
-          <End Role="Konular" Type="Self.Konular" Multiplicity="1" />
-          <End Role="KonuPuanlama" Type="Self.KonuPuanlama" Multiplicity="*" />
+        <Association Name="FK__LOGS__USERID__3C69FB99">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="LOGS" Type="Self.LOGS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Konular">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
             </Principal>
-            <Dependent Role="KonuPuanlama">
-              <PropertyRef Name="konuanahtar" />
+            <Dependent Role="LOGS">
+              <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="KullaniciLoginFK">
-          <End Role="LoginKull" Type="Self.LoginKull" Multiplicity="1" />
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+        <Association Name="FK__QUESTION___SUBTO__4AB81AF0">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="QUESTION_POOL" Type="Self.QUESTION_POOL" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="LoginKull">
-              <PropertyRef Name="loginKull1" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="Kullanici">
-              <PropertyRef Name="karsilik" />
+            <Dependent Role="QUESTION_POOL">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="KullaniciTurFK">
-          <End Role="KullaniciTurleri" Type="Self.KullaniciTurleri" Multiplicity="0..1" />
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="*" />
+        <Association Name="FK__QUESTION___TOPIC__49C3F6B7">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="QUESTION_POOL" Type="Self.QUESTION_POOL" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="KullaniciTurleri">
-              <PropertyRef Name="kullAnahtar" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="Kullanici">
-              <PropertyRef Name="tur" />
+            <Dependent Role="QUESTION_POOL">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="soruprofilKullFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="SoruProfili" Type="Self.SoruProfili" Multiplicity="*" />
+        <Association Name="FK__SUBTOPICS__TOPIC__46E78A0C">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Principal>
-            <Dependent Role="SoruProfili">
-              <PropertyRef Name="kullId" />
+            <Dependent Role="SUBTOPICS">
+              <PropertyRef Name="TOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ToknKullaniciFK">
-          <End Role="Kullanici" Type="Self.Kullanici" Multiplicity="1" />
-          <End Role="TokenKullanimi" Type="Self.TokenKullanimi" Multiplicity="*" />
+        <Association Name="FK__USER_SCOR__SUBTO__59063A47">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Kullanici">
-              <PropertyRef Name="kimlik" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="TokenKullanimi">
-              <PropertyRef Name="kullID" />
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="sabsorutur_fk">
-          <End Role="SoruTurleri" Type="Self.SoruTurleri" Multiplicity="1" />
-          <End Role="SablonSoru" Type="Self.SablonSoru" Multiplicity="*" />
+        <Association Name="FK__WRONG_ANS__SUBTO__5441852A">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SoruTurleri">
-              <PropertyRef Name="anahtar" />
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Principal>
-            <Dependent Role="SablonSoru">
-              <PropertyRef Name="sorutur" />
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="SUBTOPIC_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NeptunDB" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="BildirimLog" EntityType="Self.BildirimLog" />
-          <EntitySet Name="Eposta" EntityType="Self.Eposta" />
-          <EntitySet Name="EtkilesimDegerlendirme" EntityType="Self.EtkilesimDegerlendirme" />
-          <EntitySet Name="HavuzSoru" EntityType="Self.HavuzSoru" />
-          <EntitySet Name="Konular" EntityType="Self.Konular" />
-          <EntitySet Name="KonuPuanlama" EntityType="Self.KonuPuanlama" />
-          <EntitySet Name="Kullanici" EntityType="Self.Kullanici" />
-          <EntitySet Name="KullaniciTurleri" EntityType="Self.KullaniciTurleri" />
-          <EntitySet Name="LoginKull" EntityType="Self.LoginKull" />
-          <EntitySet Name="SablonSoru" EntityType="Self.SablonSoru" />
-          <EntitySet Name="SistemikHataLog" EntityType="Self.SistemikHataLog" />
-          <EntitySet Name="SoruProfili" EntityType="Self.SoruProfili" />
-          <EntitySet Name="SoruTurleri" EntityType="Self.SoruTurleri" />
-          <EntitySet Name="TokenKullanimi" EntityType="Self.TokenKullanimi" />
-          <AssociationSet Name="epostuye_fk" Association="Self.epostuye_fk">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="Eposta" EntitySet="Eposta" />
+        <Association Name="FK__USER_SCOR__TOPIC__5812160E">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Principal>
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="TOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WRONG_ANS__TOPIC__534D60F1">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Principal>
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USER_SCOR__USERI__571DF1D5">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="USER_SCORES" Type="Self.USER_SCORES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="USER_SCORES">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WRONG_ANS__WRONG__52593CB8">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WRONG_ANSWERED_QUESTIONS" Type="Self.WRONG_ANSWERED_QUESTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="WRONG_ANSWERED_QUESTIONS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NEPTUN_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BOOKMARKED_QUESTIONS" EntityType="Self.BOOKMARKED_QUESTIONS" />
+          <EntitySet Name="FEEDBACK" EntityType="Self.FEEDBACK" />
+          <EntitySet Name="LOGS" EntityType="Self.LOGS" />
+          <EntitySet Name="QUESTION_POOL" EntityType="Self.QUESTION_POOL" />
+          <EntitySet Name="SUBTOPICS" EntityType="Self.SUBTOPICS" />
+          <EntitySet Name="TOPICS" EntityType="Self.TOPICS" />
+          <EntitySet Name="USER_SCORES" EntityType="Self.USER_SCORES" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" />
+          <EntitySet Name="WRONG_ANSWERED_QUESTIONS" EntityType="Self.WRONG_ANSWERED_QUESTIONS" />
+          <AssociationSet Name="FK__BOOKMARKE__SUBTO__4F7CD00D" Association="Self.FK__BOOKMARKE__SUBTO__4F7CD00D">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="EtkilKullaniciFK" Association="Self.EtkilKullaniciFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="EtkilesimDegerlendirme" EntitySet="EtkilesimDegerlendirme" />
+          <AssociationSet Name="FK__BOOKMARKE__TOPIC__4E88ABD4" Association="Self.FK__BOOKMARKE__TOPIC__4E88ABD4">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="havzsorutur_fk" Association="Self.havzsorutur_fk">
-            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
-            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
+          <AssociationSet Name="FK__BOOKMARKE__USERI__4D94879B" Association="Self.FK__BOOKMARKE__USERI__4D94879B">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
           </AssociationSet>
-          <AssociationSet Name="soruprofilHavzFK" Association="Self.soruprofilHavzFK">
-            <End Role="HavuzSoru" EntitySet="HavuzSoru" />
-            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          <AssociationSet Name="FK__FEEDBACK__USERID__4222D4EF" Association="Self.FK__FEEDBACK__USERID__4222D4EF">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FEEDBACK" EntitySet="FEEDBACK" />
           </AssociationSet>
-          <AssociationSet Name="PuanKonuFK" Association="Self.PuanKonuFK">
-            <End Role="Konular" EntitySet="Konular" />
-            <End Role="KonuPuanlama" EntitySet="KonuPuanlama" />
+          <AssociationSet Name="FK__LOGS__USERID__3C69FB99" Association="Self.FK__LOGS__USERID__3C69FB99">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="LOGS" EntitySet="LOGS" />
           </AssociationSet>
-          <AssociationSet Name="KullaniciLoginFK" Association="Self.KullaniciLoginFK">
-            <End Role="LoginKull" EntitySet="LoginKull" />
-            <End Role="Kullanici" EntitySet="Kullanici" />
+          <AssociationSet Name="FK__QUESTION___SUBTO__4AB81AF0" Association="Self.FK__QUESTION___SUBTO__4AB81AF0">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="QUESTION_POOL" EntitySet="QUESTION_POOL" />
           </AssociationSet>
-          <AssociationSet Name="KullaniciTurFK" Association="Self.KullaniciTurFK">
-            <End Role="KullaniciTurleri" EntitySet="KullaniciTurleri" />
-            <End Role="Kullanici" EntitySet="Kullanici" />
+          <AssociationSet Name="FK__QUESTION___TOPIC__49C3F6B7" Association="Self.FK__QUESTION___TOPIC__49C3F6B7">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="QUESTION_POOL" EntitySet="QUESTION_POOL" />
           </AssociationSet>
-          <AssociationSet Name="soruprofilKullFK" Association="Self.soruprofilKullFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="SoruProfili" EntitySet="SoruProfili" />
+          <AssociationSet Name="FK__SUBTOPICS__TOPIC__46E78A0C" Association="Self.FK__SUBTOPICS__TOPIC__46E78A0C">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
           </AssociationSet>
-          <AssociationSet Name="ToknKullaniciFK" Association="Self.ToknKullaniciFK">
-            <End Role="Kullanici" EntitySet="Kullanici" />
-            <End Role="TokenKullanimi" EntitySet="TokenKullanimi" />
+          <AssociationSet Name="FK__USER_SCOR__SUBTO__59063A47" Association="Self.FK__USER_SCOR__SUBTO__59063A47">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
           </AssociationSet>
-          <AssociationSet Name="sabsorutur_fk" Association="Self.sabsorutur_fk">
-            <End Role="SoruTurleri" EntitySet="SoruTurleri" />
-            <End Role="SablonSoru" EntitySet="SablonSoru" />
+          <AssociationSet Name="FK__WRONG_ANS__SUBTO__5441852A" Association="Self.FK__WRONG_ANS__SUBTO__5441852A">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_SCOR__TOPIC__5812160E" Association="Self.FK__USER_SCOR__TOPIC__5812160E">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WRONG_ANS__TOPIC__534D60F1" Association="Self.FK__WRONG_ANS__TOPIC__534D60F1">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USER_SCOR__USERI__571DF1D5" Association="Self.FK__USER_SCOR__USERI__571DF1D5">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="USER_SCORES" EntitySet="USER_SCORES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WRONG_ANS__WRONG__52593CB8" Association="Self.FK__WRONG_ANS__WRONG__52593CB8">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -662,142 +709,111 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="NeptunDBModelStoreContainer" CdmEntityContainer="NeptunDB">
-          <EntitySetMapping Name="BildirimLog">
-            <EntityTypeMapping TypeName="NeptunDBModel.BildirimLog">
-              <MappingFragment StoreEntitySet="BildirimLog">
-                <ScalarProperty Name="zaman" ColumnName="zaman" />
-                <ScalarProperty Name="kullnID" ColumnName="kullnID" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="SoruTuru" ColumnName="SoruTuru" />
-                <ScalarProperty Name="icerik" ColumnName="icerik" />
+        <EntityContainerMapping StorageEntityContainer="NEPTUN_DBModelStoreContainer" CdmEntityContainer="NEPTUN_DBEntities">
+          <EntitySetMapping Name="BOOKMARKED_QUESTIONS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.BOOKMARKED_QUESTIONS">
+              <MappingFragment StoreEntitySet="BOOKMARKED_QUESTIONS">
+                <ScalarProperty Name="BOOKMARK_ID" ColumnName="BOOKMARK_ID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="QUESTION_TEXT" ColumnName="QUESTION_TEXT" />
+                <ScalarProperty Name="LATEX_TEXT" ColumnName="LATEX_TEXT" />
+                <ScalarProperty Name="CORRECT_ANSWER" ColumnName="CORRECT_ANSWER" />
+                <ScalarProperty Name="WRONG_ANSWERS" ColumnName="WRONG_ANSWERS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Eposta">
-            <EntityTypeMapping TypeName="NeptunDBModel.Eposta">
-              <MappingFragment StoreEntitySet="Eposta">
-                <ScalarProperty Name="E_posta" ColumnName="E_posta" />
-                <ScalarProperty Name="kullkarsilik" ColumnName="kullkarsilik" />
+          <EntitySetMapping Name="FEEDBACK">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.FEEDBACK">
+              <MappingFragment StoreEntitySet="FEEDBACK">
+                <ScalarProperty Name="FEEDBACK_ID" ColumnName="FEEDBACK_ID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="SUBJECT" ColumnName="SUBJECT" />
+                <ScalarProperty Name="MESSAGE" ColumnName="MESSAGE" />
+                <ScalarProperty Name="FEEDBACK_TYPE" ColumnName="FEEDBACK_TYPE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EtkilesimDegerlendirme">
-            <EntityTypeMapping TypeName="NeptunDBModel.EtkilesimDegerlendirme">
-              <MappingFragment StoreEntitySet="EtkilesimDegerlendirme">
-                <ScalarProperty Name="kullID" ColumnName="kullID" />
-                <ScalarProperty Name="zaman" ColumnName="zaman" />
-                <ScalarProperty Name="puanlama" ColumnName="puanlama" />
-                <ScalarProperty Name="oneri" ColumnName="oneri" />
+          <EntitySetMapping Name="LOGS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.LOGS">
+              <MappingFragment StoreEntitySet="LOGS">
+                <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+                <ScalarProperty Name="LOG_DATE" ColumnName="LOG_DATE" />
+                <ScalarProperty Name="LOG_LEVEL" ColumnName="LOG_LEVEL" />
+                <ScalarProperty Name="MESSAGE" ColumnName="MESSAGE" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="HavuzSoru">
-            <EntityTypeMapping TypeName="NeptunDBModel.HavuzSoru">
-              <MappingFragment StoreEntitySet="HavuzSoru">
-                <ScalarProperty Name="sorutur" ColumnName="sorutur" />
-                <ScalarProperty Name="havzID" ColumnName="havzID" />
-                <ScalarProperty Name="metin" ColumnName="metin" />
-                <ScalarProperty Name="sorudenklemi" ColumnName="sorudenklemi" />
-                <ScalarProperty Name="dogrusonuc" ColumnName="dogrusonuc" />
-                <ScalarProperty Name="LaTeX" ColumnName="LaTeX" />
+          <EntitySetMapping Name="QUESTION_POOL">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.QUESTION_POOL">
+              <MappingFragment StoreEntitySet="QUESTION_POOL">
+                <ScalarProperty Name="POOL_ID" ColumnName="POOL_ID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="QUESTION_TEXT" ColumnName="QUESTION_TEXT" />
+                <ScalarProperty Name="LATEX_TEXT" ColumnName="LATEX_TEXT" />
+                <ScalarProperty Name="CORRECT_ANSWER" ColumnName="CORRECT_ANSWER" />
+                <ScalarProperty Name="WRONG_ANSWERS" ColumnName="WRONG_ANSWERS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Konular">
-            <EntityTypeMapping TypeName="NeptunDBModel.Konular">
-              <MappingFragment StoreEntitySet="Konular">
-                <ScalarProperty Name="anahtar" ColumnName="anahtar" />
-                <ScalarProperty Name="yazi" ColumnName="yazi" />
+          <EntitySetMapping Name="SUBTOPICS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.SUBTOPICS">
+              <MappingFragment StoreEntitySet="SUBTOPICS">
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="SUBTOPIC" ColumnName="SUBTOPIC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KonuPuanlama">
-            <EntityTypeMapping TypeName="NeptunDBModel.KonuPuanlama">
-              <MappingFragment StoreEntitySet="KonuPuanlama">
-                <ScalarProperty Name="kullID" ColumnName="kullID" />
-                <ScalarProperty Name="konuanahtar" ColumnName="konuanahtar" />
-                <ScalarProperty Name="puanlama" ColumnName="puanlama" />
-                <ScalarProperty Name="sonGuncellenme" ColumnName="sonGuncellenme" />
+          <EntitySetMapping Name="TOPICS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.TOPICS">
+              <MappingFragment StoreEntitySet="TOPICS">
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="TOPIC" ColumnName="TOPIC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Kullanici">
-            <EntityTypeMapping TypeName="NeptunDBModel.Kullanici">
-              <MappingFragment StoreEntitySet="Kullanici">
-                <ScalarProperty Name="kimlik" ColumnName="kimlik" />
-                <ScalarProperty Name="ad" ColumnName="ad" />
-                <ScalarProperty Name="soyad" ColumnName="soyad" />
-                <ScalarProperty Name="karsilik" ColumnName="karsilik" />
-                <ScalarProperty Name="tur" ColumnName="tur" />
+          <EntitySetMapping Name="USER_SCORES">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.USER_SCORES">
+              <MappingFragment StoreEntitySet="USER_SCORES">
+                <ScalarProperty Name="SCORE_ID" ColumnName="SCORE_ID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="SCORE" ColumnName="SCORE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KullaniciTurleri">
-            <EntityTypeMapping TypeName="NeptunDBModel.KullaniciTurleri">
-              <MappingFragment StoreEntitySet="KullaniciTurleri">
-                <ScalarProperty Name="kullAnahtar" ColumnName="kullAnahtar" />
-                <ScalarProperty Name="kullTur" ColumnName="kullTur" />
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="USERNAME" ColumnName="USERNAME" />
+                <ScalarProperty Name="FIRST_NAME" ColumnName="FIRST_NAME" />
+                <ScalarProperty Name="LAST_NAME" ColumnName="LAST_NAME" />
+                <ScalarProperty Name="E_MAIL" ColumnName="E_MAIL" />
+                <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
+                <ScalarProperty Name="USER_ROLE" ColumnName="USER_ROLE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LoginKull">
-            <EntityTypeMapping TypeName="NeptunDBModel.LoginKull">
-              <MappingFragment StoreEntitySet="LoginKull">
-                <ScalarProperty Name="loginKull1" ColumnName="loginKull" />
-                <ScalarProperty Name="kullaniciadi" ColumnName="kullaniciadi" />
-                <ScalarProperty Name="sifre" ColumnName="sifre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SablonSoru">
-            <EntityTypeMapping TypeName="NeptunDBModel.SablonSoru">
-              <MappingFragment StoreEntitySet="SablonSoru">
-                <ScalarProperty Name="sorutur" ColumnName="sorutur" />
-                <ScalarProperty Name="sablID" ColumnName="sablID" />
-                <ScalarProperty Name="metin" ColumnName="metin" />
-                <ScalarProperty Name="sorudenklemi" ColumnName="sorudenklemi" />
-                <ScalarProperty Name="LaTeX" ColumnName="LaTeX" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SistemikHataLog">
-            <EntityTypeMapping TypeName="NeptunDBModel.SistemikHataLog">
-              <MappingFragment StoreEntitySet="SistemikHataLog">
-                <ScalarProperty Name="zaman" ColumnName="zaman" />
-                <ScalarProperty Name="kullnID" ColumnName="kullnID" />
-                <ScalarProperty Name="hatakod" ColumnName="hatakod" />
-                <ScalarProperty Name="num" ColumnName="num" />
-                <ScalarProperty Name="hatamesaj" ColumnName="hatamesaj" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SoruProfili">
-            <EntityTypeMapping TypeName="NeptunDBModel.SoruProfili">
-              <MappingFragment StoreEntitySet="SoruProfili">
-                <ScalarProperty Name="kullId" ColumnName="kullId" />
-                <ScalarProperty Name="soruTur" ColumnName="soruTur" />
-                <ScalarProperty Name="havzID" ColumnName="havzID" />
-                <ScalarProperty Name="dogruluk" ColumnName="dogruluk" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SoruTurleri">
-            <EntityTypeMapping TypeName="NeptunDBModel.SoruTurleri">
-              <MappingFragment StoreEntitySet="SoruTurleri">
-                <ScalarProperty Name="anahtar" ColumnName="anahtar" />
-                <ScalarProperty Name="tur_karsilik" ColumnName="tur_karsilik" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TokenKullanimi">
-            <EntityTypeMapping TypeName="NeptunDBModel.TokenKullanimi">
-              <MappingFragment StoreEntitySet="TokenKullanimi">
-                <ScalarProperty Name="kullID" ColumnName="kullID" />
-                <ScalarProperty Name="oturum" ColumnName="oturum" />
-                <ScalarProperty Name="girdiTOKEN" ColumnName="girdiTOKEN" />
-                <ScalarProperty Name="ciktiTOKEN" ColumnName="ciktiTOKEN" />
-                <ScalarProperty Name="zaman" ColumnName="zaman" />
+          <EntitySetMapping Name="WRONG_ANSWERED_QUESTIONS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.WRONG_ANSWERED_QUESTIONS">
+              <MappingFragment StoreEntitySet="WRONG_ANSWERED_QUESTIONS">
+                <ScalarProperty Name="WAQ_ID" ColumnName="WAQ_ID" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="QUESTION_TEXT" ColumnName="QUESTION_TEXT" />
+                <ScalarProperty Name="LATEX_TEXT" ColumnName="LATEX_TEXT" />
+                <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
+                <ScalarProperty Name="USERS_ANSWER" ColumnName="USERS_ANSWER" />
+                <ScalarProperty Name="WRONG_ANSWERS" ColumnName="WRONG_ANSWERS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

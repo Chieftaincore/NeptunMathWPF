@@ -113,13 +113,32 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BildirimLog.cs">
+    <Compile Include="BOOKMARKED_QUESTIONS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Eposta.cs">
+    <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="EtkilesimDegerlendirme.cs">
+    <Compile Include="LogLevel.cs" />
+    <Compile Include="LOGS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NeptunDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NeptunDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NeptunDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="QUESTION_POOL.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\Fonksiyonlar\DomainRangeGenerator.cs" />
@@ -154,60 +173,25 @@
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
     <Compile Include="SesIslemleri.cs" />
-
-    <Compile Include="Soru.cs" />
-    <Compile Include="HavuzSoru.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Konular.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KonuPuanlama.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Kullanici.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="KullaniciTurleri.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LoginKull.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NeptunDB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NeptunDB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NeptunDB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NeptunDB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NeptunDB.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="SablonSoru.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SistemikHataLog.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SoruProfili.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SoruTurleri.cs">
-      <DependentUpon>NeptunDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="SoruVeAjani\Ifade.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\SoruAjani.cs" />
-    <Compile Include="TokenKullanimi.cs">
+    <Compile Include="SUBTOPICS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TOPICS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USERS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER_SCORES.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WRONG_ANSWERED_QUESTIONS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -279,12 +263,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
@@ -295,6 +274,12 @@
       <DependentUpon>NeptunDB.edmx</DependentUpon>
       <LastGenOutput>NeptunDB.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
