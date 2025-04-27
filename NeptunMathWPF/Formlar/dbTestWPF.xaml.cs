@@ -22,7 +22,7 @@ namespace NeptunMathWPF.Formlar
         public dbTestWPF()
         {
             InitializeComponent();
-            dbTestDataGrid.ItemsSource = Genel.dbEntities.LoginKull.ToList();
+            dbTestDataGrid.ItemsSource = Genel.dbEntities.LOGS.ToList();
         }
     }
 }

@@ -119,6 +119,7 @@
     <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
