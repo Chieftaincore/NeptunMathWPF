@@ -12,32 +12,30 @@ namespace NeptunMathWPF
     using System;
     using System.Collections.Generic;
     
-    public partial class Kullanici
+    public partial class TOPICS
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Kullanici()
+        public TOPICS()
         {
-            this.Eposta = new HashSet<Eposta>();
-            this.EtkilesimDegerlendirme = new HashSet<EtkilesimDegerlendirme>();
-            this.SoruProfili = new HashSet<SoruProfili>();
-            this.TokenKullanimi = new HashSet<TokenKullanimi>();
+            this.BOOKMARKED_QUESTIONS = new HashSet<BOOKMARKED_QUESTIONS>();
+            this.QUESTION_POOL = new HashSet<QUESTION_POOL>();
+            this.SUBTOPICS = new HashSet<SUBTOPICS>();
+            this.USER_SCORES = new HashSet<USER_SCORES>();
+            this.WRONG_ANSWERED_QUESTIONS = new HashSet<WRONG_ANSWERED_QUESTIONS>();
         }
     
-        public int kimlik { get; set; }
-        public string ad { get; set; }
-        public string soyad { get; set; }
-        public int karsilik { get; set; }
-        public string tur { get; set; }
+        public int TOPIC_ID { get; set; }
+        public string TOPIC { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Eposta> Eposta { get; set; }
+        public virtual ICollection<BOOKMARKED_QUESTIONS> BOOKMARKED_QUESTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EtkilesimDegerlendirme> EtkilesimDegerlendirme { get; set; }
-        public virtual LoginKull LoginKull { get; set; }
-        public virtual KullaniciTurleri KullaniciTurleri { get; set; }
+        public virtual ICollection<QUESTION_POOL> QUESTION_POOL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SoruProfili> SoruProfili { get; set; }
+        public virtual ICollection<SUBTOPICS> SUBTOPICS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TokenKullanimi> TokenKullanimi { get; set; }
+        public virtual ICollection<USER_SCORES> USER_SCORES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
     }
 }

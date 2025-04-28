@@ -12,12 +12,14 @@ namespace NeptunMathWPF
     using System;
     using System.Collections.Generic;
     
-    public partial class BildirimLog
+    public partial class LOGS
     {
-        public System.DateTime zaman { get; set; }
-        public int kullnID { get; set; }
-        public byte num { get; set; }
-        public string SoruTuru { get; set; }
-        public string icerik { get; set; }
+        public int LOG_ID { get; set; }
+        public Nullable<System.DateTime> LOG_DATE { get; set; }
+        public string LOG_LEVEL { get; set; }
+        public string MESSAGE { get; set; }
+        public int USERID { get; set; }
+    
+        public virtual USERS USERS { get; set; }
     }
 }
