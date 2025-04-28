@@ -122,6 +122,7 @@
     <Compile Include="EtkilesimDegerlendirme.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\DomainRangeGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionCompositionGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionQuestionGenerator.cs" />

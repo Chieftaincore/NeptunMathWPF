@@ -9,14 +9,17 @@ using System.Windows;
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
     //Model WPF sayfası için bir öğedir
-    class SoruCardModel
+
+    using SoruTuru = SoruTerimleri.soruTuru;
+    class SoruCardModel : ObservableObject
     {
         public Soru soru { get; set; }
-       
-        public ObservableCollection<string> NesneSecenekler { get; set; }
+        public SoruTuru Tur { get => soru.SoruTuru; }
+        public SeceneklerModel NesneSecenekler { get; set; }
 
         public string LaTeX { get; set; }
         public string kaynak { get; set; }
+        public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
         public bool Aktif { get; set; }
 
@@ -30,15 +33,26 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 Random random = new Random();
                 int inject = random.Next(0, soru.GetDigerSecenekler().Length);
 
-                NesneSecenekler = new ObservableCollection<string>();
+                var _secenekler = new ObservableCollection<string>();
+
                 for (int i=0; i<soru.GetDigerSecenekler().Length; i++)
                 {
                    if(i == inject)
-                       NesneSecenekler.Add(soru.GetSonucSecenek());
+                       _secenekler.Add(soru.GetSonucSecenek());
 
-                    NesneSecenekler.Add(soru.GetDigerSecenekler()[i]);
+                    _secenekler.Add(soru.GetDigerSecenekler()[i]);
                 }
+
+                NesneSecenekler = new SeceneklerModel(_secenekler, soru.GetSonucSecenek());
+
             });
+        }
+
+        public void EkYaziGuncelle(string y)
+        {
+            ekYazi = y;
+
+            OnPropertyChanged(nameof(ekYazi));
         }
     }
 }
