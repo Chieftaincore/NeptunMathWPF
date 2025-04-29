@@ -25,27 +25,30 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugCokluIfadeEkle { get; set; }
         public ICommand DebugCokluIfadeSil { get; set; }
         public ICommand DenemeEkleKomut { get; set; }
-
-        //ObservableCollectionlar
-        public ObservableCollection<SoruCardModel> Sorular  { get; set; }
-
-        private ObservableCollection<string> _secenekler;
-        public ObservableCollection<string> secenekler
-        {
-            get => _secenekler; set
-            {
-
-                if (_secenekler != value)
-                {
-                    _secenekler = value;
-                    OnPropertyChanged(nameof(secenekler));
-                }
-            }
-        }
         public ICommand SeciliTurDegistir { get; set; }
+        public ICommand SecimDegistir { get; set; }
+
+        //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
+        public ObservableCollection<SoruCardModel> Sorular  { get; set; }
+        public SoruCardModel secilisoru { get; set; }
+        public SeceneklerModel secenekler { 
+
+            get => secilisoru.NesneSecenekler;
+        }
+
+        public string seciliSecenek {
+
+            get => secenekler.secilideger;
+
+            set { secenekler.secilideger = value; }
+        }
+
+        //sonraki sorunun ne geleceğini belirleyen algorithma için
+        public Func<Soru> sonrakiSoruAlgorithmasi { get; set; }
+        public ICommand SoruCevapla { get; set; }
+        public string IsSelected { get; set; }
 
         internal KeyEventHandler key;
-        public SoruCardModel secilisoru { get; set; }
 
         private string _seciliTur;
         public string seciliTur{ get => _seciliTur ; set
@@ -70,11 +73,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
                 DenemeEkleKomut = new RelayCommand(o => Ekle());
                 SeciliTurDegistir = new RelayCommand(o => TurDegis());
+                SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
+                SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
                 DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
                 DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
-
+  
                 seciliTur = "SoruModu";
                 Ekle();
                 OnPropertyChanged();
@@ -86,6 +91,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             Genel.Handle(() => {
 
                 List<ifadeTuru> ifadeTurleri = new List<ifadeTuru>();
+                seciliTur = "SoruModu";
 
                 if (CokluIfadeTurlerListColl.Count < 2)
                 {
@@ -106,15 +112,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     kaynak = "Yerel"
                 };
 
-                secenekler = secilisoru.NesneSecenekler;
-
                 //Aşağıdan Ekle
                 Sorular.Add(secilisoru);
 
                 //Yukarıdan Ekle
                 //Sorular.Insert(0,secilisoru);
 
-                seciliTur = "SoruModu";
+                OnPropertyChanged(nameof(secenekler));
                 OnPropertyChanged();
             });
         }
@@ -141,6 +145,21 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             return tur;
         }
 
+        private void SeciliSoruCevapla(object o)
+        {
+            //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
+            bool dogru = secenekler.Cevapla();
+
+            if (dogru)
+            {
+                secilisoru.EkYaziGuncelle("Doğru cevaplandı");
+            }
+            else
+            {
+                secilisoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}");
+            }
+        }
+
         private void TusEkleClick(object sender, RoutedEventArgs e)
         {
             if (cmBxSecilen == null || String.IsNullOrEmpty(cmBxSecilen))
@@ -162,6 +181,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             OnPropertyChanged();
         }
 
+        private void SeceneklerSecimDegistir(object nesne)
+        {
+             secenekler.secilideger = (string)nesne;
+
+             OnPropertyChanged(nameof(secenekler.secilideger));
+        }
+
         private void CokluIfadeListBoxEkle()
         {
             if (!String.IsNullOrEmpty(cmBxSecilen))
@@ -175,18 +201,21 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void DebugCokluIfadeCollSil(object obje)
         {
-            if (obje != null)
+            Genel.Handle(() =>
             {
-                int index = (int)obje;
-         
-
-                if (index < CokluIfadeTurlerListColl.Count)
+                if (obje != null)
                 {
-                    CokluIfadeTurlerListColl.RemoveAt(index);
+                    int index = (int)obje;
+
+                    if (index + 1 < CokluIfadeTurlerListColl.Count)
+                    {
+                        CokluIfadeTurlerListColl.RemoveAt(index);
+                    }
                 }
-            }
+            });
         }
 
+        //Şuanki varsayılan soru
         public List<ifadeTuru> standartIfadeList()
         {
             Random rng = new Random();
@@ -197,7 +226,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 ifadeTuru.sayi,
 
                 turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.kesir }),
-                
             };
 
             return ifadeTurleri;
