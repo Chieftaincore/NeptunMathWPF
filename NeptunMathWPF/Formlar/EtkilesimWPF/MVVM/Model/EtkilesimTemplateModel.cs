@@ -11,7 +11,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
     public class EtkilesimTemplateModel : DataTemplateSelector
     {
-        public DataTemplate SoruModu { get; set; }
+        //Şıklar LaTeX ve Kısa ise:
+        public DataTemplate SoruModuLaTeX { get; set; }
+
+        //Şıklar Uzun veya LaTeX değilse;
+        public DataTemplate SoruModuMetin { get; set; }
         public DataTemplate Proompter { get; set; }
         public DataTemplate DialogModu { get; set; }
 
@@ -22,16 +26,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
             switch (view)
             {
-                case "SoruModu":
-                    return SoruModu;
+                case "SoruModuNormal":
+                    return SoruModuLaTeX;
+                case "SoruModuMetin":
+                    return SoruModuMetin;
                 case "Proompter":
                     return Proompter;
                 case "Dialog":
                     return DialogModu;
                 default:
-                    return base.SelectTemplate(item, container);
-            }
-            ;
+                    return SoruModuMetin;
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Media;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
@@ -7,12 +8,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     //Model WPF sayfası için bir öğedir
 
     using SoruTuru = SoruTerimleri.soruTuru;
-    class SoruCardModel : ObservableObject
+    class SoruCardModel : ObservableObject, IStyleAnahtar
     {
 
         //önemli Nesneler
         public Soru soru { get; set; }
         public SoruTuru Tur { get => soru.SoruTuru; }
+        public string soruStyle { get; set; }
         public SeceneklerModel NesneSecenekler { get; set; }
 
         //Yazilar
@@ -20,10 +22,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public string kaynak { get; set; }
         public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
-
-
-        public bool Aktif { get; set; }
-
 
         //Renk ile ilgili
         private Color _tabRenk;
@@ -43,7 +41,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         }
 
         public SolidColorBrush TabBrush { get; set; }
-
 
         public SoruCardModel(Soru sorunesne)
         {
@@ -68,6 +65,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
                 NesneSecenekler = new SeceneklerModel(_secenekler, soru.GetSonucSecenek());
             });
+
+            soruStyle = SoruTuruStyleTemplate();
+            OnPropertyChanged(nameof(soruStyle));
         }
 
         public void EkYaziGuncelle(string y, int durum = 0)
@@ -76,6 +76,22 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
             OnPropertyChanged(nameof(ekYazi));
             RenkDegis(durum);
+        }
+
+        public string SoruTuruStyleTemplate()
+        {
+
+            switch (Tur)
+            {
+                case SoruTuru.islem:
+                    return "SoruModuNormal";
+                    
+                case SoruTuru.fonksiyon:
+                    return "SoruModuMetin";
+
+                default:
+                    return "SoruModuNormal";
+            }
         }
 
         public void RenkDegis(int durum)

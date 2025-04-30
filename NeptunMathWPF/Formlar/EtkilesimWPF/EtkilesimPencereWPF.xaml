@@ -15,14 +15,17 @@
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
 
-
     <Window.Resources>
 
         <model:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
-                                  SoruModu="{StaticResource SeceneklerDataTemplate}"
+                                  SoruModuLaTeX="{StaticResource SeceneklerLaTeXTemplate}"
+                                  SoruModuMetin="{StaticResource SeceneklerNormalTemplate}"
                                   Proompter="{StaticResource Proompter}"/>
 
-        
+        <model:SoruCardSelector x:Key="SoruStyleTemplateModel"
+                                  LaTeXStyle="{StaticResource SoruCard}"
+                                  MetinStyle="{StaticResource SoruCardMetin}"/>
+
     </Window.Resources>
 
     <Grid x:Name="SayfaGrid" Background="#FFF4FAFF">
@@ -72,10 +75,10 @@
                 </Expander>
                 
                 <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
-                        Height="32" Margin="5,10,5,10" Command="{Binding DenemeEkleKomut}"/>
+                        Height="32" Margin="5,10,5,10" Command="{Binding DebugIslemEkleKomut}"/>
 
                 <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle"
-                        Height="32" Margin="5,10,5,10" Command="{Binding TusFonksiyonEkle}" IsEnabled="False"/>
+                        Height="32" Margin="5,10,5,10" Command="{Binding DebugFonksiyonSoruOlustur}"/>
 
                 <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
@@ -92,7 +95,8 @@
             </ScrollViewer.Background>
 
             <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}" 
-                      ItemContainerStyle="{StaticResource SoruCard}"/>
+                      ItemContainerStyleSelector="{StaticResource SoruStyleTemplateModel}"/>
+
 
         </ScrollViewer>
 

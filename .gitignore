@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /NeptunMathWPF/Models/APIkey.cs
+/NeptunMathWPF/Formlar/ApiTest.xaml.cs
+/NeptunMathWPF/Formlar/ApiTest.xaml.cs
+/NeptunMathWPF/Formlar/ApiTest.xaml.cs
