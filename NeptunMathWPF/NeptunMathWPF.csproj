@@ -70,6 +70,7 @@
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.IO.Pipelines, Version=9.0.0.4, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -124,6 +125,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="aktifKullanici.cs" />
+    <Compile Include="APIOperations.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -193,6 +195,7 @@
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\Ifade.cs" />
+    <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
@@ -236,6 +239,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>NeptunDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="GEMINI.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="NeptunDB.edmx.diagram">
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </None>
@@ -304,9 +310,7 @@
   <ItemGroup>
     <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ApiClasslari\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
