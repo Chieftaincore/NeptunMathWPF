@@ -152,11 +152,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             if (dogru)
             {
-                secilisoru.EkYaziGuncelle("Doğru cevaplandı");
+                secilisoru.EkYaziGuncelle("Doğru cevaplandı", 3);
             }
             else
             {
-                secilisoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}");
+                secilisoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
             }
         }
 
@@ -225,7 +225,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.faktoriyel }),
                 ifadeTuru.sayi,
 
-                turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.kesir }),
+                turdondur(new ifadeTuru[] { ifadeTuru.sayi, ifadeTuru.kesir, ifadeTuru.uslu}),
             };
 
             return ifadeTurleri;
