@@ -65,6 +65,10 @@ namespace NeptunMathWPF.SoruVeAjani
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
                         break;
+                    case ifadeTuru.uslu:
+                        ifadeler.Add( new Uslu(rng.Next(Araliklar["USLUNORMAL"][0]), rng.Next(Araliklar["USLUTAMCARPAN"][0])));
+                        break;
+                        
                     default:
                         MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
                         break;
@@ -91,6 +95,10 @@ namespace NeptunMathWPF.SoruVeAjani
                     case ifadeTuru.kesir:
                         ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
                         break;
+                    case ifadeTuru.uslu:
+                        ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0], Araliklar["USLUNORMAL"][1]),
+                                              rng.Next(Araliklar["USTAMCARPAN"][0],Araliklar["USTAMCARPAN"][1])));
+                        break;
                     default:
                         break;
                 }
@@ -98,11 +106,6 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return ifadeler;
         }
-
-        //Fonksiyon sorusunu çoklu kullanıma dönüştürme ve secenekler eklemek için
-        //Birden fazla metota ayırabilirim -Hüseyin
-
-        //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
 
         internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi = 4)
         {
@@ -192,13 +195,6 @@ namespace NeptunMathWPF.SoruVeAjani
             return new Soru(question, Secenekler.ToArray());
         }
 
-
-        //Bunlarla Neyi Hedefliyorum 
-        //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
-
-        //Aynı zamanda karma soru yapıcı yapmalıyız (aynı soruda Kesir + Faktoriyel + Tamsayı) gibi farklı tür ifadeler aynı soruda yer alabilmeli
-        //Daha iyisi için yollar var yakında yapılabileceğini ümit ediyorum -Hüseyin
-
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string islemString = string.Empty;
@@ -214,9 +210,9 @@ namespace NeptunMathWPF.SoruVeAjani
                 ifadeTuru Tur = ifadeler[0].TurGetir();
 
                 Random rng = new Random();
+
                 for (int i = 0; i < ifadeler.Count; i++)
                 {
-
                     if (araeleman == null)
                     {
                         if (i == 0)
@@ -232,13 +228,11 @@ namespace NeptunMathWPF.SoruVeAjani
                                 {
                                     int bolen = ifadeler[i].parseGetir();
                                     int bolunen = rng.Next(Araliklar["TAMSAYIBOLME"][0], Araliklar["TAMSAYIBOLME"][1]) * bolen;
-
+                                    
                                     islemString += $"{bolunen}/{bolen}";
 
                                     latex += $"\\frac{{{bolunen}}}{{{bolen}}}";
                                     ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i + 1].getir()} kaldırıldı] \n";
-
-                                    
                                 }
                                 else
                                 {
@@ -258,8 +252,17 @@ namespace NeptunMathWPF.SoruVeAjani
                                         latex += ifadeler[i].LaTeXString + "/";
 
                                         ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
-
                                         alindi = true;
+                                    }
+
+                                    if (ifadeler[i].TurGetir() == ifadeTuru.uslu)
+                                    {
+                                        MessageBox.Show("Üslü Ifade de geçici olarak bölme devre dışı");
+                                        
+                                        //int temel = ((Uslu)ifadeler[i]).temel;
+                                        //int kuvvet = ((Uslu)ifadeler[i]).kuvvet;
+
+                                        //islemString += "";
                                     }
                                 }
 
@@ -268,7 +271,6 @@ namespace NeptunMathWPF.SoruVeAjani
                                     char ekleme = KarakterDondur(new char[] { '-', '+' });
                                     islemString += ekleme;
                                     latex += ekleme;
-
                                 }
                                 
                                 continue;
@@ -352,10 +354,19 @@ namespace NeptunMathWPF.SoruVeAjani
                     {
                         sonuc = sonuc.Simplify();
 
-                        if (Tur == ifadeTuru.kesir)
+                        if ((sonuc.Stringize()).Contains('/'))
                         {
-                            int rastg = random.Next(-2, 2);
-                            randEntity = sonuc + ((sonuc / 3) * rastg);
+                            int rastg = random.Next(-3, 3);
+
+                            if(rastg != 0)
+                            {
+                                randEntity = sonuc + ((sonuc / 3) * rastg);
+                            }
+                            else
+                            {
+                                randEntity = sonuc - (sonuc / 2);
+                            }
+                       
                         }
                         else
                         {
@@ -492,8 +503,8 @@ namespace NeptunMathWPF.SoruVeAjani
             int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
             string LaTex = $"\\frac{{{pay}}}{{{payda}}}";
             string islem = $"({pay}/{payda})";
-            Ifade ifadeNesne = new Ifade(islem, LaTex, ifadeTuru.kesir);
-            return ifadeNesne;
+
+            return new Ifade(islem, LaTex, ifadeTuru.kesir);
         }
 
         public static Ifade IfadeFaktoriyelUret(int sayi)

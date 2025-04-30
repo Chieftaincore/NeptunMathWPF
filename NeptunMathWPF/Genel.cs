@@ -18,6 +18,7 @@ namespace NeptunMathWPF
             sayi,
             faktoriyel,
             kesir,
+            uslu
         }
 
         public enum soruTuru
@@ -66,7 +67,7 @@ namespace NeptunMathWPF
             catch (Exception ex)
             {
                 LogToDatabase(LogLevel.WARNING, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
-                MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show($"Bir hata oluştu! Hata : {ex.ToString()}", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows;
 using static AngouriMath.MathS;
 using static AngouriMath.MathS.Numbers;
 
@@ -18,8 +18,8 @@ namespace NeptunMathWPF.SoruVeAjani
     {
         ifadeTuru Tur;
         string IslemString;
+        public virtual string LaTeXString { get; set; }
 
-        public string LaTeXString { get; set; }
 
         public Ifade()
         {
@@ -53,10 +53,7 @@ namespace NeptunMathWPF.SoruVeAjani
             LaTeXString = Sayi.ToString();
             Tur = tur;
         }
-        public string LaTeXgetir()
-        {
-            return LaTeXString;
-        }
+
         public ifadeTuru TurGetir()
         {
             return Tur;
@@ -65,7 +62,6 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             return IslemString;
         }
-
         public int parseGetir()
         {
             return int.Parse(IslemString);
@@ -99,6 +95,19 @@ namespace NeptunMathWPF.SoruVeAjani
         public override string getir()
         {
             return faq.Stringize();
+        }
+    }
+
+    public class Uslu : Ifade
+    {
+        public int temel { get; set; }
+
+        public int kuvvet { get; set; }
+
+        public Uslu(int _temel, int _kuvvet) : base ( islem: $" ({_temel}^{_kuvvet}) ",  LaTeX: $" {_temel}^{_kuvvet} ", tur: ifadeTuru.uslu)
+        {
+            temel = _temel;
+            kuvvet = _kuvvet;
         }
     }
 
