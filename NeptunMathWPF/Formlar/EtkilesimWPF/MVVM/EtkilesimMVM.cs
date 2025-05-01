@@ -4,10 +4,7 @@ using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,6 +20,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public string cmBxSecilen { get; set; }
         public ObservableCollection<ifadeTuru> CokluIfadeTurlerListColl { get; set; }
         public ICommand DebugCokluIfadeEkle { get; set; }
+
+        bool APIvar { get; set; }
+        public ICommand DebugAPIProblemEkle { get; set; }
         public ICommand DebugCokluIfadeSil { get; set; }
         public ICommand DebugIslemEkleKomut { get; set; }
         public ICommand SeciliTurDegistir { get; set; }
@@ -60,9 +60,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 }
             }
         }
-
         public EtkilesimMVM()
         {
+            //Gemini API bağlımı kontrol etmek için.
+            APIcheck();
+
             Genel.Handle(() =>
             {
                 Sorular = new ObservableCollection<SoruCardModel>();
@@ -158,6 +160,32 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
 
             MessageBox.Show($"Panel Değişti {seciliTur}");
+        }
+        
+        internal void APIcheck()
+        {
+            Genel.Handle(() =>
+            {
+                if (File.Exists("GEMINI.config"))
+                {
+                    if (APIOperations.GetGeminiApiKey() != null && APIOperations.GetGeminiApiKey() != string.Empty)
+                    {
+                        APIvar = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("API key bulunamadı, YZ API işlemleri devre dışı,", "API Devre dışı"
+                            ,MessageBoxButton.OK, icon: MessageBoxImage.Warning);
+                    }
+                }
+                else
+                {
+                    APIvar = false;
+
+                    MessageBox.Show("GEMINI.config dosyası bulunamadı YZ API işlemleri devre dışı, " +
+                        "Lütfen Dosyayı Oluşturup içine API key atınız", "API Devre Dışı", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                }
+            });
         }
 
         private static ifadeTuru turdondur(ifadeTuru[] turler)

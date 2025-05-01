@@ -3,7 +3,7 @@
                     xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
     <Style TargetType="ListViewItem" x:Key="SoruCard">
-        <Setter Property="Background" Value="CadetBlue"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
@@ -12,7 +12,7 @@
                         <Grid>
                             
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="18*"/>
                                 <RowDefinition Height="24"/>
                             </Grid.RowDefinitions>
@@ -23,8 +23,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Background="{Binding TabBrush, FallbackValue='SlateGray'}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                            <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}" FontSize="10" Grid.Row="0" Grid.Column="0"/>
-                            <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="10" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}" FontSize="12" Grid.Row="0" Grid.Column="0"/>
+                            <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="12" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
 
                             
                             
@@ -47,7 +47,7 @@
     </Style>
 
     <Style TargetType="ListViewItem" x:Key="SoruCardMetin">
-        <Setter Property="Background" Value="CadetBlue"/>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
@@ -56,7 +56,7 @@
                         <Grid>
 
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="18*"/>
                                 <RowDefinition Height="24"/>
                             </Grid.RowDefinitions>
@@ -67,11 +67,11 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Background="{Binding TabBrush, FallbackValue='SlateGray'}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-                            <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}" FontSize="10" Grid.Row="0" Grid.Column="0"/>
-                            <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="10" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
+                            <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}" FontSize="12" Grid.Row="0" Grid.Column="0"/>
+                            <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="12" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
 
                             <Label Content= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}" 
-                                                 FontWeight="DemiBold"
+                                                 FontStyle="Italic"
                                                  FontSize="19"
                                                  Grid.Row="1"
                                                  Grid.Column="0"

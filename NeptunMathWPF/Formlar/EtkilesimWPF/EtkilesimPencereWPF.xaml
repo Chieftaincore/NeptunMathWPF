@@ -85,7 +85,7 @@
             </StackPanel>
         </Expander>
 
-        <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0" >
+        <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0">
 
             <ScrollViewer.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -99,9 +99,6 @@
 
 
         </ScrollViewer>
-
-
-        <!--<ContentControl x:Name="EtkilesimPanel" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecenekCardControl}" Content="{Binding secenekler ,FallbackValue=null}"/>-->
 
         <ContentControl x:Name="EtkilesimPanel"
                         Grid.Row="1" Grid.Column="1"
