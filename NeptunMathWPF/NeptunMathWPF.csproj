@@ -160,6 +160,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ProblemGenerator.cs" />
     <Compile Include="QUESTION_POOL.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
