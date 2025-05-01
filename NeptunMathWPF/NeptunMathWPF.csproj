@@ -139,7 +139,16 @@
     <Compile Include="Formlar\ApiTest.xaml.cs">
       <DependentUpon>ApiTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\DevPanelWPF.xaml.cs">
+      <DependentUpon>DevPanelWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ISoruCardStyleKey.cs" />
+    <Compile Include="Formlar\konuEkleUC.xaml.cs">
+      <DependentUpon>konuEkleUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
+      <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
@@ -265,6 +274,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\DevPanelWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\EtkilesimWPF\EtkilesimPencereWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,7 +286,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\konuEkleUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\LatexTestPencere.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\soruHavuzuUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

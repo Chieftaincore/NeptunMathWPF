@@ -27,6 +27,7 @@
         <Button x:Name="dbTestButton" Content="Veritabanı Test" HorizontalAlignment="Center" Margin="0,226,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="dbTestButton_Click"/>
         <Image Margin="-9,20,0,61" Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Fill"/>
         <Button x:Name="ApiTest" Content="API Test" HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="apiTest_Click"/>
+        <Button x:Name="devPanelButton" Content="Dev Panel" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="devPanelButton_Click"/>
 
     </Grid>
 </Window>

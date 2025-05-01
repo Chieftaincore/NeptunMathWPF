@@ -73,5 +73,11 @@ namespace NeptunMathWPF
             (new ApiTest()).Show();
             this.Close();
         }
+
+        private void devPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            (new DevPanelWPF()).Show();
+            this.Close();
+        }
     }
 }
