@@ -144,7 +144,6 @@
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\APIkey.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="NeptunDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -161,6 +160,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ProblemGenerator.cs" />
     <Compile Include="QUESTION_POOL.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
