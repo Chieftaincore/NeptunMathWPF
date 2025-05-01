@@ -73,7 +73,10 @@
                         
                     </StackPanel>
                 </Expander>
-                
+
+                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle"
+                       Height="32" Margin="5,10,5,10" IsEnabled="{Binding APIvar}" Command="{Binding DebugAPIProblemEkle}"/>
+
                 <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugIslemEkleKomut}"/>
 

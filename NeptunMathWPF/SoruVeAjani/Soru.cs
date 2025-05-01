@@ -2,6 +2,7 @@
 using AngouriMath.Extensions;
 using NeptunMathWPF.Fonksiyonlar;
 using NeptunMathWPF.SoruVeAjani;
+using NeptunMathWPF.SoruVeAjani.Problemler;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -67,6 +68,17 @@ namespace NeptunMathWPF
             Sonuc = question.Answer;
         }
 
+        //API/LLM'den gelen Problem Sorusu
+        public Soru(ProblemRepository rep)
+        {
+            SoruTuru = soruTuru.problem;
+
+            IslemMetin = rep.problem;
+            LatexMetin = rep.problem;
+
+            Sonuc = rep.correctAnswer;
+            secenekler = rep.incorrectAnswers;
+        }
         internal void SetOlusturmaLogu(string Metin)
         {
             OlusturmaLogu = Metin;
@@ -87,10 +99,6 @@ namespace NeptunMathWPF
         public string GetOlusturmaLogu()
         {
             return OlusturmaLogu;
-        }
-        public int GetSeviye()
-        {
-            return Seviye;
         }
         public string GetMetin()
         {

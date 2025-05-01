@@ -89,6 +89,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 case SoruTuru.fonksiyon:
                     return "SoruModuMetin";
 
+                case SoruTuru.problem:
+                    return "SoruModuMetin";
+
                 default:
                     return "SoruModuNormal";
             }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -21,7 +22,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ObservableCollection<ifadeTuru> CokluIfadeTurlerListColl { get; set; }
         public ICommand DebugCokluIfadeEkle { get; set; }
 
-        bool APIvar { get; set; }
+        public bool APIvar { get; set; }
         public ICommand DebugAPIProblemEkle { get; set; }
         public ICommand DebugCokluIfadeSil { get; set; }
         public ICommand DebugIslemEkleKomut { get; set; }
@@ -76,6 +77,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugIslemEkleKomut = new RelayCommand(o => Ekle());
                 SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
                 SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
+                DebugAPIProblemEkle = new RelayCommand(o => ProblemEkle());
                 SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
                 DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
                 DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
@@ -124,6 +126,25 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 OnPropertyChanged(nameof(secenekler));
                 OnPropertyChanged();
             });
+        }
+
+        public async Task ProblemEkle()
+        {
+            Soru soru = await SoruAjani.ProblemSorusuOlustur();
+
+            seciliTur = "SoruModuMetin";
+
+            seciliSoru = new SoruCardModel(soru)
+            {
+                LaTeX = soru.GetMetin(),
+                zaman = DateTime.Now,
+                kaynak = "Yapay Zeka API"
+            };
+
+            Sorular.Add(seciliSoru);
+
+            OnPropertyChanged(nameof(secenekler));
+            OnPropertyChanged();
         }
 
         public void FonksiyonSoruEkle()

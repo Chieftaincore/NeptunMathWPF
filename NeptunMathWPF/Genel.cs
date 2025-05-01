@@ -25,6 +25,7 @@ namespace NeptunMathWPF
         {
             islem,
             fonksiyon,
+            problem,
             limit,
             polinom,
             turev

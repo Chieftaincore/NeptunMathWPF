@@ -57,7 +57,7 @@
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="18*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="24"/>
                             </Grid.RowDefinitions>
 
@@ -70,9 +70,11 @@
                             <Label Content="{Binding kaynak, StringFormat='{}{0} kaynak',FallbackValue='Debug: Bilgi Yok'}" FontSize="12" Grid.Row="0" Grid.Column="0"/>
                             <Label Content="{Binding zaman, FallbackValue='Debug: No Data'}" FontSize="12" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right"/>
 
-                            <Label Content= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}" 
+                            <TextBlock Text= "{Binding LaTeX, FallbackValue='Debug: Bilgi Yok'}" 
                                                  FontStyle="Italic"
                                                  FontSize="19"
+                                                 TextWrapping="Wrap"
+                                                 MaxWidth="640"
                                                  Grid.Row="1"
                                                  Grid.Column="0"
                                                  Margin="40,10,5,5"

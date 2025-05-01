@@ -1,19 +1,10 @@
 ﻿using AngouriMath;
-using AngouriMath.Extensions;
-using HonkSharp.Functional;
 using NeptunMathWPF.Fonksiyonlar;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-
-using static AngouriMath.MathS;
-using static AngouriMath.MathS.Numbers;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -24,7 +15,6 @@ namespace NeptunMathWPF.SoruVeAjani
     //İfade = Sayı/Kesir gibi
     //Arabirim = işlem veya matematik fonksiyonu
     //Hedef hem karma hem de tekli tür Soru Yapabilecek bir sistem
-
     public static class SoruAjani
     {
         //Tamsayı Random Atma Aralığı
@@ -46,67 +36,6 @@ namespace NeptunMathWPF.SoruVeAjani
         };
 
         internal static Random random = new Random();
-
-        internal static List<Ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
-        {
-            Random rng = new Random();
-            List<Ifade> ifadeler = new List<Ifade>();
-
-            for (int i = 0; i < ifadesayisi; i++)
-            {
-                switch (ifadeTur)
-                {
-                    case ifadeTuru.sayi:
-                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
-                        break;
-                    case ifadeTuru.faktoriyel:
-                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
-                        break;
-                    case ifadeTuru.kesir:
-                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
-                        break;
-                    case ifadeTuru.uslu:
-                        ifadeler.Add( new Uslu(rng.Next(Araliklar["USLUNORMAL"][0]), rng.Next(Araliklar["USLUTAMCARPAN"][0])));
-                        break;
-                        
-                    default:
-                        MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
-                        break;
-                }
-            }
-            return ifadeler;
-        }
-
-        internal static List<Ifade> CokluIfadeListesiOlustur(List<ifadeTuru> olusturulacak)
-        {
-            Random rng = new Random();
-            List<Ifade> ifadeler = new List<Ifade>();
-
-            for (int i = 0; i < olusturulacak.Count; i++)
-            {
-                switch (olusturulacak[i])
-                {
-                    case ifadeTuru.sayi:
-                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
-                        break;
-                    case ifadeTuru.faktoriyel:
-                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
-                        break;
-                    case ifadeTuru.kesir:
-                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
-                        break;
-                    case ifadeTuru.uslu:
-                        ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0], Araliklar["USLUNORMAL"][1]),
-                                              rng.Next(Araliklar["USTAMCARPAN"][0],Araliklar["USTAMCARPAN"][1])));
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            return ifadeler;
-        }
-
         internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi = 4)
         {
             GeneratedFunction generated = new GeneratedFunction();
@@ -210,7 +139,76 @@ namespace NeptunMathWPF.SoruVeAjani
             }
             return new Soru(question, Secenekler.ToArray());
         }
+        internal async static Task<Soru> ProblemSorusuOlustur()
+        {
+            var ProblemSoru = await ProblemGenerator.GenerateProblem(ProblemType.Havuz, ProblemDifficulty.Zor);
 
+            return new Soru(ProblemSoru);
+        }
+        
+        #region IfadeListeleri
+        internal static List<Ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
+        {
+            Random rng = new Random();
+            List<Ifade> ifadeler = new List<Ifade>();
+
+            for (int i = 0; i < ifadesayisi; i++)
+            {
+                switch (ifadeTur)
+                {
+                    case ifadeTuru.sayi:
+                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        break;
+                    case ifadeTuru.faktoriyel:
+                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
+                        break;
+                    case ifadeTuru.kesir:
+                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
+                        break;
+                    case ifadeTuru.uslu:
+                        ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0]), rng.Next(Araliklar["USLUTAMCARPAN"][0])));
+                        break;
+
+                    default:
+                        MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
+                        break;
+                }
+            }
+            return ifadeler;
+        }
+
+        internal static List<Ifade> CokluIfadeListesiOlustur(List<ifadeTuru> olusturulacak)
+        {
+            Random rng = new Random();
+            List<Ifade> ifadeler = new List<Ifade>();
+
+            for (int i = 0; i < olusturulacak.Count; i++)
+            {
+                switch (olusturulacak[i])
+                {
+                    case ifadeTuru.sayi:
+                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                        break;
+                    case ifadeTuru.faktoriyel:
+                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
+                        break;
+                    case ifadeTuru.kesir:
+                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
+                        break;
+                    case ifadeTuru.uslu:
+                        ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0], Araliklar["USLUNORMAL"][1]),
+                                              rng.Next(Araliklar["USTAMCARPAN"][0], Araliklar["USTAMCARPAN"][1])));
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            return ifadeler;
+        }
+        #endregion
+
+        #region YerelIslemSorusu
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string islemString = string.Empty;
@@ -220,7 +218,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
-            
+
             Genel.Handle(() =>
             {
                 ifadeTuru Tur = ifadeler[0].TurGetir();
@@ -244,7 +242,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                 {
                                     int bolen = ifadeler[i].parseGetir();
                                     int bolunen = rng.Next(Araliklar["TAMSAYIBOLME"][0], Araliklar["TAMSAYIBOLME"][1]) * bolen;
-                                    
+
                                     islemString += $"{bolunen}/{bolen}";
 
                                     latex += $"\\frac{{{bolunen}}}{{{bolen}}}";
@@ -274,7 +272,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                     if (ifadeler[i].TurGetir() == ifadeTuru.uslu)
                                     {
                                         MessageBox.Show("Üslü Ifade de geçici olarak bölme devre dışı");
-                                        
+
                                         //int temel = ((Uslu)ifadeler[i]).temel;
                                         //int kuvvet = ((Uslu)ifadeler[i]).kuvvet;
 
@@ -288,17 +286,17 @@ namespace NeptunMathWPF.SoruVeAjani
                                     islemString += ekleme;
                                     latex += ekleme;
                                 }
-                                
+
                                 continue;
                             }
                             else
                             {
                                 islemString += ifadeler[i].getir();
                                 latex += ifadeler[i].LaTeXString;
-                   
+
                                 islemString += dortislem;
 
-                                if(dortislem == '*')
+                                if (dortislem == '*')
                                 {
                                     latex += "\\cdot";
                                 }
@@ -374,7 +372,7 @@ namespace NeptunMathWPF.SoruVeAjani
                         {
                             int rastg = random.Next(-3, 3);
 
-                            if(rastg != 0)
+                            if (rastg != 0)
                             {
                                 randEntity = sonuc + ((sonuc / 3) * rastg);
                             }
@@ -382,12 +380,12 @@ namespace NeptunMathWPF.SoruVeAjani
                             {
                                 randEntity = sonuc - (sonuc / 2);
                             }
-                       
+
                         }
                         else
                         {
                             int r;
-                            
+
                             r = random.Next(20, 126);
                             randEntity = (sonuc + r);
                         }
@@ -455,14 +453,14 @@ namespace NeptunMathWPF.SoruVeAjani
                     }
                     else
                     {
-                        if(i < 4)
+                        if (i < 4)
                         {
                             char ekislem = KarakterDondur(new char[] { '+', '-', '*' });
 
                             islemString += ifadeler[i].getir();
                             islemString += ekislem;
 
-                            if(ekislem == '*')
+                            if (ekislem == '*')
                             {
                                 LaTeXString += " \\cdot ";
                             }
@@ -510,7 +508,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return soru;
         }
-
+        #endregion
 
         //Ifade oluştruma yöntemleri
         #region Ifadeler 
@@ -550,4 +548,4 @@ namespace NeptunMathWPF.SoruVeAjani
     //Nesneler SoruVeAjanı->Ifade.cs' içindedir
 }
 
-    
+
