@@ -21,8 +21,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public string cmBxSecilen { get; set; }
         public ObservableCollection<ifadeTuru> CokluIfadeTurlerListColl { get; set; }
         public ICommand DebugCokluIfadeEkle { get; set; }
-
-        public bool APIvar { get; set; }
         public ICommand DebugAPIProblemEkle { get; set; }
         public ICommand DebugCokluIfadeSil { get; set; }
         public ICommand DebugIslemEkleKomut { get; set; }
@@ -31,6 +29,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
+        
+        public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
         public SoruCardModel seciliSoru { get; set; }
         public SeceneklerModel secenekler { 
@@ -66,6 +66,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             //Gemini API bağlımı kontrol etmek için.
             APIcheck();
 
+            DebugAPIProblemEkle = new RelayCommand(o => ProblemEkle());
+
             Genel.Handle(() =>
             {
                 Sorular = new ObservableCollection<SoruCardModel>();
@@ -77,7 +79,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugIslemEkleKomut = new RelayCommand(o => Ekle());
                 SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
                 SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
-                DebugAPIProblemEkle = new RelayCommand(o => ProblemEkle());
                 SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
                 DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
                 DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
@@ -130,6 +131,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public async Task ProblemEkle()
         {
+            try {
+
             Soru soru = await SoruAjani.ProblemSorusuOlustur();
 
             seciliTur = "SoruModuMetin";
@@ -145,6 +148,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             OnPropertyChanged(nameof(secenekler));
             OnPropertyChanged();
+
+            }
+            catch
+            {
+                MessageBox.Show("Problem Eklenirken Sorun Oluştu", "Problem Sorunu",
+                    MessageBoxButton.OK, icon: MessageBoxImage.Error);
+            }
         }
 
         public void FonksiyonSoruEkle()

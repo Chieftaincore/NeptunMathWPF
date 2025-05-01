@@ -10,7 +10,7 @@
             </Grid.RowDefinitions>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
 
-                <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
+                <ItemsControl Background="White" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
                           Grid.Row="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -39,7 +39,7 @@
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <ItemsControl Background="WhiteSmoke" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
+                <ItemsControl Background="White" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
                   Grid.Row="0">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

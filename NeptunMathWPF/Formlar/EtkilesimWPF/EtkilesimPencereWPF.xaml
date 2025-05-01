@@ -8,8 +8,10 @@
         xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
         xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
+        Background="LightSlateGray"
         Title="Etkilesim Penceresi" Height="900" Width="1600">
-
+       
+    
     <Window.DataContext>
         
         <mvvm:EtkilesimMVM/>
@@ -28,7 +30,7 @@
 
     </Window.Resources>
 
-    <Grid x:Name="SayfaGrid" Background="#FFF4FAFF">
+    <Grid x:Name="SayfaGrid" Background="White" Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="568*"/>
             <RowDefinition Height="241*"/>
@@ -50,7 +52,7 @@
         </Ellipse>
 
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
-        <Expander x:Name="MenuExpander" Header="DEBUG MENU" IsExpanded="True" Grid.RowSpan="3" Background="{x:Null}">
+        <Expander x:Name="MenuExpander" Header="DEBUG MENU" Grid.RowSpan="3" Background="{x:Null}">
             <StackPanel Background="White">
                 <Expander Header="Coklu İfade">
                     <StackPanel Background="White">
