@@ -46,6 +46,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         //sonraki sorunun ne geleceğini belirleyen algorithma için
         public Func<Soru> sonrakiSoruAlgorithmasi { get; set; }
+
+        public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
         public string IsSelected { get; set; }
 
@@ -76,6 +78,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
 
                 //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
+                SoruSec = new RelayCommand(o => SoruCardSec(o));
                 DebugIslemEkleKomut = new RelayCommand(o => Ekle());
                 SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
                 SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
@@ -85,9 +88,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
-  
-                seciliTur = "SoruModuNormal";
+
                 Ekle();
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
                 OnPropertyChanged();
             });
         }
@@ -97,7 +101,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             Genel.Handle(() => {
 
                 List<ifadeTuru> ifadeTurleri = new List<ifadeTuru>();
-                seciliTur = "SoruModuNormal";
 
                 if (CokluIfadeTurlerListColl.Count < 2)
                 {
@@ -118,6 +121,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     kaynak = "Yerel"
                 };
 
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
                 //Aşağıdan Ekle
                 Sorular.Add(seciliSoru);
 
@@ -131,23 +136,24 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public async Task ProblemEkle()
         {
-            try {
-
-            Soru soru = await SoruAjani.ProblemSorusuOlustur();
-
-            seciliTur = "SoruModuNormal";
-
-            seciliSoru = new SoruCardModel(soru)
+            try
             {
-                LaTeX = soru.GetMetin(),
-                zaman = DateTime.Now,
-                kaynak = "Yapay Zeka API"
-            };
+                Soru soru = await SoruAjani.ProblemSorusuOlustur();
 
-            Sorular.Add(seciliSoru);
+                seciliSoru = new SoruCardModel(soru)
+                {
+                    LaTeX = soru.GetMetin(),
+                    zaman = DateTime.Now,
+                    kaynak = "Yapay Zeka API"
 
-            OnPropertyChanged(nameof(secenekler));
-            OnPropertyChanged();
+                };
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
+                Sorular.Add(seciliSoru);
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
 
             }
             catch
@@ -155,6 +161,20 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 MessageBox.Show("Problem Eklenirken Sorun Oluştu", "Problem Sorunu",
                     MessageBoxButton.OK, icon: MessageBoxImage.Error);
             }
+        }
+
+        public void SoruCardSec(object o)
+        {
+           
+            Genel.Handle(()=> {
+               
+                seciliSoru = (SoruCardModel)o;
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
+            });
         }
 
         public void FonksiyonSoruEkle()

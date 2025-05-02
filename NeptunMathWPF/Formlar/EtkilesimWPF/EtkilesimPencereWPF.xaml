@@ -37,9 +37,9 @@
             <RowDefinition Height="75*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="56*"/>
-            <ColumnDefinition Width="253*"/>
-            <ColumnDefinition Width="91*"/>
+            <ColumnDefinition Width="164"/>
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="331"/>
         </Grid.ColumnDefinitions>
 
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
@@ -76,11 +76,11 @@
                     </StackPanel>
                 </Expander>
 
-                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle"
-                       Height="32" Margin="5,10,5,10" IsEnabled="{Binding APIvar}" Command="{Binding DebugAPIProblemEkle}"/>
-
                 <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugIslemEkleKomut}"/>
+
+                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle"
+                       Height="32" Margin="5,10,5,10" IsEnabled="{Binding APIvar}" Command="{Binding DebugAPIProblemEkle}"/>
 
                 <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugFonksiyonSoruOlustur}"/>

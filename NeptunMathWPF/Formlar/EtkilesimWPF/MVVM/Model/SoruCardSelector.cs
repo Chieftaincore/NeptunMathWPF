@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    class SoruCardSelector : StyleSelector
+    class SoruCardSelector : StyleSelector 
     {
         public Style LaTeXStyle { get; set; }
         public Style MetinStyle { get; set; }
