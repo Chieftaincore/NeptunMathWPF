@@ -6,23 +6,37 @@
              xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <ComboBox x:Name="topicComboBox" HorizontalAlignment="Left" Margin="94,24,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Konu" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="subtopicComboBox" HorizontalAlignment="Left" Margin="94,55,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Alt Konu" HorizontalAlignment="Left" Margin="12,53,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="soruTextBox" HorizontalAlignment="Left" Margin="318,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="53"/>
-        <Label Content="Soru" HorizontalAlignment="Left" Margin="263,22,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="latexTextBox" HorizontalAlignment="Left" Margin="318,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="53"/>
-        <Label Content="LaTeX" HorizontalAlignment="Left" Margin="263,99,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="dogrucevapTextBox" HorizontalAlignment="Left" Margin="96,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="29"/>
-        <Label Content="Doğru Cevap" HorizontalAlignment="Left" Margin="12,99,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="yanliscevapTextBox" HorizontalAlignment="Left" Margin="96,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="162" Height="29"/>
-        <Label Content="Yanlış Cevap" HorizontalAlignment="Left" Margin="12,130,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="addButton" Content="Ekle" HorizontalAlignment="Left" Margin="574,37,0,0" VerticalAlignment="Top" Height="93" Width="132" Click="addButton_Click"/>
-        <ListBox x:Name="listbox1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,175,356,112"/>
-        <Label Content="Silmek için sol taraftan soru seçin!" HorizontalAlignment="Left" Margin="508,175,0,0" VerticalAlignment="Top" Foreground="#FF1D77BB"/>
-        <Button x:Name="rmvButton" Content="Sil" HorizontalAlignment="Left" Margin="512,225,0,0" VerticalAlignment="Top" Height="53" Width="116" Click="rmvButton_Click"/>
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="178"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <ComboBox x:Name="topicComboBox" HorizontalAlignment="Left" Margin="94,24,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <Label Content="Konu" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
+        <ComboBox x:Name="subtopicComboBox" HorizontalAlignment="Left" Margin="94,55,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <Label Content="Alt Konu" HorizontalAlignment="Left" Margin="12,53,0,0" VerticalAlignment="Top" Height="26" Width="55"/>
+
+        <TextBox x:Name="soruTextBox" HorizontalAlignment="Left" Margin="79,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="53" Grid.Column="1"/>
+        <Label Content="Soru" HorizontalAlignment="Left" Margin="24,22,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="34"/>
+        <TextBox x:Name="latexTextBox" HorizontalAlignment="Left" Margin="79,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="53" Grid.Column="1"/>
+        <Label Content="LaTeX" HorizontalAlignment="Left" Margin="24,99,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="40"/>
+
+        <TextBox x:Name="dogrucevapTextBox" HorizontalAlignment="Right" Margin="96,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" Height="29" Grid.Column="0"/>
+        <Label Content="Doğru Cevap" HorizontalAlignment="Right" Margin="0,99,120,0" VerticalAlignment="Top" Height="26" Width="79"/>
+        <TextBox x:Name="yanliscevapTextBox" HorizontalAlignment="Right" Margin="96,132,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" Height="29" Grid.Column="0"/>
+        <Label Content="Yanlış Cevap" HorizontalAlignment="Right" Margin="0,130,120,0" VerticalAlignment="Top" Height="26" Width="75"/>
+        <Button x:Name="addButton" Content="Ekle" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="141" Width="132" Click="addButton_Click" Grid.Column="2"/>
+
+        <ListBox x:Name="listbox1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,20,5" Grid.ColumnSpan="2" Grid.Row="1"/>
+
+        <Label Content="Silmek için sol taraftan soru seçin!" HorizontalAlignment="Left" Margin="340,5,0,0" VerticalAlignment="Top" Foreground="#FF1D77BB" Grid.Column="1" Grid.Row="1" Height="26" Width="189" Grid.ColumnSpan="2"/>
+        <Button x:Name="rmvButton" Content="Sil" HorizontalAlignment="Left" Margin="11,36,0,0" VerticalAlignment="Top" Height="53" Width="131" Click="rmvButton_Click" Grid.Column="2" Grid.Row="1"/>
 
     </Grid>
 </UserControl>

@@ -5,33 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
              mc:Ignorable="d" 
-             d:DesignHeight="450" Width="747">
-    <Grid Margin="0,0,-48,0">
+             d:DesignHeight="450" Width="540">
+    <Grid Margin="4" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="223*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="221"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
+
+
         <GroupBox
-            Width="242" Margin="47,38,0,22" Header="KONU ve ALT KONU EKLEME&#xA;" HorizontalAlignment="Left"/>
+            Width="242" Margin="0,20,0,22" Header="KONU ve ALT KONU EKLEME&#xA;" HorizontalAlignment="Right" Grid.Column="0" Grid.RowSpan="2"/>
         <TextBox
-            Width="120" VerticalAlignment="Top" TextWrapping="Wrap" x:Name="topicTextBox" Margin="159,76,0,0" HorizontalAlignment="Left"/>
-        <TextBox
-            Width="120" VerticalAlignment="Top" TextWrapping="Wrap" x:Name="subtopicTextBox" Margin="157,235,0,0" HorizontalAlignment="Left"/>
-        <Label
-            VerticalAlignment="Top" Margin="65,221,0,0" HorizontalAlignment="Left" Content="ALT KONU"/>
-        <Button
-            Width="90" VerticalAlignment="Top" x:Name="addTopicButton" Margin="65,122,0,0" Height="24" HorizontalAlignment="Left" Content="Konu Ekle" Click="addTopicButton_Click"/>
-        <Button
-            Width="90" VerticalAlignment="Top" x:Name="addSubtopicButton" Margin="62,287,0,0" Height="24" HorizontalAlignment="Left" Content="Alt Konu Ekle" Click="addSubtopicButton_Click"/>
-        <ComboBox
-            Width="120" VerticalAlignment="Center" x:Name="topicComboBox" Margin="157,0,0,0" HorizontalAlignment="Left"/>
-        <Label x:Name="konulbl2"
-            VerticalAlignment="Top" Margin="66,190,0,0" HorizontalAlignment="Left" Content="KONU"/>
-        <Button
-            Width="96" VerticalAlignment="Top" x:Name="rmvTopicButton" Margin="420,129,0,0" Height="24" HorizontalAlignment="Left" Content="Konu Sil" Click="rmvTopicButton_Click"/>
+            Width="120" VerticalAlignment="Top" TextWrapping="Wrap" x:Name="topicTextBox" Margin="0,72,30,0" HorizontalAlignment="Right" Height="22"/>
+
         <Label x:Name="konulbl2_Copy"
-            VerticalAlignment="Top" Margin="67,62,0,0" HorizontalAlignment="Left" Content="KONU"/>
-        <Rectangle HorizontalAlignment="Left" Height="393" Margin="300,41,0,0" Stroke="Black" VerticalAlignment="Top" Width="6" Fill="Black" RenderTransformOrigin="0.5,0.5">
+      VerticalAlignment="Top" Margin="35,70,0,0" HorizontalAlignment="Left" Content="KONU" Height="26" Width="44"/>
+        <TextBox
+            Width="120" VerticalAlignment="Top" TextWrapping="Wrap" x:Name="subtopicTextBox" Margin="0,40,30,0" HorizontalAlignment="Right" Grid.Column="0" Height="18" Grid.Row="1"/>
+        <Label
+            VerticalAlignment="Top" Margin="42,36,0,0" HorizontalAlignment="Left" Content="ALT KONU" Height="26" Width="65" Grid.Row="1"/>
+        <Button
+            Width="90" VerticalAlignment="Top" x:Name="addTopicButton" Margin="0,122,30,0" Height="24" HorizontalAlignment="Right" Content="Konu Ekle" Click="addTopicButton_Click"/>
+        <Button
+            Width="90" VerticalAlignment="Top" x:Name="addSubtopicButton" Margin="0,72,30,0" Height="24" HorizontalAlignment="Right" Content="Alt Konu Ekle" Click="addSubtopicButton_Click" Grid.Row="1"/>
+        <ComboBox
+            Width="120" VerticalAlignment="Top" x:Name="topicComboBox" Margin="0,4,30,0" HorizontalAlignment="Right" Height="22" Grid.Row="1"/>
+        <Label x:Name="konulbl2"
+            VerticalAlignment="Top" Margin="53,3,0,0" HorizontalAlignment="Left" Content="KONU" Height="26" Width="43" Grid.Row="1"/>
+
+
+
+        <Rectangle HorizontalAlignment="Left" Margin="263,10,10,0" Stroke="DarkSlateBlue" VerticalAlignment="Stretch" Width="6" Fill="LightSteelBlue" RenderTransformOrigin="0.5,0.5" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform ScaleX="-1"/>
@@ -41,14 +50,18 @@
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>
-        <Label x:Name="konulbl2_Copy1"
-            VerticalAlignment="Top" Margin="338,83,0,0" HorizontalAlignment="Left" Content="KONU"/>
-        <GroupBox Header="KONU ve ALT KONU SİLME" Margin="317,48,254,22"/>
-        <ComboBox
-            Width="120" VerticalAlignment="Top" x:Name="topicComboBox2" Margin="396,85,0,0" HorizontalAlignment="Left"/>
-        <ComboBox x:Name="subtopicComboBox" HorizontalAlignment="Left" Margin="396,255,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Alt Konu" HorizontalAlignment="Left" Margin="332,253,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="rmvSubtopicButton" Content="Alt Konu Sil" HorizontalAlignment="Left" Margin="429,287,0,0" VerticalAlignment="Top" Width="87" Height="24" Click="rmvSubtopicButton_Click"/>
 
+        <GroupBox Header="KONU ve ALT KONU SİLME" Margin="10,20,10,22" Grid.Column="1" Grid.RowSpan="2"/>
+        <Label x:Name="konulbl2_Copy1"
+            VerticalAlignment="Top" Margin="26,70,0,0" HorizontalAlignment="Left" Content="KONU" Grid.Column="1" Height="26" Width="43"/>
+
+        <ComboBox
+            Width="120" VerticalAlignment="Top" x:Name="topicComboBox2" Margin="98,72,0,0" HorizontalAlignment="Left" Grid.Column="1" Height="22"/>
+        <ComboBox x:Name="subtopicComboBox" HorizontalAlignment="Left" Margin="98,40,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="22" Grid.Row="1"/>
+        <Label Content="Alt Konu" HorizontalAlignment="Left" Margin="26,36,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="55" Grid.Row="1"/>
+        <Button x:Name="rmvSubtopicButton" Content="Alt Konu Sil" HorizontalAlignment="Left" Margin="131,72,0,0" VerticalAlignment="Top" Width="87" Height="24" Click="rmvSubtopicButton_Click" Grid.Column="1" Grid.Row="1"/>
+
+        <Button
+            Width="96" VerticalAlignment="Top" x:Name="rmvTopicButton" Margin="122,122,0,0" Height="24" HorizontalAlignment="Left" Content="Konu Sil" Click="rmvTopicButton_Click" Grid.Column="1"/>
     </Grid>
 </UserControl>
