@@ -17,7 +17,8 @@ namespace NeptunMathWPF.SoruVeAjani
     public class Ifade
     {
         ifadeTuru Tur;
-        string IslemString;
+        
+        internal string IslemString { get; set; }
         public virtual string LaTeXString { get; set; }
 
 
@@ -75,11 +76,9 @@ namespace NeptunMathWPF.SoruVeAjani
         string islem;
         string LaTex;
 
-        public Kesir(int pay, int payda)
+        public Kesir(int pay, int payda)  : base($"({pay}/{payda})", $"\\frac{{{pay}}}{{{payda}}}", ifadeTuru.kesir)
         {
-            string islemS = $"({pay}/{payda})";
-            LaTex = $"frac({{{pay}}}, {{{payda}}})";
-            islem = islemS;  
+            
         }
     }
 

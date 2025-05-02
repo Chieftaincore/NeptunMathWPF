@@ -34,7 +34,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
         public SoruCardModel seciliSoru { get; set; }
         public SeceneklerModel secenekler { 
-
+            
             get => seciliSoru.NesneSecenekler;
         }
         public string seciliSecenek {
@@ -135,7 +135,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             Soru soru = await SoruAjani.ProblemSorusuOlustur();
 
-            seciliTur = "SoruModuMetin";
+            seciliTur = "SoruModuNormal";
 
             seciliSoru = new SoruCardModel(soru)
             {

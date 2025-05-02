@@ -44,7 +44,7 @@ namespace NeptunMathWPF
             {
                 mesaj += $"({secenekler[i]})";
             }
-            MessageBox.Show(mesaj);
+            //MessageBox.Show(mesaj);
 
             //secenekleri listede toplama
             foreach (Entity e in secenekler)
