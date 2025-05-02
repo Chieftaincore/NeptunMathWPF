@@ -13,38 +13,15 @@ namespace NeptunMathWPF
     {
         public async static Task<ProblemRepository> GenerateProblem(ProblemType problemType, ProblemDifficulty problemDifficulty)
         {
-            string problemTypeString = ProblemTypeToString(problemType);
-
-            string difficultyDetail = "";
-            switch (problemDifficulty)
+            string difficulty = problemDifficulty.ToString();
+            if (problemDifficulty == ProblemDifficulty.CokZor)
             {
-                case ProblemDifficulty.Kolay:
-                    difficultyDetail = "temel düzeyde, çok basit ve kolayca çözülebilir bir problem olsun.";
-                    break;
-                case ProblemDifficulty.Orta:
-                    difficultyDetail = "orta düzeyde, az miktarda zorlayan ve azcık zorlanarak çözülebilir bir problem olsun.";
-                    break;
-                case ProblemDifficulty.Zor: 
-                    difficultyDetail = "zor düzeyde, zor ve zorlanarak çözülebilir bir problem olsun.";
-                    break;
-                case ProblemDifficulty.EnZor: 
-                    difficultyDetail = "en zor düzeyde, çok zor ve aşırı zorlanarak çözülebilir bir problem olsun.";
-                    break;
+                difficulty = "çok zor";
             }
 
-            string problemPrompt = $"Lütfen Türkçe bir matematik problem sorusu üretin.\r\nProblem sorusu tipi **{problemTypeString}**" +
-                $".\r\nProblemin **zorluk seviyesi 100 üzerinden yaklaşık {(int)problemDifficulty}" +
-                $" olsun**, yani {difficultyDetail}\r\n\r\nProblem metnini oluşturun.\r\nBu problem " +
-                "için **doğru sayısal cevabı** hesaplayın.\r\nArdından, doğru cevaptan farklı olan, ancak problemi çözen bir öğrenci için **makul " +
-                "görünebilecek, sık yapılan hatalardan kaynaklanabilecek veya kafa karıştırıcı 3 adet yanlış cevap seçeneği** oluşturun." +
-                "\r\n\r\nYanıtınızı **SADECE** aşağıdaki JSON formatında verin. JSON bloğu dışında hiçbir metin, açıklama, giriş cümlesi " +
-                "(örn. \"İşte sorunuz:\") veya kapanış cümlesi eklemeyin. Sadece JSON bloğu olmalı.\r\n\r\nJSON formatı şu şekilde olsun:\r\n{\r\n  " +
-                "\"problem\": \"[Buraya oluşturulan problem metni gelecek. Metin Türkçe olacak.]\",\r\n  \"dogru_cevap\": \"[Buraya hesaplanan doğru " +
-                "sayısal cevap gelecek. Sadece sayı veya kesir/ondalık değer olarak.]\",\r\n  \"yanlis_cevaplar\": [\r\n    \"[Buraya ilk yanlış cevap " +
-                "seçeneği gelecek. Sadece sayı veya kesir/ondalık değer olarak.]\",\r\n    \"[Buraya ikinci yanlış cevap seçeneği gelecek. Sadece sayı" +
-                " veya kesir/ondalık değer olarak.]\",\r\n    \"[Buraya üçüncü yanlış cevap seçeneği gelecek. Sadece sayı veya kesir/ondalık değer" +
-                " olarak.]\"\r\n  ]\r\n}\r\n\r\nÖrnek: Eğer doğru cevap 10 ise, yanlış cevaplar 5, 12, 8 gibi sayılar olabilir. Lütfen problemle" +
-                " ilgili mantıksal olarak türetilebilecek yanlışlar olsunlar.\r\n\r\nProblem ve tüm cevap değerleri **Türkçe** olmalıdır. Sorduğun sorunun ve cevabın doğru olduğundan kesinlikle emin ol. Yanlış soru olmasın.";
+            string type = ProblemTypeToString(problemType);
+
+            string problemPrompt = $"Aşağıdaki JSON yapısına uygun bir matematik problemi, doğru cevabı ve üç adet yanlış cevap üret. Üretilen problem ve doğru cevap matematiksel olarak %100 doğru olmalıdır. Problem, ortaokul veya lise seviyesine uygun ancak {difficulty} seviyede olmalı ve çözülebilir nitelikte olmalıdır. Problem sorusunun türü {type} Problemi olmalıdır. Soru içeriğini rastgele seç. Yanlış cevaplar, olası mantık hatalarını veya işlem hatalarını yansıtan, makul görünen ama yanlış seçenekler olmalıdır. Soruyu ve cevabı ürettikten sonra kendin cevabın ve sorunun doğruluğunu test et ve eğer doğru değilse soruyu tekrar yaz.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n İstenen JSON formatı: \r\n\r\n\r\n\r\n ```json \r\n\r\n\r\n\r\n  {{  \r\n\r\n\r\n\r\n   \"problem\": \"Matematik problemi metni buraya\", \r\n\r\n\r\n\r\n   \"dogru_cevap\": \"Doğru sayısal cevap buraya\", \r\n\r\n\r\n\r\n   \"yanlis_cevaplar\": [ \r\n\r\n\r\n\r\n     \"Yanlış cevap 1 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 2 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 3 (sayısal)\" \r\n\r\n\r\n\r\n   ] \r\n\r\n\r\n\r\n }} \r\n\r\n\r\n\r\n ``` \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Sadece bu JSON çıktısını üret, başına veya sonuna kesinlikle başka hiçbir metin ekleme.";
 
             string generatedJsonString = await APIOperations.CallGeminiApiTypedAsync(problemPrompt);
             generatedJsonString = generatedJsonString.Replace("```json", "");
@@ -72,31 +49,35 @@ namespace NeptunMathWPF
             }
         }
 
-        private static string ProblemTypeToString(ProblemType problemType)
+
+        private static string ProblemTypeToString(ProblemType type)
         {
             string returnString = "";
-            switch (problemType)
+            switch (type)
             {
                 case ProblemType.Havuz:
-                    returnString = "Havuz Problemleri";
+                    returnString = "Havuz";
                     break;
-                case ProblemType.Isci: 
-                    returnString = "İşçi Problemleri";
+                case ProblemType.Isci:
+                    returnString = "İşçi";
                     break;
-                case ProblemType.SayiveKesir: 
-                    returnString = "Sayı ve Kesir Problemleri";
+                case ProblemType.SayiveKesir:
+                    returnString = "Sayı ve Kesir";
                     break;
                 case ProblemType.Yas:
-                    returnString = "Yaş Problemleri";
+                    returnString = "Yaş";
                     break;
-                case ProblemType.Karisim: 
-                    returnString = "Karışım Problemleri";
+                case ProblemType.Yuzde:
+                    returnString = "Yüzde";
+                    break;
+                case ProblemType.Karisim:
+                    returnString = "Karışım";
                     break;
                 case ProblemType.KarZarar:
-                    returnString = "Kar ve Zarar Problemleri";
+                    returnString = "Kar Zarar";
                     break;
                 case ProblemType.Hareket:
-                    returnString = "Hareket(Yol/Hız/Zaman) Problemleri";
+                    returnString = "Hareket";
                     break;
             }
             return returnString;
@@ -117,9 +98,9 @@ namespace NeptunMathWPF
 
     public enum ProblemDifficulty
     {
-        Kolay = 25,
-        Orta = 50,
-        Zor = 75,
-        EnZor = 100
+        Kolay,
+        Orta,
+        Zor,
+        CokZor
     }
 }
