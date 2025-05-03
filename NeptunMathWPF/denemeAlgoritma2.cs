@@ -40,6 +40,7 @@ public static class SoruYoneticisi
         switch (zorlukSeviyesi)
         {
             //soru ajani classındaki soru generator isimlerini buraya aktaramadığım için altını çizip hata veriyor
+            // buradaki soru ajani classindaki soru generator isimleri örnektir o yüzden hata veriyor
             case 1:
                 // seviye 1 
                 uretilenSoru = SoruAjani.IslemSorusuUret(1, 10, 1, 5); //örnek parametreler : ilk sayı için 1 ila 10 ikinci sayı için 1 ila 5 arasında sayı üret
