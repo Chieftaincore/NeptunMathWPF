@@ -116,6 +116,8 @@
     <Compile Include="BOOKMARKED_QUESTIONS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="denemeAlgoritma1.cs" />
+    <Compile Include="denemeAlgoritma2.cs" />
     <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
