@@ -79,5 +79,11 @@ namespace NeptunMathWPF
             (new DevPanelWPF()).Show();
             this.Close();
         }
+
+        private void ButonLimit_Click(object sender, RoutedEventArgs e)
+        {
+            LimitPanel limitPanel = new LimitPanel();
+            limitPanel.Show();
+        }
     }
 }
