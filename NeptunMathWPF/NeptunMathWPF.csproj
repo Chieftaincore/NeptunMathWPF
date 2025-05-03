@@ -133,6 +133,7 @@
     <Compile Include="BOOKMARKED_QUESTIONS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="DBQuestionRepository.cs" />
     <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
