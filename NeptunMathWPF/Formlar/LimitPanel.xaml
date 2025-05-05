@@ -46,10 +46,6 @@
                 Padding="15,5" Margin="10,0"/>
             <Button x:Name="nextButton" Content="Sonraki Soru" Click="NextButton_Click" 
                 Padding="15,5" Margin="10,0"/>
-            <Button x:Name="nextButton_Copy" Content="Hesap Makinesi" Click="HesapMakinesiButon_Click" 
-                Padding="15,5"/>
-            <Button x:Name="nextButton_Copy1" Content="Not Kağıtı" Click="NotAlmaButon_Click" 
-                Padding="15,5"/>
         </StackPanel>
     </Grid>
 </Window>

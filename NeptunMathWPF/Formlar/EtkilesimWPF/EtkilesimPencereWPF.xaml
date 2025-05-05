@@ -10,10 +10,10 @@
         mc:Ignorable="d"
         Background="LightSlateGray"
         Title="Etkilesim Penceresi" Height="900" Width="1600">
-       
-    
+
+
     <Window.DataContext>
-        
+
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
 
@@ -72,7 +72,7 @@
                                   ItemsSource="{Binding DebugComboBoxTurler}" SelectedValue="{Binding cmBxSecilen, Mode=OneWayToSource}"/>
 
                         <Button Content="Ekle" Margin="6,0,6,0" Command="{Binding DebugCokluIfadeEkle}"/>
-                        
+
                     </StackPanel>
                 </Expander>
 
@@ -109,6 +109,9 @@
                         Grid.Row="1" Grid.Column="1"
                         ContentTemplateSelector="{StaticResource EtkilesimTemplateModel}"
                         Content="{Binding seciliTur}"/>
+        <Button Grid.Column="2" Content="Hesap Makinesi" HorizontalAlignment="Center" Margin="0,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="HesapMakinesi_Click"/>
+        <Button Grid.Column="2" Content="Yerel Hesap Makinesi" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="46" Width="124" Click="YerelHesapMakinesi_Click"/>
+        <Button Grid.Column="2" Content="Hesaplama Not Tutma" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="NotAlma_Click" Margin="0,170,0,0"/>
 
     </Grid>
 </Window>

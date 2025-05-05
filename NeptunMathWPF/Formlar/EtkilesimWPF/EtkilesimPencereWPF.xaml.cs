@@ -1,4 +1,5 @@
-﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
+﻿using HesapMakinesi;
+using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,28 @@ namespace NeptunMathWPF.Formlar
             InitializeComponent();
         }
 
-      
+        private void HesapMakinesi_Click(object sender, RoutedEventArgs e)
+        {
+            HesapMakinesiWindow hesapMakinesiWindow = new HesapMakinesiWindow();
+            hesapMakinesiWindow.Show();
+        }
+
+        private void YerelHesapMakinesi_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("calc.exe");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Yerel hesap makinesi açılırken hata oluştu: " + ex.Message);
+            }
+        }
+
+        private void NotAlma_Click(object sender, RoutedEventArgs e)
+        {
+            NotAlmaWindow notAlmaWindow = new NotAlmaWindow();
+            notAlmaWindow.Show();
+        }
     }
 }
