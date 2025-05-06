@@ -14,11 +14,12 @@ namespace NeptunMathWPF.Fonksiyonlar
             int x = random.Next(1, 10);
             double result = function.func(x);
 
-            
+
             Question qst = new Question
             {
                 QuestionText = $"{function.function} fonksiyonu için f({x}) değeri nedir?",
-                Answer = Math.Round(result, 2).ToString()
+                Answer = ToRational(Math.Round(result, 2)),
+                WrongAnswers = GenerateAnswer(Math.Round(result, 2).ToString(), function.parameters[0], function.parameters[1])
             };
 
             return new List<FunctionRepository>
@@ -36,9 +37,36 @@ namespace NeptunMathWPF.Fonksiyonlar
             };
         }
 
-        protected override string GenerateAnswer(string question)
+        protected override List<string> GenerateAnswer(string answer, int a, int b)
         {
-            throw new NotImplementedException();
+            double correct = double.Parse(answer);
+
+            var temp = new List<string>
+    {
+        ToRational((a * b)),
+        ToRational((a * 1 + b)),
+        ToRational(Math.Ceiling(correct)),
+        ToRational((correct + 1)),
+        ToRational((correct - 1))
+    };
+
+            var extras = Enumerable
+                .Range(1, 6)                                  
+                .SelectMany(offset => new[]
+                {
+            ToRational((correct + offset)),           
+            ToRational((correct - offset))            
+                });
+
+            var wrongs = temp
+                .Concat(extras)
+                .Where(w => w != answer)
+                .Distinct()
+                .Take(4)
+                .ToList();
+
+            return wrongs;
         }
+
     }
 }

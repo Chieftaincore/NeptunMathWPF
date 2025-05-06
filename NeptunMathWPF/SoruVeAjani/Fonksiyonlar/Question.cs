@@ -10,5 +10,6 @@ namespace NeptunMathWPF.Fonksiyonlar
     {
         public string QuestionText { get; set; }
         public string Answer { get; set; }
+        public List<string> WrongAnswers { get; set; }
     }
 }

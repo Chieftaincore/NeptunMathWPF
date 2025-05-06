@@ -11,7 +11,7 @@ namespace NeptunMathWPF.Fonksiyonlar
         protected Random random = new Random();
 
         internal abstract List<FunctionRepository> GenerateQuestion();
-        protected abstract string GenerateAnswer(string question);
+        protected abstract List<string> GenerateAnswer(string answer, int a, int b);
 
         internal (string function, Func<double, double> func, List<int> parameters, FunctionType functionType) GetRandomFunction()
         {
@@ -71,11 +71,52 @@ namespace NeptunMathWPF.Fonksiyonlar
                     returnFunc = x => x;
                     break;
             }
-            
+
             List<int> parameters = new List<int> { a, b, c };
-                
+
             return (returnQuestion, returnFunc, parameters, functionType);
 
         }
+
+        public static string ToRational(double value, double tolerance = 1.0E-6)
+        {
+            double fraction = value;
+            int sign = Math.Sign(fraction);
+            fraction = Math.Abs(fraction);
+
+            if (fraction == 0) return ("0");
+
+            int lower_n = 0, lower_d = 1;
+            int upper_n = 1, upper_d = 0;
+
+            while (true)
+            {
+                int mediant_n = lower_n + upper_n;
+                int mediant_d = lower_d + upper_d;
+
+                if (mediant_d * (fraction + tolerance) < mediant_n)
+                {
+                    upper_n = mediant_n;
+                    upper_d = mediant_d;
+                }
+                else if (mediant_n < (fraction - tolerance) * mediant_d)
+                {
+                    lower_n = mediant_n;
+                    lower_d = mediant_d;
+                }
+                else
+                {
+                    if (mediant_d==1)
+                    {
+                        return ($"{sign * mediant_n}");
+                    }
+                    else
+                    {
+                        return ($"{sign * mediant_n} / {mediant_d}");
+                    }
+                }
+            }
+        }
+
     }
 }

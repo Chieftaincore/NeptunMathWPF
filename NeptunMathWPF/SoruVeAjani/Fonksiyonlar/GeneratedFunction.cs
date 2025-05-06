@@ -14,13 +14,12 @@ namespace NeptunMathWPF.Fonksiyonlar
         //Çevirme için gerekli generator type alma
         public FunctionQuestionGenerator gen { get; }
 
-        public bool HasMultipleFunctions => repository.Count > 1; // Listede 1den fazla eleman varsa true olur.
+        //public bool HasMultipleFunctions => repository.Count > 1; // Listede 1den fazla eleman varsa true olur.
         internal GeneratedFunction()
         {
             bool whileCheck = true;
             while (whileCheck)
             {
-
                 List<FunctionQuestionGenerator> generators = new List<FunctionQuestionGenerator>
                  {
 
@@ -35,14 +34,17 @@ namespace NeptunMathWPF.Fonksiyonlar
 
                 gen = generator;
 
+
+
                 foreach (var item in repository)
                 {
-                    if (item.questionObject.Answer.ToString() != "NaN") //Payda 0 gelirse tekrar soru üretsin
+                    if (item.questionObject.Answer.ToString() != "NaN" && item.questionObject.WrongAnswers.Count == 4 && item.questionObject.Answer!= "∞") //Payda 0 gelirse veya yanlış cevapların sayısı 4'ten küçük gelirse tekrar soru üretsin
                     {
                         whileCheck = false;
 
                     }
                 }
+
             }
         }
     }

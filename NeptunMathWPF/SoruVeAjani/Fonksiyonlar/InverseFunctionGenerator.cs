@@ -19,7 +19,8 @@ namespace NeptunMathWPF.Fonksiyonlar
             Question qst = new Question
             {
                 QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f⁻¹(y) fonksiyonunda f⁻¹({y}) değeri nedir?",
-                Answer = ((double)(y - b) / a).ToString()
+                Answer = ToRational(((double)(y - b) / a)),
+                WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(),a,b)
             };
 
             return new List<FunctionRepository>
@@ -36,9 +37,41 @@ namespace NeptunMathWPF.Fonksiyonlar
             };
         }
 
-        protected override string GenerateAnswer(string question)
+        protected override List<string> GenerateAnswer(string answer, int a, int b)
         {
-            throw new NotImplementedException();
+            double correct = double.Parse(answer);
+            var candidates = new HashSet<string>
+            {
+                ToRational((correct + b - b)),
+                ToRational((correct * a)),
+                "0",
+                ToRational((correct +(double) b / a)),
+                ToRational((correct -(double) b / a))
+            };
+
+            var wrongs = candidates
+                .Where(w => w != answer)
+                .Take(4)
+                .ToList();
+
+            int offset = 1;
+            while (wrongs.Count < 4)
+            {
+                var extra1 = ToRational((correct + offset));
+                var extra2 = ToRational((correct - offset));
+
+                if (extra1 != answer && !wrongs.Contains(extra1))
+                    wrongs.Add(extra1);
+
+                if (wrongs.Count >= 4) break;
+
+                if (extra2 != answer && !wrongs.Contains(extra2))
+                    wrongs.Add(extra2);
+
+                offset++;
+            }
+
+            return wrongs;
         }
     }
 }
