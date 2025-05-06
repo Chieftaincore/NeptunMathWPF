@@ -183,7 +183,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             {
                 seciliTur = "SoruModuMetin";
 
-                Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur(seceneksayisi: 4);
+                Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur();
 
                 seciliSoru = new SoruCardModel(soru)
                 {

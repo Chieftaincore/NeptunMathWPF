@@ -251,7 +251,7 @@ namespace NeptunMathWPF.Formlar
         {
             //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
             
-            Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur(seceneksayisi: (int)sliderIfade.Value);
+            Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur();
 
             SoruLOG.Text = soru.GetOlusturmaLogu();
             LatexCikti.Formula = string.Empty;
