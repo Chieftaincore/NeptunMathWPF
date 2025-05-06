@@ -9,6 +9,7 @@
         xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
         Background="LightSlateGray"
+        Closed="PenecereyiKapat"
         Title="Etkilesim Penceresi" Height="900" Width="1600">
 
 
@@ -101,7 +102,6 @@
 
             <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}" 
                       ItemContainerStyleSelector="{StaticResource SoruStyleTemplateModel}"/>
-
 
         </ScrollViewer>
 
