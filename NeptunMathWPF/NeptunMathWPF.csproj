@@ -354,6 +354,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
+    <Content Include="Kaynaklar\Sesler\SesDogru1.wav" />
+    <Content Include="Kaynaklar\Sesler\SesDogru2.wav" />
+    <Content Include="Kaynaklar\Sesler\SesDogru3.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis1.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis2.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis3.wav" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
