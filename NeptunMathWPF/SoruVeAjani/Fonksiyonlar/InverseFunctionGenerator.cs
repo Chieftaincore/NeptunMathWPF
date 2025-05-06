@@ -20,7 +20,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             {
                 QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f⁻¹(y) fonksiyonunda f⁻¹({y}) değeri nedir?",
                 Answer = ToRational(((double)(y - b) / a)),
-                WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(),a,b)
+                WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(), a, b)
             };
 
             return new List<FunctionRepository>
@@ -40,38 +40,43 @@ namespace NeptunMathWPF.Fonksiyonlar
         protected override List<string> GenerateAnswer(string answer, int a, int b)
         {
             double correct = double.Parse(answer);
+            string rationalAnswer = ToRational(correct); // Cevabı normalize et
+
             var candidates = new HashSet<string>
-            {
-                ToRational((correct + b - b)),
-                ToRational((correct * a)),
-                "0",
-                ToRational((correct +(double) b / a)),
-                ToRational((correct -(double) b / a))
-            };
+    {
+        // Hatalı cevaplar
+        ToRational(correct + b - b),              // Anlamsız ama sayısal olarak doğru → elenir
+        ToRational(correct * a),
+        "0",
+        ToRational(correct + (double)b / a),
+        ToRational(correct - (double)b / a)
+    };
 
             var wrongs = candidates
-                .Where(w => w != answer)
+                .Where(w => w != rationalAnswer) // Cevapla birebir aynı olanları çıkar
                 .Take(4)
                 .ToList();
 
             int offset = 1;
             while (wrongs.Count < 4)
             {
-                var extra1 = ToRational((correct + offset));
-                var extra2 = ToRational((correct - offset));
+                string extra1 = ToRational(correct + offset);
+                string extra2 = ToRational(correct - offset);
 
-                if (extra1 != answer && !wrongs.Contains(extra1))
+                if (extra1 != rationalAnswer && !wrongs.Contains(extra1))
                     wrongs.Add(extra1);
 
                 if (wrongs.Count >= 4) break;
 
-                if (extra2 != answer && !wrongs.Contains(extra2))
+                if (extra2 != rationalAnswer && !wrongs.Contains(extra2))
                     wrongs.Add(extra2);
 
                 offset++;
+                if (offset > 100) break; // Güvenlik sınırı: sonsuz döngüden kaçın
             }
 
             return wrongs;
         }
+
     }
 }
