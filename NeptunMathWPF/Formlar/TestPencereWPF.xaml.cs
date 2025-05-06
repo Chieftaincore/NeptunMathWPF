@@ -52,8 +52,8 @@ namespace NeptunMathWPF
 
         private void EtkilesimSayfasi_Click(object sender, RoutedEventArgs e)
         {
-            (new EtkilesimPencereWPF()).Show();
-            this.Close();
+            (new EtkilesimPencereWPF(this)).Show();
+            this.Hide();
         }
 
         private void fonksiyonSayfasi_Click(object sender, RoutedEventArgs e)
@@ -78,6 +78,12 @@ namespace NeptunMathWPF
         {
             (new DevPanelWPF()).Show();
             this.Close();
+        }
+
+        private void ButonLimit_Click(object sender, RoutedEventArgs e)
+        {
+            LimitPanel limitPanel = new LimitPanel();
+            limitPanel.Show();
         }
     }
 }

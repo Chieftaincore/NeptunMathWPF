@@ -144,8 +144,17 @@
       <DependentUpon>DevPanelWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ISoruCardStyleKey.cs" />
+    <Compile Include="Formlar\HesapMakinesiWindow.xaml.cs">
+      <DependentUpon>HesapMakinesiWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\konuEkleUC.xaml.cs">
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\LimitPanel.xaml.cs">
+      <DependentUpon>LimitPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\NotAlmaWindow.xaml.cs">
+      <DependentUpon>NotAlmaWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
@@ -287,11 +296,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\HesapMakinesiWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\konuEkleUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\LatexTestPencere.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\LimitPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\NotAlmaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

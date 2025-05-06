@@ -1,0 +1,51 @@
+﻿<Window x:Class="NeptunMathWPF.Formlar.LimitPanel"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:NeptunMathWPF"
+    xmlns:controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+    mc:Ignorable="d"
+    Title="Limit Quiz Uygulaması" Height="500" Width="800">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Limit Quiz Uygulaması" 
+               FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <TextBlock x:Name="questionTypeTextBlock" Grid.Row="1" 
+               FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center" Margin="0,0,0,10"
+               Text="Soru Tipi: Limit Değerini Bulma"/>
+
+        <Border Grid.Row="2" BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="0,0,0,10"
+            Background="AliceBlue">
+            <controls:FormulaControl x:Name="formulaControl" Formula="\lim_{x \to a} \frac{f(x)}{g(x)}" 
+                        HorizontalAlignment="Center" FontSize="20"/>
+        </Border>
+
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="optionsPanel" Margin="0,10">
+                <!-- Şıklar burada olacak -->
+            </StackPanel>
+        </ScrollViewer>
+
+        <TextBlock x:Name="resultTextBlock" Grid.Row="4" TextWrapping="Wrap"
+               FontSize="16" HorizontalAlignment="Center" Margin="0,10"/>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <TextBlock x:Name="scoreTextBlock" Text="Skor: 0/0" 
+                   FontSize="16" VerticalAlignment="Center" Margin="0,0,20,0"/>
+            <Button x:Name="checkButton" Content="Kontrol Et" Click="CheckButton_Click" 
+                Padding="15,5" Margin="10,0"/>
+            <Button x:Name="nextButton" Content="Sonraki Soru" Click="NextButton_Click" 
+                Padding="15,5" Margin="10,0"/>
+        </StackPanel>
+    </Grid>
+</Window>

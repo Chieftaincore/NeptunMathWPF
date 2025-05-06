@@ -113,7 +113,7 @@ namespace NeptunMathWPF
 
         }
 
-        public static void Shutdown()
+        public static void UygulamaKapat()
         {
             System.Environment.Exit(110);
         }
