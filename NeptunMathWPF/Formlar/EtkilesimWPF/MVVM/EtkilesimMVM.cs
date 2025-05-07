@@ -14,6 +14,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
     using soruTuru = SoruTerimleri.soruTuru;
+  
+    /// <summary>
+    /// EtkilesimMVVM' EtkilesimWPF penceresi için Main Model Nesnesidir
+    /// 
+    /// Sınıfın içinde Penecerenin çalışması için önemli değişkenler bulunuyor
+    /// 
+    /// </summary>
     class EtkilesimMVM : ObservableObject
     {
         //Debug Tools: Geliştirme de denemeler için
@@ -26,6 +33,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugIslemEkleKomut { get; set; }
         public ICommand SeciliTurDegistir { get; set; }
         public ICommand SecimDegistir { get; set; }
+        public ICommand HesapMakinesiGosterGizle { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
@@ -33,6 +41,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
         public SoruCardModel seciliSoru { get; set; }
+       
         public SeceneklerModel secenekler { 
             
             get => seciliSoru.NesneSecenekler;
@@ -46,7 +55,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         //sonraki sorunun ne geleceğini belirleyen algorithma için
         public Func<Soru> sonrakiSoruAlgorithmasi { get; set; }
-
+        public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
         public string IsSelected { get; set; }
@@ -74,18 +83,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             {
                 Sorular = new ObservableCollection<SoruCardModel>();
                 CokluIfadeTurlerListColl = new ObservableCollection<ifadeTuru>();
-
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
 
-                //MVVM'de Komutları bu sınıfa yazım altta belirtmeniz gerek
-                SoruSec = new RelayCommand(o => SoruCardSec(o));
-                DebugIslemEkleKomut = new RelayCommand(o => Ekle());
-                SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
-                SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
-                SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
-                DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
-                DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
-                DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
+                //MVVM'de Komutları bu sınıfa yazım alttaki KomutlarInit()'in gövdesinde belirtmeniz gerek
+                KomutlarInit();
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
 
@@ -298,6 +299,23 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
                 CokluIfadeTurlerListColl.Add(tur);
             }
+        }
+
+
+        /// <summary>
+        /// MVVM'de komutlar Relaylenerek işlenmesi gerekir lütfen içine komutunuzu koyunuz
+        /// </summary>
+        internal void KomutlarInit()
+        {
+            SoruSec = new RelayCommand(o => SoruCardSec(o));
+            DebugIslemEkleKomut = new RelayCommand(o => Ekle());
+            SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
+            SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
+            SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
+            DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
+            DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
+            DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
+            HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
         }
 
         private void DebugCokluIfadeCollSil(object obje)

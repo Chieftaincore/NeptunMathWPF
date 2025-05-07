@@ -11,6 +11,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
     class SeceneklerModel : ObservableObject
     {
+
+        public readonly string dogrusesDosyaYolu = "C:\\Users\\Bilgisayar\\source\\repos\\NeptunMathWPF\\NeptunMathWPF\\Kaynaklar\\Sesler\\SesDogru2.wav";
+        public readonly string yanlissesDosyaYolu = "C:\\Users\\Bilgisayar\\source\\repos\\NeptunMathWPF\\NeptunMathWPF\\Kaynaklar\\Sesler\\SesYanlis5.wav";
+
         public ObservableCollection<string> secenekler { get; set; }
 
         string _secilideger;
@@ -36,15 +40,15 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public bool Cevapla()
         {
-            MessageBox.Show($"seçilen {secilideger} | dogru cevap{dogrusecenek}");
 
             if (secilideger == dogrusecenek)
             {
-            
+                SesIslemleri.sesOynat(dogrusesDosyaYolu);
                 return true;
             }
             else
             {
+                SesIslemleri.sesOynat(yanlissesDosyaYolu);
                 return false;
             }
         }    

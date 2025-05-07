@@ -22,7 +22,7 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
             {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } },
-            {"USLUNORMAL",new int[]{1,12}}, {"USTAMCARPAN",new int[] {0,5} }, {"USBOLMECARPAN", new int[]{2,5}}
+            {"USLUNORMAL",new int[]{1,11}}, {"USTAMCARPAN",new int[] {0,4} }, {"USBOLMECARPAN", new int[]{2,5}}
         };
 
         internal static Random random = new Random();
@@ -405,99 +405,6 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
-        //YEDEK GELİŞTİRİLİYOR Yeni Deneme daha iyi yollar için arama denemesi
-        //Henüz tuşlara bağlanmadı
-        public static Soru YeniSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, List<AraIslem> islemler = null)
-        {
-            string ajanLOG = string.Empty;
-
-            string islemString = string.Empty;
-            string LaTeXString = string.Empty;
-
-            Entity sonuc = 0;
-            List<Entity> diger = new List<Entity>();
-
-            Genel.Handle(() =>
-            {
-                Random rng = new Random();
-                for (int i = 0; i < ifadeler.Count; i++)
-                {
-                    if (i < islemler.Count)
-                    {
-                        if (!islemler[i].OzelYapiGetir())
-                        {
-                            islemString += ifadeler[i].getir();
-                            ajanLOG += $"{ifadeler[i].TurGetir()} Eklendi :: {ifadeler[i].getir()}";
-
-                            islemString += islemler[i].IslemGetir();
-                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
-                        }
-                        else
-                        {
-                            string Ozel = islemler[i].OzelYapiCalistir(ifadeler[i]);
-                            islemString += Ozel;
-                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
-                        }
-
-                        LaTeXString += islemler[i].LaTeXGetir();
-                    }
-                    else
-                    {
-                        if (i < 4)
-                        {
-                            char ekislem = KarakterDondur(new char[] { '+', '-', '*' });
-
-                            islemString += ifadeler[i].getir();
-                            islemString += ekislem;
-
-                            if (ekislem == '*')
-                            {
-                                LaTeXString += " \\cdot ";
-                            }
-                            else
-                            {
-                                LaTeXString += ekislem;
-                            }
-                        }
-                    }
-                }
-                for (int i = 0; i < seceneksayisi - 1;)
-                {
-                    Entity randEntity;
-                    int.TryParse(sonuc.Stringize(), out int s);
-
-                    if ((s % 1) == 0)
-                    {
-                        randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
-                    }
-                    else
-                    {
-                        sonuc = sonuc.Simplify();
-
-                        int rastg = random.Next(-2, 2);
-                        randEntity = sonuc + ((sonuc / 3) * rastg);
-                    }
-                    randEntity = randEntity.EvalNumerical();
-
-                    if (!diger.Contains(randEntity) && randEntity != sonuc)
-                    {
-                        i++;
-                        diger.Add(randEntity);
-                    }
-                }
-            });
-
-            Entity entity = islemString;
-            sonuc = entity.EvalNumerical();
-
-            ajanLOG += $"{islemString}\n";
-            ajanLOG += $"{sonuc}\n";
-
-            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
-            soru.SetLaTexMetin(LaTeXString);
-
-            return soru;
-        }
         #endregion
 
         //Ifade oluştruma yöntemleri

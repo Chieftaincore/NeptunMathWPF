@@ -1,27 +1,16 @@
 ﻿using HesapMakinesi;
-using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace NeptunMathWPF.Formlar
 {
     /// <summary>
-    /// EtkilesimPencereWPF.xaml etkileşim mantığı
+    /// Genellikle Pencereyi kapsayan tuşlar veya MVVM dışı eventler içindir
+    /// formun diğer özellikleri için EtkilesimMVVM'e bakınız
     /// </summary>
     /// 
-
-    //Bu Formun özellikleri ve fonksiyonelliği için EtkilesimMVVM'e bakınız
     public partial class EtkilesimPencereWPF : Window
     {
         Window Onceki;
@@ -63,7 +52,7 @@ namespace NeptunMathWPF.Formlar
 
         private void PenecereyiKapat(object sender, EventArgs e)
         {
-            if(Onceki != null)
+            if (Onceki != null)
             {
                 Onceki.Show();
             }
@@ -71,6 +60,13 @@ namespace NeptunMathWPF.Formlar
             {
                 Genel.UygulamaKapat();
             }
+        }
+
+        private void DialogScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ScrollViewer scv = (ScrollViewer)sender;
+            scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
+            e.Handled = true;
         }
     }
 }
