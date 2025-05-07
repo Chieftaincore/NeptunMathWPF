@@ -341,7 +341,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Kaynaklar\Sesler\SesYanlis4.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis5.wav" />
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
