@@ -38,10 +38,9 @@ namespace NeptunMathWPF.Fonksiyonlar
 
                 foreach (var item in repository)
                 {
-                    if (item.questionObject.Answer.ToString() != "NaN" && item.questionObject.WrongAnswers.Count == 4 && item.questionObject.Answer!= "∞") //Payda 0 gelirse veya yanlış cevapların sayısı 4'ten küçük gelirse tekrar soru üretsin
+                    if (!item.questionObject.Answer.Contains("NaN") && item.questionObject.WrongAnswers.Count == 4 && item.questionObject.Answer!= "∞" && !string.IsNullOrEmpty(item.questionObject.Answer)) //Payda 0 gelirse veya yanlış cevapların sayısı 4'ten küçük gelirse tekrar soru üretsin
                     {
                         whileCheck = false;
-
                     }
                 }
 

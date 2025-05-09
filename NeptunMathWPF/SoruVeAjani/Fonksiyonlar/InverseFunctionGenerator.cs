@@ -9,17 +9,18 @@ namespace NeptunMathWPF.Fonksiyonlar
 {
     public class InverseFunctionGenerator : FunctionQuestionGenerator
     {
+        int y;
         internal override List<FunctionRepository> GenerateQuestion()
         {
             int a = random.Next(1, 5);
             int b = random.Next(1, 5);
-            int y = random.Next(1, 10);
+            y = random.Next(1, 10);
 
             string question = $"f(x) = {a}x + {b} \n f⁻¹({y})";
             Question qst = new Question
             {
                 QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f⁻¹(y) fonksiyonunda f⁻¹({y}) değeri nedir?",
-                Answer = ToRational(((double)(y - b) / a)),
+                Answer = GetRationalValue(y - b, a),
                 WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(), a, b)
             };
 
@@ -40,39 +41,44 @@ namespace NeptunMathWPF.Fonksiyonlar
         protected override List<string> GenerateAnswer(string answer, int a, int b)
         {
             double correct = double.Parse(answer);
-            string rationalAnswer = ToRational(correct); // Cevabı normalize et
+            string rationalAnswer = GetRationalValue(y - b, a);
 
             var candidates = new HashSet<string>
     {
         // Hatalı cevaplar
-        ToRational(correct + b - b),              // Anlamsız ama sayısal olarak doğru → elenir
-        ToRational(correct * a),
+        GetRationalValue(a + random.Next(10), b + random.Next(10)),
+        GetRationalValue(a - random.Next(10), b - random.Next(10)),
+        a.ToString(),
+        (a*random.Next(5) + random.Next(5)).ToString(),
+        GetRationalValue(a + random.Next(10), b),
+        GetRationalValue((int)correct * a,b),
         "0",
-        ToRational(correct + (double)b / a),
-        ToRational(correct - (double)b / a)
+        GetRationalValue(a , b + random.Next(10)),
+        GetRationalValue(a + random.Next(10) , b - random.Next(10)),
+        GetRationalValue(a - random.Next(10) , b + random.Next(10)),
     };
 
             var wrongs = candidates
-                .Where(w => w != rationalAnswer) // Cevapla birebir aynı olanları çıkar
+                .Where(w => w != rationalAnswer && w!="NaN")
                 .Take(4)
                 .ToList();
 
-            int offset = 1;
+            int offset = random.Next(1, 50);
             while (wrongs.Count < 4)
             {
-                string extra1 = ToRational(correct + offset);
-                string extra2 = ToRational(correct - offset);
-
-                if (extra1 != rationalAnswer && !wrongs.Contains(extra1))
+                string extra1 = (correct + offset).ToString();
+                string extra2 = (correct - offset).ToString();
+                
+                if (extra1 != rationalAnswer && !wrongs.Contains(extra1) && extra1!="NaN")
                     wrongs.Add(extra1);
 
                 if (wrongs.Count >= 4) break;
 
-                if (extra2 != rationalAnswer && !wrongs.Contains(extra2))
+                if (extra2 != rationalAnswer && !wrongs.Contains(extra2) && extra2 != "NaN")
                     wrongs.Add(extra2);
 
                 offset++;
-                if (offset > 100) break; // Güvenlik sınırı: sonsuz döngüden kaçın
+                if (offset > 100) break;
             }
 
             return wrongs;
