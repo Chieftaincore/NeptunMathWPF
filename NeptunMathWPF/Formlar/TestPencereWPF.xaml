@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF"
         mc:Ignorable="d"
+        Closed="Window_Closed"
         Title="Debug Penceresi" Height="450" Width="800" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>

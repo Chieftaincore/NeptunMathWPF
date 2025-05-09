@@ -85,5 +85,10 @@ namespace NeptunMathWPF
             LimitPanel limitPanel = new LimitPanel();
             limitPanel.Show();
         }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Genel.UygulamaKapat();
+        }
     }
 }

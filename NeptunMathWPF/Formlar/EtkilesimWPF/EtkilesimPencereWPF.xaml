@@ -40,8 +40,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="164"/>
             <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="331"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
+
+        <Label Background="WhiteSmoke" Grid.ColumnSpan="3" Grid.Row="2"/>
 
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
             <Ellipse.Fill>
@@ -109,13 +111,16 @@
                         Grid.Row="1" Grid.Column="1"
                         ContentTemplateSelector="{StaticResource EtkilesimTemplateModel}"
                         Content="{Binding seciliTur}"/>
-		
-        <Button Grid.Column="2" Grid.Row="1" Content="Hesap Makinesi" Background="AliceBlue"
+
+        <Button Grid.Column="2" Grid.Row="1" Content="Hesap Makinesi" Background="AliceBlue" FontWeight="SemiBold"
 				HorizontalAlignment="Stretch" Margin="40,16" VerticalAlignment="Top" Height="46" Command="{Binding HesapMakinesiGosterGizle}"/>
-        
-        <Button Grid.Column="2" Content="Yerel Hesap Makinesi" Background="AliceBlue"
+
+        <Button Grid.Column="2" Content="Yerel Hesap Makinesi" Background="AliceBlue" FontWeight="SemiBold"
                 HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Center" Height="46" Click="YerelHesapMakinesi_Click"/>
-       
+
+        <Button Grid.Column="2" Content="Belge Olarak Çıkar" Background="AliceBlue" FontWeight="SemiBold"
+                HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Bottom" Height="46" Command="{Binding CiktiAL}"/>
+
         <Button Grid.Column="2" Visibility="Collapsed" Content="Hesaplama Not Tutma" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="NotAlma_Click" Margin="0,170,0,0"/>
 
     </Grid>

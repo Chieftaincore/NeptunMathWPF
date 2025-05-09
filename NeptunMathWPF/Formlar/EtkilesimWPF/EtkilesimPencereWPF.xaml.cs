@@ -68,5 +68,6 @@ namespace NeptunMathWPF.Formlar
             scv.ScrollToVerticalOffset(scv.VerticalOffset - e.Delta);
             e.Handled = true;
         }
+
     }
 }

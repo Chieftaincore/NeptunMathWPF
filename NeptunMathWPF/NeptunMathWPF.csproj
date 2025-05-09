@@ -219,6 +219,7 @@
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\Ifade.cs" />
+    <Compile Include="SoruVeAjani\PDFLatexYineleyici.cs" />
     <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
@@ -270,6 +271,7 @@
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="pdflatexBatch.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -341,6 +343,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Kaynaklar\Sesler\SesDogru5.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis4.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis5.wav" />
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

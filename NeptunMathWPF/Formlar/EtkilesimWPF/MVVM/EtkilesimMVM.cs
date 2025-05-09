@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Win32;
 using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
 using System;
@@ -7,7 +8,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
@@ -19,7 +19,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
     /// EtkilesimMVVM' EtkilesimWPF penceresi için Main Model Nesnesidir
     /// 
     /// Sınıfın içinde Penecerenin çalışması için önemli değişkenler bulunuyor
-    /// 
     /// </summary>
     class EtkilesimMVM : ObservableObject
     {
@@ -58,6 +57,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
+        public ICommand CiktiAL { get; set; }
         public string IsSelected { get; set; }
 
         internal KeyEventHandler key;
@@ -123,12 +123,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 };
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
-
-                //Aşağıdan Ekle
                 Sorular.Add(seciliSoru);
-
-                //Yukarıdan Ekle
-                //Sorular.Insert(0,secilisoru);
 
                 OnPropertyChanged(nameof(secenekler));
                 OnPropertyChanged();
@@ -214,6 +209,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             MessageBox.Show($"Panel Değişti {seciliTur}");
         }
         
+        /// <summary>
+        /// GEMINI API dosyasının boş olup olmadığını kontrol eder, 
+        /// </summary>
         internal void APIcheck()
         {
             Genel.Handle(() =>
@@ -316,6 +314,31 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
+            CiktiAL = new RelayCommand(o =>  PDFlatexCiktiAl());
+        }
+
+        public void PDFlatexCiktiAl()
+        {
+            if (MessageBox.Show("pdflatex tarafından dosya çıkarılması için bilgisayarınızda standart LatexLive kütüphanesi veya pdflatex komutları taşıyan bir TeX motoru bulunmalıdır", "Gereksinim Bildirisi", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
+            {
+                FileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = "Klasör | Directory",
+                    Title = "Kaydetmek için klasör yeri ve ismi (Ek dosyalar eklenebilir)",
+                    FileName = $"LatexDeneme{DateTime.Now:yyyyMMdd_HH}",
+
+                };
+
+
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    new PDFLatexYineleyici().LaTeXPDFolustur(Sorular, saveFileDialog.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("Seçim yapılmadı", "Geçersiz Dosya Seçimi", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+            }
         }
 
         private void DebugCokluIfadeCollSil(object obje)
