@@ -1,29 +1,33 @@
-﻿using System;
+﻿using AngouriMath.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NeptunMathWPF.Fonksiyonlar
 {
     public abstract class FunctionQuestionGenerator
     {
-        protected Random random = new Random();
+        protected static readonly Random random = new Random();
 
         internal abstract List<FunctionRepository> GenerateQuestion();
         protected abstract List<string> GenerateAnswer(string answer, int a, int b);
 
-        internal (string function, Func<double, double> func, List<int> parameters, FunctionType functionType) GetRandomFunction()
+        internal (string function, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunction()
         {
             // Rastgele fonksiyon tipi seç (Lineer, Karesel, Köklü, Mutlak, Üstel, Rasyonel)
-            int rnd = random.Next(0, 6);
+            int rnd = random.Next(0,6);
             FunctionType functionType = (FunctionType)rnd; // Fonksiyon tipini rastgele seçer
 
             // Parametre sınırları
             int a = random.Next(1, 5);
             int b = random.Next(0, 6);
             int c = random.Next(1, 4);
-
+            int denominator = 0;
+            string denomsign = "";
+            
             string returnQuestion;
             Func<double, double> returnFunc;
 
@@ -38,14 +42,14 @@ namespace NeptunMathWPF.Fonksiyonlar
                     bool isNegative1 = random.Next(2) == 0;
                     bool isNegative2 = random.Next(2) == 0;
 
-                    returnQuestion = $"f(x) = {a}x² {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
-                    returnFunc = x => a * x * x + (isNegative1 ? -b : b) * x + (isNegative2 ? -c : c);
+                    returnQuestion = $"f(x) = {a}x^2 {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
+                    returnFunc = x => (a * x * x) + ((isNegative1 ? -b : b) * x) + (isNegative2 ? -c : c);
                     break;
 
                 case FunctionType.Root: // Köklü: f(x) = √(ax + b)
                     b = random.Next(1, 5);
                     returnQuestion = $"f(x) = √({a}x + {b})";
-                    returnFunc = x => Math.Sqrt(a * x + b);
+                    returnFunc = x => a * x + b;
                     break;
 
                 case FunctionType.Absolute: // Mutlak: f(x) = |ax - b|
@@ -53,7 +57,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                     returnFunc = x => Math.Abs(a * x - b);
                     break;
 
-                case FunctionType.Exponential: // Üstel: f(x) = a^(x +- b)
+                case FunctionType.Exponential: // Üstel: f(x) = a^(x ± b)
                     string operation = random.Next(2) == 0 ? "+" : "-";
                     returnQuestion = $"f(x) = {a}^(x {operation} {b})";
                     returnFunc = x => Math.Pow(a, operation == "+" ? x + b : x - b);
@@ -64,6 +68,8 @@ namespace NeptunMathWPF.Fonksiyonlar
                     string denomSign = random.Next(2) == 0 ? "+" : "-";
                     returnQuestion = $"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})";
                     returnFunc = x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset));
+                    denominator = denominatorOffset;
+                    denomsign = denomSign;
                     break;
 
                 default:
@@ -74,49 +80,61 @@ namespace NeptunMathWPF.Fonksiyonlar
 
             List<int> parameters = new List<int> { a, b, c };
 
-            return (returnQuestion, returnFunc, parameters, functionType);
+            return (returnQuestion, returnFunc, parameters, functionType,denominator,denomsign);
 
         }
 
-        public static string ToRational(double value, double tolerance = 1.0E-6)
+
+        public static string GetClosestSquareRoot(double target)
         {
-            double fraction = value;
-            int sign = Math.Sign(fraction);
-            fraction = Math.Abs(fraction);
+            int closestN = 1;
+            double minDiff = double.MaxValue;
 
-            if (fraction == 0) return ("0");
-
-            int lower_n = 0, lower_d = 1;
-            int upper_n = 1, upper_d = 0;
-
-            while (true)
+            
+            for (int n = 1; n <= 1000; n++)
             {
-                int mediant_n = lower_n + upper_n;
-                int mediant_d = lower_d + upper_d;
+                double sqrtValue = Math.Sqrt(n);
+                double diff = Math.Abs(sqrtValue - target);
 
-                if (mediant_d * (fraction + tolerance) < mediant_n)
+                if (diff < minDiff)
                 {
-                    upper_n = mediant_n;
-                    upper_d = mediant_d;
-                }
-                else if (mediant_n < (fraction - tolerance) * mediant_d)
-                {
-                    lower_n = mediant_n;
-                    lower_d = mediant_d;
-                }
-                else
-                {
-                    if (mediant_d==1)
-                    {
-                        return ($"{sign * mediant_n}");
-                    }
-                    else
-                    {
-                        return ($"{sign * mediant_n} / {mediant_d}");
-                    }
+                    minDiff = diff;
+                    closestN = n;
                 }
             }
+
+            return SimplifySquareRoot(closestN);
         }
+
+
+        public static string SimplifySquareRoot(int n)
+        {
+            int outside = 1;
+            int inside = n;
+
+            // n sayısını en büyük kare çarpanına ayır
+            for (int i = 2; i * i <= inside; i++)
+            {
+                while (inside % (i * i) == 0)
+                {
+                    inside /= i * i;
+                    outside *= i;
+                }
+            }
+
+            if (inside == 1)
+                return outside.ToString();
+            else if (outside == 1)
+                return $"√{inside}";
+            else
+                return $"{outside}√{inside}";
+        }
+
+        public static string GetRationalValue(int a, int b)
+        {
+            return $"{a}/{b}".Simplify().ToString();
+        }
+
 
     }
 }

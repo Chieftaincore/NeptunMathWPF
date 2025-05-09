@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static AngouriMath.Entity;
 
 namespace NeptunMathWPF.Fonksiyonlar
 {
@@ -11,7 +10,7 @@ namespace NeptunMathWPF.Fonksiyonlar
     {
         internal override List<FunctionRepository> GenerateQuestion()
         {
-            var (expr, func, parameters, type) = GetRandomFunction();
+            var (expr, func, parameters, type, denominator, denomsign) = GetRandomFunction();
 
             string domainAnswer;
             switch (type)
@@ -20,25 +19,31 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Quadratic:
                 case FunctionType.Absolute:
                 case FunctionType.Exponential:
-                case FunctionType.Inverse:
                     domainAnswer = "ℝ"; // Tüm gerçel sayılar
                     break;
 
                 case FunctionType.Root:
                     {
                         int a = parameters[0], b = parameters[1];
-
-                        double boundary = -b / (double)a;
-                        domainAnswer = a > 0
-                            ? $"[ {Math.Round(boundary, 2)}, ∞ )"
-                            : $"( -∞, {Math.Round(boundary, 2)} ]";
+                        if (-b / (double)a != Math.Floor(-b / (double)a))
+                        {
+                            domainAnswer = a > 0
+                                ? $"[ {-b}/{a}, ∞ )"
+                                : $"( -∞, {-b}/{a} ]";
+                        }
+                        else
+                        {
+                            domainAnswer = a > 0
+                                ? $"[ {-b/a}, ∞ )"
+                                : $"( -∞, {-b/a} ]";
+                        }
                     }
                     break;
 
                 case FunctionType.Rational:
                     {
-                        int denomOffset = parameters[2];
-                        domainAnswer = $"ℝ \\ {{ {-denomOffset} }}";
+                        int c = denominator;
+                        domainAnswer = denomsign == "-" ? $"ℝ \\ {{ {c} }}" : $"ℝ \\ {{ {-c} }}";
                     }
                     break;
 
@@ -73,12 +78,11 @@ namespace NeptunMathWPF.Fonksiyonlar
             var candidates = new HashSet<string>
             {
                 "ℝ",
-                "ℝ \\ { 0 }",
                 $"ℝ \\ {{ {b + 1} }}",
-                $"ℝ \\ {{ {Math.Max(0, b - 1)} }}",
                 $"ℝ \\ {{ {b + 2} }}",
+                $"ℝ \\ {{ {b - 1} }}",
                 $"ℝ \\ {{ {b + 3} }}",
-                $"ℝ \\ {{ {b - 1} }}"
+                $"ℝ \\ {{ {b - 2} }}"
             };
 
             var wrongs = candidates
