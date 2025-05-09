@@ -2,17 +2,7 @@
 using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace NeptunMathWPF
 {
@@ -21,18 +11,29 @@ namespace NeptunMathWPF
     /// </summary>
     public partial class TestPencereWPF : Window
     {
+        Window onceki;
+
         //Mergelendi
         public TestPencereWPF()
         {
             InitializeComponent();
+        }
+        
+        public TestPencereWPF(Window _onceki)
+        {
+            InitializeComponent();
+
+            onceki = _onceki;
         }
 
         //HES kod
         //Yeni Latex pencere açar 
         private void LaTeXtestformuTikla(object sender, RoutedEventArgs e)
         {
-            (new LatexTestPencere()).Show();
+            Window a = new LatexTestPencere();
+            a.Show();
             //WPF'de Close() kaynakları siler Hide() ise gizler
+
             this.Close();
         }
 
@@ -40,14 +41,13 @@ namespace NeptunMathWPF
         {
             //Soru soru = SoruAjani.YerelSoruOlustur(SoruTerimleri.ifadeTurleri.sayi,seceneksayisi:7);
 
-            List<Ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi,4);
+            List<Ifade> liste = SoruAjani.IfadeListesiOlustur(SoruTerimleri.ifadeTurleri.sayi, 4);
             Soru soru = SoruAjani.YerelSoruBirlestir(liste);
         }
 
         private void SoruTestPaneliTikla(object sender, RoutedEventArgs e)
         {
-            (new SoruNesneTestWPF()).Show();
-            this.Close();
+            new SoruNesneTestWPF().ShowDialog();
         }
 
         private void EtkilesimSayfasi_Click(object sender, RoutedEventArgs e)
@@ -58,32 +58,28 @@ namespace NeptunMathWPF
 
         private void fonksiyonSayfasi_Click(object sender, RoutedEventArgs e)
         {
-            (new FunctionsWPF()).Show();
-            this.Close();
+            (new FunctionsWPF()).ShowDialog();
         }
 
         private void dbTestButton_Click(object sender, RoutedEventArgs e)
         {
-            (new dbTestWPF()).Show();
-            this.Close();
+            (new dbTestWPF()).ShowDialog();
         }
 
         private void apiTest_Click(object sender, RoutedEventArgs e)
         {
-            (new ApiTest()).Show();
-            this.Close();
+            (new ApiTest()).ShowDialog();
         }
 
         private void devPanelButton_Click(object sender, RoutedEventArgs e)
         {
-            (new DevPanelWPF()).Show();
-            this.Close();
+            (new DevPanelWPF()).ShowDialog();
         }
 
         private void ButonLimit_Click(object sender, RoutedEventArgs e)
         {
             LimitPanel limitPanel = new LimitPanel();
-            limitPanel.Show();
+            limitPanel.ShowDialog();
         }
 
         private void Window_Closed(object sender, EventArgs e)

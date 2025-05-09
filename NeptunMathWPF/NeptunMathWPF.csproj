@@ -346,6 +346,7 @@
     <Content Include="Kaynaklar\Sesler\SesDogru5.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis4.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis5.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis6.wav" />
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NeptunDB.edmx</DependentUpon>

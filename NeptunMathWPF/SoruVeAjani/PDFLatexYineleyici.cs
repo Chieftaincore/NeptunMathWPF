@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -61,7 +62,7 @@ namespace NeptunMathWPF.SoruVeAjani
             List<char> cevapkagidi = new List<char>();
             List<string> latexContextListesi = new List<string>()
             {
-                "\\documentclass[12pt]{article}",
+                "\\documentclass[14pt]{report}",
                 "\\usepackage{amsmath}",
 
                 "\\makeatletter",
@@ -81,13 +82,15 @@ namespace NeptunMathWPF.SoruVeAjani
 
                 if (_model.Tur == SoruTerimleri.soruTuru.islem)
                 {
-                    latexContextListesi.Add($"${_model.LaTeX}$");
+                    latexContextListesi.Add($"\\large ${_model.LaTeX}$");
                 }
                 else
                 {
-                    if(_model.Tur == SoruTerimleri.soruTuru.fonksiyon)
+                    if (_model.Tur == SoruTerimleri.soruTuru.fonksiyon)
                     {
-                        latexContextListesi.Add($"\\text{{{_model.LaTeX}}}");
+                        latexContextListesi.Add(_model.soru.IslemMetin);
+                        MessageBox.Show(_model.soru.IslemMetin);
+
                     }
                     else
                     {
@@ -95,14 +98,14 @@ namespace NeptunMathWPF.SoruVeAjani
                     }
                 }
 
-                latexContextListesi.Add("\r\r\r\r");
-       
+                latexContextListesi.AddRange(new string[] { "\\\\" });
+
 
                 char opt = 'A';
                 foreach (string secenek in _model.NesneSecenekler.secenekler)
                 {
                     latexContextListesi.Add($"{opt} : {secenek}");
-                    latexContextListesi.Add("\r");
+                    latexContextListesi.Add("\\\\");
 
                     if (secenek == _model.NesneSecenekler.DogruSecenekGetir())
                         cevapkagidi.Add(opt);
@@ -110,19 +113,19 @@ namespace NeptunMathWPF.SoruVeAjani
                     opt++;
                 }
 
-                latexContextListesi.Add("\r\r\r\r");
+                latexContextListesi.AddRange(new string[] { "\\, \\," });
             }
 
-            latexContextListesi.Add("\\section{CEVAPLAR}");
+            latexContextListesi.Add("\\section*{CEVAPLAR}");
 
-            latexContextListesi.Add("\r\r");
+            latexContextListesi.AddRange(new string[] { "\\," });
 
             int c = 0;
             foreach (char karakter in cevapkagidi)
             {
-                
-                latexContextListesi.Add($"{c} :: {karakter} ");
-                latexContextListesi.Add("\r");
+                c++;
+                latexContextListesi.Add($"{c} :: {karakter}");
+                latexContextListesi.Add("\\hspace{1pt}");
             }
 
             latexContextListesi.Add("\\end{document}");
