@@ -31,10 +31,9 @@ namespace NeptunMathWPF
         private void LaTeXtestformuTikla(object sender, RoutedEventArgs e)
         {
             Window a = new LatexTestPencere();
-            a.Show();
+            a.ShowDialog();
             //WPF'de Close() kaynakları siler Hide() ise gizler
 
-            this.Close();
         }
 
         private void BasitSoruTus(object sender, RoutedEventArgs e)
@@ -84,7 +83,16 @@ namespace NeptunMathWPF
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Genel.UygulamaKapat();
+            if (this.onceki == null)
+            {
+                Genel.UygulamaKapat();
+            }
+            else
+            {
+                onceki.Show();
+                this.Close();
+
+            }
         }
     }
 }
