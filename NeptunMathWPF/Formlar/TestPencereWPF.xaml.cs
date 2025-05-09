@@ -1,5 +1,6 @@
 ﻿using NeptunMathWPF.Formlar;
 using NeptunMathWPF.SoruVeAjani;
+using LoginApp;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -93,6 +94,12 @@ namespace NeptunMathWPF
                 this.Close();
 
             }
+        }
+
+        private void FormlarAc_Click(object sender, RoutedEventArgs e)
+        {
+            new LoginForm().ShowDialog();
+           
         }
     }
 }

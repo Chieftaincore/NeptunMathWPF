@@ -1,0 +1,83 @@
+﻿<Window x:Class="AnasayfaWPF.AnaSayfa"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ana Menü" WindowState="Maximized" Height="450" Width="900"
+        Background="#f8f8f8">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="200*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel Grid.Column="0" Background="#FF213447">
+
+                <Label Background="White" Margin="10,33,10,20">
+                    <Label.Content>
+                        <Image x:Name="Logo" Height="100"/>
+                    </Label.Content>
+                </Label>
+
+                <Label Content="NeptunMath" FontSize="16" FontWeight="Bold" FontStyle="Italic" Foreground="White" Margin="0,20,0,20" HorizontalAlignment="Center"/>
+
+                <Button Content="Özel Session" Click="SoruButton_Click" Margin="20 10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#4CAF50" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                <Button Content="[Geliştici]" Click="SoruUreticiButton_Click" Margin="20 10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#2196F3" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+
+                <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="20 10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="DimGray" Foreground="White" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="20 10" Padding="15" FontSize="12" FontWeight="SemiBold" Background="#f92020" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
+
+            </StackPanel>
+        </ScrollViewer>
+
+
+        <ScrollViewer Grid.Column="1" Grid.RowSpan="2">
+            <Grid Background="WhiteSmoke">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label VerticalAlignment="Top" Content="Etkileşim/Session" FontSize="20" FontWeight="DemiBold" Background="#FF213447" Foreground="White" Grid.Row="0" Grid.ColumnSpan="2" Height="37"/>
+
+
+                <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+
+                    <Button Height="159" Width="150" Click="EtkilesimAc" Content="Tek Konulu Etkileşim Aç" Padding="10"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Background="#606290" Foreground="White" BorderBrush="#203230" BorderThickness="3" Cursor="Hand"/>
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
+
+                    <Button Height="150" Width="150" Click="EtkilesimAc" Content="Tek Konulu Etkileşim Aç" Padding="10"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Background="#606290" Foreground="White" BorderBrush="#203230" BorderThickness="3" Cursor="Hand"/>
+
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+
+        <TabControl Background="#FF213447" Grid.Column="2" Grid.RowSpan="2">
+            <TabItem Header="Hakkında" Padding="8" Background="AliceBlue">
+                <StackPanel Background="White">
+                    <Image Width="150" Height="150"/>
+                    <TextBlock Text="Uygulamaya Hoş Geldiniz!" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    <TextBlock Text="Lütfen bir seçenek belirleyin." HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="YEDEK SAYFA" Padding="8" Background="AliceBlue">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

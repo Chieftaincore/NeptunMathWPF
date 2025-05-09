@@ -38,8 +38,10 @@
                 <Button x:Name="ApiTest" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="API Test" Width="148" Height="49" Click="apiTest_Click"/>
                 <Button x:Name="devPanelButton" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Dev Panel" Width="148" Height="49" Click="devPanelButton_Click"/>
                 <Button Content="Limit ve Hesap Makinesi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Height="49" Width="148" Click="ButonLimit_Click"/>
+                <Button x:Name="FormlarAc" Content="Formları Aç" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20" Background="DarkSlateBlue" Foreground="White" Height="49" Width="148" Click="FormlarAc_Click" Grid.Column="1" />
             </StackPanel>
         </ScrollViewer>
+
 
         <Image Source="/Kaynaklar/Resimler/Neptun Math.png"/>
     </Grid>
