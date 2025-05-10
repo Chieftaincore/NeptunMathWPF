@@ -10,9 +10,8 @@
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="182"/>
+            <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <ScrollViewer Grid.RowSpan="2" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -20,11 +19,17 @@
 
                 <Label Content="NeptunMath" FontSize="16" FontWeight="Bold" FontStyle="Italic" Foreground="White" Margin="0,20,0,20" HorizontalAlignment="Center"/>
 
-                <Button Content="Özel Session" Click="SoruButton_Click" Margin="10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#4CAF50" FontStyle="Italic" Foreground="White" BorderThickness="0" Cursor="Hand"/>
-                <Button Content="[Geliştirici]" Click="SoruUreticiButton_Click" Margin="10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="#2196F3" FontStyle="Italic" Foreground="White" BorderThickness="0" Cursor="Hand"/>
+                <Button Content="İstatistik" Click="tusIstatistik" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFDCFFF6" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                
+                <Button Content="Bildirimler" Click="tusIstatistik" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                
+                <Button Content="[DEBUG MENU]" Click="tusDebugPenceresi" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="10" Padding="15" FontSize="18" FontWeight="SemiBold" Background="DimGray" FontStyle="Italic" Foreground="White" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
-                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="10" Padding="15" FontSize="12" FontWeight="SemiBold" Background="#f92020" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="[GELİŞTİRİCİ]" Click="tusDevPanel" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFC5D8F1" FontStyle="Italic" Foreground="Black" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
+                
+                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="10" Padding="15" FontSize="12" FontWeight="SemiBold" Background="Firebrick" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
 
             </StackPanel>
         </ScrollViewer>
@@ -34,27 +39,48 @@
             <TabItem Header="Session" Padding="8" Background="AliceBlue">
 
                 <ScrollViewer>
-                    <Grid Background="WhiteSmoke">
+                    <Grid Background="White">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30"/>
-                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="47*"/>
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Label VerticalAlignment="Top" Content="Etkileşim/Session" FontSize="20" FontWeight="DemiBold" Background="#FF213447" Foreground="White" Grid.Row="0" Grid.ColumnSpan="2" Height="37"/>
+                        <Label VerticalAlignment="Center" Content="Etkileşim/Session" FontSize="20" FontWeight="DemiBold" Background="GhostWhite" Grid.ColumnSpan="2" Height="37"/>
 
-                        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
 
-                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5">
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="İşlemler / Problemler" Cursor="Hand" BorderThickness="2" Background="AliceBlue"/>
 
-                            <ComboBox Margin="30,10" Height="22"/>
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15"  Content="Fonksiyonlar" Cursor="Hand" BorderThickness="2"  Background="AliceBlue"/>
 
-                            <Button Content="Konu Ekle" Height="30" Margin="30,10"
-                                    Background="AliceBlue" FontStyle="Italic" FontWeight="SemiBold"/>
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15"  Content="Fonksiyon Konuları" BorderBrush="#253768" Cursor="Hand"  BorderThickness="2" Background="AliceBlue"/>
+
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Grid.RowSpan="2">
+
+                            <ComboBox Height="35" Margin="30,10" FontSize="16" BorderBrush="Black" BorderThickness="5">
+
+                            </ComboBox>
+
+                            <Button Content="Konu Ekle" Margin="30,2,30,10" Cursor="Hand"
+                                    Background="#253768" HorizontalAlignment="Right" Padding="10" Foreground="AliceBlue" FontStyle="Italic" FontWeight="SemiBold"/>
+
+                            <ListView BorderThickness="4" Margin="30 10" MinHeight="100">
+                                
+                                
+                            </ListView>
+
+                            <Button Content="Aç"
+                                Background="#253768" Foreground="White" Margin="30,4,30,10" BorderThickness="4" Cursor="Hand"
+                                FontSize="15" FontWeight="SemiBold" Padding="10" FontStyle="Italic"/> 
+
+
 
                         </StackPanel>
 
@@ -66,10 +92,15 @@
 
             <TabItem Header="Hakkında" Padding="8" Background="AliceBlue">
                 <StackPanel Background="White">
-                    <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Width="404" Height="215"/>
+                    <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Width="498" Height="313"/>
                     <TextBlock Text="Uygulamaya Hoş Geldiniz!" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     <TextBlock Text="Lütfen bir seçenek belirleyin." HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
                 </StackPanel>
+            </TabItem>
+
+            <TabItem Header="Kullanici" Padding="8" Background="AliceBlue">
+                
+                
             </TabItem>
         </TabControl>
     </Grid>

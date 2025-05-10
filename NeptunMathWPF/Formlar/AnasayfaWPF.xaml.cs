@@ -13,19 +13,24 @@ namespace AnasayfaWPF
             InitializeComponent();
         }
 
-        private void SoruButton_Click(object sender, RoutedEventArgs e)
+        private void tusIstatistik(object sender, RoutedEventArgs e)
         {
             new SoruNesneTestWPF().Show();
         }
 
-        private void SoruUreticiButton_Click(object sender, RoutedEventArgs e)
+        private void tusDebugPenceresi(object sender, RoutedEventArgs e)
         {
             new TestPencereWPF(this).ShowDialog(); 
         }
 
-        private void EtkilesimAc(object sender, RoutedEventArgs e)
+        private void tusDevPanel(object sender, RoutedEventArgs e)
         {
-            // Etkileşim açma işlemleri
+            new DevPanelWPF().ShowDialog();
+        }
+
+        private void StandartEtkilesimSayfasiAc(object sender, RoutedEventArgs e)
+        {
+            new EtkilesimPencereWPF().ShowDialog();
         }
 
         private void OturumuKapat_Click(object sender, RoutedEventArgs e)

@@ -212,7 +212,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                     {
                                         //MessageBox.Show("DEBUG : silindi ");
                                         islemString += ifadeler[i].getir() + '/';
-                                        latex += ifadeler[i].LaTeXString + '/';
+                                        latex +=$"\\frac{{{ifadeler[i].LaTeXString}}}{{";
 
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
@@ -221,7 +221,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                     if (ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
                                     {
                                         islemString += ifadeler[i].getir() + " / ";
-                                        latex += ifadeler[i].LaTeXString + "/";
+                                        latex += $"\\frac{{{ifadeler[i].LaTeXString}}}{{";
 
                                         ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
@@ -268,11 +268,27 @@ namespace NeptunMathWPF.SoruVeAjani
                                     }
                                 }
 
-                                if (i < ifadeler.Count - 1 && !alindi)
+                                if (i < ifadeler.Count - 1)
                                 {
-                                    char ekleme = KarakterDondur(new char[] { '-', '+' });
-                                    islemString += ekleme;
-                                    latex += ekleme;
+
+                                    if (alindi)
+                                    {
+                                        i++;
+
+                                        islemString += ifadeler[i].getir();
+                                        latex += $"{ifadeler[i].LaTeXString}}}";
+
+                                        alindi = false;
+                                    }
+
+                                    if (!alindi)
+                                    {
+                                        char ekleme = KarakterDondur(new char[] { '-', '+' });
+                                        islemString += ekleme;
+                                        latex += ekleme;
+
+                                        continue;
+                                    }
                                 }
 
                                 continue;

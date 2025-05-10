@@ -325,7 +325,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     Filter = "Klasör | Directory",
                     Title = "Kaydetmek için klasör yeri ve ismi (Ek dosyalar eklenebilir)",
-                    FileName = $"LatexDeneme{DateTime.Now:yyyyMMdd_HH}",
+                    FileName = $"LatexPDF{DateTime.Now:yyyyMMdd_HHmmss}",
 
                 };
 
