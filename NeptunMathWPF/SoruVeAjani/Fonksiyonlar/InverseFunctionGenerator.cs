@@ -58,7 +58,9 @@ namespace NeptunMathWPF.Fonksiyonlar
         GetRationalValue(a - random.Next(10) , b + random.Next(10)),
     };
 
-            var wrongs = candidates
+            List<string> candidatesList = candidates.ToList();
+            Genel.Shuffle(candidatesList);
+            var wrongs = candidatesList
                 .Where(w => w != rationalAnswer && w!="NaN")
                 .Take(4)
                 .ToList();

@@ -85,7 +85,10 @@ namespace NeptunMathWPF.Fonksiyonlar
                 $"ℝ \\ {{ {b - 2} }}"
             };
 
-            var wrongs = candidates
+            List<string> candidatesList = candidates.ToList();
+            Genel.Shuffle(candidatesList);
+
+            var wrongs = candidatesList
                 .Where(w => w != answer)
                 .Take(4)
                 .ToList();
