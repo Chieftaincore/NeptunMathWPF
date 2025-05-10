@@ -12,8 +12,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     class SeceneklerModel : ObservableObject
     {
 
-        public readonly string dogrusesDosyaYolu = "C:\\Users\\Bilgisayar\\source\\repos\\NeptunMathWPF\\NeptunMathWPF\\Kaynaklar\\Sesler\\SesDogru5.wav";
-        public readonly string yanlissesDosyaYolu = "C:\\Users\\Bilgisayar\\source\\repos\\NeptunMathWPF\\NeptunMathWPF\\Kaynaklar\\Sesler\\SesYanlis6.wav";
+        public readonly string dogrusesDosyaYolu = @"Kaynaklar\Sesler\SesDogru5.wav";
+        public readonly string yanlissesDosyaYolu = @"Kaynaklar\Sesler\SesYanlis6.wav";
 
         public ObservableCollection<string> secenekler { get; set; }
 
