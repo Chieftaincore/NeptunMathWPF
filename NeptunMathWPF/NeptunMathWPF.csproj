@@ -164,6 +164,9 @@
     <Compile Include="Formlar\NotAlmaWindow.xaml.cs">
       <DependentUpon>NotAlmaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\PDFbelgelendiriciWPF.xaml.cs">
+      <DependentUpon>PDFbelgelendiriciWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
     </Compile>
@@ -349,6 +352,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Formlar\NotAlmaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\PDFbelgelendiriciWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

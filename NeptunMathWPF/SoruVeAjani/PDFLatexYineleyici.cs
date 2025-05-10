@@ -62,14 +62,19 @@ namespace NeptunMathWPF.SoruVeAjani
             List<char> cevapkagidi = new List<char>();
             List<string> latexContextListesi = new List<string>()
             {
-                "\\documentclass[14pt]{report}",
+                "\\documentclass{article}",
                 "\\usepackage{amsmath}",
+                "\\usepackage{amsfonts}",
+                "\\usepackage{amssymb}",
 
                 "\\makeatletter",
-                "\\def\\UTFviii@undefined@err#1{??chardışı??}",
+                "\\def\\UTFviii@undefined@err#1{?gçrs?}",
                 "\\makeatother",
 
                 "\\begin{document}",
+
+                "\\fontsize{15pt}{20pt}\\selectfont",
+
                 "\\title{NeptunWPF soru cıktısı}",
                 "\\section{Sorular}"
             };
@@ -82,15 +87,20 @@ namespace NeptunMathWPF.SoruVeAjani
 
                 if (_model.Tur == SoruTerimleri.soruTuru.islem)
                 {
-                    latexContextListesi.Add($"\\large ${_model.LaTeX}$");
+                    latexContextListesi.Add($"${_model.LaTeX}$");
                 }
                 else
                 {
                     if (_model.Tur == SoruTerimleri.soruTuru.fonksiyon)
                     {
-                        latexContextListesi.Add(_model.soru.IslemMetin);
-                        MessageBox.Show(_model.soru.IslemMetin);
 
+                        string ae = $"$\\text{{{_model.soru.IslemMetin}}}$";
+
+                        ae = ae.Replace("⁻", "\\mp");
+                        ae = ae.Replace("^", "");
+
+                        latexContextListesi.Add(ae);
+                        
                     }
                     else
                     {
@@ -99,13 +109,15 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
 
                 latexContextListesi.AddRange(new string[] { "\\\\" });
+                latexContextListesi.AddRange(new string[] { "\\," });
 
 
                 char opt = 'A';
                 foreach (string secenek in _model.NesneSecenekler.secenekler)
                 {
-                    latexContextListesi.Add($"{opt} : {secenek}");
-                    latexContextListesi.Add("\\\\");
+                    string n = secenek.Replace("ℝ", "R");
+                    latexContextListesi.Add($"{opt} : {n}");
+                    latexContextListesi.Add("\\,");
 
                     if (secenek == _model.NesneSecenekler.DogruSecenekGetir())
                         cevapkagidi.Add(opt);
@@ -124,6 +136,7 @@ namespace NeptunMathWPF.SoruVeAjani
             foreach (char karakter in cevapkagidi)
             {
                 c++;
+
                 latexContextListesi.Add($"{c} :: {karakter}");
                 latexContextListesi.Add("\\hspace{1pt}");
             }

@@ -9,7 +9,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     //Model WPF sayfası için bir öğedir
     using SoruTuru = SoruTerimleri.soruTuru;
 
-    class SoruCardModel : ObservableObject, IStyleAnahtar
+    internal class SoruCardModel : ObservableObject, IStyleAnahtar
     {
         //önemli Nesneler
         public Soru soru { get; set; }
