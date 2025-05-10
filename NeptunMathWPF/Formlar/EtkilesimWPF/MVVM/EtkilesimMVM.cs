@@ -257,6 +257,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             else
             {
                 seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
+                //buraya db kayıt eklenecek
             }
         }
 
