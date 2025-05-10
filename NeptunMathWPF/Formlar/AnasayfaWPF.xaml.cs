@@ -1,6 +1,7 @@
 ﻿
 using System.Windows;
-using LoginApp; // LoginApp namespace'ini ekledik
+using LoginApp;
+using NeptunMathWPF; // LoginApp namespace'ini ekledik
 
 namespace AnasayfaWPF
 {
@@ -20,6 +21,8 @@ namespace AnasayfaWPF
 
         private void SoruUreticiButton_Click(object sender, RoutedEventArgs e)
         {
+            new TestPencereWPF(this).ShowDialog(); 
+
             //SoruSec soruSec = new SoruSec();
             //soruSec.Show();
             //MessageBox.Show("Soru üretici sayfasına gidiliyor");
