@@ -167,6 +167,9 @@
     <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
+      <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
@@ -225,9 +228,6 @@
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SoruCardSelector.cs" />
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
-      <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Genel.cs" />
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">

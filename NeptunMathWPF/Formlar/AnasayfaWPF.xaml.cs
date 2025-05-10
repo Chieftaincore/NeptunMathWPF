@@ -1,7 +1,8 @@
 ﻿
 using System.Windows;
 using LoginApp;
-using NeptunMathWPF; // LoginApp namespace'ini ekledik
+using NeptunMathWPF;
+using NeptunMathWPF.Formlar; // LoginApp namespace'ini ekledik
 
 namespace AnasayfaWPF
 {
@@ -14,18 +15,12 @@ namespace AnasayfaWPF
 
         private void SoruButton_Click(object sender, RoutedEventArgs e)
         {
-            //SoruFormu soruFormu = new SoruFormu();
-            //soruFormu.Show();
-            //MessageBox.Show("Sorulara sayfasına gidiliyor");
+            new SoruNesneTestWPF().Show();
         }
 
         private void SoruUreticiButton_Click(object sender, RoutedEventArgs e)
         {
             new TestPencereWPF(this).ShowDialog(); 
-
-            //SoruSec soruSec = new SoruSec();
-            //soruSec.Show();
-            //MessageBox.Show("Soru üretici sayfasına gidiliyor");
         }
 
         private void EtkilesimAc(object sender, RoutedEventArgs e)
