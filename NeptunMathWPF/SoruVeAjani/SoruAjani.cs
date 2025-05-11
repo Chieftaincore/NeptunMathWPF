@@ -62,7 +62,10 @@ namespace NeptunMathWPF.SoruVeAjani
 
             var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, ProblemDifficulty.Zor);
 
-            return new Soru(ProblemSoru);
+            return new Soru(ProblemSoru)
+            {
+                AltTur = (ProblemType)secilen
+            };
         }
 
         /// <summary>
