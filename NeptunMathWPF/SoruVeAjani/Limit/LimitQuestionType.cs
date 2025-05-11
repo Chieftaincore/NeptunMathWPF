@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF.SoruVeAjani.Limit
 {
-    public enum QuestionType
+    public enum LimitQuestionType
     {
         CommonFactor,
         FindCoefficients,

@@ -70,18 +70,18 @@ namespace NeptunMathWPF.SoruVeAjani.Limit
             ResultText = "";
             ResultColor = Brushes.Black;
 
-            var questionTypes = Enum.GetValues(typeof(QuestionType));
-            var questionType = (QuestionType)questionTypes.GetValue(_random.Next(questionTypes.Length));
+            var questionTypes = Enum.GetValues(typeof(LimitQuestionType));
+            var questionType = (LimitQuestionType)questionTypes.GetValue(_random.Next(questionTypes.Length));
 
             switch (questionType)
             {
-                case QuestionType.CommonFactor:
+                case LimitQuestionType.CommonFactor:
                     _currentQuestion = LimitQuestionGenerator.GenerateCommonFactorQuestion();
                     break;
-                case QuestionType.FindCoefficients:
+                case LimitQuestionType.FindCoefficients:
                     _currentQuestion = LimitQuestionGenerator.GenerateFindCoefficientsQuestion();
                     break;
-                case QuestionType.CoefficientExpression:
+                case LimitQuestionType.CoefficientExpression:
                     _currentQuestion = LimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
                     break;
                 default:
@@ -95,7 +95,7 @@ namespace NeptunMathWPF.SoruVeAjani.Limit
             var options = new List<double> { _currentQuestion.Answer };
             while (options.Count < 4)
             {
-                double wrongOption = questionType == QuestionType.CommonFactor
+                double wrongOption = questionType == LimitQuestionType.CommonFactor
                     ? _currentQuestion.Answer + _random.Next(-10, 11)
                     : _currentQuestion.Answer + _random.Next(-5, 6);
 
@@ -117,15 +117,15 @@ namespace NeptunMathWPF.SoruVeAjani.Limit
             }
         }
 
-        private string GetQuestionTypeText(QuestionType type)
+        private string GetQuestionTypeText(LimitQuestionType type)
         {
             switch (type)
             {
-                case QuestionType.CommonFactor:
+                case LimitQuestionType.CommonFactor:
                     return "Soru Tipi: Limit Değerini Bulma";
-                case QuestionType.FindCoefficients:
+                case LimitQuestionType.FindCoefficients:
                     return "Soru Tipi: Katsayıları Bulma";
-                case QuestionType.CoefficientExpression:
+                case LimitQuestionType.CoefficientExpression:
                     return "Soru Tipi: Katsayı İfadesini Bulma";
                 default:
                     return "";

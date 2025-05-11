@@ -227,13 +227,18 @@
     <Compile Include="SoruVeAjani\Limit\LimitQuizViewModel.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitOkuBeni.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitRelayCommand.cs" />
-    <Compile Include="SoruVeAjani\Limit\QuestionType.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitQuestionType.cs" />
     <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
       <DependentUpon>TestPencereWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\SoruAjani.cs" />
+    <Compile Include="SoruVeAjani\Turev\DerivativeQuestion.cs" />
+    <Compile Include="SoruVeAjani\Turev\DerivativeQuestionGenerator.cs" />
+    <Compile Include="SoruVeAjani\Turev\TurevQuestionType.cs" />
+    <Compile Include="SoruVeAjani\Turev\TurevAnaCalısanYer.cs" />
+    <Compile Include="SoruVeAjani\Turev\TurevBeniOku.cs" />
     <Compile Include="SUBTOPICS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
