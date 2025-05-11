@@ -4,6 +4,7 @@ using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +18,14 @@ namespace NeptunMathWPF.SoruVeAjani
     /// </summary>
     public static class SoruAjani
     {
+     
+        internal enum IslemAlttur
+        {
+            Karmasik,
+        }
+
+       
+        
         //Tamsayı Random Atma Aralığı
         //Yeni PARAMETRE olarak fikir Uygulanabilir
         internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
@@ -160,13 +169,13 @@ namespace NeptunMathWPF.SoruVeAjani
 
         #region YerelIslemSorusuOlusturucular
 
-        //2.05.25 COMMİTİ: bir sürü sorun çözdüm ama hala bazı sorunlar var.
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
             string islemString = string.Empty;
             string ajanLOG = string.Empty;
 
             string latex = string.Empty;
+            Enum _enum = AltTurGetir(ifadeler);
 
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
@@ -402,7 +411,10 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
             });
             //Nesnenin Olusutğu AN;
-            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
+            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray())
+            {
+                AltTur = _enum
+            };
 
             //PARAMETRELER ve Olusturucu LOGU
             ajanLOG += "PARAMETRELER \n";
@@ -415,6 +427,31 @@ namespace NeptunMathWPF.SoruVeAjani
             ajanLOG += $"LaTex ÇIKTI :: {latex}";
             soru.SetOlusturmaLogu(ajanLOG);
             return soru;
+        }
+
+
+        /// <summary>
+        /// içindeki ifadelere göre tek içeren veya çoklu içeren altkonu geri gönderir
+        /// çoklularda özel adlandırmlar yer alır
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        internal static Enum AltTurGetir(List<Ifade> ifadeler)
+        {
+            List<ifadeTuru> ozgunler = new List<ifadeTuru>();
+
+            foreach(Ifade i in ifadeler)
+            {
+                if (!ozgunler.Contains(i.TurGetir()))
+                    ozgunler.Add(i.TurGetir());
+            }
+
+            if (ozgunler.Count == 1)
+            {
+                return ozgunler[0];
+            }
+        
+            return IslemAlttur.Karmasik;
         }
 
         #endregion
