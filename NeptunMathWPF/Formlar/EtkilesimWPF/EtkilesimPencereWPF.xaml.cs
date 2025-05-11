@@ -24,10 +24,17 @@ namespace NeptunMathWPF.Formlar
     //Bu Formun özellikleri ve fonksiyonelliği için EtkilesimMVVM'e bakınız
     public partial class EtkilesimPencereWPF : Window
     {
-       
+        Window Onceki;
         public EtkilesimPencereWPF()
         {
             InitializeComponent();
+        }
+
+        public EtkilesimPencereWPF(Window _onceki)
+        {
+            InitializeComponent();
+
+            Onceki = _onceki;
         }
 
         private void HesapMakinesi_Click(object sender, RoutedEventArgs e)
@@ -52,6 +59,18 @@ namespace NeptunMathWPF.Formlar
         {
             NotAlmaWindow notAlmaWindow = new NotAlmaWindow();
             notAlmaWindow.Show();
+        }
+
+        private void PenecereyiKapat(object sender, EventArgs e)
+        {
+            if(Onceki != null)
+            {
+                Onceki.Show();
+            }
+            else
+            {
+                Genel.UygulamaKapat();
+            }
         }
     }
 }

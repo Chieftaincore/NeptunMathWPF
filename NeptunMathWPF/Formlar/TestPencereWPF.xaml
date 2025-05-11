@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF"
         mc:Ignorable="d"
-        Title="TestPencereWPF" Height="450" Width="800" Background="White">
+        Title="Debug Penceresi" Height="450" Width="800" Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="79*"/>
-            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Rectangle Grid.Column="1" HorizontalAlignment="Center" Stroke="Black" VerticalAlignment="Center">
             <Rectangle.Fill>
@@ -19,16 +19,27 @@
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Button x:Name="tusLaTeXtestformu" Grid.Column="1" Content="Latex Test Formu" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="LaTeXtestformuTikla"/>
-        <Button x:Name="soruUreticiPanel_Huseyin_" Grid.Column="1" Content="Soru Test Paneli" HorizontalAlignment="Center" Margin="0,64,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="SoruTestPaneliTikla"/>
-        <Button x:Name="tusEtkilesimSayfasi" Grid.Column="1" Content="Etkileşim Sayfası" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
-        <Button x:Name="tusEtkilesimSayfasi_Copy" Grid.Column="1" Content="Etkileşim Sayfası" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.606,0.353" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
-        <Button x:Name="fonksiyonSayfasi" Content="Fonksiyon Test" HorizontalAlignment="Center" Margin="0,172,0,0" VerticalAlignment="Top" Height="49" Width="148" Grid.Column="1" Click="fonksiyonSayfasi_Click"/>
-        <Button x:Name="dbTestButton" Content="Veritabanı Test" HorizontalAlignment="Center" Margin="0,226,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="dbTestButton_Click"/>
-        <Image Margin="-9,20,0,61" Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Fill"/>
-        <Button x:Name="ApiTest" Content="API Test" HorizontalAlignment="Center" Margin="0,280,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="apiTest_Click"/>
-        <Button x:Name="devPanelButton" Content="Dev Panel" HorizontalAlignment="Center" Margin="0,334,0,0" VerticalAlignment="Top" Width="148" Height="49" Grid.Column="1" Click="devPanelButton_Click"/>
-        <Button Grid.Column="1" Content="Limit ve Hesap Makinesi" HorizontalAlignment="Center" Margin="0,388,0,0" VerticalAlignment="Top" Height="38" Width="148" Click="ButonLimit_Click"/>
 
+        <ScrollViewer Grid.Column="1">
+            <ScrollViewer.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="SteelBlue"/>
+                    <GradientStop Color="DarkBlue" Offset="1"/>
+                </LinearGradientBrush>
+            </ScrollViewer.Background>
+
+            <StackPanel>
+                <Button x:Name="tusLaTeXtestformu" FontStyle="Italic" FontWeight="SemiBold" Background="AliceBlue" Margin="4" Content="Latex Test Formu" Height="49" Width="148" Click="LaTeXtestformuTikla"/>
+                <Button x:Name="soruUreticiPanel_Huseyin_" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Soru Test Paneli" Height="49" Width="148" Click="SoruTestPaneliTikla"/>
+                <Button x:Name="tusEtkilesimSayfasi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Etkileşim Sayfası" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
+                <Button x:Name="fonksiyonSayfasi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Fonksiyon Test" Height="49" Width="148"  Click="fonksiyonSayfasi_Click"/>
+                <Button x:Name="dbTestButton" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Veritabanı Test"  Width="148" Height="49" Click="dbTestButton_Click"/>
+                <Button x:Name="ApiTest" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="API Test" Width="148" Height="49" Click="apiTest_Click"/>
+                <Button x:Name="devPanelButton" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Dev Panel" Width="148" Height="49" Click="devPanelButton_Click"/>
+                <Button Content="Limit ve Hesap Makinesi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Height="49" Width="148" Click="ButonLimit_Click"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Image Source="/Kaynaklar/Resimler/Neptun Math.png"/>
     </Grid>
 </Window>
