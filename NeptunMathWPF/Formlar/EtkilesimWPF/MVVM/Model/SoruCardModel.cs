@@ -14,6 +14,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         //önemli Nesneler
         public Soru soru { get; set; }
         public SoruTuru Tur { get => soru.SoruTuru; }
+        public Enum SoruAltTuru { get; set; }
         public string soruStyle { get; set; }
         public SeceneklerModel NesneSecenekler { get; set; }
 

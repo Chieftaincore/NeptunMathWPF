@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -14,7 +15,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
     using soruTuru = SoruTerimleri.soruTuru;
-  
+
     /// <summary>
     /// EtkilesimMVVM' EtkilesimWPF penceresi için Main Model Nesnesidir
     /// 
@@ -36,16 +37,18 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
-        
+
         public bool APIvar { get; set; }
-        public ObservableCollection<SoruCardModel> Sorular  { get; set; }
+        public ObservableCollection<SoruCardModel> Sorular { get; set; }
         public SoruCardModel seciliSoru { get; set; }
-       
-        public SeceneklerModel secenekler { 
-            
+
+        public SeceneklerModel secenekler
+        {
+
             get => seciliSoru.NesneSecenekler;
         }
-        public string seciliSecenek {
+        public string seciliSecenek
+        {
 
             get => secenekler.secilideger;
 
@@ -63,7 +66,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         internal KeyEventHandler key;
 
         private string _seciliTur;
-        public string seciliTur{ get => _seciliTur ; set
+        public string seciliTur
+        {
+            get => _seciliTur; set
             {
                 if (_seciliTur != value)
                 {
@@ -99,7 +104,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void Ekle()
         {
-            Genel.Handle(() => {
+            Genel.Handle(() =>
+            {
 
                 List<ifadeTuru> ifadeTurleri = new List<ifadeTuru>();
 
@@ -161,9 +167,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void SoruCardSec(object o)
         {
-           
-            Genel.Handle(()=> {
-               
+
+            Genel.Handle(() =>
+            {
+
                 seciliSoru = (SoruCardModel)o;
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
@@ -197,7 +204,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void tusTurDegis()
         {
-            if(seciliTur == "SoruModuNormal")
+            if (seciliTur == "SoruModuNormal")
             {
                 seciliTur = "Proompter";
             }
@@ -208,7 +215,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             MessageBox.Show($"Panel Değişti {seciliTur}");
         }
-        
+
         /// <summary>
         /// GEMINI API dosyasının boş olup olmadığını kontrol eder, 
         /// </summary>
@@ -225,7 +232,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     else
                     {
                         MessageBox.Show("API key bulunamadı, YZ API işlemleri devre dışı,", "API Devre dışı"
-                            ,MessageBoxButton.OK, icon: MessageBoxImage.Warning);
+                            , MessageBoxButton.OK, icon: MessageBoxImage.Warning);
                     }
                 }
                 else
@@ -257,7 +264,45 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             else
             {
                 seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
+
+
+                // DB KAYIT
+                AddWrongQuestionToDB();
+
             }
+        }
+
+        private void AddWrongQuestionToDB()
+        {
+            string soruTur = seciliSoru.Tur.ToString();
+            var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
+
+            var answer = secenekler.DogruSecenekGetir();
+            var wrongAnswersList = secenekler.secenekler.Where(x=>x!=answer).ToList();
+            string wrongAnswers = "";
+            foreach(var item in wrongAnswersList)
+            {
+                wrongAnswers += item+"#";
+            }
+
+            //subtopic eklenecek
+            Genel.Handle(() =>
+            {
+                Genel.ReloadEntity();
+                Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Add(new WRONG_ANSWERED_QUESTIONS
+                {
+                    USERID = aktifKullanici.kullnId,
+                    //TOPICS = topic,
+                    TOPIC_ID = 5,
+                    SUBTOPIC_ID = 5,
+                    QUESTION_TEXT = seciliSoru.soru.IslemMetin,
+                    LATEX_TEXT = seciliSoru.LaTeX,
+                    ANSWER = answer,
+                    USERS_ANSWER = secenekler.secilideger,
+                    WRONG_ANSWERS = wrongAnswers
+                });
+                Genel.dbEntities.SaveChanges();
+            });
         }
 
         private void TusEkleClick(object sender, RoutedEventArgs e)
@@ -283,9 +328,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SeceneklerSecimDegistir(object nesne)
         {
-             secenekler.secilideger = (string)nesne;
+            secenekler.secilideger = (string)nesne;
 
-             OnPropertyChanged(nameof(secenekler.secilideger));
+            OnPropertyChanged(nameof(secenekler.secilideger));
         }
 
         private void CokluIfadeListBoxEkle()
@@ -314,7 +359,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
-            CiktiAL = new RelayCommand(o =>  PDFlatexCiktiAl());
+            CiktiAL = new RelayCommand(o => PDFlatexCiktiAl());
         }
 
         public void PDFlatexCiktiAl()
