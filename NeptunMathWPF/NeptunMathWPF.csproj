@@ -199,6 +199,9 @@
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
     <Compile Include="SesIslemleri.cs" />
+    <Compile Include="Models\Algorithma\AlgorithmaModel.cs" />
+    <Compile Include="Models\Algorithma\ZorlukModel.cs" />
+    <Compile Include="Models\Algorithma\ZorlukRepository.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\DomainRangeGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionCompositionGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionQuestionGenerator.cs" />
@@ -412,6 +415,7 @@
     <Content Include="Kaynaklar\Sesler\SesYanlis2.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis3.wav" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

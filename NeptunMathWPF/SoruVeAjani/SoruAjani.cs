@@ -1,5 +1,6 @@
 ﻿using AngouriMath;
 using NeptunMathWPF.Fonksiyonlar;
+using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,12 +19,7 @@ namespace NeptunMathWPF.SoruVeAjani
     {
         //Tamsayı Random Atma Aralığı
         //Yeni PARAMETRE olarak fikir Uygulanabilir
-        public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
-        {
-            {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
-            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } },
-            {"USLUNORMAL",new int[]{1,11}}, {"USTAMCARPAN",new int[] {0,4} }, {"USBOLMECARPAN", new int[]{2,5}}
-        };
+        internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
 
         internal static Random random = new Random();
 
