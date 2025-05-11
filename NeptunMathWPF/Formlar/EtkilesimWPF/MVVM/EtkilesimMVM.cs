@@ -280,38 +280,122 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
 
                 // DB KAYIT
-                AddWrongQuestionToDB();
-
+                if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+                {
+                    AddWrongQuestionToDB();
+                }
             }
         }
 
         private void AddWrongQuestionToDB()
         {
-            string soruTur = seciliSoru.Tur.ToString();
-            var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
-
-            var answer = secenekler.DogruSecenekGetir();
-            var wrongAnswersList = secenekler.secenekler.Where(x=>x!=answer).ToList();
-            string wrongAnswers = "";
-            foreach(var item in wrongAnswersList)
-            {
-                wrongAnswers += item+"#";
-            }
-
-            //subtopic eklenecek
             Genel.Handle(() =>
             {
                 Genel.ReloadEntity();
+
+                string soruTur = seciliSoru.Tur.ToString();
+                //string soruAltTur = seciliSoru.soru.AltTur.ToString();
+                var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
+
+                // null kontrol (eğer db'de veri yoksa veriyi ekle)
+                if (topic == null)
+                {
+                    Genel.dbEntities.TOPICS.Add(new TOPICS
+                    {
+                        TOPIC = soruTur,
+                    });
+                    Genel.dbEntities.SaveChanges();
+                    topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
+                }
+                //var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC== soruAltTur);
+                //zif (subtopic==null)
+                //{
+                //    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
+                //    {
+                //        SUBTOPIC = soruAltTur,
+                //    });
+                //    Genel.dbEntities.SaveChanges();
+                //    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                //}
+
+                //------cevaplar-----
+                var answer = secenekler.DogruSecenekGetir();
+                var wrongAnswersList = secenekler.secenekler.Where(x => x != answer).ToList();
+                string wrongAnswers = "";
+                //-------------------
+
+                foreach (var item in wrongAnswersList)
+                {
+                    wrongAnswers += item + "#";
+                }
+                //subtopic eklenecek
                 Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Add(new WRONG_ANSWERED_QUESTIONS
                 {
                     USERID = aktifKullanici.kullnId,
-                    //TOPICS = topic,
-                    TOPIC_ID = 5,
+                    TOPICS = topic,
+                    //SUBTOPICS = subtopic,
                     SUBTOPIC_ID = 5,
                     QUESTION_TEXT = seciliSoru.soru.IslemMetin,
                     LATEX_TEXT = seciliSoru.LaTeX,
                     ANSWER = answer,
                     USERS_ANSWER = secenekler.secilideger,
+                    WRONG_ANSWERS = wrongAnswers
+                });
+                Genel.dbEntities.SaveChanges();
+            });
+        }
+
+        private void BookmarkQuestionToDB(SoruCardModel model)
+        {
+            Genel.Handle(() =>
+            {
+                Genel.ReloadEntity();
+
+                string soruTur = model.Tur.ToString();
+                //string soruAltTur = model.soru.AltTur.ToString();
+                var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
+
+                // null kontrol (eğer db'de veri yoksa veriyi ekle)
+                if (topic == null)
+                {
+                    Genel.dbEntities.TOPICS.Add(new TOPICS
+                    {
+                        TOPIC = soruTur,
+                    });
+                    Genel.dbEntities.SaveChanges();
+                    topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
+                }
+                //var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC== soruAltTur);
+                //zif (subtopic==null)
+                //{
+                //    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
+                //    {
+                //        SUBTOPIC = soruAltTur,
+                //    });
+                //    Genel.dbEntities.SaveChanges();
+                //    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                //}
+
+                //------cevaplar-----
+                var answer = model.NesneSecenekler.DogruSecenekGetir();
+                var wrongAnswersList = model.NesneSecenekler.secenekler.Where(x => x != answer).ToList();
+                string wrongAnswers = "";
+                //-------------------
+
+                foreach (var item in wrongAnswersList)
+                {
+                    wrongAnswers += item + "#";
+                }
+                //subtopic eklenecek
+                Genel.dbEntities.BOOKMARKED_QUESTIONS.Add(new BOOKMARKED_QUESTIONS
+                {
+                    USERID = aktifKullanici.kullnId,
+                    TOPICS = topic,
+                    //SUBTOPICS = subtopic,
+                    SUBTOPIC_ID = 5,
+                    QUESTION_TEXT = seciliSoru.soru.IslemMetin,
+                    LATEX_TEXT = seciliSoru.LaTeX,
+                    CORRECT_ANSWER = answer,
                     WRONG_ANSWERS = wrongAnswers
                 });
                 Genel.dbEntities.SaveChanges();
@@ -371,7 +455,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
 
             //Soru İçi Eylemler
-            SoruYerIsaretiKaydet  = new RelayCommand(o => tusDBSoruIsaretle(o));
+            SoruYerIsaretiKaydet = new RelayCommand(o => tusDBSoruIsaretle(o));
             tusSoruMetaVeri = new RelayCommand(o => tusSoruMetaBilgi(o));
             SoruHataBildir = new RelayCommand(o => tusDBSoruBildir(o));
 
@@ -396,7 +480,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             SoruCardModel _model = (SoruCardModel)o;
 
+
             SoruMetaVeri(_model, "Yer işaretlenen");
+
+            if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+            {
+                BookmarkQuestionToDB(_model);
+            }
         }
 
         internal void tusDBSoruBildir(object o)
