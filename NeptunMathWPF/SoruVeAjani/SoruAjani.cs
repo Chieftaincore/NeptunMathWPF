@@ -44,7 +44,10 @@ namespace NeptunMathWPF.SoruVeAjani
             FunctionRepository rep = generated.repository[0];
             question = rep.questionObject;
 
-            return new Soru(question, question.WrongAnswers.ToArray());
+            return new Soru(question, question.WrongAnswers.ToArray())
+            {
+                AltTur = rep.functionType
+            };
         }
 
         /// <summary>

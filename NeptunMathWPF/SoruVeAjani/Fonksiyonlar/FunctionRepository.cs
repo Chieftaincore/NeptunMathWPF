@@ -16,5 +16,7 @@ namespace NeptunMathWPF.Fonksiyonlar
         public string question { get; set; }
         public Question questionObject { get; set; }
         public FunctionType functionType { get; set; }
+
+     
     }
 }
