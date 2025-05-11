@@ -19,6 +19,7 @@ namespace NeptunMathWPF
     public class Soru
     {
         public soruTuru SoruTuru { get; }
+        public Enum AltTur { get; set; }
         public string IslemMetin { get; set; }
         public string LatexMetin { get; set; }
 

@@ -24,6 +24,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
     class EtkilesimMVM : ObservableObject
     {
         //Debug Tools: Geliştirme de denemeler için
+        #region Debug
         public string[] DebugComboBoxTurler { get; set; }
         public string cmBxSecilen { get; set; }
         public ObservableCollection<ifadeTuru> CokluIfadeTurlerListColl { get; set; }
@@ -35,6 +36,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SecimDegistir { get; set; }
         public ICommand HesapMakinesiGosterGizle { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
+
+        #endregion
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
 
@@ -61,6 +64,15 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
         public ICommand CiktiAL { get; set; }
+
+        #region SoruiciEylemler 
+
+        public ICommand SoruYerIsaretiKaydet { get; set; }
+        public ICommand SoruHataBildir { get; set; }
+        public ICommand tusSoruMetaVeri { get; set; }
+
+        #endregion
+
         public string IsSelected { get; set; }
 
         internal KeyEventHandler key;
@@ -106,7 +118,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             Genel.Handle(() =>
             {
-
                 List<ifadeTuru> ifadeTurleri = new List<ifadeTuru>();
 
                 if (CokluIfadeTurlerListColl.Count < 2)
@@ -147,7 +158,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     LaTeX = soru.GetMetin(),
                     zaman = DateTime.Now,
                     kaynak = "Yapay Zeka API"
-
                 };
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
@@ -202,6 +212,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
+        /// <summary>
+        /// MVVM UI öğeleri içindir Kutuları Değiştirir
+        /// </summary>
         public void tusTurDegis()
         {
             if (seciliTur == "SoruModuNormal")
@@ -326,6 +339,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             OnPropertyChanged();
         }
 
+        /// <summary>
+        /// Sorunun içindeki radiobuttonlar buna bağlıdır içindeki değerleri object' kısmına gönderirler ve
+        /// Soru modelinin içindeki dosyalar değişir
+        /// </summary>
+        /// <param name="nesne"> Secenek Radiobuttonun içibdeki Content/Değer </param>
         private void SeceneklerSecimDegistir(object nesne)
         {
             secenekler.secilideger = (string)nesne;
@@ -344,22 +362,60 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-
+        //Belge düzenini toplamak için stabil pushdan sonra bunun içine Relayleri toplayacağım
+        #region relayCommands
         /// <summary>
         /// MVVM'de komutlar Relaylenerek işlenmesi gerekir lütfen içine komutunuzu koyunuz
         /// </summary>
         internal void KomutlarInit()
         {
+
+            //Soru İçi Eylemler
+            SoruYerIsaretiKaydet  = new RelayCommand(o => tusDBSoruIsaretle(o));
+            tusSoruMetaVeri = new RelayCommand(o => tusSoruMetaBilgi(o));
+            SoruHataBildir = new RelayCommand(o => tusDBSoruBildir(o));
+
+            //MVVM önemli komutlar
             SoruSec = new RelayCommand(o => SoruCardSec(o));
+            CiktiAL = new RelayCommand(o => PDFlatexCiktiAl());
+            SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
+
+            //Radiobuttonlar bu Komut'a bağlı
+            SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
+            HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
+
+            //DEBUG
             DebugIslemEkleKomut = new RelayCommand(o => Ekle());
             SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
-            SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
-            SecimDegistir = new RelayCommand(o => SeceneklerSecimDegistir(o));
             DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
-            HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
-            CiktiAL = new RelayCommand(o => PDFlatexCiktiAl());
+        }
+
+        internal void tusDBSoruIsaretle(object o)
+        {
+            SoruCardModel _model = (SoruCardModel)o;
+
+            SoruMetaVeri(_model, "Yer işaretlenen");
+        }
+
+        internal void tusDBSoruBildir(object o)
+        {
+            SoruCardModel _model = (SoruCardModel)o;
+
+            SoruMetaVeri(_model, "Bildirilen");
+        }
+
+        internal void tusSoruMetaBilgi(object o)
+        {
+            SoruCardModel _model = (SoruCardModel)o;
+
+            SoruMetaVeri(_model);
+        }
+
+        private void SoruMetaVeri(SoruCardModel _model, string EK = "")
+        {
+            MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         public void PDFlatexCiktiAl()
@@ -417,6 +473,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             return ifadeTurleri;
         }
+
+        #endregion
 
         //StackOverflow'dan aldım
         internal class RelayCommand : ICommand
