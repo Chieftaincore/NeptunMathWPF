@@ -294,7 +294,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 Genel.ReloadEntity();
 
                 string soruTur = seciliSoru.Tur.ToString();
-                //string soruAltTur = seciliSoru.soru.AltTur.ToString();
+                string soruAltTur = seciliSoru.soru.AltTur.ToString();
                 var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
 
                 // null kontrol (eğer db'de veri yoksa veriyi ekle)
@@ -307,16 +307,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     Genel.dbEntities.SaveChanges();
                     topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
                 }
-                //var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC== soruAltTur);
-                //zif (subtopic==null)
-                //{
-                //    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
-                //    {
-                //        SUBTOPIC = soruAltTur,
-                //    });
-                //    Genel.dbEntities.SaveChanges();
-                //    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
-                //}
+                var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                if(subtopic == null)
+                {
+                    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
+                    {
+                        SUBTOPIC = soruAltTur,
+                        TOPICS = topic
+                    });
+                    Genel.dbEntities.SaveChanges();
+                    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                }
 
                 //------cevaplar-----
                 var answer = secenekler.DogruSecenekGetir();
@@ -333,7 +334,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     USERID = aktifKullanici.kullnId,
                     TOPICS = topic,
-                    //SUBTOPICS = subtopic,
+                    SUBTOPICS = subtopic,
                     SUBTOPIC_ID = 5,
                     QUESTION_TEXT = seciliSoru.soru.IslemMetin,
                     LATEX_TEXT = seciliSoru.LaTeX,
@@ -352,7 +353,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 Genel.ReloadEntity();
 
                 string soruTur = model.Tur.ToString();
-                //string soruAltTur = model.soru.AltTur.ToString();
+                string soruAltTur = model.soru.AltTur.ToString();
                 var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
 
                 // null kontrol (eğer db'de veri yoksa veriyi ekle)
@@ -365,16 +366,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     Genel.dbEntities.SaveChanges();
                     topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
                 }
-                //var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC== soruAltTur);
-                //zif (subtopic==null)
-                //{
-                //    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
-                //    {
-                //        SUBTOPIC = soruAltTur,
-                //    });
-                //    Genel.dbEntities.SaveChanges();
-                //    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
-                //}
+                var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                if (subtopic == null)
+                {
+                    Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
+                    {
+                        SUBTOPIC = soruAltTur,
+                        TOPICS = topic
+                    });
+                    Genel.dbEntities.SaveChanges();
+                    subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
+                }
 
                 //------cevaplar-----
                 var answer = model.NesneSecenekler.DogruSecenekGetir();
@@ -391,7 +393,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     USERID = aktifKullanici.kullnId,
                     TOPICS = topic,
-                    //SUBTOPICS = subtopic,
+                    SUBTOPICS = subtopic,
                     SUBTOPIC_ID = 5,
                     QUESTION_TEXT = seciliSoru.soru.IslemMetin,
                     LATEX_TEXT = seciliSoru.LaTeX,
