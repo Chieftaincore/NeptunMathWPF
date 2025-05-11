@@ -222,6 +222,12 @@
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\Ifade.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitQuestion.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitQuestionGenerator.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitQuizViewModel.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitOkuBeni.cs" />
+    <Compile Include="SoruVeAjani\Limit\LimitRelayCommand.cs" />
+    <Compile Include="SoruVeAjani\Limit\QuestionType.cs" />
     <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">

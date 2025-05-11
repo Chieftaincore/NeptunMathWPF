@@ -87,6 +87,15 @@
 
                 <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
+                
+                <Button x:Name="LimitSoruOlustur" Content="Limit Soru Oluştur" 
+                    Height="32" Margin="5,10,5,10" Command="{Binding DebugLimitSorusuOlustur}"/>
+                
+                <Button x:Name="TurevSoruOlustur" Content="Türev Soru Oluştur" 
+                    Height="32" Margin="5,10,5,10" Command="{Binding DebugTurevSorusuOlustur}"/>
+                
+                <Button x:Name="tusPanelDegis_Copy2" Content="Latexsiz PDF" 
+                    Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDF}"/>
             </StackPanel>
         </Expander>
 
