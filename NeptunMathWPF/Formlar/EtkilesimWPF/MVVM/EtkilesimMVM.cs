@@ -1,4 +1,5 @@
 ﻿
+using HesapMakinesi;
 using Microsoft.Win32;
 using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
@@ -107,14 +108,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
 
-                Ekle();
+                DebugIslemSoruEkle();
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
                 OnPropertyChanged();
             });
         }
 
-        public void Ekle()
+        public void DebugIslemSoruEkle()
         {
             Genel.Handle(() =>
             {
@@ -177,10 +178,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void SoruCardSec(object o)
         {
-
             Genel.Handle(() =>
             {
-
                 seciliSoru = (SoruCardModel)o;
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
@@ -194,8 +193,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             Genel.Handle(() =>
             {
-                seciliTur = "SoruModuMetin";
-
                 Soru soru = SoruAjani.RastgeleFonksiyonSorusuOlustur();
 
                 seciliSoru = new SoruCardModel(soru)
@@ -206,6 +203,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 };
 
                 Sorular.Add(seciliSoru);
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
 
                 OnPropertyChanged(nameof(secenekler));
                 OnPropertyChanged();
@@ -285,8 +284,12 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     AddWrongQuestionToDB();
                 }
             }
+
+            seciliTur = seciliSoru.SoruTuruStyleTemplate();
+            OnPropertyChanged(nameof(seciliTur));
         }
 
+        #region VeriTabani
         private void AddWrongQuestionToDB()
         {
             Genel.Handle(() =>
@@ -402,26 +405,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
-        private void TusEkleClick(object sender, RoutedEventArgs e)
-        {
-            if (cmBxSecilen == null || String.IsNullOrEmpty(cmBxSecilen))
-            {
-                MessageBox.Show("Lütfen bir ifade türü seçin.");
-                return;
-            }
+        #endregion
 
-            string a = cmBxSecilen;
-
-            if (a != null)
-            {
-                ifadeTuru tur;
-                Enum.TryParse<ifadeTuru>(a, out tur);
-
-                CokluIfadeTurlerListColl.Add(tur);
-            }
-
-            OnPropertyChanged();
-        }
+        
 
         /// <summary>
         /// Sorunun içindeki radiobuttonlar buna bağlıdır içindeki değerleri object' kısmına gönderirler ve
@@ -469,12 +455,15 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             HesapMakinesiGosterGizle = new RelayCommand(o => hesap.GosterGizle());
 
             //DEBUG
-            DebugIslemEkleKomut = new RelayCommand(o => Ekle());
+            DebugIslemEkleKomut = new RelayCommand(o => DebugIslemSoruEkle());
             SeciliTurDegistir = new RelayCommand(o => tusTurDegis());
             DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
         }
+
+
+
 
         internal void tusDBSoruIsaretle(object o)
         {
@@ -510,26 +499,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void PDFlatexCiktiAl()
         {
-            if (MessageBox.Show("pdflatex tarafından dosya çıkarılması için bilgisayarınızda standart LatexLive kütüphanesi veya pdflatex komutları taşıyan bir TeX motoru bulunmalıdır", "Gereksinim Bildirisi", MessageBoxButton.OKCancel, MessageBoxImage.Question) == MessageBoxResult.OK)
-            {
-                FileDialog saveFileDialog = new SaveFileDialog
-                {
-                    Filter = "Klasör | Directory",
-                    Title = "Kaydetmek için klasör yeri ve ismi (Ek dosyalar eklenebilir)",
-                    FileName = $"LatexPDF{DateTime.Now:yyyyMMdd_HHmmss}",
+            new PDFbelgelendiriciWPF(Sorular).ShowDialog();
 
-                };
-
-
-                if (saveFileDialog.ShowDialog() == true)
-                {
-                    new PDFLatexYineleyici().LaTeXPDFolustur(Sorular, saveFileDialog.FileName);
-                }
-                else
-                {
-                    MessageBox.Show("Seçim yapılmadı", "Geçersiz Dosya Seçimi", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
         }
 
         private void DebugCokluIfadeCollSil(object obje)

@@ -13,22 +13,22 @@
                    Margin="0,0,0,20"/>
 
             <TextBlock Text="Kullanıcı Adı:" Margin="0,0,0,5"/>
-            <TextBox x:Name="KayitKullaniciAdiTxt" Padding="5" Margin="0,0,0,10"/>
+            <TextBox x:Name="KayitKullaniciAdiTxt" Padding="5" MaxLength="30" Margin="0,0,0,10"/>
 
             <TextBlock Text="Şifre:" Margin="0,0,0,5"/>
-            <PasswordBox x:Name="KayitSifreTxt" Padding="5" Margin="0,0,0,10"/>
+            <PasswordBox x:Name="KayitSifreTxt" MaxLength="50" Padding="5" Margin="0,0,0,10"/>
 
             <TextBlock Text="Şifre Tekrar:" Margin="0,0,0,5"/>
-            <PasswordBox x:Name="KayitSifreTekrarTxt" Padding="5" Margin="0,0,0,10"/>
+            <PasswordBox x:Name="KayitSifreTekrarTxt" MaxLength="50" Padding="5" Margin="0,0,0,10"/>
 
             <TextBlock Text="E-posta:" Margin="0,0,0,5"/>
-            <TextBox x:Name="KayitEpostaTxt" Padding="5" Margin="0,0,0,10"/>
+            <TextBox x:Name="KayitEpostaTxt" MaxLength="150" Padding="5" Margin="0,0,0,10"/>
 
             <TextBlock Text="İsim:" Margin="0,0,0,5"/>
-            <TextBox x:Name="KayitIsimTxt" Padding="5" Margin="0,0,0,10"/>
+            <TextBox x:Name="KayitIsimTxt" MaxLength="50" Padding="5" Margin="0,0,0,10"/>
 
             <TextBlock Text="Soyisim:" Margin="0,0,0,5"/>
-            <TextBox x:Name="KayitSoyisimTxt" Padding="5" Margin="0,0,0,20"/>
+            <TextBox x:Name="KayitSoyisimTxt"  MaxLength="50" Padding="5" Margin="0,0,0,20"/>
 
             <Button Content="Kayıt Ol" Height="35" 
                     Background="#f44336" Foreground="White" 

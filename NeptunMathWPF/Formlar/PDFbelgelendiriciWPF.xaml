@@ -5,8 +5,49 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
         mc:Ignorable="d"
-        Title="PDFbelgelendiriciWPF" Height="450" Width="800">
-    <Grid>
+        Title="PDF Çıkart" 
+        WindowState="Normal" ResizeMode="CanMinimize"
+        Background="DarkBlue" Height="450" Width="800">
+
+    <Grid Margin="4" Background="White">
         
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="240"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Column="2" Grid.RowSpan="3">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="SteelBlue" Offset="0"/>
+                    <GradientStop Color="DarkBlue" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Label Content="PDF Çıktı" Grid.Column="2" 
+               Foreground="White" FontSize="19" FontWeight="Bold" FontStyle="Italic"
+               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+        <Rectangle Fill="SteelBlue"/>
+        <ComboBox Padding="10" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="12" BorderThickness="2"/>
+
+        <ContentControl x:Name="cmbxSeciliTur" Grid.Row="1" Grid.RowSpan="2" Margin="12">
+        </ContentControl>
+
+        <TextBlock x:Name="txtBoxDetaylar" 
+                   Grid.Column="2"  Grid.Row="1" Margin="10" 
+                   Foreground="White" FontSize="15" Text="Deneme"/>
+
+        <Button Content="Çıkart" Click="tusPDFCikart"
+                Grid.Row="2" Grid.Column="2" Margin="10"
+                FontStyle="Italic" FontSize="19" FontWeight="SemiBold"
+                Background="WhiteSmoke" BorderThickness="2"/>
     </Grid>
 </Window>

@@ -26,6 +26,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         //Renk ile ilgili
         private Color _tabRenk;
+        public bool kilitlendi { get => NesneSecenekler.kilitli; }
+
+
         public Color TabRenk
         {
             get => _tabRenk; set
@@ -81,6 +84,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public string SoruTuruStyleTemplate()
         {
+            if (kilitlendi)
+                return "SoruModuKilitli";
 
             switch (Tur)
             {

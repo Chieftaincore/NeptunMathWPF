@@ -23,6 +23,7 @@
         <model:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
                                   SoruModuLaTeX="{StaticResource SeceneklerLaTeXTemplate}"
                                   SoruModuMetin="{StaticResource SeceneklerNormalTemplate}"
+                                  SoruModuKilitli="{StaticResource SeceneklerKilitliTemplate}"
                                   Proompter="{StaticResource Proompter}"/>
 
         <model:SoruCardSelector x:Key="SoruStyleTemplateModel"
