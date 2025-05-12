@@ -91,6 +91,9 @@
 
                 <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
+
+                <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" 
+                        Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDFOlustur}"/>
             </StackPanel>
         </Expander>
 

@@ -38,6 +38,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand HesapMakinesiGosterGizle { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
 
+        public ICommand DebugLatexsizPDFOlustur { get; set; }
+
         #endregion
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
@@ -471,6 +473,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
+            DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
         }
 
         internal void tusDBSoruIsaretle(object o)
@@ -541,6 +544,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             };
 
             return ifadeTurleri;
+        }
+
+        public void PDFlatexsizCiktiAl()
+        {
+            
         }
 
         #endregion
