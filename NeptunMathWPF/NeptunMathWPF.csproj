@@ -38,6 +38,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Kaynaklar\Resimler\logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngouriMath, Version=0.1.3.0, Culture=neutral, PublicKeyToken=bccdab90849ccf86, processorArchitecture=MSIL">
       <HintPath>..\packages\AngouriMath.1.3.0\lib\net472\AngouriMath.dll</HintPath>
@@ -390,6 +393,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Kaynaklar\Resimler\logo.ico" />
     <Content Include="Kaynaklar\Sesler\SesDogru5.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

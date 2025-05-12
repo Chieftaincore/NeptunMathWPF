@@ -8,13 +8,12 @@
         xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
         xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
-        Background="LightSlateGray"
+        Background="LightSteelBlue"
         Closed="PenecereyiKapat"
         Title="Etkilesim Penceresi" Height="900" Width="1600">
 
 
     <Window.DataContext>
-
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
 
@@ -32,7 +31,7 @@
 
     </Window.Resources>
 
-    <Grid x:Name="SayfaGrid" Background="White" Margin="5">
+    <Grid x:Name="SayfaGrid" Background="White" Margin="5,0,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="568*"/>
             <RowDefinition Height="241*"/>
@@ -44,7 +43,19 @@
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <Label Background="WhiteSmoke" Grid.ColumnSpan="3" Grid.Row="2"/>
+        <Rectangle Grid.Column="2" Grid.RowSpan="3">
+
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="White" Offset="0.4"/>
+                    <GradientStop Color="GhostWhite" Offset="0.5"/>
+                    <GradientStop Color="SteelBlue" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            
+        </Rectangle>
+
+        <Label Background="GhostWhite" Grid.ColumnSpan="3" Grid.Row="2"/>
 
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
             <Ellipse.Fill>
@@ -56,9 +67,14 @@
         </Ellipse>
 
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
-        <Expander x:Name="MenuExpander" Header="DEBUG MENU" Grid.RowSpan="3" Background="{x:Null}">
-            <StackPanel Background="White">
-                <Expander Header="Coklu İfade">
+        <Expander x:Name="MenuExpander" Grid.RowSpan="3">
+
+            <Expander.Header>
+                DEBUG MENU 
+            </Expander.Header>
+
+            <StackPanel Background="LightSteelBlue" VerticalAlignment="Top">
+                <Expander Header="Coklu İfade" Background="White" Padding="0,5,0,10">
                     <StackPanel Background="White">
 
                         <ListBox x:Name="CokluIfadeListBox" Height="100" 
@@ -67,32 +83,31 @@
                                 <KeyBinding
                                     Key="Delete"
                                     Command="{Binding DebugCokluIfadeSil}"
-                                    CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                    />
+                                    CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                             </ListBox.InputBindings>
                         </ListBox>
 
                         <ComboBox x:Name="CokluIfadeComboBox" Width="120" 
                                   ItemsSource="{Binding DebugComboBoxTurler}" SelectedValue="{Binding cmBxSecilen, Mode=OneWayToSource}"/>
 
-                        <Button Content="Ekle" Margin="6,0,6,0" Command="{Binding DebugCokluIfadeEkle}"/>
+                        <Button Content="Ekle" Margin="4,2,4,5" Command="{Binding DebugCokluIfadeEkle}" Background="AliceBlue" />
 
                     </StackPanel>
                 </Expander>
 
-                <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
+                <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugIslemEkleKomut}"/>
 
-                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle"
+                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle" Background="AliceBlue"
                        Height="32" Margin="5,10,5,10" IsEnabled="{Binding APIvar}" Command="{Binding DebugAPIProblemEkle}"/>
 
-                <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle"
+                <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugFonksiyonSoruOlustur}"/>
 
-                <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
+                <Button x:Name="tusPanelDegis" Content="Panel Değiş" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
 
-                <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" 
+                <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDFOlustur}"/>
             </StackPanel>
         </Expander>
@@ -123,7 +138,7 @@
                 HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Center" Height="46" Click="YerelHesapMakinesi_Click"/>
 
         <Button Grid.Column="2" Content="Belge Olarak Çıkar" Background="AliceBlue" FontWeight="SemiBold"
-                HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Bottom" Height="46" Command="{Binding CiktiAL}"/>
+                HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Bottom" Height="46" Command="{Binding PDFciktiAl}"/>
 
         <Button Grid.Column="2" Visibility="Collapsed" Content="Hesaplama Not Tutma" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="NotAlma_Click" Margin="0,170,0,0"/>
 

@@ -1,7 +1,4 @@
-﻿
-using HesapMakinesi;
-using Microsoft.Win32;
-using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
+﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
@@ -10,11 +7,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using System.Linq;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -71,7 +66,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
-        public ICommand CiktiAL { get; set; }
+        public ICommand PDFciktiAl { get; set; }
 
         #region SoruiciEylemler 
 
@@ -464,7 +459,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             //MVVM önemli komutlar
             SoruSec = new RelayCommand(o => SoruCardSec(o));
-            CiktiAL = new RelayCommand(o => PDFlatexCiktiAl());
+            PDFciktiAl = new RelayCommand(o => PDFciktiPencere());
             SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
 
             //Radiobuttonlar bu Komut'a bağlı
@@ -600,9 +595,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             return ifadeTurleri;
         }
 
-        public void PDFlatexCiktiAl()
+        public void PDFciktiPencere()
         {
-            
+            (new PDFbelgelendiriciWPF(Sorular)).ShowDialog();
         }
 
         #endregion

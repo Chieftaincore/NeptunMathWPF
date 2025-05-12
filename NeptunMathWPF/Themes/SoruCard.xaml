@@ -117,7 +117,7 @@
                                                  FontStyle="Italic"
                                                  FontSize="19"
                                                  TextWrapping="Wrap"
-                                                 MaxWidth="720"
+                                                 MaxWidth="780"
                                                  Grid.Row="1"
                                                  Grid.Column="0"
                                                  Margin="40,10,5,5"

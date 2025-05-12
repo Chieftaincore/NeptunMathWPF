@@ -22,7 +22,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public string kaynak { get; set; }
         public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
-
         public bool kilitlendi { get => NesneSecenekler.kilitli; }
 
         //Renk ile ilgili
