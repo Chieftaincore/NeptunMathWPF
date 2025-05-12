@@ -10,7 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Xml.Linq;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -510,7 +514,57 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void PDFlatexCiktiAl()
         {
-            new PDFbelgelendiriciWPF(Sorular).ShowDialog();
+            // SaveFileDialog ile dosya adı ve konum seçimi
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                Title = "PDF Dosyasını Kaydet",
+                FileName = "Sorular.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string pdfPath = saveFileDialog.FileName;
+
+                // PDF belgesi oluştur
+                Document document = new Document();
+                PdfWriter.GetInstance(document, new FileStream(pdfPath, FileMode.Create));
+                document.Open();
+
+                // Sorular koleksiyonunu alın
+                var sorular = Sorular;
+
+                if (sorular != null)
+                {
+                    foreach (var soru in sorular)
+                    {
+                        // Soruyu ekle
+                        // Özellikle itexSharp.text yazması lazım
+                        document.Add(new iTextSharp.text.Paragraph($"Soru: {soru.soru.GetMetin()}"));
+
+                        // Seçenekleri ekle
+                        if (soru.NesneSecenekler != null)
+                        {
+                            var secenekler = soru.NesneSecenekler.secenekler;
+                            for (int i = 0; i < secenekler.Count; i++)
+                            {
+                                // 'a', 'b', 'c', ... için
+                                char secenekHarf = (char)('a' + i);
+                                document.Add(new iTextSharp.text.Paragraph($"{secenekHarf}) {secenekler[i]}"));
+                            }
+                        }
+
+                        // Boşluk ekle
+                        document.Add(new iTextSharp.text.Paragraph("\n"));
+
+                    }
+                }
+
+                document.Close();
+
+                // Kullanıcıya bilgi ver
+                MessageBox.Show($"Sorular PDF dosyasına aktarıldı: {pdfPath}");
+            }
 
         }
 
