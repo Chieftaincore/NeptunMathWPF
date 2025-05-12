@@ -30,7 +30,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SeciliTurDegistir { get; set; }
         public ICommand SecimDegistir { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
-
+        public ICommand DebugLimitSoruOlustur { get; set; }
+        public ICommand DebugTurevSoruOlustur { get; set; }
         public ICommand DebugLatexsizPDF { get; set; } //Latex olmadan PDF oluşturma komutu
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
@@ -92,6 +93,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
                 DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
                 DebugLatexsizPDF = new RelayCommand(o => LatexsizPDF());
+                DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
 
@@ -286,6 +288,30 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
 
             OnPropertyChanged();
+        }
+
+        private void DebugLimitSoruEkle()
+        {
+
+            Genel.Handle(() =>
+            {
+                seciliTur = "SoruModuNormal";
+
+                Soru soru = SoruAjani.RastgeleLimitSorusuOlustur();
+
+                seciliSoru = new SoruCardModel(soru)
+                {
+                    LaTeX = soru.LatexMetin,
+                    zaman = DateTime.Now,
+                    kaynak = "Yerel"
+                };
+
+                Sorular.Add(seciliSoru);
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
+
+            });
         }
 
         private void SeceneklerSecimDegistir(object nesne)

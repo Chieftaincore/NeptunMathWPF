@@ -1,11 +1,14 @@
 ﻿using AngouriMath;
 using NeptunMathWPF.Fonksiyonlar;
+using NeptunMathWPF.Formlar;
+using NeptunMathWPF.SoruVeAjani.Limit;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -28,6 +31,71 @@ namespace NeptunMathWPF.SoruVeAjani
         };
 
         internal static Random random = new Random();
+       
+        internal static Soru RastgeleLimitSorusuOlustur()
+        {
+            LimitQuestion lim;
+
+            Array questionTypes = Enum.GetValues(typeof(LimitQuestionType));
+            LimitQuestionType currentQuestionType = (LimitQuestionType)questionTypes.GetValue(random.Next(questionTypes.Length));
+
+            switch (currentQuestionType)
+            {
+                case LimitQuestionType.CommonFactor:
+                    lim = LimitQuestionGenerator.GenerateCommonFactorQuestion();
+                    break;
+                case LimitQuestionType.FindCoefficients:
+                    lim = LimitQuestionGenerator.GenerateFindCoefficientsQuestion();
+                    break;
+                case LimitQuestionType.CoefficientExpression:
+                    lim = LimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
+                    break;
+                default:
+                    lim = LimitQuestionGenerator.GenerateCommonFactorQuestion();
+                    break;
+            };
+            
+            // Doğru cevap ve şaşırtmacalar
+            List<string> options = new List<string>();
+
+            // 3 tane farklı yanlış şık oluştur
+            while (options.Count < 4)
+            {
+                double _wrong;
+                string wrongOption;
+
+                if (currentQuestionType == LimitQuestionType.CommonFactor)
+                {
+                    // Tam sayı şıklar oluştur (doğru cevaptan belirli uzaklıkta)
+                    _wrong = lim.Answer + random.Next(-10, 11);
+                    wrongOption = _wrong.ToString();
+                }
+                else
+                {
+                    // Katsayı sorularında daha küçük aralıkta şaşırtma cevaplar
+                    _wrong = lim.Answer + random.Next(-5, 6);
+                    wrongOption = _wrong.ToString();
+                }
+
+                // Aynı şık olmamasını sağla
+                if (!options.Contains(wrongOption) && Math.Abs(_wrong - lim.Answer) > 0.001)
+                {
+                    options.Add(wrongOption);
+                }
+            }
+            // Şıkları karıştır
+            options = options.OrderBy(x => random.Next()).ToList();
+
+            return new Soru(lim, options.ToArray())
+            {
+                
+            };
+        }
+
+
+
+
+        
         internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi = 4)
         {
             GeneratedFunction generated = new GeneratedFunction();

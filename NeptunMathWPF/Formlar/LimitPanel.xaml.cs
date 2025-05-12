@@ -20,7 +20,7 @@ namespace NeptunMathWPF.Formlar
     /// </summary>
     public partial class LimitPanel : Window
     {
-        private LimitQuestion currentQuestion;
+        private fLimitQuestion currentQuestion;
         private int correctAnswers = 0;
         private int totalQuestions = 0;
         private Random random = new Random();
@@ -39,13 +39,13 @@ namespace NeptunMathWPF.Formlar
             switch (currentQuestionType)
             {
                 case QuestionType.CommonFactor:
-                    currentQuestion = LimitQuestionGenerator.GenerateCommonFactorQuestion();
+                    currentQuestion = fLimitQuestionGenerator.GenerateCommonFactorQuestion();
                     break;
                 case QuestionType.FindCoefficients:
-                    currentQuestion = LimitQuestionGenerator.GenerateFindCoefficientsQuestion();
+                    currentQuestion = fLimitQuestionGenerator.GenerateFindCoefficientsQuestion();
                     break;
                 case QuestionType.CoefficientExpression:
-                    currentQuestion = LimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
+                    currentQuestion = fLimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
                     break;
             }
 
@@ -199,7 +199,7 @@ namespace NeptunMathWPF.Formlar
         CoefficientExpression  // Katsayı ifadelerini bulma sorusu
     }
 
-    public class LimitQuestion
+    public class fLimitQuestion
     {
         public string QuestionLaTeX { get; set; }
         public double Answer { get; set; }
@@ -207,12 +207,12 @@ namespace NeptunMathWPF.Formlar
         public string ExplanationText { get; set; }
     }
 
-    public static class LimitQuestionGenerator
+     static class fLimitQuestionGenerator
     {
         private static Random random = new Random();
 
         // Ortak çarpanlı limit soruları (x-a paydada)
-        public static LimitQuestion GenerateCommonFactorQuestion()
+        public static fLimitQuestion GenerateCommonFactorQuestion()
         {
             // Limit noktasını belirle (-10 ile 10 arasında, 0 hariç)
             int a = random.Next(-10, 10);
@@ -242,7 +242,7 @@ namespace NeptunMathWPF.Formlar
             string explanation = $"Bu ifade aslında (x-{a})(x+{b})/(x-{a}) şeklindedir. " +
                                 $"Ortak çarpanları sadeleştirince x→{a} için limit (x+{b}) = {a}+{b} = {answer} olur.";
 
-            return new LimitQuestion
+            return new fLimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,
@@ -252,7 +252,7 @@ namespace NeptunMathWPF.Formlar
         }
 
         // Katsayıları bulma soruları 
-        public static LimitQuestion GenerateFindCoefficientsQuestion()
+        public static fLimitQuestion GenerateFindCoefficientsQuestion()
         {
             // Limit noktasını belirle (-5 ile 5 arasında, 0 hariç)
             int a = random.Next(-5, 5);
@@ -310,7 +310,7 @@ namespace NeptunMathWPF.Formlar
                             $"Buradan e = -{a}·{b} = {realConstant} bulunur.";
             }
 
-            return new LimitQuestion
+            return new fLimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,
@@ -320,7 +320,7 @@ namespace NeptunMathWPF.Formlar
         }
 
         // Katsayı ifadelerini bulma soruları
-        public static LimitQuestion GenerateCoefficientExpressionQuestion()
+        public static fLimitQuestion GenerateCoefficientExpressionQuestion()
         {
             // Limit noktasını belirle (-5 ile 5 arasında, 0 hariç)
             int a = random.Next(-5, 5);
@@ -394,7 +394,7 @@ namespace NeptunMathWPF.Formlar
                         $"e = -{a}·{b} = {e}\n\n" +
                         explanation;
 
-            return new LimitQuestion
+            return new fLimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,
