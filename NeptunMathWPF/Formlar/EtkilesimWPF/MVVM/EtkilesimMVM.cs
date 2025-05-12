@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Xml.Linq;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Linq;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -512,7 +512,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
-        public void PDFlatexCiktiAl()
+        public void PDFlatexsizCiktiAl()
         {
             // SaveFileDialog ile dosya adı ve konum seçimi
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
@@ -600,7 +600,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             return ifadeTurleri;
         }
 
-        public void PDFlatexsizCiktiAl()
+        public void PDFlatexCiktiAl()
         {
             
         }
