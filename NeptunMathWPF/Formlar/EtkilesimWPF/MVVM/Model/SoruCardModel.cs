@@ -1,5 +1,4 @@
-﻿using AngouriMath.Extensions;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
@@ -24,11 +23,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
 
-        //Renk ile ilgili
-        private Color _tabRenk;
         public bool kilitlendi { get => NesneSecenekler.kilitli; }
 
-
+        //Renk ile ilgili
+        private Color _tabRenk;
         public Color TabRenk
         {
             get => _tabRenk; set

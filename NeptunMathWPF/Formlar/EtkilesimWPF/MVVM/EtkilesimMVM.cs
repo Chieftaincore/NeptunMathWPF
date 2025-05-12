@@ -51,6 +51,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             get => seciliSoru.NesneSecenekler;
         }
+
         public string seciliSecenek
         {
 
@@ -285,6 +286,16 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 }
             }
 
+            if(Sorular.Last() != seciliSoru)
+            {
+               int i = Sorular.IndexOf(seciliSoru);
+
+                seciliSoru = Sorular.ElementAt(i + 1);
+
+                OnPropertyChanged(nameof(seciliSoru));
+                OnPropertyChanged(nameof(secenekler));
+            }
+
             seciliTur = seciliSoru.SoruTuruStyleTemplate();
             OnPropertyChanged(nameof(seciliTur));
         }
@@ -461,9 +472,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
         }
-
-
-
 
         internal void tusDBSoruIsaretle(object o)
         {

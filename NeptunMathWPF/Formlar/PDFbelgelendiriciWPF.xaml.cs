@@ -2,19 +2,9 @@
 using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace NeptunMathWPF.Formlar
 {
@@ -24,13 +14,21 @@ namespace NeptunMathWPF.Formlar
     public partial class PDFbelgelendiriciWPF : Window
     {
 
+        UserControl pdflatex;
+
+        UserControl normlpdf;
+
         ObservableCollection<SoruCardModel> Modeller;
+
+        string[] turler = { "NormalPDF", "PDFlatex" };
 
         internal PDFbelgelendiriciWPF(ObservableCollection<SoruCardModel> _modeller)
         {
             InitializeComponent();
 
             Modeller = _modeller;
+
+            cmbxPDFYineleyiciler.ItemsSource = turler;
         }
 
         private void tusPDFCikart(object sender, RoutedEventArgs e)
@@ -59,6 +57,32 @@ namespace NeptunMathWPF.Formlar
                     }
                 }
             });
+
+        }
+
+        private void cmbxSeciliDegisme(object sender, SelectionChangedEventArgs e)
+        {
+
+            Genel.Handle(() =>
+            {
+
+                ComboBox obj = (ComboBox)sender;
+
+                if ((string)obj.SelectedValue == turler[0])
+                {
+                    cmbxSeciliTur = pdflatex;
+                }
+
+                if ((string)obj.SelectedValue == turler[0])
+                {
+                    cmbxSeciliTur = normlpdf;
+                }
+
+            });
+        }
+
+        internal void TextBlockYenile()
+        {
 
         }
     }
