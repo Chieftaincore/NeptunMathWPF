@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Linq;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -28,8 +31,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SecimDegistir { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
 
+        public ICommand DebugLatexsizPDF { get; set; } //Latex olmadan PDF oluşturma komutu
+
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
-        
+
         public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular  { get; set; }
         public SoruCardModel seciliSoru { get; set; }
@@ -86,6 +91,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
                 DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
                 DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
+                DebugLatexsizPDF = new RelayCommand(o => LatexsizPDF());
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
 
@@ -330,6 +336,57 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             };
 
             return ifadeTurleri;
+        }
+
+        //Latex olmadan PDF oluşturma
+        public void LatexsizPDF()
+        {
+            // SaveFileDialog ile dosya adı ve konum seçimi
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                Title = "PDF Dosyasını Kaydet",
+                FileName = "Sorular.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string pdfPath = saveFileDialog.FileName;
+
+                // PDF belgesi oluştur
+                Document document = new Document();
+                PdfWriter.GetInstance(document, new FileStream(pdfPath, FileMode.Create));
+                document.Open();
+
+                // Sorular koleksiyonunu alın
+                var sorular = Sorular;
+
+                if (sorular != null)
+                {
+                    foreach (var soru in sorular)
+                    {
+                        // Soruyu ekle
+                        document.Add(new Paragraph($"Soru: {soru.soru.GetMetin()}"));
+
+                        // Seçenekleri ekle
+                        if (soru.NesneSecenekler != null)
+                        {
+                            foreach (var secenek in soru.NesneSecenekler.secenekler)
+                            {
+                                document.Add(new Paragraph($"- {secenek}"));
+                            }
+                        }
+
+                        // Boşluk ekle
+                        document.Add(new Paragraph("\n"));
+                    }
+                }
+
+                document.Close();
+
+                // Kullanıcıya bilgi ver
+                MessageBox.Show($"Sorular PDF dosyasına aktarıldı: {pdfPath}");
+            }
         }
 
         //StackOverflow'dan aldım

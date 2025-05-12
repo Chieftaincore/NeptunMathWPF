@@ -4,9 +4,9 @@ namespace NeptunMathWPF.SoruVeAjani.Turev.Models
 {
     public class TurevQuestionType
     {
-        BasicDerivative,    // Temel türev hesaplama
-        PointDerivative,    // Belirli noktada türev değeri
-        FindCoefficient,   // Katsayı belirleme
-        ProductRule        // Çarpım kuralı ile türev
+        //BasicDerivative,    // Temel türev hesaplama
+        //PointDerivative,    // Belirli noktada türev değeri
+        //FindCoefficient,   // Katsayı belirleme
+        //ProductRule        // Çarpım kuralı ile türev
     }
 }

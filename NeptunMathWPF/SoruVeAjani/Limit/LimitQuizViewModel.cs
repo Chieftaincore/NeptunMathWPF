@@ -59,9 +59,9 @@ namespace NeptunMathWPF.SoruVeAjani.Limit
         public LimitQuizViewModel()
         {
             // Butonları ayarlayınca burada ayarlanacak
-            CheckCommand = new RelayCommand(CheckAnswer);
-            NextCommand = new RelayCommand(GenerateNewQuestion);
-            GenerateNewQuestion();
+           // CheckCommand = new RelayCommand(CheckAnswer);
+           // NextCommand = new RelayCommand(GenerateNewQuestion);
+          //  GenerateNewQuestion();
         }
 
         private void GenerateNewQuestion()
