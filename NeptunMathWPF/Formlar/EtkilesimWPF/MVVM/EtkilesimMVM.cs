@@ -371,9 +371,12 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                         // Seçenekleri ekle
                         if (soru.NesneSecenekler != null)
                         {
-                            foreach (var secenek in soru.NesneSecenekler.secenekler)
+                            var secenekler = soru.NesneSecenekler.secenekler;
+                            for (int i = 0; i < secenekler.Count; i++)
                             {
-                                document.Add(new Paragraph($"- {secenek}"));
+                                // 'a', 'b', 'c', ... için
+                                char secenekHarf = (char)('a' + i);
+                                document.Add(new Paragraph($"{secenekHarf}) {secenekler[i]}"));
                             }
                         }
 
