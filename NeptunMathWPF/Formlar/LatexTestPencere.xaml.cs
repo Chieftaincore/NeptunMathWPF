@@ -19,9 +19,18 @@ namespace NeptunMathWPF
     /// </summary>
     public partial class LatexTestPencere : Window
     {
+        Window onceki;
+
         public LatexTestPencere()
         {
             InitializeComponent();
+        } 
+        
+        public LatexTestPencere(Window _onceki)
+        {
+            InitializeComponent();
+
+            onceki = _onceki;
         }
 
         private void tusCevir_Click(object sender, RoutedEventArgs e)
@@ -37,5 +46,7 @@ namespace NeptunMathWPF
                 MessageBox.Show("Hata", "Latex Hatası");
             }
         }
+
+       
     }
 }

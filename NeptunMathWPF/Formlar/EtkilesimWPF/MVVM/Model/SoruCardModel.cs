@@ -1,5 +1,4 @@
-﻿using AngouriMath.Extensions;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
@@ -9,11 +8,12 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     //Model WPF sayfası için bir öğedir
     using SoruTuru = SoruTerimleri.soruTuru;
 
-    class SoruCardModel : ObservableObject, IStyleAnahtar
+    internal class SoruCardModel : ObservableObject, IStyleAnahtar
     {
         //önemli Nesneler
         public Soru soru { get; set; }
         public SoruTuru Tur { get => soru.SoruTuru; }
+        public Enum SoruAltTuru { get; set; }
         public string soruStyle { get; set; }
         public SeceneklerModel NesneSecenekler { get; set; }
 
@@ -22,6 +22,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public string kaynak { get; set; }
         public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
+        public bool kilitlendi { get => NesneSecenekler.kilitli; }
 
         //Renk ile ilgili
         private Color _tabRenk;
@@ -80,6 +81,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public string SoruTuruStyleTemplate()
         {
+            if (kilitlendi)
+                return "SoruModuKilitli";
 
             switch (Tur)
             {

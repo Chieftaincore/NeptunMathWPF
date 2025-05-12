@@ -36,6 +36,8 @@ namespace NeptunMathWPF
     //bu fonksiyonlara yerel loglama, try catch, hata dialogbox vs örnek gösterilebilir
     static class Genel
     {
+
+        static readonly Random random = new Random();
         static internal NEPTUN_DBEntities dbEntities = new NEPTUN_DBEntities();
 
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
@@ -116,6 +118,20 @@ namespace NeptunMathWPF
         public static void UygulamaKapat()
         {
             System.Environment.Exit(110);
+        }
+
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

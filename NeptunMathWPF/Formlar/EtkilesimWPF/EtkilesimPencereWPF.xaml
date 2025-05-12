@@ -8,13 +8,12 @@
         xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
         xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath"
         mc:Ignorable="d"
-        Background="LightSlateGray"
+        Background="LightSteelBlue"
         Closed="PenecereyiKapat"
         Title="Etkilesim Penceresi" Height="900" Width="1600">
 
 
     <Window.DataContext>
-
         <mvvm:EtkilesimMVM/>
     </Window.DataContext>
 
@@ -23,6 +22,7 @@
         <model:EtkilesimTemplateModel x:Key="EtkilesimTemplateModel"
                                   SoruModuLaTeX="{StaticResource SeceneklerLaTeXTemplate}"
                                   SoruModuMetin="{StaticResource SeceneklerNormalTemplate}"
+                                  SoruModuKilitli="{StaticResource SeceneklerKilitliTemplate}"
                                   Proompter="{StaticResource Proompter}"/>
 
         <model:SoruCardSelector x:Key="SoruStyleTemplateModel"
@@ -31,7 +31,7 @@
 
     </Window.Resources>
 
-    <Grid x:Name="SayfaGrid" Background="White" Margin="5">
+    <Grid x:Name="SayfaGrid" Background="White" Margin="5,0,5,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="568*"/>
             <RowDefinition Height="241*"/>
@@ -40,8 +40,22 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="164"/>
             <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="331"/>
+            <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
+
+        <Rectangle Grid.Column="2" Grid.RowSpan="3">
+
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="White" Offset="0.4"/>
+                    <GradientStop Color="GhostWhite" Offset="0.5"/>
+                    <GradientStop Color="SteelBlue" Offset="1"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+            
+        </Rectangle>
+
+        <Label Background="GhostWhite" Grid.ColumnSpan="3" Grid.Row="2"/>
 
         <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
             <Ellipse.Fill>
@@ -53,9 +67,14 @@
         </Ellipse>
 
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
-        <Expander x:Name="MenuExpander" Header="DEBUG MENU" Grid.RowSpan="3" Background="{x:Null}">
-            <StackPanel Background="White">
-                <Expander Header="Coklu İfade">
+        <Expander x:Name="MenuExpander" Grid.RowSpan="3">
+
+            <Expander.Header>
+                DEBUG MENU 
+            </Expander.Header>
+
+            <StackPanel Background="LightSteelBlue" VerticalAlignment="Top">
+                <Expander Header="Coklu İfade" Background="White" Padding="0,5,0,10">
                     <StackPanel Background="White">
 
                         <ListBox x:Name="CokluIfadeListBox" Height="100" 
@@ -64,30 +83,32 @@
                                 <KeyBinding
                                     Key="Delete"
                                     Command="{Binding DebugCokluIfadeSil}"
-                                    CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                    />
+                                    CommandParameter="{Binding Path=SelectedIndex, RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}" />
                             </ListBox.InputBindings>
                         </ListBox>
 
                         <ComboBox x:Name="CokluIfadeComboBox" Width="120" 
                                   ItemsSource="{Binding DebugComboBoxTurler}" SelectedValue="{Binding cmBxSecilen, Mode=OneWayToSource}"/>
 
-                        <Button Content="Ekle" Margin="6,0,6,0" Command="{Binding DebugCokluIfadeEkle}"/>
+                        <Button Content="Ekle" Margin="4,2,4,5" Command="{Binding DebugCokluIfadeEkle}" Background="AliceBlue" />
 
                     </StackPanel>
                 </Expander>
 
-                <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" 
+                <Button x:Name="tusTestEkle" Content="Yerel İşlem Sorusu Ekle" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugIslemEkleKomut}"/>
 
-                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle"
+                <Button x:Name="tusAPIproblemEkle" Content="Yapay Zeka Problem ekle" Background="AliceBlue"
                        Height="32" Margin="5,10,5,10" IsEnabled="{Binding APIvar}" Command="{Binding DebugAPIProblemEkle}"/>
 
-                <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle"
+                <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugFonksiyonSoruOlustur}"/>
 
-                <Button x:Name="tusPanelDegis" Content="Panel Değiş" 
+                <Button x:Name="tusPanelDegis" Content="Panel Değiş" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
+
+                <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" Background="AliceBlue"
+                        Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDFOlustur}"/>
                 
                 <Button x:Name="tusLimitSoruOlustur" Content="Limit Soru Oluştur" 
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugLimitSoruOlustur}"/>
@@ -95,12 +116,10 @@
                 <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" 
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugTurevSorusuOlustur}"/>
                 
-                <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF" 
-                    Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDF}"/>
             </StackPanel>
         </Expander>
 
-        <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0">
+        <ScrollViewer x:Name="DialogScrollViewer" Grid.Column="1" Grid.Row="0" PreviewMouseWheel="DialogScrollViewer_PreviewMouseWheel">
 
             <ScrollViewer.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -118,9 +137,17 @@
                         Grid.Row="1" Grid.Column="1"
                         ContentTemplateSelector="{StaticResource EtkilesimTemplateModel}"
                         Content="{Binding seciliTur}"/>
-        <Button Grid.Column="2" Content="Hesap Makinesi" HorizontalAlignment="Center" Margin="0,16,0,0" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="HesapMakinesi_Click"/>
-        <Button Grid.Column="2" Content="Yerel Hesap Makinesi" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="46" Width="124" Click="YerelHesapMakinesi_Click"/>
-        <Button Grid.Column="2" Content="Hesaplama Not Tutma" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="NotAlma_Click" Margin="0,170,0,0"/>
+
+        <Button Grid.Column="2" Grid.Row="1" Content="Hesap Makinesi" Background="AliceBlue" FontWeight="SemiBold"
+				HorizontalAlignment="Stretch" Margin="40,16" VerticalAlignment="Top" Height="46" Command="{Binding HesapMakinesiGosterGizle}"/>
+
+        <Button Grid.Column="2" Content="Yerel Hesap Makinesi" Background="AliceBlue" FontWeight="SemiBold"
+                HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Center" Height="46" Click="YerelHesapMakinesi_Click"/>
+
+        <Button Grid.Column="2" Content="Belge Olarak Çıkar" Background="AliceBlue" FontWeight="SemiBold"
+                HorizontalAlignment="Stretch" Margin="40,16" Grid.Row="1" VerticalAlignment="Bottom" Height="46" Command="{Binding PDFciktiAl}"/>
+
+        <Button Grid.Column="2" Visibility="Collapsed" Content="Hesaplama Not Tutma" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Top" Height="46" Width="124" Click="NotAlma_Click" Margin="0,170,0,0"/>
 
     </Grid>
 </Window>

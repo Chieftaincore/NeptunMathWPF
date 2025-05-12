@@ -1,7 +1,7 @@
 ﻿<Window x:Class="HesapMakinesi.HesapMakinesiWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Hesap Makinesi" Height="500" Width="400" WindowState="Normal" ResizeMode="CanMinimize"
+        Title="Hesap Makinesi" Height="500" Width="400" ResizeMode="CanMinimize"
         FontWeight="Bold" FontSize="18">
         
     <!--Geçici Maximize Kapattım -Hüseyin -->

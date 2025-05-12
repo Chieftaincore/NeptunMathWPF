@@ -31,13 +31,15 @@
 
                                 <MenuItem Header="Eylemler">
 
-                                    <MenuItem Header="Soruyu Yer İşaretlerinde Kaydet" Command=""/>
+                                    <MenuItem Header="Soruyu Yer İşaretlerinde Kaydet" Command="{Binding DataContext.SoruYerIsaretiKaydet, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
-                                    <MenuItem Header="Soruda Hata Bildir" Command=""/>
+                                    <MenuItem Header="Soruda Hata Bildir" Command="{Binding DataContext.SoruHataBildir, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                     <MenuItem Header="Soruyu Açıkla" Command=""/>
 
                                     <MenuItem Header="Soruyu Değerlendir" Command=""/>
+
+                                    <MenuItem Header="Soru Meta Verisi" Command="{Binding DataContext.tusSoruMetaVeri, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                 </MenuItem>
                             </Menu>
@@ -94,13 +96,15 @@
 
                                 <MenuItem Header="Eylemler">
 
-                                    <MenuItem Header="Soruyu Yer İşaretlerinde Kaydet" Command=""/>
+                                    <MenuItem Header="Soruyu Yer İşaretlerinde Kaydet" Command="{Binding DataContext.SoruYerIsaretiKaydet, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
-                                    <MenuItem Header="Soruda Hata Bildir" Command=""/>
+                                    <MenuItem Header="Soruda Hata Bildir" Command="{Binding DataContext.SoruHataBildir, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                     <MenuItem Header="Soruyu Açıkla" Command=""/>
-                                    
+
                                     <MenuItem Header="Soruyu Değerlendir" Command=""/>
+
+                                    <MenuItem Header="Soru Meta Verisi" Command="{Binding DataContext.tusSoruMetaVeri, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                 </MenuItem>
                             </Menu>
@@ -113,7 +117,7 @@
                                                  FontStyle="Italic"
                                                  FontSize="19"
                                                  TextWrapping="Wrap"
-                                                 MaxWidth="720"
+                                                 MaxWidth="780"
                                                  Grid.Row="1"
                                                  Grid.Column="0"
                                                  Margin="40,10,5,5"

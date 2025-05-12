@@ -11,6 +11,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
     class SeceneklerModel : ObservableObject
     {
+
+        public readonly string dogrusesDosyaYolu = @"Kaynaklar\Sesler\SesDogru5.wav";
+        public readonly string yanlissesDosyaYolu = @"Kaynaklar\Sesler\SesYanlis6.wav";
+
         public ObservableCollection<string> secenekler { get; set; }
 
         string _secilideger;
@@ -27,6 +31,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         string dogrusecenek { get; set; }
 
+        internal bool kilitli;
         
         public SeceneklerModel(ObservableCollection<string> _secenekler, string _dogrusecenek)
         {
@@ -36,15 +41,16 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public bool Cevapla()
         {
-            MessageBox.Show($"seçilen {secilideger} | dogru cevap{dogrusecenek}");
+            kilitli = true;
 
             if (secilideger == dogrusecenek)
             {
-            
+                SesIslemleri.sesOynat(dogrusesDosyaYolu);
                 return true;
             }
             else
             {
+                SesIslemleri.sesOynat(yanlissesDosyaYolu);
                 return false;
             }
         }    

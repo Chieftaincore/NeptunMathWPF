@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
         mc:Ignorable="d"
         Background="LightSteelBlue"
-        Title="DevPanelWPF" Height="500" Width="840" MinHeight="500" MinWidth="840" >
+        Title="Geliştirici Panel" Height="500" Width="840" MinHeight="500" MinWidth="840">
+    
     <Grid Margin="5" Background="White">
 
         <Grid.RowDefinitions>
@@ -18,8 +19,6 @@
             <ColumnDefinition Width="80"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-
 
         <!--Group Boxın Fonksiyonel işlevi yok gibi görünüyor yoruma aldım-->
         <!--<GroupBox Header="İşlemler" Margin="10,0,10,86" Grid.ColumnSpan="2"/>-->

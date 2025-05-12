@@ -27,6 +27,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Kaynaklar\Resimler\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AngouriMath, Version=0.1.3.0, Culture=neutral, PublicKeyToken=bccdab90849ccf86, processorArchitecture=MSIL">
@@ -58,6 +62,12 @@
     </Reference>
     <Reference Include="HonkSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=384cc7619dfb9a7d, processorArchitecture=MSIL">
       <HintPath>..\packages\HonkSharp.1.0.1\lib\net472\HonkSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="IndexRange, Version=1.0.0.0, Culture=neutral, PublicKeyToken=35e6a3c4212514c6, processorArchitecture=MSIL">
       <HintPath>..\packages\IndexRange.1.0.0\lib\net471\IndexRange.dll</HintPath>
@@ -149,6 +159,7 @@
     <Compile Include="Formlar\DevPanelWPF.xaml.cs">
       <DependentUpon>DevPanelWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\HesapMakinesiModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ISoruCardStyleKey.cs" />
     <Compile Include="Formlar\HesapMakinesiWindow.xaml.cs">
       <DependentUpon>HesapMakinesiWindow.xaml</DependentUpon>
@@ -159,11 +170,20 @@
     <Compile Include="Formlar\LimitPanel.xaml.cs">
       <DependentUpon>LimitPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\LoginForm.xaml.cs">
+      <DependentUpon>LoginForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\NotAlmaWindow.xaml.cs">
       <DependentUpon>NotAlmaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\PDFbelgelendiriciWPF.xaml.cs">
+      <DependentUpon>PDFbelgelendiriciWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
+      <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
@@ -190,6 +210,10 @@
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
+    <Compile Include="SesIslemleri.cs" />
+    <Compile Include="Models\Algorithma\AlgorithmaModel.cs" />
+    <Compile Include="Models\Algorithma\ZorlukModel.cs" />
+    <Compile Include="Models\Algorithma\ZorlukRepository.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\DomainRangeGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionCompositionGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\FunctionQuestionGenerator.cs" />
@@ -201,6 +225,15 @@
     <Compile Include="SoruVeAjani\Fonksiyonlar\Question.cs" />
     <Compile Include="Formlar\dbTestWPF.xaml.cs">
       <DependentUpon>dbTestWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\AnasayfaWPF.xaml.cs">
+      <DependentUpon>AnasayfaWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\AyarlarFormu.xaml.cs">
+      <DependentUpon>AyarlarFormu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\KayitFormu.xaml.cs">
+      <DependentUpon>KayitFormu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\EtkilesimPencereWPF.xaml.cs">
       <DependentUpon>EtkilesimPencereWPF.xaml</DependentUpon>
@@ -214,9 +247,6 @@
     <Compile Include="Formlar\FunctionsWPF.xaml.cs">
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
-      <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Genel.cs" />
     <Compile Include="Formlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
@@ -228,6 +258,7 @@
     <Compile Include="SoruVeAjani\Limit\LimitOkuBeni.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitRelayCommand.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitQuestionType.cs" />
+    <Compile Include="SoruVeAjani\PDFLatexYineleyici.cs" />
     <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">
@@ -284,6 +315,7 @@
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="pdflatexBatch.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -321,6 +353,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\AnasayfaWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\AyarlarFormu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\KayitFormu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\LatexTestPencere.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -329,7 +373,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\LoginForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Formlar\NotAlmaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\PDFbelgelendiriciWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -355,6 +407,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Kaynaklar\Resimler\logo.ico" />
+    <Content Include="Kaynaklar\Sesler\SesDogru5.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Kaynaklar\Sesler\SesYanlis4.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis5.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis6.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="NeptunDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
@@ -371,6 +432,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
+    <Content Include="Kaynaklar\Sesler\SesDogru1.wav" />
+    <Content Include="Kaynaklar\Sesler\SesDogru2.wav" />
+    <Content Include="Kaynaklar\Sesler\SesDogru3.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis1.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis2.wav" />
+    <Content Include="Kaynaklar\Sesler\SesYanlis3.wav" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

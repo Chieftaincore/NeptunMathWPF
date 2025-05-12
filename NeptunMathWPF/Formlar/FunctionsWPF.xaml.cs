@@ -23,15 +23,23 @@ namespace NeptunMathWPF.Formlar
         public FunctionsWPF()
         {
             InitializeComponent();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            lblWrongs.Content = "";
             GeneratedFunction function = new GeneratedFunction();
+
             foreach (var item in function.repository)
             {
                 lblQuestion.Content = item.questionObject.QuestionText;
                 lblAnswer.Content = item.questionObject.Answer;
+                var a = item.questionObject.WrongAnswers;
+                foreach (var answer in a)
+                {
+                    lblWrongs.Content += answer + "\n";
+                }
             }
         }
     }
