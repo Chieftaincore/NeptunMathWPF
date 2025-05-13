@@ -90,14 +90,10 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return new Soru(lim, options.ToArray())
             {
-                
+                AltTur = currentQuestionType
             };
         }
 
-
-
-
-        
         /// <summary>
         /// Farklı Türlerde Fonksiyon Getirir
         /// </summary>

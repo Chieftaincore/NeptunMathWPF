@@ -255,7 +255,6 @@
     <Compile Include="SoruVeAjani\Limit\LimitQuestion.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitQuestionGenerator.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitQuizViewModel.cs" />
-    <Compile Include="SoruVeAjani\Limit\LimitOkuBeni.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitRelayCommand.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitQuestionType.cs" />
     <Compile Include="SoruVeAjani\PDFLatexYineleyici.cs" />

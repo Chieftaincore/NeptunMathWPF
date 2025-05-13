@@ -110,10 +110,10 @@
                 <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDFOlustur}"/>
                 
-                <Button x:Name="tusLimitSoruOlustur" Content="Limit Soru Oluştur" 
+                <Button x:Name="tusLimitSoruOlustur" Content="Limit Soru Oluştur" Background="AliceBlue"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugLimitSoruOlustur}"/>
                 
-                <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" 
+                <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" Background="AliceBlue"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugTurevSorusuOlustur}"/>
                 
             </StackPanel>

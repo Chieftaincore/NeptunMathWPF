@@ -446,8 +446,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         #endregion
 
-        
-
         /// <summary>
         /// Sorunun içindeki radiobuttonlar buna bağlıdır içindeki değerleri object' kısmına gönderirler ve
         /// Soru modelinin içindeki dosyalar değişir
@@ -500,6 +498,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
+            DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
         }
 
         internal void tusDBSoruIsaretle(object o)
