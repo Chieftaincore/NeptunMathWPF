@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using NeptunMathWPF.Formlar;
+using NeptunMathWPF.Formlar.EtkilesimWPF;
+using System.Windows;
 
 namespace AnasayfaWPF
 {
@@ -18,14 +20,13 @@ namespace AnasayfaWPF
 
         private void KullaniciAdiSifirla_Click(object sender, RoutedEventArgs e)
         {
-            // Kullanıcı adı sıfırlama işlemleri burada yapılacak
-            MessageBox.Show("Kullanıcı adı sıfırlama işlemi başlatıldı.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+            new kullaniciadiDegisPanelWPF().ShowDialog();
         }
 
         private void SifreSifirla_Click(object sender, RoutedEventArgs e)
         {
             // Şifre sıfırlama işlemleri burada yapılacak
-            MessageBox.Show("Şifre sıfırlama işlemi başlatıldı.", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
+            new sifreDegisPanelWPF().ShowDialog();
         }
 
         private void SoruProfiliSifirla_Click(object sender, RoutedEventArgs e)

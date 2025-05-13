@@ -1,0 +1,24 @@
+﻿<Window x:Class="NeptunMathWPF.Formlar.EtkilesimWPF.sifreDegisPanelWPF"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF"
+        mc:Ignorable="d"
+        Title="Şifre Değiştirme Paneli" Height="250" Width="400">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Eski Şifre:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <PasswordBox x:Name="eskiSifreTextBox" Width="200" MinHeight="25"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBlock Text="Yeni Şifre:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <PasswordBox x:Name="yeniSifreTextBox" Width="200" MinHeight="25"/>
+            </StackPanel>
+
+            <Button x:Name="sifreDegisButton" Content="Şifreyi Değiştir" Width="200" MinHeight="35" Click="sifreDegisButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

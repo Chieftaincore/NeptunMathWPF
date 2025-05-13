@@ -149,8 +149,17 @@
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\HesapMakinesiModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ISoruCardStyleKey.cs" />
+    <Compile Include="Formlar\kullaniciadiDegisPanelWPF.xaml.cs">
+      <DependentUpon>kullaniciadiDegisPanelWPF.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\sifreDegisPanelWPF.xaml.cs">
+      <DependentUpon>sifreDegisPanelWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\HesapMakinesiWindow.xaml.cs">
       <DependentUpon>HesapMakinesiWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\IstatistikWPF.xaml.cs">
+      <DependentUpon>IstatistikWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\konuEkleUC.xaml.cs">
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
@@ -318,11 +327,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\kullaniciadiDegisPanelWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\sifreDegisPanelWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\FunctionsWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\HesapMakinesiWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\IstatistikWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

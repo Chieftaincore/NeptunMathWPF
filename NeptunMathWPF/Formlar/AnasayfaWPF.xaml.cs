@@ -15,7 +15,7 @@ namespace AnasayfaWPF
 
         private void tusIstatistik(object sender, RoutedEventArgs e)
         {
-            new SoruNesneTestWPF().Show();
+            new IstatistikWPF().Show();
         }
 
         private void tusDebugPenceresi(object sender, RoutedEventArgs e)
