@@ -1,218 +1,17 @@
-﻿using HesapMakinesi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace NeptunMathWPF.Formlar
+namespace NeptunMathWPF.SoruVeAjani.Limit
 {
-    /// <summary>
-    /// Interaction logic for LimitPanel.xaml
-    /// </summary>
-    public partial class LimitPanel : Window
-    {
-        private fLimitQuestion currentQuestion;
-        private int correctAnswers = 0;
-        private int totalQuestions = 0;
-        private Random random = new Random();
-        private QuestionType currentQuestionType;
-        public LimitPanel()
-        {
-            InitializeComponent();
-            GenerateNewQuestion();
-        }
-        private void GenerateNewQuestion()
-        {
-            // Rastgele soru tipini seç
-            Array questionTypes = Enum.GetValues(typeof(QuestionType));
-            currentQuestionType = (QuestionType)questionTypes.GetValue(random.Next(questionTypes.Length));
-
-            switch (currentQuestionType)
-            {
-                case QuestionType.CommonFactor:
-                    currentQuestion = fLimitQuestionGenerator.GenerateCommonFactorQuestion();
-                    break;
-                case QuestionType.FindCoefficients:
-                    currentQuestion = fLimitQuestionGenerator.GenerateFindCoefficientsQuestion();
-                    break;
-                case QuestionType.CoefficientExpression:
-                    currentQuestion = fLimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
-                    break;
-            }
-
-            DisplayQuestion();
-            GenerateOptions();
-        }
-
-        private void DisplayQuestion()
-        {
-            // LaTeX formatında soruyu göster
-            formulaControl.Formula = currentQuestion.QuestionLaTeX;
-
-            // Soru tipini göster
-            questionTypeTextBlock.Text = GetQuestionTypeText(currentQuestionType);
-
-            // Skor güncelleme
-            scoreTextBlock.Text = $"Skor: {correctAnswers}/{totalQuestions}";
-        }
-
-        private string GetQuestionTypeText(QuestionType type)
-        {
-            switch (type)
-            {
-                case QuestionType.CommonFactor:
-                    return "Soru Tipi: Limit Değerini Bulma";
-                case QuestionType.FindCoefficients:
-                    return "Soru Tipi: Katsayıları Bulma";
-                case QuestionType.CoefficientExpression:
-                    return "Soru Tipi: Katsayı İfadesini Bulma";
-                default:
-                    return "";
-            }
-        }
-
-        private void GenerateOptions()
-        {
-            optionsPanel.Children.Clear();
-
-            // Doğru cevap ve şaşırtmacalar
-            List<double> options = new List<double>();
-            options.Add(currentQuestion.Answer);
-
-            // 3 tane farklı yanlış şık oluştur
-            while (options.Count < 4)
-            {
-                double wrongOption;
-
-                if (currentQuestionType == QuestionType.CommonFactor)
-                {
-                    // Tam sayı şıklar oluştur (doğru cevaptan belirli uzaklıkta)
-                    wrongOption = currentQuestion.Answer + random.Next(-10, 11);
-                }
-                else
-                {
-                    // Katsayı sorularında daha küçük aralıkta şaşırtma cevaplar
-                    wrongOption = currentQuestion.Answer + random.Next(-5, 6);
-                }
-
-                // Aynı şık olmamasını sağla
-                if (!options.Contains(wrongOption) && Math.Abs(wrongOption - currentQuestion.Answer) > 0.001)
-                {
-                    options.Add(wrongOption);
-                }
-            }
-
-            // Şıkları karıştır
-            options = options.OrderBy(x => random.Next()).ToList();
-
-            // Şıkları ekrana ekle
-            char optionLetter = 'A';
-            foreach (double option in options)
-            {
-                RadioButton radioButton = new RadioButton
-                {
-                    Content = $"{optionLetter}. {option}",
-                    Margin = new Thickness(5),
-                    FontSize = 14,
-                    Tag = option
-                };
-                optionsPanel.Children.Add(radioButton);
-                optionLetter++;
-            }
-        }
-
-        private void CheckButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool answerSelected = false;
-            bool isCorrect = false;
-
-            foreach (RadioButton rb in optionsPanel.Children.OfType<RadioButton>())
-            {
-                if (rb.IsChecked == true)
-                {
-                    answerSelected = true;
-                    double selectedAnswer = (double)rb.Tag;
-
-                    // Hassasiyet toleransını azaltarak tam sayı karşılaştırmaları daha doğru yapalım
-                    if (Math.Abs(selectedAnswer - currentQuestion.Answer) < 0.0001)
-                    {
-                        isCorrect = true;
-                        correctAnswers++;
-                    }
-
-                    totalQuestions++;
-                    break;
-                }
-            }
-
-            if (!answerSelected)
-            {
-                MessageBox.Show("Lütfen bir cevap seçiniz!", "Uyarı");
-                return;
-            }
-
-            // Sonucu göster
-            resultTextBlock.Text = isCorrect ? "Doğru Cevap!" : $"Yanlış! Doğru cevap: {currentQuestion.Answer}";
-            resultTextBlock.Foreground = isCorrect ? Brushes.Green : Brushes.Red;
-
-            // Açıklama göster
-            if (currentQuestion.ExplanationText != null)
-            {
-                resultTextBlock.Text += $"\n{currentQuestion.ExplanationText}";
-            }
-
-            // İstatistikleri güncelle
-            scoreTextBlock.Text = $"Skor: {correctAnswers}/{totalQuestions}";
-        }
-
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-            resultTextBlock.Text = "";
-            GenerateNewQuestion();
-        }
-
-        private void HesapMakinesiButon_Click(object sender, RoutedEventArgs e)
-        {
-            HesapMakinesiWindow hesapMakinesi = new HesapMakinesiWindow();
-            hesapMakinesi.Show();
-        }
-
-        private void NotAlmaButon_Click(object sender, RoutedEventArgs e)
-        {
-            NotAlmaWindow notAlma = new NotAlmaWindow();
-            notAlma.Show();
-        }
-    }
-    public enum QuestionType
-    {
-        CommonFactor,          // Standart limit değeri bulma sorusu
-        FindCoefficients,      // Katsayıları bulma sorusu
-        CoefficientExpression  // Katsayı ifadelerini bulma sorusu
-    }
-
-    public class fLimitQuestion
-    {
-        public string QuestionLaTeX { get; set; }
-        public double Answer { get; set; }
-        public string QuestionText { get; set; }
-        public string ExplanationText { get; set; }
-    }
-
-     static class fLimitQuestionGenerator
+    public class LimitQuestionGenerator
     {
         private static Random random = new Random();
 
-        // Ortak çarpanlı limit soruları (x-a paydada)
-        public static fLimitQuestion GenerateCommonFactorQuestion()
+        // Ufak bir not explanation textler silinebilir burada işe yaramayacaktır heralde
+        public static LimitQuestion GenerateCommonFactorQuestion()
         {
             // Limit noktasını belirle (-10 ile 10 arasında, 0 hariç)
             int a = random.Next(-10, 10);
@@ -242,7 +41,7 @@ namespace NeptunMathWPF.Formlar
             string explanation = $"Bu ifade aslında (x-{a})(x+{b})/(x-{a}) şeklindedir. " +
                                 $"Ortak çarpanları sadeleştirince x→{a} için limit (x+{b}) = {a}+{b} = {answer} olur.";
 
-            return new fLimitQuestion
+            return new LimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,
@@ -251,8 +50,7 @@ namespace NeptunMathWPF.Formlar
             };
         }
 
-        // Katsayıları bulma soruları 
-        public static fLimitQuestion GenerateFindCoefficientsQuestion()
+        public static LimitQuestion GenerateFindCoefficientsQuestion()
         {
             // Limit noktasını belirle (-5 ile 5 arasında, 0 hariç)
             int a = random.Next(-5, 5);
@@ -310,7 +108,7 @@ namespace NeptunMathWPF.Formlar
                             $"Buradan e = -{a}·{b} = {realConstant} bulunur.";
             }
 
-            return new fLimitQuestion
+            return new LimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,
@@ -319,8 +117,7 @@ namespace NeptunMathWPF.Formlar
             };
         }
 
-        // Katsayı ifadelerini bulma soruları
-        public static fLimitQuestion GenerateCoefficientExpressionQuestion()
+        public static LimitQuestion GenerateCoefficientExpressionQuestion()
         {
             // Limit noktasını belirle (-5 ile 5 arasında, 0 hariç)
             int a = random.Next(-5, 5);
@@ -394,7 +191,7 @@ namespace NeptunMathWPF.Formlar
                         $"e = -{a}·{b} = {e}\n\n" +
                         explanation;
 
-            return new fLimitQuestion
+            return new LimitQuestion
             {
                 QuestionText = questionText,
                 QuestionLaTeX = latexString,

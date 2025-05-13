@@ -1,7 +1,4 @@
-﻿
-using HesapMakinesi;
-using Microsoft.Win32;
-using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
+﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani;
 using System;
 using System.Collections.Generic;
@@ -11,6 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -37,6 +36,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SecimDegistir { get; set; }
         public ICommand HesapMakinesiGosterGizle { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
+        public ICommand DebugLimitSoruOlustur { get; set; }
+        public ICommand DebugTurevSoruOlustur { get; set; }
+        public ICommand DebugLatexsizPDF { get; set; } //Latex olmadan PDF oluşturma komutu
+
+        public ICommand DebugLatexsizPDFOlustur { get; set; }
 
         #endregion
 
@@ -65,7 +69,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
-        public ICommand CiktiAL { get; set; }
+        public ICommand PDFciktiAl { get; set; }
 
         #region SoruiciEylemler 
 
@@ -416,9 +420,31 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
-        #endregion
+        private void DebugLimitSoruEkle()
+        {
 
-        
+            Genel.Handle(() =>
+            {
+                seciliTur = "SoruModuNormal";
+
+                Soru soru = SoruAjani.RastgeleLimitSorusuOlustur();
+
+                seciliSoru = new SoruCardModel(soru)
+                {
+                    LaTeX = soru.LatexMetin,
+                    zaman = DateTime.Now,
+                    kaynak = "Yerel"
+                };
+
+                Sorular.Add(seciliSoru);
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
+
+            });
+        }
+
+        #endregion
 
         /// <summary>
         /// Sorunun içindeki radiobuttonlar buna bağlıdır içindeki değerleri object' kısmına gönderirler ve
@@ -458,7 +484,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             //MVVM önemli komutlar
             SoruSec = new RelayCommand(o => SoruCardSec(o));
-            CiktiAL = new RelayCommand(o => PDFlatexCiktiAl());
+            PDFciktiAl = new RelayCommand(o => PDFciktiPencere());
             SoruCevapla = new RelayCommand(o => SeciliSoruCevapla(o));
 
             //Radiobuttonlar bu Komut'a bağlı
@@ -471,6 +497,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeSil = new RelayCommand(o => DebugCokluIfadeCollSil(o));
             DebugFonksiyonSoruOlustur = new RelayCommand(o => FonksiyonSoruEkle());
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
+            DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
+            DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
         }
 
         internal void tusDBSoruIsaretle(object o)
@@ -505,9 +533,59 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
-        public void PDFlatexCiktiAl()
+        public void PDFlatexsizCiktiAl()
         {
-            new PDFbelgelendiriciWPF(Sorular).ShowDialog();
+            // SaveFileDialog ile dosya adı ve konum seçimi
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
+            {
+                Filter = "PDF Files (*.pdf)|*.pdf",
+                Title = "PDF Dosyasını Kaydet",
+                FileName = "Sorular.pdf"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string pdfPath = saveFileDialog.FileName;
+
+                // PDF belgesi oluştur
+                Document document = new Document();
+                PdfWriter.GetInstance(document, new FileStream(pdfPath, FileMode.Create));
+                document.Open();
+
+                // Sorular koleksiyonunu alın
+                var sorular = Sorular;
+
+                if (sorular != null)
+                {
+                    foreach (var soru in sorular)
+                    {
+                        // Soruyu ekle
+                        // Özellikle itexSharp.text yazması lazım
+                        document.Add(new iTextSharp.text.Paragraph($"Soru: {soru.soru.GetMetin()}"));
+
+                        // Seçenekleri ekle
+                        if (soru.NesneSecenekler != null)
+                        {
+                            var secenekler = soru.NesneSecenekler.secenekler;
+                            for (int i = 0; i < secenekler.Count; i++)
+                            {
+                                // 'a', 'b', 'c', ... için
+                                char secenekHarf = (char)('a' + i);
+                                document.Add(new iTextSharp.text.Paragraph($"{secenekHarf}) {secenekler[i]}"));
+                            }
+                        }
+
+                        // Boşluk ekle
+                        document.Add(new iTextSharp.text.Paragraph("\n"));
+
+                    }
+                }
+
+                document.Close();
+
+                // Kullanıcıya bilgi ver
+                MessageBox.Show($"Sorular PDF dosyasına aktarıldı: {pdfPath}");
+            }
 
         }
 
@@ -541,6 +619,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             };
 
             return ifadeTurleri;
+        }
+
+        public void PDFciktiPencere()
+        {
+            (new PDFbelgelendiriciWPF(Sorular)).ShowDialog();
         }
 
         #endregion

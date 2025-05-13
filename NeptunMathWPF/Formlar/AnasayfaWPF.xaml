@@ -10,7 +10,7 @@
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="182"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
@@ -19,32 +19,37 @@
 
                 <StackPanel.Background>
                     <LinearGradientBrush>
-                        <GradientStop Color="#FF163AA7"/>
-                        <GradientStop Color="#FF213447" Offset="1"/>
+                        <GradientStop Color="SteelBlue"/>
+                        <GradientStop Color="DarkBlue" Offset="1"/>
+
+                        <!--<GradientStop Color="#FF163AA7"/>-->
+                        <!--<GradientStop Color="#FF213447" Offset="1"/>-->
                     </LinearGradientBrush>
                     
                 </StackPanel.Background>
 
-                <Label Content="NeptunMath" FontSize="16" FontWeight="Bold" FontStyle="Italic" Foreground="White" Margin="0,20,0,20" HorizontalAlignment="Center"/>
+                <Image Source="/Kaynaklar/Resimler/logo.ico" Stretch="Uniform" VerticalAlignment="Top" Width="120" Margin="10,25,0,10" HorizontalAlignment="Center"/>
 
-                <Button Content="İstatistik" Click="tusIstatistik" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
-                
-                <Button Content="Bildirimler" Click="tusIstatistik" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
-                
-                <Button Content="[DEBUG MENU]" Click="tusDebugPenceresi" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Label Content="NeptunMath" FontSize="16" FontWeight="Bold" FontStyle="Italic" Foreground="White" Margin="0,4,0,20" HorizontalAlignment="Center"/>
 
-                <Button Content="[GELİŞTİRİCİ]" Click="tusDevPanel" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="İstatistik" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="10" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFC5D8F1" FontStyle="Italic" Foreground="Black" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
-                
-                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="10" Padding="15" FontSize="12" FontWeight="SemiBold" Background="Firebrick" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="Bildirimler" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Debug Menu" Click="tusDebugPenceresi" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Geliştirici" Click="tusDevPanel" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="4,5,4,5" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFC5D8F1" FontStyle="Italic" Foreground="Black" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="4,5,4,5" Width="158" Padding="15" FontSize="14" FontWeight="SemiBold" Background="Firebrick" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
 
             </StackPanel>
         </ScrollViewer>
 
         <TabControl Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
 
-            <TabItem Header="Session" Padding="8">
+            <TabItem Header="Session" Background="AliceBlue" Padding="8">
 
                 <ScrollViewer>
                     <Grid Background="White">
@@ -58,11 +63,11 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <Label VerticalAlignment="Center" Content="Etkileşim/Session" FontSize="20" FontWeight="DemiBold" Background="GhostWhite" Grid.ColumnSpan="2" Height="37"/>
+                        <Label VerticalAlignment="Center" Content="Etkileşim/Session" FontSize="20" FontWeight="DemiBold" Background="WhiteSmoke" Grid.ColumnSpan="2" Height="37"/>
 
                         <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
 
-                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" BorderThickness="2"/>
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="AliceBlue" BorderThickness="2"/>
 
                         </StackPanel>
 
@@ -88,7 +93,7 @@
             </TabItem>
 
 
-            <TabItem Header="Hakkında" Padding="8">
+            <TabItem Header="Hakkında" Background="AliceBlue" Padding="8">
                 <StackPanel Background="White">
                     <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Width="498" Height="313"/>
                     <TextBlock Text="Uygulamaya Hoş Geldiniz!" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
@@ -96,7 +101,7 @@
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Kullanici" Padding="8">
+            <TabItem Header="Kullanici" Background="AliceBlue" Padding="8">
                 
                 
             </TabItem>

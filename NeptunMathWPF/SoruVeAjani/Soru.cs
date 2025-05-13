@@ -2,6 +2,7 @@
 using AngouriMath.Extensions;
 using NeptunMathWPF.Fonksiyonlar;
 using NeptunMathWPF.SoruVeAjani;
+using NeptunMathWPF.SoruVeAjani.Limit;
 using NeptunMathWPF.SoruVeAjani.Problemler;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace NeptunMathWPF
         public string LatexMetin { get; set; }
 
         string Sonuc;
-       
+
         string OlusturmaLogu;
 
         int Seviye;
@@ -32,16 +33,17 @@ namespace NeptunMathWPF
         List<string> secenekler = new List<string>();
 
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
-      
+
         //İşlem Sorusu
-        public Soru(string islem, string sonuc, Entity[] secenekler) {
-           
+        public Soru(string islem, string sonuc, Entity[] secenekler)
+        {
+
             SoruTuru = soruTuru.islem;
 
             //Loglama Debug Mesajı
             string mesaj = $"islem :: {islem} \n sonuc :: {sonuc} \n secenekler :: ";
 
-            for (int i=0;i < secenekler.Length; i++)
+            for (int i = 0; i < secenekler.Length; i++)
             {
                 mesaj += $"({secenekler[i]})";
             }
@@ -55,6 +57,16 @@ namespace NeptunMathWPF
 
             IslemMetin = islem;
             this.Sonuc = sonuc;
+        }
+
+        public Soru(LimitQuestion _limit, string[] _secenekler)
+        {
+            SoruTuru = soruTuru.limit;
+
+            LatexMetin = _limit.QuestionLaTeX;
+            IslemMetin = _limit.QuestionText;
+            Sonuc = _limit.Answer.ToString();
+            secenekler = _secenekler.ToList();
         }
 
         //Fonksiyon Sorusu

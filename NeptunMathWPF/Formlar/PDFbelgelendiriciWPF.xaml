@@ -25,26 +25,24 @@
         <Rectangle Grid.Column="2" Grid.RowSpan="3">
             <Rectangle.Fill>
                 <LinearGradientBrush>
-                    <GradientStop Color="SteelBlue" Offset="0"/>
-                    <GradientStop Color="DarkSlateBlue" Offset="1"/>
+                    <GradientStop Color="GhostWhite" Offset="0"/>
+                    <GradientStop Color="LightSteelBlue" Offset="1"/>
                 </LinearGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
 
         <Label Content="PDF Çıktı" Grid.Column="2" 
-               Foreground="White" FontSize="19" FontWeight="Bold" FontStyle="Italic"
+               FontSize="19" FontWeight="Bold" FontStyle="Italic"
                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        
         
         <ComboBox x:Name="cmbxPDFYineleyiciler" SelectionChanged="cmbxSeciliDegisme"
                   Padding="10" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="12" BorderThickness="2"/>
 
         <ContentControl x:Name="cmbxSeciliTur" Grid.Row="1" Grid.RowSpan="2" Margin="12"/>
 
-
         <TextBlock x:Name="txtBoxDetaylar" 
                    Grid.Column="2"  Grid.Row="1" Margin="10" 
-                   Foreground="White" FontSize="15" Text="Deneme"/>
+                   FontSize="15" Text="Deneme"/>
 
         <Button Content="Çıkart" Click="tusPDFCikart"
                 Grid.Row="2" Grid.Column="2" Margin="10"
