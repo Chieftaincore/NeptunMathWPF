@@ -113,7 +113,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
 
                 //Problemler için içine soruTuru.problem de ekleyin
-                Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon});
+                Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon, soruTuru.limit});
 
                 //MVVM'de Komutları bu sınıfa yazım alttaki KomutlarInit()'in gövdesinde belirtmeniz gerek
                 KomutlarInit();
@@ -318,6 +318,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SeciliSoruCevapla(object o)
         {
+            if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
+            {
+                MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                return;
+            }
+
             //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
             bool dogru = secenekler.Cevapla();
 

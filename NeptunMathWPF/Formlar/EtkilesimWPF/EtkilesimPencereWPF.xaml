@@ -57,14 +57,9 @@
 
         <Label Background="GhostWhite" Grid.ColumnSpan="3" Grid.Row="2"/>
 
-        <Ellipse Grid.Column="2" HorizontalAlignment="Center" Height="99" Margin="0,197,0,0" Stroke="Black" VerticalAlignment="Top" Width="98">
-            <Ellipse.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF161616"/>
-                    <GradientStop Color="#FFE05656" Offset="1"/>
-                </LinearGradientBrush>
-            </Ellipse.Fill>
-        </Ellipse>
+        <Image Source="/Kaynaklar/Resimler/logo.ico" Grid.Column="2" HorizontalAlignment="Center" Height="142" Margin="0,20" VerticalAlignment="Top"/>
+
+
 
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
         <Expander x:Name="MenuExpander" Grid.RowSpan="3">
@@ -75,7 +70,8 @@
 
             <StackPanel Background="LightSteelBlue" VerticalAlignment="Top">
 
-                <Button Content="Algorithma Etkin" Margin="5" Command="{Binding AlgorithmaCheck}" CommandParameter="{Binding }"/>
+                <Button Content="Algorithma Etkin" Margin="5" Command="{Binding AlgorithmaCheck}" CommandParameter="{Binding }"
+                        Padding="8" Background="AliceBlue"/>
 
                 <Expander Header="Coklu İfade" Background="White" Padding="0,5,0,10">
                     <StackPanel Background="White">

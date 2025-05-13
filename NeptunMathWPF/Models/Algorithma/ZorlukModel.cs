@@ -47,13 +47,13 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             return $"{soruTuru} {seviye}";
         }
 
-        public virtual void seviyeArttır()
+        public void seviyeArttır()
         {
             if (seviye < max)
                 seviye++;
         }
 
-        public virtual void seviyeAzalt()
+        public void seviyeAzalt()
         {
             if (seviye > min)
                 seviye--;
@@ -199,11 +199,11 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public override Soru SonrakiAlgorithma(int _seviye)
         {
-            if(seviye > 3)
+            if(Limit)
             {
                 Random rng = new Random();
 
-                if (rng.Next(0, 1) == 1)
+                if (rng.Next(0, 2) >= 1)
                     return SoruAjani.RastgeleLimitSorusuOlustur();
             }
 
