@@ -21,19 +21,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         public ZorlukRepository()
         {
 
-            Zorluklar = new List<ZorlukModel>()
-            {
-                new ZorlukModel()
-                {
-
-                },
-
-                new ZorlukModel()
-                {
-
-                }
-
-            };
         }
     }
 }

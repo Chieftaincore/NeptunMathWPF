@@ -16,6 +16,8 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
     class AlgorithmaModel
     {
         public ZorlukRepository repo { get; set; }
+
+
         public Func<Soru> SonrakiAlgorithma { get; set; }
 
         internal EtkilesimMVM MVVM;
@@ -24,6 +26,8 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         {
             MVVM = _MVVM;
         }
+
+
 
         
     }
