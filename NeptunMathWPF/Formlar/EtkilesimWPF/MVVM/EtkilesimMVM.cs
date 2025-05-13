@@ -535,7 +535,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public void PDFlatexsizCiktiAl()
         {
-            // SaveFileDialog ile dosya adı ve konum seçimi
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog
             {
                 Filter = "PDF Files (*.pdf)|*.pdf",
@@ -553,49 +552,58 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 var boldFont = new Font(baseFont, 12, Font.BOLD);
                 var normalFont = new Font(baseFont, 11, Font.NORMAL);
 
-                // PDF belgesi oluştur
                 Document document = new Document();
                 PdfWriter.GetInstance(document, new FileStream(pdfPath, FileMode.Create));
                 document.Open();
 
-                // Soru numarası için sayaç
                 int soruNo = 1;
-
-                // Sorular koleksiyonunu alın
                 var sorular = Sorular;
+                // Cevap anahtarı için liste
+                List<string> cevapAnahtari = new List<string>();
 
                 if (sorular != null)
                 {
                     foreach (var soru in sorular)
                     {
-                        // Soru numarası ve metni kalın yazı ile ekle
-                        document.Add(new iTextSharp.text.Paragraph($"Soru {soruNo}: {soru.soru.GetMetin()}", boldFont));
+                        document.Add(new Paragraph($"Soru {soruNo}: {soru.soru.GetMetin()}", boldFont));
 
-                        // Seçenekleri ekle
+                        // Seçenekleri ekle ve doğru cevabın harfini bul
+                        string dogruCevap = "";
                         if (soru.NesneSecenekler != null)
                         {
                             var secenekler = soru.NesneSecenekler.secenekler;
+                            string dogruSecenek = soru.NesneSecenekler.DogruSecenekGetir();
                             for (int i = 0; i < secenekler.Count; i++)
                             {
-                                // 'a', 'b', 'c', ... için
                                 char secenekHarf = (char)('A' + i);
-                                document.Add(new iTextSharp.text.Paragraph($"{secenekHarf}) {secenekler[i]}"));
+                                document.Add(new Paragraph($"{secenekHarf}) {secenekler[i]}", normalFont));
+                                if (secenekler[i] == dogruSecenek)
+                                {
+                                    dogruCevap = secenekHarf.ToString();
+                                }
                             }
                         }
+                        cevapAnahtari.Add($"Soru {soruNo}: {dogruCevap}");
 
-                        // Boşluk ekle
-                        document.Add(new iTextSharp.text.Paragraph("\n"));
-
+                        document.Add(new Paragraph("\n", normalFont));
                         soruNo++;
                     }
                 }
 
-                document.Close();
+                // Cevap anahtarı başlığı
+                document.Add(new Paragraph("Cevap Anahtarı", boldFont));
+                document.Add(new Paragraph(" ", normalFont));
+                foreach (var cevap in cevapAnahtari)
+                {
+                    document.Add(new Paragraph(cevap, normalFont));
+                }
 
-                // Kullanıcıya bilgi ver
+                document.Close();
                 MessageBox.Show($"Sorular PDF dosyasına aktarıldı: {pdfPath}");
             }
         }
+
+        
 
 
         private void DebugCokluIfadeCollSil(object obje)
