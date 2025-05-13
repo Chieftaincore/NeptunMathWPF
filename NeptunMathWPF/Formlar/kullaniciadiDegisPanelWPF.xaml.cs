@@ -47,7 +47,7 @@ namespace NeptunMathWPF.Formlar
             }
             else
             {
-                MessageBox.Show("Boş bıraktığınız alanlar var!", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Boş bıraktığınız alanlar var!", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning); 
             }
         }
     }
