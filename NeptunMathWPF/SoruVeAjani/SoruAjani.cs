@@ -2,6 +2,7 @@
 using NeptunMathWPF.Fonksiyonlar;
 using NeptunMathWPF.SoruVeAjani.Algorithma;
 using NeptunMathWPF.SoruVeAjani.Limit;
+using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -130,18 +131,31 @@ namespace NeptunMathWPF.SoruVeAjani
             };
         }
 
-        /// <summary>
-        /// belirli soru döndürür
-        /// </summary>
-        /// <param name="problemTipi"> Problem Tipi ENUM</param>
-        /// <returns></returns>
-        internal async static Task<Soru> ProblemSorusuOlustur(ProblemType problemTipi)
+        internal async static Task<Soru> ProblemSorusuOlustur(ProblemDifficulty zorluk)
         {
             //rastgele EnumType alması için
             int le = Enum.GetValues(typeof(ProblemType)).Length;
             int secilen = (new Random()).Next(0, le);
 
-            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, ProblemDifficulty.Zor);
+            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, zorluk);
+
+            return new Soru(ProblemSoru)
+            {
+                AltTur = (ProblemType)secilen
+            };
+        }
+        /// <summary>
+        /// belirli soru döndürür
+        /// </summary>
+        /// <param name="problemTipi"> Problem Tipi ENUM</param>
+        /// <returns></returns>
+        internal async static Task<Soru> ProblemSorusuOlustur(ProblemType problemTipi, ProblemDifficulty zorluk)
+        {
+            //rastgele EnumType alması için
+            int le = Enum.GetValues(typeof(ProblemType)).Length;
+            int secilen = (new Random()).Next(0, le);
+
+            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, zorluk);
 
             return new Soru(ProblemSoru);
         }
@@ -553,8 +567,6 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return charlar[rng.Next(0, charlar.Length)];
         }
-
-      
 
 
         #region eskiFonksiyonKodununOnemliKismi

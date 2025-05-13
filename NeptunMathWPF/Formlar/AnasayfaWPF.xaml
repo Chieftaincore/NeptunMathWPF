@@ -67,26 +67,23 @@
 
                         <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
 
-                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="AliceBlue" BorderThickness="2"/>
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="AliceBlue" BorderThickness="4" Click="tusStandartSession"/>
 
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Grid.RowSpan="2">
-                            <ComboBox Height="35" Margin="30,10" FontSize="16" BorderBrush="Black" BorderThickness="5">
+                            <ComboBox x:Name="cmbxSoruTurler" Height="35" Margin="30,10" FontSize="16" BorderBrush="Black" BorderThickness="5">
 
                             </ComboBox>
 
                             <Button Content="Konu Ekle" Margin="30,2,30,10" Cursor="Hand"
-                                    Background="#253768" HorizontalAlignment="Right" Padding="10" Foreground="AliceBlue" FontStyle="Italic" FontWeight="SemiBold"/>
+                                    Background="#253768" HorizontalAlignment="Right" Padding="10" Foreground="AliceBlue" FontStyle="Italic" FontWeight="SemiBold" Click="tusKonuEkle"/>
 
-                            <ListView BorderThickness="4" Margin="30 10" MinHeight="100">
-
-
-                            </ListView>
+                            <ListView x:Name="listKonu" BorderThickness="4" Margin="30 10" MinHeight="100" PreviewKeyDown="listKonu_PreviewKeyDown"/>
 
                             <Button Content="Aç"
                                 Background="#253768" Foreground="White" Margin="30,4,30,10" BorderThickness="4" Cursor="Hand"
-                                FontSize="15" FontWeight="SemiBold" Padding="10" FontStyle="Italic"/>
+                                FontSize="15" FontWeight="SemiBold" Padding="10" FontStyle="Italic" Click="tusOzelSession"/>
                         </StackPanel>
                     </Grid>
                 </ScrollViewer>

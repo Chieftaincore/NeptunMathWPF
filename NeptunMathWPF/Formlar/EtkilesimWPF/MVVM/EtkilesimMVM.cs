@@ -10,6 +10,9 @@ using System.Windows;
 using System.Windows.Input;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Data;
+using NeptunMathWPF.SoruVeAjani.Algorithma;
+using System.Windows.Controls;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -39,13 +42,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugLimitSoruOlustur { get; set; }
         public ICommand DebugTurevSoruOlustur { get; set; }
         public ICommand DebugLatexsizPDF { get; set; } //Latex olmadan PDF oluşturma komutu
-
+        public ICommand AlgorithmaCheck { get; set; }
         public ICommand DebugLatexsizPDFOlustur { get; set; }
 
         #endregion
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
-
+        bool algodurum = true;
+        public AlgorithmaModel Algorithma { get; set; }
         public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular { get; set; }
         public SoruCardModel seciliSoru { get; set; }
@@ -107,6 +111,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 Sorular = new ObservableCollection<SoruCardModel>();
                 CokluIfadeTurlerListColl = new ObservableCollection<ifadeTuru>();
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
+
+                //Problemler için içine soruTuru.problem de ekleyin
+                Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon, soruTuru.limit});
 
                 //MVVM'de Komutları bu sınıfa yazım alttaki KomutlarInit()'in gövdesinde belirtmeniz gerek
                 KomutlarInit();
@@ -174,9 +181,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 OnPropertyChanged();
 
             }
-            catch
+            catch(Exception e)
             {
-                MessageBox.Show("Problem Eklenirken Sorun Oluştu", "Problem Sorunu",
+                MessageBox.Show($"Problem Eklenirken Sorun Oluştu {e}", "Problem Sorunu",
                     MessageBoxButton.OK, icon: MessageBoxImage.Error);
             }
         }
@@ -262,6 +269,46 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
+        #region MVVMAlgorithma
+
+        internal bool SonSoruCheck()
+        {
+            if (Sorular.Last().kilitlendi)
+                return true;
+
+            return false;
+        }
+
+        public void AlgorithmaSoruEkle()
+        {
+            Genel.Handle(() =>
+            {   
+                Soru _soru = algoSonrakiSoruGetir();
+
+                seciliSoru = new SoruCardModel(_soru)
+                {
+                    LaTeX = _soru.LatexMetin,
+                    zaman = DateTime.Now,
+                    kaynak = "Yerel"
+                };
+
+                Sorular.Add(seciliSoru);
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
+
+            });
+        }
+
+        internal Soru algoSonrakiSoruGetir()
+        {
+            return Algorithma.Sonraki();
+        }
+
+        #endregion
+
         private static ifadeTuru turdondur(ifadeTuru[] turler)
         {
             Random rng = new Random();
@@ -271,17 +318,29 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SeciliSoruCevapla(object o)
         {
+            if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
+            {
+                MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                return;
+            }
+
             //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
             bool dogru = secenekler.Cevapla();
 
             if (dogru)
             {
                 seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
+                
+                if (algodurum)
+                    Algorithma.ModelSeviyeArtır(seciliSoru.Tur);
             }
             else
             {
                 seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
 
+                if(algodurum)
+                     Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
 
                 // DB KAYIT
                 if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
@@ -294,14 +353,19 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             {
                int i = Sorular.IndexOf(seciliSoru);
 
-                seciliSoru = Sorular.ElementAt(i + 1);
+               seciliSoru = Sorular.ElementAt(i + 1);
 
-                OnPropertyChanged(nameof(seciliSoru));
-                OnPropertyChanged(nameof(secenekler));
+               OnPropertyChanged(nameof(seciliSoru));
+               OnPropertyChanged(nameof(secenekler));
             }
 
             seciliTur = seciliSoru.SoruTuruStyleTemplate();
             OnPropertyChanged(nameof(seciliTur));
+
+            if (SonSoruCheck() && algodurum)
+            {
+                AlgorithmaSoruEkle(); 
+            }
         }
 
         #region VeriTabani
@@ -499,6 +563,20 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
             DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
+            AlgorithmaCheck = new RelayCommand(o => AlgorithmaChecki(o));
+        }
+
+        /// <summary>
+        /// Debug Algorithma kapatma/açma tuşu
+        /// </summary>
+        /// <param name="o"></param>
+        internal void AlgorithmaChecki(object o)
+        {
+            bool durum = algodurum;
+            algodurum = !durum;
+
+            MessageBox.Show(algodurum.ToString());
+
         }
 
         internal void tusDBSoruIsaretle(object o)
