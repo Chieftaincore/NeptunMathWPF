@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
@@ -15,6 +16,9 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         public SoruTerimleri.soruTuru soruTuru { get; set; }
         public int KullId { get => aktifKullanici.kullnId; }
 
+        public int max;
+        public int min;
+
         /// <summary>
         /// Model oluşturulurken seviyeye göre dictionary yapmak için
         /// </summary>
@@ -22,7 +26,9 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         internal Func<Soru> Algorithma;
 
-        public int seviye;
+        internal bool DinamikSeviye = true;
+
+        public int seviye { get; set; }
 
         public virtual Soru SonrakiAlgorithma(int _seviye)
         {
@@ -40,15 +46,31 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         {
             return $"{soruTuru} {seviye}";
         }
+
+        public virtual void seviyeArttır()
+        {
+            if (seviye < max)
+                seviye++;
+        }
+
+        public virtual void seviyeAzalt()
+        {
+            if (seviye > min)
+                seviye--;
+        }
     }
 
     public class IslemSoruZorlukModel : ZorlukModel
     {
         internal Dictionary<string, int[]> DefaultAraliklar { get => ZorlukRepository.Araliklar; }
-
+        
         public IslemSoruZorlukModel()
         {
             soruTuru = SoruTerimleri.soruTuru.islem;
+
+            seviye = 3;
+            min = 1;
+            max = 9;
         }
 
         public override Soru SonrakiAlgorithma(int _seviye)
@@ -164,14 +186,75 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
     public class FonksiyonelSoruZorlukModel : ZorlukModel
     {
-   
+        public bool Limit { get; set; } = false;
 
+        public FonksiyonelSoruZorlukModel()
+        {
+            soruTuru = SoruTerimleri.soruTuru.fonksiyon;
 
+            seviye = 3;
+            min = 1;
+            max = 9;
+        }
+
+        public override Soru SonrakiAlgorithma(int _seviye)
+        {
+            if(seviye > 3)
+            {
+                Random rng = new Random();
+
+                if (rng.Next(0, 1) == 1)
+                    return SoruAjani.RastgeleLimitSorusuOlustur();
+            }
+
+            return SoruAjani.RastgeleFonksiyonSorusuOlustur();
+        }
     }
 
     public class ProblemSoruZorlukModel : ZorlukModel
     {
 
+        public ProblemSoruZorlukModel()
+        {
+            soruTuru = SoruTerimleri.soruTuru.problem;
+
+            seviye = 2;
+            min = 1;
+            max = 4;
+        }
+
+        public async Task SoruHazirla()
+        {
+            await SoruAjani.ProblemSorusuOlustur();
+        }
+
+        public async Task<Soru> SoruHazirla(int _seviye)
+        {
+            ProblemDifficulty _zorluk;
+
+            switch (_seviye)
+            {
+                case 1:
+                    _zorluk = ProblemDifficulty.Kolay;
+                    break;
+                case 2:
+                    _zorluk = ProblemDifficulty.Orta;
+                    break;
+                case 3:
+                    _zorluk = ProblemDifficulty.Zor;
+                    break;
+                case 4:
+                    _zorluk = ProblemDifficulty.CokZor;
+                    break;
+                default:
+                    _zorluk = ProblemDifficulty.Orta;
+                    break;
+            }
+
+            Soru soru = await SoruAjani.ProblemSorusuOlustur(_zorluk);
+
+            return soru;
+        }
     }
 
 }

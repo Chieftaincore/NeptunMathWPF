@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
+    using soruTur = SoruTerimleri.soruTuru;
     public class ZorlukRepository
     {
         
@@ -16,11 +18,38 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             {"USLUNORMAL",new int[]{1,11}}, {"USTAMCARPAN",new int[] {0,4} }, {"USBOLMECARPAN", new int[]{2,5}}
         };
 
-        public List<ZorlukModel> Zorluklar { get; set; }
+        public Dictionary<soruTur,ZorlukModel> Zorluklar { get; set; }
 
-        public ZorlukRepository()
+        public ZorlukRepository(List<soruTur> turler)
         {
+            if(turler.Count > 0)
+            {
+                Zorluklar = new Dictionary<soruTur, ZorlukModel>();
 
+                if (turler.Contains(soruTur.islem))
+                    Zorluklar.Add(soruTur.islem, new IslemSoruZorlukModel());
+
+                if (turler.Contains(soruTur.fonksiyon) || turler.Contains(soruTur.limit))
+                {
+                    FonksiyonelSoruZorlukModel fonksmodel = new FonksiyonelSoruZorlukModel();
+
+                    if(turler.Contains(soruTur.fonksiyon))
+                         Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
+
+                    //limitin şu anlık kendi oluşturucusu yok
+                    if (turler.Contains(soruTur.limit))
+                    {
+                        Zorluklar.Add(soruTur.limit, fonksmodel);
+                        fonksmodel.Limit = true;
+                    }
+                }
+
+                if (turler.Contains(soruTur.problem))
+                {
+                    Zorluklar.Add(soruTur.problem, new ProblemSoruZorlukModel());
+                }
+            }
         }
+
     }
 }

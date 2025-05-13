@@ -189,7 +189,6 @@
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Algorithma\ZorlukModelBase.cs" />
     <Compile Include="Models\Models.cs" />
     <Compile Include="NeptunDB.Context.cs">
       <AutoGen>True</AutoGen>
