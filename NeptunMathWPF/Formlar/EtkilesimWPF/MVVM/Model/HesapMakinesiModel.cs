@@ -8,30 +8,33 @@ using System.Windows;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    class HesapMakinesiModel
+    public class HesapMakinesiModel
     {
         public Visibility Gorunur { get => pencere.Visibility; }
-        public HesapMakinesiWindow pencere { get; set; }
-
-        public HesapMakinesiModel()
+        
+        public HesapMakinesiWindow pencere = new HesapMakinesiWindow()
         {
-            pencere = new HesapMakinesiWindow()
-            {
-                Visibility = System.Windows.Visibility.Hidden
-            };
-        }
+            Visibility = System.Windows.Visibility.Hidden
+        };
 
         public void GosterGizle()
         {
-            if (Gorunur == Visibility.Hidden)
+
+            //Eventleri gizleme yapmama rağmen ka
+            Genel.Handle(() =>
             {
-                pencere.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                if (Gorunur == Visibility.Visible)
-                    pencere.Visibility = Visibility.Hidden;
-            }
+                //Hesap makinesi daha önceden açık mı kontrol etmek için
+                var acik = PresentationSource.FromVisual(pencere);
+
+                if (acik == null)
+                {
+                    (pencere = new HesapMakinesiWindow()).Show();
+                }
+                else
+                {
+                    pencere.Visibility = Visibility.Visible;
+                }
+            });
         }
     }
 }

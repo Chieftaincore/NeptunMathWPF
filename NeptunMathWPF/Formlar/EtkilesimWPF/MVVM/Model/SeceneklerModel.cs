@@ -31,6 +31,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         string dogrusecenek { get; set; }
 
+        internal bool kilitli;
         
         public SeceneklerModel(ObservableCollection<string> _secenekler, string _dogrusecenek)
         {
@@ -40,6 +41,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public bool Cevapla()
         {
+            kilitli = true;
 
             if (secilideger == dogrusecenek)
             {

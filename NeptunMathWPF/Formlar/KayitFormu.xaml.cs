@@ -45,6 +45,7 @@ namespace AnasayfaWPF
                     PASSWORD = sifre,
                     USER_ROLE = yetki
                 });
+
                 Genel.dbEntities.SaveChanges();
                 MessageBox.Show($"Kayıt Başarılı!\nKullanıcı Adı: {kullaniciAdi}\nE-posta: {eposta}\nİsim: {isim} {soyisim}", "Bilgi", MessageBoxButton.OK, MessageBoxImage.Information);
 

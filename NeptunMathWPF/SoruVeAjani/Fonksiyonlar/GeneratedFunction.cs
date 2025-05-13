@@ -21,14 +21,14 @@ namespace NeptunMathWPF.Fonksiyonlar
             while (whileCheck)
             {
                 List<FunctionQuestionGenerator> generators = new List<FunctionQuestionGenerator>
-                 {
+                {
 
                     new FunctionValueGenerator(),
                     new FunctionCompositionGenerator(),
                     new InverseFunctionGenerator(),
                     new DomainRangeGenerator()
 
-                 };
+                };
                 var generator = generators[new Random().Next(generators.Count)];
                 repository = generator.GenerateQuestion();
 

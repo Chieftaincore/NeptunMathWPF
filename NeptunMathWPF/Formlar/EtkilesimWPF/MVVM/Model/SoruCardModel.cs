@@ -1,5 +1,4 @@
-﻿using AngouriMath.Extensions;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Media;
@@ -23,6 +22,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         public string kaynak { get; set; }
         public string ekYazi { get; set; }
         public DateTime zaman { get; set; }
+        public bool kilitlendi { get => NesneSecenekler.kilitli; }
 
         //Renk ile ilgili
         private Color _tabRenk;
@@ -81,6 +81,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public string SoruTuruStyleTemplate()
         {
+            if (kilitlendi)
+                return "SoruModuKilitli";
 
             switch (Tur)
             {

@@ -28,7 +28,6 @@
                     
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-
                             <!-- ORTALAM İÇİN HorizontalAlignment="Center" Doldurma için HorizontalAlignment="Left" veya "Strech" -->
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" IsItemsHost="True"> 
                                 
@@ -39,7 +38,7 @@
                 </ItemsControl>
                 
             </ScrollViewer>
-            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" BorderThickness="2"
+            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" FontStyle="Italic" BorderThickness="2"
                     Command="{Binding DataContext.SoruCevapla, Mode=TwoWay ,RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Grid>
     </DataTemplate>
@@ -67,11 +66,22 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" BorderThickness="2"
+            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" FontStyle="Italic" BorderThickness="2"
                 Command="{Binding DataContext.SoruCevapla, Mode=TwoWay ,RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Grid>
     </DataTemplate>
 
+    <DataTemplate x:Key="SeceneklerKilitliTemplate">
+
+        <Grid>
+            <Label Content="Bu Soruyu Zaten Cevapladınız"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic"/>
+        </Grid>
+
+    </DataTemplate>
+    
+    
+    
     <DataTemplate x:Key="Proompter">
         <Grid Margin="2">
             

@@ -21,10 +21,10 @@
             <!--<Label Content="*NEPTHUN MATH*" FontSize="20" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.Row="0"/>-->
             <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Uniform" HorizontalAlignment="Center" Height="120" Grid.Row="0"/>
             <TextBlock Text="Kullanıcı Adı:" Grid.Row="1" Margin="0,0,0,5"/>
-            <TextBox x:Name="txtKullaniciAdi" Grid.Row="2" Padding="5" Margin="0,0,0,10"/>
+            <TextBox x:Name="txtKullaniciAdi" MaxLength="30" Grid.Row="2" Padding="5" Margin="0,0,0,10"/>
 
             <TextBlock Text="Şifre:" Grid.Row="3" Margin="0,0,0,5"/>
-            <PasswordBox x:Name="txtSifre" Grid.Row="4" Padding="5" Margin="0,0,0,10"/>
+            <PasswordBox x:Name="txtSifre" MaxLength="50" Grid.Row="4" Padding="5" Margin="0,0,0,10"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" Margin="0,10,0,5">
                 <Button Content="Giriş Yap" Height="35" Background="#4CAF50" Foreground="White" FontWeight="SemiBold"

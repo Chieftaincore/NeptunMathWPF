@@ -4,11 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Data;
 using System.Text.RegularExpressions;
+using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 
 namespace HesapMakinesi
 {
     public partial class HesapMakinesiWindow : Window
     {
+        HesapMakinesiModel Model;
+
         public HesapMakinesiWindow()
         {
             InitializeComponent();
@@ -19,7 +22,7 @@ namespace HesapMakinesi
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                this.Hide();
             }
         }
 
