@@ -37,6 +37,7 @@ namespace NeptunMathWPF.Formlar
                         var kullanici = Genel.dbEntities.USERS.Where(x => x.USERID == aktifKullanici.kullnId).FirstOrDefault();
                         kullanici.USERNAME = yeniKullaniciAdiTextBox.Text;
                         Genel.dbEntities.SaveChanges();
+                        aktifKullanici.kullaniciAdi = kullanici.USERNAME;
                         MessageBox.Show("Kullanıcı adı başarıyla değiştirildi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
                     });
                 }

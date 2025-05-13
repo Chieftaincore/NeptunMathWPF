@@ -36,6 +36,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF
                         var kullanici = Genel.dbEntities.USERS.Where(x => x.USERID == aktifKullanici.kullnId).FirstOrDefault();
                         kullanici.PASSWORD = yeniSifreTextBox.Password;
                         Genel.dbEntities.SaveChanges();
+                        aktifKullanici.sifre = kullanici.PASSWORD;
                         MessageBox.Show("Şifre başarıyla değiştirildi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
                     });
                 }
