@@ -101,10 +101,19 @@ namespace NeptunMathWPF.Formlar
             {
                 string pdfPath = saveFileDialog.FileName;
 
+                // Türkçe karakter desteği için BaseFont ve Font ayarla
+                string arialPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+                BaseFont baseFont = BaseFont.CreateFont(arialPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                var boldFont = new Font(baseFont, 12, Font.BOLD);
+                var normalFont = new Font(baseFont, 11, Font.NORMAL);
+
                 // PDF belgesi oluştur
                 Document document = new Document();
                 PdfWriter.GetInstance(document, new FileStream(pdfPath, FileMode.Create));
                 document.Open();
+
+                // Soru numarası için sayaç
+                int soruNo = 1;
 
                 // Sorular koleksiyonunu alın
                 var sorular = Modeller;
@@ -113,9 +122,8 @@ namespace NeptunMathWPF.Formlar
                 {
                     foreach (var soru in sorular)
                     {
-                        // Soruyu ekle
-                        // Özellikle itexSharp.text yazması lazım
-                        document.Add(new iTextSharp.text.Paragraph($"Soru: {soru.soru.GetMetin()}"));
+                        // Soru numarası ve metni kalın yazı ile ekle
+                        document.Add(new iTextSharp.text.Paragraph($"Soru {soruNo}: \n {soru.soru.GetMetin()}", boldFont));
 
                         // Seçenekleri ekle
                         if (soru.NesneSecenekler != null)
@@ -124,7 +132,7 @@ namespace NeptunMathWPF.Formlar
                             for (int i = 0; i < secenekler.Count; i++)
                             {
                                 // 'a', 'b', 'c', ... için
-                                char secenekHarf = (char)('a' + i);
+                                char secenekHarf = (char)('A' + i);
                                 document.Add(new iTextSharp.text.Paragraph($"{secenekHarf}) {secenekler[i]}"));
                             }
                         }
@@ -132,6 +140,7 @@ namespace NeptunMathWPF.Formlar
                         // Boşluk ekle
                         document.Add(new iTextSharp.text.Paragraph("\n"));
 
+                        soruNo++;
                     }
                 }
 
