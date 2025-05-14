@@ -50,26 +50,26 @@ namespace NeptunMathWPF.Fonksiyonlar
 
                 case FunctionType.Root: // Köklü: f(x) = √(ax + b)  >2<
                     b = random.Next(1, 5);
-                    returnQuestion = $"f(x) = \\sqrt{{{a}x + {b}}}";
+                    returnQuestion = $"f(x) = √({a}x + {b})";
                     returnFunc = x => a * x + b;
                     break;
 
                 case FunctionType.Absolute: // Mutlak: f(x) = |ax - b|  >3<
-                    returnQuestion = $"f(x) = \\left|{a}x - {b}\\right|";
+                    returnQuestion = $"f(x) = |{a}x - {b}|";
                     returnFunc = x => Math.Abs(a * x - b);
                     break;
 
                 case FunctionType.Exponential: // Üstel: f(x) = a^(x ± b)  >4<
                     string operation = random.Next(2) == 0 ? "+" : "-";
                     b = random.Next(3);
-                    returnQuestion = $"f(x) = {a}^{{x {operation} {b}}}";
+                    returnQuestion = $"f(x) = {a}^(x {operation} {b})";
                     returnFunc = x => Math.Pow(a, operation == "+" ? x + b : x - b);
                     break;
 
                 case FunctionType.Rational: // Rasyonel: f(x) = (ax + b)/(x ± c)  >5<
                     int denominatorOffset = random.Next(1, 4);
                     string denomSign = random.Next(2) == 0 ? "+" : "-";
-                    returnQuestion = $"f(x) = \\frac{{{a}x + {b}}}/{{x {denomSign} {denominatorOffset}}}";
+                    returnQuestion = $"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})";
                     returnFunc = x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset));
                     denominator = denominatorOffset;
                     denomsign = denomSign;

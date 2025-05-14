@@ -19,7 +19,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Quadratic:
                 case FunctionType.Absolute:
                 case FunctionType.Exponential:
-                    domainAnswer = "R"; // Tüm gerçel sayılar
+                    domainAnswer = "ℝ"; // Tüm gerçel sayılar
                     break;
 
                 case FunctionType.Root:
@@ -28,14 +28,14 @@ namespace NeptunMathWPF.Fonksiyonlar
                         if (-b / (double)a != Math.Floor(-b / (double)a))
                         {
                             domainAnswer = a > 0
-                                ? $"[ {-b}/{a}, \\infty )"
-                                : $"( -\\infty, {-b}/{a} ]";
+                                ? $"[ {-b}/{a}, ∞ )"
+                                : $"( -∞, {-b}/{a} ]";
                         }
                         else
                         {
                             domainAnswer = a > 0
-                                ? $"[ {-b/a}, \\infty )"
-                                : $"( -\\infty, {-b/a} ]";
+                                ? $"[ {-b/a}, ∞ )"
+                                : $"( -∞, {-b/a} ]";
                         }
                     }
                     break;
@@ -43,12 +43,12 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Rational:
                     {
                         int c = denominator;
-                        domainAnswer = denomsign == "-" ? $"R \\ {{ {c} }}" : $"R \\ {{ {-c} }}";
+                        domainAnswer = denomsign == "-" ? $"ℝ \\ {{ {c} }}" : $"ℝ \\ {{ {-c} }}";
                     }
                     break;
 
                 default:
-                    domainAnswer = "R";
+                    domainAnswer = "ℝ";
                     break;
             }
 
@@ -77,12 +77,12 @@ namespace NeptunMathWPF.Fonksiyonlar
         {
             var candidates = new HashSet<string>
             {
-                "R",
-                $"R \\ {{ {b + 1} }}",
-                $"R \\ {{ {b + 2} }}",
-                $"R \\ {{ {b - 1} }}",
-                $"R \\ {{ {b + 3} }}",
-                $"R \\ {{ {b - 2} }}"
+                "ℝ",
+                $"ℝ \\ {{ {b + 1} }}",
+                $"ℝ \\ {{ {b + 2} }}",
+                $"ℝ \\ {{ {b - 1} }}",
+                $"ℝ \\ {{ {b + 3} }}",
+                $"ℝ \\ {{ {b - 2} }}"
             };
 
             List<string> candidatesList = candidates.ToList();
