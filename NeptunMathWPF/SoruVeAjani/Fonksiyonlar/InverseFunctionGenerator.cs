@@ -16,10 +16,10 @@ namespace NeptunMathWPF.Fonksiyonlar
             int b = random.Next(1, 5);
             y = random.Next(1, 10);
 
-            string question = $"f(x) = {a}x + {b} \n f⁻¹({y})";
+            string question = $"f(x) = {a}x + {b} \n f{{-1}}({y})";
             Question qst = new Question
             {
-                QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f⁻¹(y) fonksiyonunda f⁻¹({y}) değeri nedir?",
+                QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f^{{-1}}(y) fonksiyonunda f{{-1}}({y}) değeri nedir?",
                 Answer = GetRationalValue(y - b, a),
                 WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(), a, b)
             };

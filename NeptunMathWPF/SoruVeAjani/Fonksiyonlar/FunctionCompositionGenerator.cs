@@ -81,7 +81,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             double result = f.func(g.func(x));
             Question qst = new Question
             {
-                QuestionText = $"f(x) = {f.function.Split('=')[1]} ve g(x) = {g.function.Split('=')[1]} ise (f∘g)({x}) kaçtır?".Replace("- 0x", "").Replace("+ 0x", "").Replace(" + 0", "").Replace(" - 0", "").Replace("1x", "x"),
+                QuestionText = $"f(x) = {f.function.Split('=')[1]} ve g(x) = {g.function.Split('=')[1]} ise (f \\circ g)({x}) kaçtır?".Replace("- 0x", "").Replace("+ 0x", "").Replace(" + 0", "").Replace(" - 0", "").Replace("1x", "x"),
                 Answer = (f.functionType == FunctionType.Rational || g.functionType == FunctionType.Rational) ? answ : result.ToString(),
                 WrongAnswers = (f.functionType == FunctionType.Rational || g.functionType == FunctionType.Rational || f.functionType == FunctionType.Exponential || g.functionType == FunctionType.Exponential) ? GenerateAnswerRational(result, f.parameters[0], f.parameters[1], x, answ) : GenerateAnswer(Math.Round(result, 2).ToString(), f.parameters[0], f.parameters[1])
             };
