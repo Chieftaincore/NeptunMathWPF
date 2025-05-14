@@ -11,22 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace NeptunMathWPF.Formlar
 {
     /// <summary>
-    /// Interaction logic for IstatistikWPF.xaml
+    /// Interaction logic for BookmarkedQuestionsPanelWPF.xaml
     /// </summary>
-    public partial class IstatistikWPF : Window
+    public partial class BookmarkedQuestionsPanelWPF : Window
     {
-        public IstatistikWPF()
+        public BookmarkedQuestionsPanelWPF()
         {
             InitializeComponent();
             LoadTopics();
         }
 
-        private void GetStatistic()
+        private void GetQuestionCount()
         {
             Genel.Handle(() =>
             {
@@ -36,7 +35,7 @@ namespace NeptunMathWPF.Formlar
                     {
                         string subtopic = SubtopicsListBox.SelectedItem.ToString();
                         int subtopicid = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
-                        lblYanlisCount.Content = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid).Count();
+                        lblKaydedilenCount.Content = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid).Count();
                     }
                 }
                 catch (System.NullReferenceException)
@@ -72,14 +71,14 @@ namespace NeptunMathWPF.Formlar
         {
             try
             {
-                GetStatistic();
+                //getquestioncount()
                 Genel.Handle(() =>
                 {
                     string topicstr = TopicsListBox.SelectedItem.ToString();
                     var topicId = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == topicstr).Select(x => x.TOPIC_ID).FirstOrDefault();
                     var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.TOPIC_ID == topicId).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
 
-                    QuestionsListBox.ItemsSource = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
+                    QuestionsListBox.ItemsSource = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
                 });
             }
             catch (System.NullReferenceException) { }
@@ -87,9 +86,8 @@ namespace NeptunMathWPF.Formlar
 
         private void QuestionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (QuestionsListBox.SelectedItem!=null)
+            if (QuestionsListBox.SelectedItem != null)
             {
-
                 Genel.Handle(() =>
                 {
                     lblA.Content = "A)";
@@ -104,38 +102,35 @@ namespace NeptunMathWPF.Formlar
                     lblE.Foreground = new SolidColorBrush(Colors.Black);
 
                     string sorustr = QuestionsListBox.SelectedItem.ToString();
-                    var soru = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.QUESTION_TEXT == sorustr).FirstOrDefault();
-                    lblSoru.Content = soru.QUESTION_TEXT;
+                    var soru = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.QUESTION_TEXT == sorustr).FirstOrDefault();
+                    lblSoru.Content = sorustr;
                     List<string> answers = new List<string>();
                     foreach (var item in soru.WRONG_ANSWERS.Split('#'))
                     {
                         if (!string.IsNullOrEmpty(item))
                             answers.Add(item);
                     }
-                    answers.Add(soru.ANSWER);
+                    answers.Add(soru.CORRECT_ANSWER);
                     Genel.Shuffle(answers);
 
-
-                    CheckTrueOrWrong(answers[0], lblA, soru.ANSWER, soru.USERS_ANSWER);
-                    CheckTrueOrWrong(answers[1], lblB, soru.ANSWER, soru.USERS_ANSWER);
-                    CheckTrueOrWrong(answers[2], lblC, soru.ANSWER, soru.USERS_ANSWER);
-                    CheckTrueOrWrong(answers[3], lblD, soru.ANSWER, soru.USERS_ANSWER);
+                    CheckTrueOrWrong(answers[0], lblA, soru.CORRECT_ANSWER);
+                    CheckTrueOrWrong(answers[1], lblB, soru.CORRECT_ANSWER);
+                    CheckTrueOrWrong(answers[2], lblC, soru.CORRECT_ANSWER);
+                    CheckTrueOrWrong(answers[3], lblD, soru.CORRECT_ANSWER);
 
                     if (answers.Count > 4)
                     {
-                        CheckTrueOrWrong(answers[4], lblE, soru.ANSWER, soru.USERS_ANSWER);
+                        CheckTrueOrWrong(answers[4], lblE, soru.CORRECT_ANSWER);
                     }
                 });
             }
         }
 
-        private void CheckTrueOrWrong(string answer, Label lbl, string correctanswer, string usersanswer)
+        private void CheckTrueOrWrong(string answer, Label lbl, string correctanswer)
         {
             lbl.Content += answer;
             if (answer == correctanswer)
                 lbl.Foreground = new SolidColorBrush(Colors.Green);
-            else if (answer == usersanswer)
-                lbl.Foreground = new SolidColorBrush(Colors.Red);
         }
     }
 }

@@ -171,6 +171,9 @@
     <Compile Include="Formlar\ApiTest.xaml.cs">
       <DependentUpon>ApiTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\BookmarkedQuestionsPanelWPF.xaml.cs">
+      <DependentUpon>BookmarkedQuestionsPanelWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\DevPanelWPF.xaml.cs">
       <DependentUpon>DevPanelWPF.xaml</DependentUpon>
     </Compile>
@@ -230,6 +233,7 @@
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="ProblemGenerator.cs" />
+    <Compile Include="QuestionPoolRepository.cs" />
     <Compile Include="QUESTION_POOL.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
@@ -349,6 +353,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Formlar\ApiTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\BookmarkedQuestionsPanelWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
