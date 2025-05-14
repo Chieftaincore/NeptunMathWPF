@@ -40,6 +40,9 @@ namespace NeptunMathWPF
         static readonly Random random = new Random();
         static internal NEPTUN_DBEntities dbEntities = new NEPTUN_DBEntities();
 
+        public static string geminiFileName = "GEMINI.config";
+        public static string geminiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, geminiFileName);
+
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
 
         internal static void Handle(Action action) //Hata yönetimi için hazır try-catch blokları

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
@@ -26,7 +25,7 @@ namespace AnasayfaWPF
 
             listKonu.ItemsSource = OzelSessionTurler;
 
-            if(aktifKullanici.yetki == "admin")
+            if (aktifKullanici.yetki == "admin")
             {
                 tusAdminDebug.Visibility = Visibility.Visible;
                 tusAdminGelistirici.Visibility = Visibility.Visible;
@@ -56,7 +55,7 @@ namespace AnasayfaWPF
 
         private void tusDebugPenceresi(object sender, RoutedEventArgs e)
         {
-            new TestPencereWPF(this).ShowDialog(); 
+            new TestPencereWPF(this).ShowDialog();
         }
 
         private void tusDevPanel(object sender, RoutedEventArgs e)
@@ -85,6 +84,18 @@ namespace AnasayfaWPF
             AyarlarFormu ayarlarFormu = new AyarlarFormu();
             ayarlarFormu.ShowDialog(); // ShowDialog, ayarlar formu kapanana kadar ana sayfanın etkileşimini engeller
         }
+        private void tusRaporlar(object sender, RoutedEventArgs e)
+        {
+            // Yeni bir RaporFormu örneği oluştur
+            RaporFormu raporPenceresi = new RaporFormu();
+
+            // Rapor formunu modal olarak aç.
+            // Bu, rapor formu açıkken ana sayfanın etkileşime kapalı olmasını sağlar
+            // ve rapor formu kapatıldığında ana sayfa otomatik olarak tekrar etkinleşir.
+            raporPenceresi.ShowDialog();
+        }
+
+
 
         private void tusStandartSession(object sender, RoutedEventArgs e)
         {
@@ -113,7 +124,7 @@ namespace AnasayfaWPF
                 }
                 else
                 {
-                    MessageBox.Show("Problemler Yapay Zeka API tarafından oluşturulduğundan lütfen başka bir konu daha ekleyiniz","Sadece problemler!", MessageBoxButton.OK, MessageBoxImage.Hand);
+                    MessageBox.Show("Problemler Yapay Zeka API tarafından oluşturulduğundan lütfen başka bir konu daha ekleyiniz", "Sadece problemler!", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             });
         }
@@ -129,7 +140,7 @@ namespace AnasayfaWPF
 
                 if (ek != null && !listKonu.Items.Contains(_tur))
                 {
-                   
+
                     OzelSessionTurler.Add(_tur);
                 }
 
