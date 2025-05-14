@@ -36,6 +36,17 @@ namespace AnasayfaWPF
                 tusAdminDebug.Visibility = Visibility.Collapsed;
                 tusAdminGelistirici.Visibility = Visibility.Collapsed;
             }
+
+            KullaniciBilgileri();
+        }
+
+        private void KullaniciBilgileri()
+        {
+            kKullaniciAdi.Content = $"@{aktifKullanici.kullaniciAdi}";
+            kAd.Content = $"İsim : {aktifKullanici.isim}";
+            kSoyAd.Content = $"Soyisim : {aktifKullanici.soyisim}";
+            kYetki.Content = $"Yetki : {aktifKullanici.yetki}";
+            kEmail.Content = $"E-posta : {aktifKullanici.email}";
         }
 
         private void tusIstatistik(object sender, RoutedEventArgs e)
@@ -85,10 +96,24 @@ namespace AnasayfaWPF
         {
             Genel.Handle(() =>
             {
-                if (listKonu.Items.Count > 0)
+                if (listKonu.Items.Count > 0 && !OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem))
                 {
                     new EtkilesimPencereWPF(this, OzelSessionTurler.ToArray()).Show();
                     this.Hide();
+
+                    return;
+                }
+
+                if (listKonu.Items.Count > 1 && OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem))
+                {
+                    new EtkilesimPencereWPF(this, OzelSessionTurler.ToArray()).Show();
+                    this.Hide();
+
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Problemler Yapay Zeka API tarafından oluşturulduğundan lütfen başka bir konu daha ekleyiniz","Sadece problemler!", MessageBoxButton.OK, MessageBoxImage.Hand);
                 }
             });
         }
@@ -125,6 +150,11 @@ namespace AnasayfaWPF
                     }
                 }
             });
+        }
+
+        private void tusKaydedilenler(object sender, RoutedEventArgs e)
+        {
+           
         }
     }
 }

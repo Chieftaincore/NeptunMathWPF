@@ -209,9 +209,6 @@
     <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
       <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\NormalPDFuc.xaml.cs">
-      <DependentUpon>NormalPDFuc.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
@@ -432,10 +429,6 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Formlar\TestPencereWPF.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Formlar\NormalPDFuc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

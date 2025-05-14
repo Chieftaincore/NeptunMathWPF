@@ -186,8 +186,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
     public class FonksiyonelSoruZorlukModel : ZorlukModel
     {
-        public bool Limit { get; set; } = false;
-
         public FonksiyonelSoruZorlukModel()
         {
             soruTuru = SoruTerimleri.soruTuru.fonksiyon;
@@ -199,17 +197,29 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public override Soru SonrakiAlgorithma(int _seviye)
         {
-            if(Limit)
-            {
-                Random rng = new Random();
-
-                if (rng.Next(0, 2) >= 1)
-                    return SoruAjani.RastgeleLimitSorusuOlustur();
-            }
-
             return SoruAjani.RastgeleFonksiyonSorusuOlustur();
         }
     }
+
+    public class LimitSoruZorlukModel : ZorlukModel
+    {
+        public bool Limit { get; set; } = false;
+
+        public LimitSoruZorlukModel()
+        {
+            soruTuru = SoruTerimleri.soruTuru.fonksiyon;
+
+            seviye = 3;
+            min = 1;
+            max = 9;
+        }
+
+        public override Soru SonrakiAlgorithma(int _seviye)
+        {
+            return SoruAjani.RastgeleLimitSorusuOlustur();
+        }
+    }
+
 
     public class ProblemSoruZorlukModel : ZorlukModel
     {

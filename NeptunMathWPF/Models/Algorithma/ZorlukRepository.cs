@@ -37,12 +37,13 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                     if(turler.Contains(soruTur.fonksiyon))
                          Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
 
-                    //limitin şu anlık kendi oluşturucusu yok
-                    if (turler.Contains(soruTur.limit))
-                    {
-                        Zorluklar.Add(soruTur.limit, fonksmodel);
-                        fonksmodel.Limit = true;
-                    }
+         
+                }
+
+
+                if (turler.Contains(soruTur.limit))
+                {
+                    Zorluklar.Add(soruTur.limit, new LimitSoruZorlukModel());
                 }
 
                 if (turler.Contains(soruTur.problem))
