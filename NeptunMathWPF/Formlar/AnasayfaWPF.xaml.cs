@@ -154,7 +154,7 @@ namespace AnasayfaWPF
 
         private void tusKaydedilenler(object sender, RoutedEventArgs e)
         {
-           
+            new BookmarkedQuestionsPanelWPF().ShowDialog();
         }
 
         private void Window_Closed(object sender, EventArgs e)
