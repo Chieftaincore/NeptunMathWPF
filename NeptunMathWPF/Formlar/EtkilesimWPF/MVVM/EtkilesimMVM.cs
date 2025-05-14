@@ -113,7 +113,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
 
                 //Problemler için içine soruTuru.problem de ekleyin
-                Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon, soruTuru.limit});
+                Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon, soruTuru.limit });
 
                 //MVVM'de Komutları bu sınıfa yazım alttaki KomutlarInit()'in gövdesinde belirtmeniz gerek
                 KomutlarInit();
@@ -181,7 +181,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 OnPropertyChanged();
 
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 MessageBox.Show($"Problem Eklenirken Sorun Oluştu {e}", "Problem Sorunu",
                     MessageBoxButton.OK, icon: MessageBoxImage.Error);
@@ -282,7 +282,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public void AlgorithmaSoruEkle()
         {
             Genel.Handle(() =>
-            {   
+            {
                 Soru _soru = algoSonrakiSoruGetir();
 
                 seciliSoru = new SoruCardModel(_soru)
@@ -331,7 +331,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             if (dogru)
             {
                 seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
-                
+
                 if (algodurum)
                     Algorithma.ModelSeviyeArtır(seciliSoru.Tur);
             }
@@ -339,8 +339,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             {
                 seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
 
-                if(algodurum)
-                     Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
+                if (algodurum)
+                    Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
 
                 // DB KAYIT
                 if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
@@ -349,14 +349,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 }
             }
 
-            if(Sorular.Last() != seciliSoru)
+            if (Sorular.Last() != seciliSoru)
             {
-               int i = Sorular.IndexOf(seciliSoru);
+                int i = Sorular.IndexOf(seciliSoru);
 
-               seciliSoru = Sorular.ElementAt(i + 1);
+                seciliSoru = Sorular.ElementAt(i + 1);
 
-               OnPropertyChanged(nameof(seciliSoru));
-               OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged(nameof(seciliSoru));
+                OnPropertyChanged(nameof(secenekler));
             }
 
             seciliTur = seciliSoru.SoruTuruStyleTemplate();
@@ -364,7 +364,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             if (SonSoruCheck() && algodurum)
             {
-                AlgorithmaSoruEkle(); 
+                AlgorithmaSoruEkle();
             }
         }
 
@@ -390,7 +390,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
                 }
                 var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
-                if(subtopic == null)
+                if (subtopic == null)
                 {
                     Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
                     {
@@ -411,7 +411,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     wrongAnswers += item + "#";
                 }
-                //subtopic eklenecek
                 Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Add(new WRONG_ANSWERED_QUESTIONS
                 {
                     USERID = aktifKullanici.kullnId,
@@ -469,7 +468,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     wrongAnswers += item + "#";
                 }
-                //subtopic eklenecek
                 Genel.dbEntities.BOOKMARKED_QUESTIONS.Add(new BOOKMARKED_QUESTIONS
                 {
                     USERID = aktifKullanici.kullnId,
@@ -482,6 +480,33 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 });
                 Genel.dbEntities.SaveChanges();
             });
+        }
+
+        private void FeedbackToDB(SoruCardModel scm)
+        {
+            if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+            {
+
+                Genel.Handle(() =>
+                {
+                    Genel.ReloadEntity();
+                    Genel.dbEntities.FEEDBACK.Add(new FEEDBACK
+                    {
+                        USERID = aktifKullanici.kullnId,
+                        SUBJECT = "Hatalı soru bildirimi",
+                        MESSAGE = $"SORU: {scm.soru.IslemMetin} SECENEKLER: {scm.NesneSecenekler.secenekler[0]}" +
+                        $"#{scm.NesneSecenekler.secenekler[1]}" +
+                        $"#{scm.NesneSecenekler.secenekler[2]}" +
+                        $"#{scm.NesneSecenekler.secenekler[3]}" +
+                        $"#{(scm.NesneSecenekler.secenekler.Count >= 5 ? scm.NesneSecenekler.secenekler[4] : "")}" +
+                        $" DOGRU CEVAP: {scm.NesneSecenekler.DogruSecenekGetir()}",
+                        FEEDBACK_TYPE = "Hata",
+                        STATUS = "Beklemede",
+                        CREATE_DATE = DateTime.Now,
+                    });
+                    Genel.dbEntities.SaveChanges();
+                });
+            }
         }
 
         private void DebugLimitSoruEkle()
@@ -596,6 +621,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             SoruCardModel _model = (SoruCardModel)o;
 
+            FeedbackToDB(_model);
             SoruMetaVeri(_model, "Bildirilen");
         }
 
@@ -681,7 +707,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-        
+
 
 
         private void DebugCokluIfadeCollSil(object obje)
