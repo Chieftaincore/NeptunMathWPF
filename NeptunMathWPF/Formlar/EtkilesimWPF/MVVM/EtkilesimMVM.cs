@@ -318,54 +318,57 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SeciliSoruCevapla(object o)
         {
-            if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
+            Genel.Handle(() =>
             {
-                MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
-
-                return;
-            }
-
-            //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
-            bool dogru = secenekler.Cevapla();
-
-            if (dogru)
-            {
-                seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
-                
-                if (algodurum)
-                    Algorithma.ModelSeviyeArtır(seciliSoru.Tur);
-            }
-            else
-            {
-                seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
-
-                if(algodurum)
-                     Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
-
-                // DB KAYIT
-                if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+                if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
                 {
-                    AddWrongQuestionToDB();
+                    MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                    return;
                 }
-            }
 
-            if(Sorular.Last() != seciliSoru)
-            {
-               int i = Sorular.IndexOf(seciliSoru);
+                //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
+                bool dogru = secenekler.Cevapla();
 
-               seciliSoru = Sorular.ElementAt(i + 1);
+                if (dogru)
+                {
+                    seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
 
-               OnPropertyChanged(nameof(seciliSoru));
-               OnPropertyChanged(nameof(secenekler));
-            }
+                    if (algodurum)
+                        Algorithma.ModelSeviyeArtır(seciliSoru.Tur);
+                }
+                else
+                {
+                    seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
 
-            seciliTur = seciliSoru.SoruTuruStyleTemplate();
-            OnPropertyChanged(nameof(seciliTur));
+                    if (algodurum)
+                        Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
 
-            if (SonSoruCheck() && algodurum)
-            {
-                AlgorithmaSoruEkle(); 
-            }
+                    // DB KAYIT
+                    if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+                    {
+                        AddWrongQuestionToDB();
+                    }
+                }
+
+                if (Sorular.Last() != seciliSoru)
+                {
+                    int i = Sorular.IndexOf(seciliSoru);
+
+                    seciliSoru = Sorular.ElementAt(i + 1);
+
+                    OnPropertyChanged(nameof(seciliSoru));
+                    OnPropertyChanged(nameof(secenekler));
+                }
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+                OnPropertyChanged(nameof(seciliTur));
+
+                if (SonSoruCheck() && algodurum)
+                {
+                    AlgorithmaSoruEkle();
+                }
+            });
         }
 
         #region VeriTabani
@@ -608,7 +611,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SoruMetaVeri(SoruCardModel _model, string EK = "")
         {
-            MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            if (_model.kilitlendi || aktifKullanici.yetki == "admin")
+            {
+                MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+            else
+            {
+                MessageBox.Show("MetaVeriyi görmeden önce soruyu çözmeniz veya admin olmanız gerekli", "Metaveri?", MessageBoxButton.OK, MessageBoxImage.Question);
+            }
         }
 
         public void PDFlatexsizCiktiAl()

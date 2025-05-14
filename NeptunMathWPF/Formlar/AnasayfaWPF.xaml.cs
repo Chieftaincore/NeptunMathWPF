@@ -25,6 +25,17 @@ namespace AnasayfaWPF
             cmbxSoruTurler.Items.Add(SoruTerimleri.soruTuru.fonksiyon);
 
             listKonu.ItemsSource = OzelSessionTurler;
+
+            if(aktifKullanici.yetki == "admin")
+            {
+                tusAdminDebug.Visibility = Visibility.Visible;
+                tusAdminGelistirici.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tusAdminDebug.Visibility = Visibility.Collapsed;
+                tusAdminGelistirici.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void tusIstatistik(object sender, RoutedEventArgs e)
