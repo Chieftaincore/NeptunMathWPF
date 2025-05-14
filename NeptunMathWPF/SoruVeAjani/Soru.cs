@@ -75,7 +75,7 @@ namespace NeptunMathWPF
             SoruTuru = soruTuru.fonksiyon;
 
             IslemMetin = question.QuestionText;
-            LatexMetin = question.QuestionText;
+            LatexMetin = question.LatexText;
 
             this.secenekler = secenekler.ToList();
             Sonuc = question.Answer;

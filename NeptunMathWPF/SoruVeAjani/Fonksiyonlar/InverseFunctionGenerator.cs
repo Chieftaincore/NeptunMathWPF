@@ -20,6 +20,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             Question qst = new Question
             {
                 QuestionText = $"f(x) = {a}x + {b} fonksiyonunun tersi olan f⁻¹(y) fonksiyonunda f⁻¹({y}) değeri nedir?",
+                LatexText= $"f(x) = {a}x + {b} \\text{{ fonksiyonunun tersi olan }} f^{{-1}}(y) \\text{{ fonksiyonunda }} f^{{-1}}({y}) \\text{{ değeri nedir?}}",
                 Answer = GetRationalValue(y - b, a),
                 WrongAnswers = GenerateAnswer(((double)(y - b) / a).ToString(), a, b)
             };

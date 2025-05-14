@@ -10,7 +10,7 @@ namespace NeptunMathWPF.Fonksiyonlar
     {
         internal override List<FunctionRepository> GenerateQuestion()
         {
-            var (expr, func, parameters, type, denominator, denomsign) = GetRandomFunction();
+            var (question, latex, func, parameters, type, denominator, denomsign) = GetRandomFunction();
 
             string domainAnswer;
             switch (type)
@@ -19,7 +19,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Quadratic:
                 case FunctionType.Absolute:
                 case FunctionType.Exponential:
-                    domainAnswer = "R"; // Tüm gerçel sayılar
+                    domainAnswer = $"R"; // Tüm gerçel sayılar
                     break;
 
                 case FunctionType.Root:
@@ -28,14 +28,14 @@ namespace NeptunMathWPF.Fonksiyonlar
                         if (-b / (double)a != Math.Floor(-b / (double)a))
                         {
                             domainAnswer = a > 0
-                                ? $"[ {-b}/{a}, ∞ )"
-                                : $"( -∞, {-b}/{a} ]";
+                                ? $"[ {-b}/{a}, \\infty )"
+                                : $"( -\\infty, {-b}/{a} ]";
                         }
                         else
                         {
                             domainAnswer = a > 0
-                                ? $"[ {-b/a}, ∞ )"
-                                : $"( -∞, {-b/a} ]";
+                                ? $"[ {-b / a}, \\infty )"
+                                : $"( -\\infty, {-b / a} ]";
                         }
                     }
                     break;
@@ -43,18 +43,19 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Rational:
                     {
                         int c = denominator;
-                        domainAnswer = denomsign == "-" ? $"R \\ {{ {c} }}" : $"R \\ {{ {-c} }}";
+                        domainAnswer = denomsign == "-" ? $"R - \\text{{{{{c}}}}} " : $"R - \\text{{{{{-c}}}}} ";
                     }
                     break;
 
                 default:
-                    domainAnswer = "R";
+                    domainAnswer = $"R";
                     break;
             }
 
             var q = new Question
             {
-                QuestionText = $"{expr} fonksiyonunun tanım kümesi nedir?",
+                QuestionText = $"{question} fonksiyonunun tanım kümesi nedir?",
+                LatexText = $"{latex} \\text{{ fonksiyonunun tanım kümesi nedir?}}",
                 Answer = domainAnswer,
                 WrongAnswers = GenerateAnswer(domainAnswer, parameters[0], parameters[1])
             };
@@ -63,7 +64,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             {
                 new FunctionRepository
                 {
-                    question = expr,
+                    question = question,
                     functionType = type,
                     a = parameters[0],
                     b = parameters[1],
@@ -77,12 +78,12 @@ namespace NeptunMathWPF.Fonksiyonlar
         {
             var candidates = new HashSet<string>
             {
-                "R",
-                $"R \\ {{ {b + 1} }}",
-                $"R \\ {{ {b + 2} }}",
-                $"R \\ {{ {b - 1} }}",
-                $"R \\ {{ {b + 3} }}",
-                $"R \\ {{ {b - 2} }}"
+                $"R",
+                $"R - \\text{{{{{b+1}}}}}",
+                $"R - \\text{{{{{b+2}}}}}",
+                $"R - \\text{{{{{b-1}}}}}",
+                $"R - \\text{{{{ {b + 3} }}}}",
+                $"R - \\text{{{{ {b - 2} }}}}"
             };
 
             List<string> candidatesList = candidates.ToList();
