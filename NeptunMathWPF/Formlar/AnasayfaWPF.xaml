@@ -22,9 +22,6 @@
                     <LinearGradientBrush>
                         <GradientStop Color="SteelBlue"/>
                         <GradientStop Color="DarkBlue" Offset="1"/>
-
-                        <!--<GradientStop Color="#FF163AA7"/>-->
-                        <!--<GradientStop Color="#FF213447" Offset="1"/>-->
                     </LinearGradientBrush>
                     
                 </StackPanel.Background>
@@ -37,7 +34,7 @@
 
                 <Button Content="Kaydedilenler" Click="tusKaydedilenler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
                 
-                <Button Content="Bildirimler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="Bildirimler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand" Visibility="Collapsed"/>
 
                 <Button x:Name="tusAdminDebug" Content="Debug Menu" Click="tusDebugPenceresi" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 

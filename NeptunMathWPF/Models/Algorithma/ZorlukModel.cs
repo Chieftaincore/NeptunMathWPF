@@ -68,7 +68,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         {
             soruTuru = SoruTerimleri.soruTuru.islem;
 
-            seviye = 3;
+            seviye = 7;
             min = 1;
             max = 9;
         }

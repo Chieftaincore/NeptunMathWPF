@@ -168,10 +168,10 @@
     <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\ApiTest.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\ApiTest.xaml.cs">
       <DependentUpon>ApiTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\BookmarkedQuestionsPanelWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\BookmarkedQuestionsPanelWPF.xaml.cs">
       <DependentUpon>BookmarkedQuestionsPanelWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\DevPanelWPF.xaml.cs">
@@ -179,19 +179,19 @@
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\HesapMakinesiModel.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ISoruCardStyleKey.cs" />
-    <Compile Include="Formlar\kullaniciadiDegisPanelWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\kullaniciadiDegisPanelWPF.xaml.cs">
       <DependentUpon>kullaniciadiDegisPanelWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\sifreDegisPanelWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\sifreDegisPanelWPF.xaml.cs">
       <DependentUpon>sifreDegisPanelWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\HesapMakinesiWindow.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\HesapMakinesiWindow.xaml.cs">
       <DependentUpon>HesapMakinesiWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\IstatistikWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\IstatistikWPF.xaml.cs">
       <DependentUpon>IstatistikWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\konuEkleUC.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\WPFControls\konuEkleUC.xaml.cs">
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\LimitPanel.xaml.cs">
@@ -200,13 +200,13 @@
     <Compile Include="Formlar\LoginForm.xaml.cs">
       <DependentUpon>LoginForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\NotAlmaWindow.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\NotAlmaWindow.xaml.cs">
       <DependentUpon>NotAlmaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\PDFbelgelendiriciWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\PDFbelgelendiriciWPF.xaml.cs">
       <DependentUpon>PDFbelgelendiriciWPF.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\soruHavuzuUC.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\WPFControls\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
@@ -251,7 +251,7 @@
     <Compile Include="SoruVeAjani\Fonksiyonlar\GeneratedFunction.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\InverseFunctionGenerator.cs" />
     <Compile Include="SoruVeAjani\Fonksiyonlar\Question.cs" />
-    <Compile Include="Formlar\dbTestWPF.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\dbTestWPF.xaml.cs">
       <DependentUpon>dbTestWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\AnasayfaWPF.xaml.cs">
@@ -275,7 +275,7 @@
       <DependentUpon>FunctionsWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Genel.cs" />
-    <Compile Include="Formlar\LatexTestPencere.xaml.cs">
+    <Compile Include="Formlar\AltFormlar\LatexTestPencere.xaml.cs">
       <DependentUpon>LatexTestPencere.xaml</DependentUpon>
     </Compile>
     <Compile Include="SoruVeAjani\Ifade.cs" />
@@ -351,15 +351,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Formlar\ApiTest.xaml">
+    <Page Include="Formlar\AltFormlar\ApiTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\BookmarkedQuestionsPanelWPF.xaml">
+    <Page Include="Formlar\AltFormlar\BookmarkedQuestionsPanelWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\dbTestWPF.xaml">
+    <Page Include="Formlar\AltFormlar\dbTestWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -371,11 +371,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\kullaniciadiDegisPanelWPF.xaml">
+    <Page Include="Formlar\AltFormlar\kullaniciadiDegisPanelWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\sifreDegisPanelWPF.xaml">
+    <Page Include="Formlar\AltFormlar\sifreDegisPanelWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -383,15 +383,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\HesapMakinesiWindow.xaml">
+    <Page Include="Formlar\AltFormlar\HesapMakinesiWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\IstatistikWPF.xaml">
+    <Page Include="Formlar\AltFormlar\IstatistikWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\konuEkleUC.xaml">
+    <Page Include="Formlar\AltFormlar\WPFControls\konuEkleUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -407,7 +407,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\LatexTestPencere.xaml">
+    <Page Include="Formlar\AltFormlar\LatexTestPencere.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -419,15 +419,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Formlar\NotAlmaWindow.xaml">
+    <Page Include="Formlar\AltFormlar\NotAlmaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\PDFbelgelendiriciWPF.xaml">
+    <Page Include="Formlar\AltFormlar\PDFbelgelendiriciWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\soruHavuzuUC.xaml">
+    <Page Include="Formlar\AltFormlar\WPFControls\soruHavuzuUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
