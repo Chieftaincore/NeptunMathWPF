@@ -565,7 +565,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     foreach (var soru in sorular)
                     {
-                        document.Add(new Paragraph($"Soru {soruNo}: {soru.soru.GetMetin()}", boldFont));
+                        document.Add(new Paragraph($"Soru {soruNo}: \n {soru.soru.GetMetin()}", boldFont));
 
                         // Seçenekleri ekle ve doğru cevabın harfini bul
                         string dogruCevap = "";
