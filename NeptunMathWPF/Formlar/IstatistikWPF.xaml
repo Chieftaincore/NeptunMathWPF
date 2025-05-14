@@ -7,9 +7,21 @@
         mc:Ignorable="d"
         Title="IstatistikWPF" Height="450" Width="800">
     <Grid>
-        <ListBox x:Name="TopicsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,70,630,166" SelectionChanged="TopicsListBox_SelectionChanged"/>
-        <ListBox x:Name="SubtopicsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="175,70,440,166" SelectionChanged="SubtopicsListBox_SelectionChanged"/>
-        <Label x:Name="lblYanlisCount" Content="" HorizontalAlignment="Left" Margin="504,156,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="TopicsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="4,45,626,191" SelectionChanged="TopicsListBox_SelectionChanged"/>
+        <ListBox x:Name="SubtopicsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="174,45,441,191" SelectionChanged="SubtopicsListBox_SelectionChanged"/>
+        <Label x:Name="lblYanlisCount" Content="" HorizontalAlignment="Left" Margin="697,18,0,0" VerticalAlignment="Top" Foreground="#FFDC1D1D"/>
+        <Label Content="Yanlış Sayısı:" HorizontalAlignment="Left" Margin="601,18,0,0" VerticalAlignment="Top" Foreground="#FFDC1D1D"/>
+        <Label Content="Konu" HorizontalAlignment="Left" Margin="4,18,0,0" VerticalAlignment="Top"/>
+        <Label Content="Altkonu" HorizontalAlignment="Left" Margin="174,18,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="QuestionsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="364,44,87,191" SelectionChanged="QuestionsListBox_SelectionChanged"/>
+        <Label Content="Sorular" HorizontalAlignment="Left" Margin="364,18,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Soru" Margin="6,248,14,10"/>
+        <Label x:Name="lblSoru" Content="Label" HorizontalAlignment="Left" Margin="23,280,0,0" VerticalAlignment="Top" Height="56" Width="747"/>
+        <Label x:Name="lblA" Content="A)" HorizontalAlignment="Left" Margin="23,341,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblB" Content="B)" HorizontalAlignment="Left" Margin="364,341,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblC" Content="C)" HorizontalAlignment="Left" Margin="23,384,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblD" Content="D)" HorizontalAlignment="Left" Margin="363,384,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblE" Content="E)" HorizontalAlignment="Left" Margin="528,362,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
