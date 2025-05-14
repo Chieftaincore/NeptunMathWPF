@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
+    using soruTur = SoruTerimleri.soruTuru;
     public class ZorlukRepository
     {
         
@@ -16,24 +19,46 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             {"USLUNORMAL",new int[]{1,11}}, {"USTAMCARPAN",new int[] {0,4} }, {"USBOLMECARPAN", new int[]{2,5}}
         };
 
-        public List<ZorlukModel> Zorluklar { get; set; }
+        public Dictionary<soruTur,ZorlukModel> Zorluklar { get; set; }
 
-        public ZorlukRepository()
+        public ZorlukRepository(List<soruTur> turler)
         {
-
-            Zorluklar = new List<ZorlukModel>()
+            if(turler.Count > 0)
             {
-                new ZorlukModel()
+                Zorluklar = new Dictionary<soruTur, ZorlukModel>();
+
+                if (turler.Contains(soruTur.islem))
+                    Zorluklar.Add(soruTur.islem, new IslemSoruZorlukModel());
+
+                if (turler.Contains(soruTur.fonksiyon) || turler.Contains(soruTur.limit))
                 {
+                    FonksiyonelSoruZorlukModel fonksmodel = new FonksiyonelSoruZorlukModel();
 
-                },
+                    if(turler.Contains(soruTur.fonksiyon))
+                         Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
 
-                new ZorlukModel()
-                {
-
+         
                 }
 
-            };
+
+                if (turler.Contains(soruTur.limit))
+                {
+                    Zorluklar.Add(soruTur.limit, new LimitSoruZorlukModel());
+                }
+
+                if (turler.Contains(soruTur.problem))
+                {
+                    Zorluklar.Add(soruTur.problem, new ProblemSoruZorlukModel());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Algorithma modeli yetersiz sayıda Parametre aldı tek tip soruya ayarlandı", "Algorithma model bildiri", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+                if (turler.Contains(soruTur.islem))
+                    Zorluklar.Add(soruTur.islem, new IslemSoruZorlukModel());
+            }
         }
+
     }
 }

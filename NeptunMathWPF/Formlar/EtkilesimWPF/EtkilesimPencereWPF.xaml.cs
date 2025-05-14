@@ -1,4 +1,6 @@
 ﻿using HesapMakinesi;
+using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
+using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +27,16 @@ namespace NeptunMathWPF.Formlar
 
             Onceki = _onceki;
         }
+
+        public EtkilesimPencereWPF(Window _onceki, SoruTerimleri.soruTuru[] Turler)
+        {
+            InitializeComponent();
+
+            ((EtkilesimMVM)this.DataContext).Algorithma = new AlgorithmaModel(turler: Turler);
+
+            Onceki = _onceki;
+        }
+
 
         private void HesapMakinesi_Click(object sender, RoutedEventArgs e)
         {

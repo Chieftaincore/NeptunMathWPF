@@ -10,6 +10,9 @@ using System.Windows;
 using System.Windows.Input;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Data;
+using NeptunMathWPF.SoruVeAjani.Algorithma;
+using System.Windows.Controls;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -39,13 +42,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugLimitSoruOlustur { get; set; }
         public ICommand DebugTurevSoruOlustur { get; set; }
         public ICommand DebugLatexsizPDF { get; set; } //Latex olmadan PDF oluşturma komutu
-
+        public ICommand AlgorithmaCheck { get; set; }
         public ICommand DebugLatexsizPDFOlustur { get; set; }
-
+        public ICommand DebugHavuzSoruEkle { get; set; }
         #endregion
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
-
+        bool algodurum = true;
+        public AlgorithmaModel Algorithma { get; set; }
         public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular { get; set; }
         public SoruCardModel seciliSoru { get; set; }
@@ -108,15 +112,41 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 CokluIfadeTurlerListColl = new ObservableCollection<ifadeTuru>();
                 DebugComboBoxTurler = Enum.GetNames(typeof(ifadeTuru));
 
+                //Problemler için içine soruTuru.problem de ekleyin
+                if(Algorithma == null)
+                    Algorithma = new AlgorithmaModel(new soruTuru[] { soruTuru.islem, soruTuru.fonksiyon, soruTuru.limit});
+
                 //MVVM'de Komutları bu sınıfa yazım alttaki KomutlarInit()'in gövdesinde belirtmeniz gerek
                 KomutlarInit();
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
 
+
                 DebugIslemSoruEkle();
 
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
                 OnPropertyChanged();
+            });
+        }
+
+        //Bitmedi
+        internal void IlkEkleme()
+        {
+            Genel.Handle(() =>
+            {
+                if(Algorithma != null)
+                {
+                    if (Algorithma.repo.Zorluklar.Count == 1 && Algorithma.repo.Zorluklar.ContainsKey(soruTuru.problem))
+                    {
+
+                    }
+
+                    Algorithma.Sonraki();
+                }
+                else
+                {
+                    DebugIslemSoruEkle();
+                }
             });
         }
 
@@ -174,9 +204,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 OnPropertyChanged();
 
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("Problem Eklenirken Sorun Oluştu", "Problem Sorunu",
+                MessageBox.Show($"Problem Eklenirken Sorun Oluştu {e}", "Problem Sorunu",
                     MessageBoxButton.OK, icon: MessageBoxImage.Error);
             }
         }
@@ -262,6 +292,46 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
+        #region MVVMAlgorithma
+
+        internal bool SonSoruCheck()
+        {
+            if (Sorular.Last().kilitlendi)
+                return true;
+
+            return false;
+        }
+
+        public void AlgorithmaSoruEkle()
+        {
+            Genel.Handle(() =>
+            {
+                Soru _soru = algoSonrakiSoruGetir();
+
+                seciliSoru = new SoruCardModel(_soru)
+                {
+                    LaTeX = _soru.LatexMetin,
+                    zaman = DateTime.Now,
+                    kaynak = "Yerel"
+                };
+
+                Sorular.Add(seciliSoru);
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
+                OnPropertyChanged(nameof(secenekler));
+                OnPropertyChanged();
+
+            });
+        }
+
+        internal Soru algoSonrakiSoruGetir()
+        {
+            return Algorithma.Sonraki();
+        }
+
+        #endregion
+
         private static ifadeTuru turdondur(ifadeTuru[] turler)
         {
             Random rng = new Random();
@@ -271,37 +341,57 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SeciliSoruCevapla(object o)
         {
-            //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
-            bool dogru = secenekler.Cevapla();
-
-            if (dogru)
+            Genel.Handle(() =>
             {
-                seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
-            }
-            else
-            {
-                seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
-
-
-                // DB KAYIT
-                if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+                if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
                 {
-                    AddWrongQuestionToDB();
+                    MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                    return;
                 }
-            }
 
-            if(Sorular.Last() != seciliSoru)
-            {
-               int i = Sorular.IndexOf(seciliSoru);
+                //Radioboxlar Nesnenin içine seciliDeğeri önceden göndermiştir
+                bool dogru = secenekler.Cevapla();
 
-                seciliSoru = Sorular.ElementAt(i + 1);
+                if (dogru)
+                {
+                    seciliSoru.EkYaziGuncelle("Doğru cevaplandı", 3);
 
-                OnPropertyChanged(nameof(seciliSoru));
-                OnPropertyChanged(nameof(secenekler));
-            }
+                    if (algodurum && Algorithma.RepoDenetim(seciliSoru.Tur))
+                        Algorithma.ModelSeviyeArtır(seciliSoru.Tur);
+                }
+                else
+                {
+                    seciliSoru.EkYaziGuncelle($"Yanlış cevaplandı | doğru cevap {secenekler.DogruSecenekGetir()}", 2);
 
-            seciliTur = seciliSoru.SoruTuruStyleTemplate();
-            OnPropertyChanged(nameof(seciliTur));
+                    if (algodurum && Algorithma.RepoDenetim(seciliSoru.Tur))
+                        Algorithma.ModelSeviyeAzalt(seciliSoru.Tur);
+
+                    // DB KAYIT
+                    if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+                    {
+                        AddWrongQuestionToDB();
+                    }
+                }
+
+                if (Sorular.Last() != seciliSoru)
+                {
+                    int i = Sorular.IndexOf(seciliSoru);
+
+                    seciliSoru = Sorular.ElementAt(i + 1);
+
+                    OnPropertyChanged(nameof(seciliSoru));
+                    OnPropertyChanged(nameof(secenekler));
+                }
+
+                seciliTur = seciliSoru.SoruTuruStyleTemplate();
+                OnPropertyChanged(nameof(seciliTur));
+
+                if (SonSoruCheck() && algodurum)
+                {
+                    AlgorithmaSoruEkle();
+                }
+            });
         }
 
         #region VeriTabani
@@ -326,7 +416,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
                 }
                 var subtopic = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == soruAltTur);
-                if(subtopic == null)
+                if (subtopic == null)
                 {
                     Genel.dbEntities.SUBTOPICS.Add(new SUBTOPICS
                     {
@@ -347,7 +437,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     wrongAnswers += item + "#";
                 }
-                //subtopic eklenecek
                 Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Add(new WRONG_ANSWERED_QUESTIONS
                 {
                     USERID = aktifKullanici.kullnId,
@@ -405,7 +494,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     wrongAnswers += item + "#";
                 }
-                //subtopic eklenecek
                 Genel.dbEntities.BOOKMARKED_QUESTIONS.Add(new BOOKMARKED_QUESTIONS
                 {
                     USERID = aktifKullanici.kullnId,
@@ -418,6 +506,33 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 });
                 Genel.dbEntities.SaveChanges();
             });
+        }
+
+        private void FeedbackToDB(SoruCardModel scm)
+        {
+            if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
+            {
+
+                Genel.Handle(() =>
+                {
+                    Genel.ReloadEntity();
+                    Genel.dbEntities.FEEDBACK.Add(new FEEDBACK
+                    {
+                        USERID = aktifKullanici.kullnId,
+                        SUBJECT = "Hatalı soru bildirimi",
+                        MESSAGE = $"SORU: {scm.soru.IslemMetin} SECENEKLER: {scm.NesneSecenekler.secenekler[0]}" +
+                        $"#{scm.NesneSecenekler.secenekler[1]}" +
+                        $"#{scm.NesneSecenekler.secenekler[2]}" +
+                        $"#{scm.NesneSecenekler.secenekler[3]}" +
+                        $"#{(scm.NesneSecenekler.secenekler.Count >= 5 ? scm.NesneSecenekler.secenekler[4] : "")}" +
+                        $" DOGRU CEVAP: {scm.NesneSecenekler.DogruSecenekGetir()}",
+                        FEEDBACK_TYPE = "Hata",
+                        STATUS = "Beklemede",
+                        CREATE_DATE = DateTime.Now,
+                    });
+                    Genel.dbEntities.SaveChanges();
+                });
+            }
         }
 
         private void DebugLimitSoruEkle()
@@ -499,6 +614,24 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
             DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
+            AlgorithmaCheck = new RelayCommand(o => AlgorithmaChecki(o));
+        }
+
+        /// <summary>
+        /// Debug Algorithma kapatma/açma tuşu
+        /// </summary>
+        /// <param name="o"></param>
+        internal void AlgorithmaChecki(object o)
+        {
+            bool durum = algodurum;
+            algodurum = !durum;
+
+            MessageBox.Show(algodurum.ToString());
+        }
+
+        internal void tusDBSoruGetir()
+        {
+
         }
 
         internal void tusDBSoruIsaretle(object o)
@@ -518,6 +651,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             SoruCardModel _model = (SoruCardModel)o;
 
+            FeedbackToDB(_model);
             SoruMetaVeri(_model, "Bildirilen");
         }
 
@@ -530,7 +664,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         private void SoruMetaVeri(SoruCardModel _model, string EK = "")
         {
-            MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            if (_model.kilitlendi || aktifKullanici.yetki == "admin")
+            {
+                MessageBox.Show($"Eylemdeki {EK} Model:: {_model.kaynak}\r SORU |\r - Türü {_model.soru.SoruTuru}\r - Alt Konusu :: {_model.soru.AltTur} \r{_model.LaTeX}\r Cevaplar\r - doğru :: {_model.NesneSecenekler.DogruSecenekGetir()} \r - seçilen :: {_model.NesneSecenekler.secilideger} \rRenk : {_model.TabRenk} \r ", "SoruBilgisi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            }
+            else
+            {
+                MessageBox.Show("MetaVeriyi görmeden önce soruyu çözmeniz veya admin olmanız gerekli", "Metaveri?", MessageBoxButton.OK, MessageBoxImage.Question);
+            }
         }
 
         public void PDFlatexsizCiktiAl()
@@ -603,9 +744,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-        
-
-
+       
         private void DebugCokluIfadeCollSil(object obje)
         {
             Genel.Handle(() =>

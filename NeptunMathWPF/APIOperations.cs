@@ -17,7 +17,7 @@ namespace NeptunMathWPF
 
         private static string apiKey = GetGeminiApiKey();
         private static string baseApiUrl =
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent";
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
         private static readonly HttpClient _httpClient = new HttpClient();
 
         public static string GetGeminiApiKey()

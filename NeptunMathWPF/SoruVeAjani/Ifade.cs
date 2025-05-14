@@ -71,10 +71,6 @@ namespace NeptunMathWPF.SoruVeAjani
     }
     public class Kesir : Ifade
     {
-        Entity pay;
-        Entity payda;
-        string islem;
-        string LaTex;
 
         public Kesir(int pay, int payda)  : base($"({pay}/{payda})", $"\\frac{{{pay}}}{{{payda}}}", ifadeTuru.kesir)
         {

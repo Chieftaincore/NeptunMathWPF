@@ -1,4 +1,5 @@
 ﻿using NeptunMathWPF;
+using System;
 using System.Windows;
 
 namespace AnasayfaWPF
@@ -32,6 +33,32 @@ namespace AnasayfaWPF
                 if (sifre != sifreTekrar)
                 {
                     MessageBox.Show("Şifreler eşleşmiyor!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var Eposta = KayitEpostaTxt.Text.Trim();
+
+                if (Eposta.EndsWith("."))
+                {
+                    MessageBox.Show("Eposta : sonu doğru bitmiyor", "Metin Kutusu Eksiği!", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    return;
+                }
+
+                try
+                {
+                    var addr = new System.Net.Mail.MailAddress(KayitEpostaTxt.Text);
+
+                    bool dogru = addr.Address == Eposta;
+
+                    if (!dogru)
+                    {
+                        MessageBox.Show($"hatalı Eposta yazıldı", "Metin Kutusu Eksiği!", MessageBoxButton.OK, MessageBoxImage.Stop);
+                        return;
+                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Eposta Doğrulmada hata", "Metin Kutusu Eksiği!", MessageBoxButton.OK, MessageBoxImage.Stop);
                     return;
                 }
 
