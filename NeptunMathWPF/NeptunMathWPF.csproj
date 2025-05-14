@@ -131,6 +131,8 @@
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -143,6 +145,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="WpfMath, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\WpfMath.2.1.0\lib\net462\WpfMath.dll</HintPath>
     </Reference>
@@ -193,6 +196,9 @@
     </Compile>
     <Compile Include="Formlar\AltFormlar\WPFControls\konuEkleUC.xaml.cs">
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Formlar\GetAPIKeyPanelWPF.xaml.cs">
+      <DependentUpon>GetAPIKeyPanelWPF.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\LimitPanel.xaml.cs">
       <DependentUpon>LimitPanel.xaml</DependentUpon>
@@ -334,9 +340,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>NeptunDB.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="GEMINI.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="NeptunDB.edmx.diagram">
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </None>
@@ -400,6 +403,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\AyarlarFormu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\GetAPIKeyPanelWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
