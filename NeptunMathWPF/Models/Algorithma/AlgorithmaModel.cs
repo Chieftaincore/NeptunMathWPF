@@ -1,5 +1,6 @@
 ﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,11 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                 if (_tur == soruTur.problem)
                 {
                     ProblemArkaSoruAsync();
+
+                    List<soruTur> _Yedek = new List<soruTur>(SoruTurleri);
+                    _Yedek.Remove(soruTur.problem);
+
+                    _tur = _Yedek[rng.Next(_Yedek.Count)];
                 }
 
                 return repo.Zorluklar[_tur].SonrakiAlgorithma(_seviye);
@@ -96,6 +102,16 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         public void ModelSeviyeAzalt(soruTur tur)
         {
             repo.Zorluklar[tur].seviyeAzalt();
+        }
+
+        public bool RepoDenetim(soruTur tur)
+        {
+            if (repo.Zorluklar.ContainsKey(tur))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -35,10 +35,6 @@
 
                                     <MenuItem Header="Soruda Hata Bildir" Command="{Binding DataContext.SoruHataBildir, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
-                                    <MenuItem Header="Soruyu Açıkla" Command=""/>
-
-                                    <MenuItem Header="Soruyu Değerlendir" Command=""/>
-
                                     <MenuItem Header="Soru Meta Verisi" Command="{Binding DataContext.tusSoruMetaVeri, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                 </MenuItem>
@@ -99,10 +95,6 @@
                                     <MenuItem Header="Soruyu Yer İşaretlerinde Kaydet" Command="{Binding DataContext.SoruYerIsaretiKaydet, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 
                                     <MenuItem Header="Soruda Hata Bildir" Command="{Binding DataContext.SoruHataBildir, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
-
-                                    <MenuItem Header="Soruyu Açıkla" Command=""/>
-
-                                    <MenuItem Header="Soruyu Değerlendir" Command=""/>
 
                                     <MenuItem Header="Soru Meta Verisi" Command="{Binding DataContext.tusSoruMetaVeri, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding .}"/>
 

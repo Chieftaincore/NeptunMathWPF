@@ -103,7 +103,7 @@
                 <Button x:Name="tusFonksiyonEKle" Content="Fonksiyon Sorusu Ekle" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugFonksiyonSoruOlustur}"/>
 
-                <Button x:Name="tusPanelDegis" Content="Panel Değiş" Background="AliceBlue"
+                <Button x:Name="tusPanelDegis" Content="Panel Değiş" Background="AliceBlue" Visibility="Collapsed"
                         Height="32" Margin="5,10,5,10" Command="{Binding SeciliTurDegistir}"/>
 
                 <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" Background="AliceBlue"
@@ -112,7 +112,7 @@
                 <Button x:Name="tusLimitSoruOlustur" Content="Limit Soru Oluştur" Background="AliceBlue"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugLimitSoruOlustur}"/>
                 
-                <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" Background="AliceBlue"
+                <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" Background="AliceBlue" Visibility="Collapsed"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugTurevSorusuOlustur}"/>
                 
             </StackPanel>

@@ -34,11 +34,13 @@
 
                 <Button Content="İstatistik" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Bildirimler" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="Kaydedilenler" Click="tusKaydedilenler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                
+                <Button Content="Bildirimler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Debug Menu" Click="tusDebugPenceresi" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="tusAdminDebug" Content="Debug Menu" Click="tusDebugPenceresi" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Geliştirici" Click="tusDevPanel" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="tusAdminGelistirici" Content="Geliştirici" Click="tusDevPanel" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
                 <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="4,5,4,5" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFC5D8F1" FontStyle="Italic" Foreground="Black" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
 
@@ -99,7 +101,20 @@
             </TabItem>
 
             <TabItem Header="Kullanici" Background="AliceBlue" Padding="8">
-                
+               
+                <StackPanel>
+                    
+                <Label x:Name="kKullaniciAdi" Margin="10,12" FontSize="20" FontWeight="Bold"/>
+
+                    <Label x:Name="kAd" Margin="10,8" FontSize="12"/>
+
+                    <Label x:Name="kSoyAd" Margin="10,8" FontSize="12"/>
+                    
+                    <Label x:Name="kYetki" Margin="10,8" FontSize="12"/>
+                    
+                    <Label x:Name="kEmail" Margin="10,8" FontSize="12"/>
+                    
+                </StackPanel>
                 
             </TabItem>
             

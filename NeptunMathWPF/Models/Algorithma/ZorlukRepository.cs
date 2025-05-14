@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
@@ -36,18 +37,26 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                     if(turler.Contains(soruTur.fonksiyon))
                          Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
 
-                    //limitin şu anlık kendi oluşturucusu yok
-                    if (turler.Contains(soruTur.limit))
-                    {
-                        Zorluklar.Add(soruTur.limit, fonksmodel);
-                        fonksmodel.Limit = true;
-                    }
+         
+                }
+
+
+                if (turler.Contains(soruTur.limit))
+                {
+                    Zorluklar.Add(soruTur.limit, new LimitSoruZorlukModel());
                 }
 
                 if (turler.Contains(soruTur.problem))
                 {
                     Zorluklar.Add(soruTur.problem, new ProblemSoruZorlukModel());
                 }
+            }
+            else
+            {
+                MessageBox.Show("Algorithma modeli yetersiz sayıda Parametre aldı tek tip soruya ayarlandı", "Algorithma model bildiri", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+                if (turler.Contains(soruTur.islem))
+                    Zorluklar.Add(soruTur.islem, new IslemSoruZorlukModel());
             }
         }
 
