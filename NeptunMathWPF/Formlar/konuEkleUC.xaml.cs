@@ -24,6 +24,7 @@ namespace NeptunMathWPF.Formlar
         {
             InitializeComponent();
             LoadTopics();
+            LoadSubtopics();
         }
 
         private void addTopicButton_Click(object sender, RoutedEventArgs e)
@@ -32,6 +33,7 @@ namespace NeptunMathWPF.Formlar
             {
                 Genel.Handle(() =>
                 {
+                    Genel.ReloadEntity();
                     string topic = topicTextBox.Text;
                     Genel.dbEntities.TOPICS.Add(new TOPICS
                     {
@@ -50,6 +52,7 @@ namespace NeptunMathWPF.Formlar
             if (topicComboBox.Text != string.Empty && subtopicTextBox.Text != string.Empty)
                 Genel.Handle(() =>
                 {
+                    Genel.ReloadEntity();
                     string subtopic = subtopicTextBox.Text;
                     string _topic = topicComboBox.Text;
                     var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == _topic);
@@ -83,15 +86,16 @@ namespace NeptunMathWPF.Formlar
 
         private void rmvTopicButton_Click(object sender, RoutedEventArgs e)
         {
-            if (topicTextBox.Text != string.Empty)
+            if (topicComboBox2.SelectedIndex!=-1)
             {
 
                 Genel.Handle(() =>
                 {
+                    Genel.ReloadEntity();
                     try
                     {
                         Genel.ReloadEntity();
-                        string topic = topicTextBox.Text;
+                        string topic = topicComboBox2.SelectedItem.ToString();
                         var entityToDelete = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == topic);
                         Genel.dbEntities.TOPICS.Attach(entityToDelete);
                         Genel.dbEntities.TOPICS.Remove(entityToDelete);
@@ -110,14 +114,15 @@ namespace NeptunMathWPF.Formlar
         private void rmvSubtopicButton_Click(object sender, RoutedEventArgs e)
         {
             // eğer aynı alt konu ismi farklı konularda varsa topic id kontrolü de eklenebilir
-            if (subtopicTextBox.Text != string.Empty)
+            if (subtopicComboBox.SelectedIndex!=-1)
             {
                 Genel.Handle(() =>
                 {
+                    Genel.ReloadEntity();
                     try
                     {
 
-                        string subtopic = subtopicTextBox.Text;
+                        string subtopic = subtopicComboBox.SelectedItem.ToString(); ;
                         var entityToDelete = Genel.dbEntities.SUBTOPICS.FirstOrDefault(x => x.SUBTOPIC == subtopic);
                         Genel.dbEntities.SUBTOPICS.Attach(entityToDelete);
                         Genel.dbEntities.SUBTOPICS.Remove(entityToDelete);

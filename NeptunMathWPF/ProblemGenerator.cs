@@ -13,40 +13,56 @@ namespace NeptunMathWPF
     {
         public async static Task<ProblemRepository> GenerateProblem(ProblemType problemType, ProblemDifficulty problemDifficulty)
         {
-            string difficulty = problemDifficulty.ToString();
-            if (problemDifficulty == ProblemDifficulty.CokZor)
-            {
-                difficulty = "çok zor";
-            }
+            int maxRetries = 5;
+            int attempt = 0;
 
-            string type = ProblemTypeToString(problemType);
-
-            string problemPrompt = $"Aşağıdaki JSON yapısına uygun bir matematik problemi, doğru cevabı ve üç adet yanlış cevap üret. Üretilen problem ve doğru cevap matematiksel olarak %100 doğru olmalıdır. Problem, ortaokul veya lise seviyesine uygun ancak {difficulty} seviyede olmalı ve çözülebilir nitelikte olmalıdır. Problem sorusunun türü {type} Problemi olmalıdır. Soru içeriğini rastgele seç. Yanlış cevaplar, olası mantık hatalarını veya işlem hatalarını yansıtan, makul görünen ama yanlış seçenekler olmalıdır. Soruyu ve cevabı ürettikten sonra kendin cevabın ve sorunun doğruluğunu test et ve eğer doğru değilse soruyu tekrar yaz.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n İstenen JSON formatı: \r\n\r\n\r\n\r\n ```json \r\n\r\n\r\n\r\n  {{  \r\n\r\n\r\n\r\n   \"problem\": \"Matematik problemi metni buraya\", \r\n\r\n\r\n\r\n   \"dogru_cevap\": \"Doğru sayısal cevap buraya\", \r\n\r\n\r\n\r\n   \"yanlis_cevaplar\": [ \r\n\r\n\r\n\r\n     \"Yanlış cevap 1 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 2 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 3 (sayısal)\" \r\n\r\n\r\n\r\n   ] \r\n\r\n\r\n\r\n }} \r\n\r\n\r\n\r\n ``` \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Sadece bu JSON çıktısını üret, başına veya sonuna kesinlikle başka hiçbir metin ekleme.";
-
-            string generatedJsonString = await APIOperations.CallGeminiApiTypedAsync(problemPrompt);
-            generatedJsonString = generatedJsonString.Replace("```json", "");
-            generatedJsonString = generatedJsonString.Replace("```", "");
-
-
-
-            if (!string.IsNullOrEmpty(generatedJsonString))
+            while (attempt < maxRetries)
             {
                 try
                 {
-                    var quizData = JsonSerializer.Deserialize<ProblemRepository>(generatedJsonString, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-                    return quizData;
+
+                    string difficulty = problemDifficulty.ToString();
+                    if (problemDifficulty == ProblemDifficulty.CokZor)
+                    {
+                        difficulty = "çok zor";
+                    }
+
+                    string type = ProblemTypeToString(problemType);
+
+                    string problemPrompt = $"Aşağıdaki JSON yapısına uygun bir matematik problemi, doğru cevabı ve üç adet yanlış cevap üret. Üretilen problem ve doğru cevap matematiksel olarak %100 doğru olmalıdır. Problem, ortaokul veya lise seviyesine uygun ancak {difficulty} seviyede olmalı ve çözülebilir nitelikte olmalıdır. Problem sorusunun türü {type} Problemi olmalıdır. Soru içeriğini rastgele seç. Yanlış cevaplar, olası mantık hatalarını veya işlem hatalarını yansıtan, makul görünen ama yanlış seçenekler olmalıdır. Soruyu ve cevabı ürettikten sonra kendin cevabın ve sorunun doğruluğunu test et ve eğer doğru değilse soruyu tekrar yaz.\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n İstenen JSON formatı: \r\n\r\n\r\n\r\n ```json \r\n\r\n\r\n\r\n  {{  \r\n\r\n\r\n\r\n   \"problem\": \"Matematik problemi metni buraya\", \r\n\r\n\r\n\r\n   \"dogru_cevap\": \"Doğru sayısal cevap buraya\", \r\n\r\n\r\n\r\n   \"yanlis_cevaplar\": [ \r\n\r\n\r\n\r\n     \"Yanlış cevap 1 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 2 (sayısal)\", \r\n\r\n\r\n\r\n     \"Yanlış cevap 3 (sayısal)\" \r\n\r\n\r\n\r\n   ] \r\n\r\n\r\n\r\n }} \r\n\r\n\r\n\r\n ``` \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n Sadece bu JSON çıktısını üret, başına veya sonuna kesinlikle başka hiçbir metin ekleme.";
+
+                    string generatedJsonString = await APIOperations.CallGeminiApiTypedAsync(problemPrompt);
+                    generatedJsonString = generatedJsonString.Replace("```json", "");
+                    generatedJsonString = generatedJsonString.Replace("```", "");
+
+
+
+                    if (!string.IsNullOrEmpty(generatedJsonString))
+                    {
+                        try
+                        {
+                            var quizData = JsonSerializer.Deserialize<ProblemRepository>(generatedJsonString, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                            return quizData;
+                        }
+                        catch (JsonException jsonEx)
+                        {
+                            return null;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                catch (JsonException jsonEx)
+                catch (Exception)
                 {
-                    MessageBox.Show(jsonEx.Message);
-                    return null;
+
                 }
+
+                attempt++;
+                await Task.Delay(500);
             }
-            else
-            {
-                MessageBox.Show("else");
-                return null;
-            }
+            return null;
         }
 
 

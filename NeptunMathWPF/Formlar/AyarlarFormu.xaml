@@ -15,7 +15,6 @@
                     <!-- Butonları sağa yaslamak için HorizontalAlignment'ı Stretch yapıyoruz -->
                     <Button Content="Kullanıcı Adını Sıfırla" Click="KullaniciAdiSifirla_Click" Width="200" Margin="0,0,0,10" HorizontalAlignment="Stretch"/>
                     <Button Content="Şifreyi Sıfırla" Click="SifreSifirla_Click" Width="200" Margin="0,0,0,10" HorizontalAlignment="Stretch"/>
-                    <Button Content="Soru Profilini Sıfırla" Click="SoruProfiliSifirla_Click" Width="200" HorizontalAlignment="Stretch"/>
                 </StackPanel>
             </GroupBox>
 

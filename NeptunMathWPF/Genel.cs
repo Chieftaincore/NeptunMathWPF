@@ -53,7 +53,7 @@ namespace NeptunMathWPF
             catch (SqlException sqlEx)
             {
                 LogToDatabase(LogLevel.ERROR, $"{sqlEx.Message}\n{sqlEx.InnerException}\n{sqlEx.StackTrace}");
-                MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
             catch (FileNotFoundException fileEx)
@@ -69,10 +69,22 @@ namespace NeptunMathWPF
             }
             catch (Exception ex)
             {
-                LogToDatabase(LogLevel.WARNING, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
-                MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                LogToDatabase(LogLevel.ERROR, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
+                MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        internal static async Task HandleAsync(Action action)
+        {
+            try
+            { action(); }
+            catch (Exception ex)
+            {
+                LogToDatabase(LogLevel.ERROR, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
+                MessageBox.Show("Problem yüklenirken hata oluştu!\nBağlantınızı kontrol edin veya bir yetkiliyle iletişime geçin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor
         {
             dbEntities = new NEPTUN_DBEntities();
