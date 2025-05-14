@@ -32,7 +32,7 @@
             <StackPanel>
                 
                 <Button x:Name="tusLaTeXtestformu" FontStyle="Italic" FontWeight="SemiBold" Background="AliceBlue" Margin="4" Content="Latex Test Formu" Height="49" Width="148" Click="LaTeXtestformuTikla"/>
-                <Button x:Name="FormlarAc" Content="Formları Aç" HorizontalAlignment="Center" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="4" Background="AliceBlue" Height="49" Width="148" Click="FormlarAc_Click" Grid.Column="1" />
+                <Button x:Name="FormlarAc" Content="Formları Aç" HorizontalAlignment="Center" FontWeight="SemiBold" VerticalAlignment="Bottom" Margin="4" Background="AliceBlue" Height="49" Width="148" Click="FormlarAc_Click" Grid.Column="1" Visibility="Collapsed"/>
                 <Button x:Name="tusEtkilesimSayfasi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Etkileşim Sayfası" Height="49" Width="148" Click="EtkilesimSayfasi_Click"/>
                 <Button FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Soru Test Paneli" Height="49" Width="148" Click="SoruTestPaneliTikla"/>
                 <Button x:Name="fonksiyonSayfasi" FontStyle="Italic" FontWeight="SemiBold"  Background="AliceBlue" Margin="4" Content="Fonksiyon Test" Height="49" Width="148"  Click="fonksiyonSayfasi_Click"/>

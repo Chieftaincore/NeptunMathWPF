@@ -19,7 +19,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Quadratic:
                 case FunctionType.Absolute:
                 case FunctionType.Exponential:
-                    domainAnswer = "ℝ"; // Tüm gerçel sayılar
+                    domainAnswer = "R"; // Tüm gerçel sayılar
                     break;
 
                 case FunctionType.Root:
@@ -43,12 +43,12 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Rational:
                     {
                         int c = denominator;
-                        domainAnswer = denomsign == "-" ? $"ℝ \\ {{ {c} }}" : $"ℝ \\ {{ {-c} }}";
+                        domainAnswer = denomsign == "-" ? $"R \\ {{ {c} }}" : $"R \\ {{ {-c} }}";
                     }
                     break;
 
                 default:
-                    domainAnswer = "ℝ";
+                    domainAnswer = "R";
                     break;
             }
 
@@ -77,12 +77,12 @@ namespace NeptunMathWPF.Fonksiyonlar
         {
             var candidates = new HashSet<string>
             {
-                "ℝ",
-                $"ℝ \\ {{ {b + 1} }}",
-                $"ℝ \\ {{ {b + 2} }}",
-                $"ℝ \\ {{ {b - 1} }}",
-                $"ℝ \\ {{ {b + 3} }}",
-                $"ℝ \\ {{ {b - 2} }}"
+                "R",
+                $"R \\ {{ {b + 1} }}",
+                $"R \\ {{ {b + 2} }}",
+                $"R \\ {{ {b - 1} }}",
+                $"R \\ {{ {b + 3} }}",
+                $"R \\ {{ {b - 2} }}"
             };
 
             List<string> candidatesList = candidates.ToList();
