@@ -74,9 +74,8 @@ namespace NeptunMathWPF.Formlar
                 //getquestioncount()
                 Genel.Handle(() =>
                 {
-                    string topicstr = TopicsListBox.SelectedItem.ToString();
-                    var topicId = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == topicstr).Select(x => x.TOPIC_ID).FirstOrDefault();
-                    var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.TOPIC_ID == topicId).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
+                    string subtopic = SubtopicsListBox.SelectedItem.ToString();
+                    var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
 
                     QuestionsListBox.ItemsSource = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
                 });

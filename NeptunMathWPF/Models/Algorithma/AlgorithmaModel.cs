@@ -68,7 +68,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             }
             else
             {
-                MessageBox.Show("Geri Döndürdü","ASYNC");
+                //MessageBox.Show("Geri Döndürdü","ASYNC");
 
                 Soru soru = Bekleyen.Last();
 
@@ -80,7 +80,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public async Task ProblemArkaSoruAsync()
         {
-            MessageBox.Show("ASYNC Tetiklendi"," ASYNC tetiklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+           // MessageBox.Show("ASYNC Tetiklendi"," ASYNC tetiklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
             Bekleyen.Add(await ((ProblemSoruZorlukModel)repo.Zorluklar[soruTur.problem]).SoruHazirla(repo.Zorluklar[soruTur.problem].seviye));
 
