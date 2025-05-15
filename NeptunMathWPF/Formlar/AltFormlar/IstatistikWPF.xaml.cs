@@ -70,23 +70,22 @@ namespace NeptunMathWPF.Formlar
 
         private void SubtopicsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            try
+            Genel.Handle(() =>
             {
-                GetStatistic();
-                Genel.Handle(() =>
+                if(SubtopicsListBox.SelectedItem!=null)
                 {
+                    GetStatistic();
                     string subtopic = SubtopicsListBox.SelectedItem.ToString();
                     var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
 
                     QuestionsListBox.ItemsSource = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
-                });
-            }
-            catch (System.NullReferenceException) { }
+                }
+            });
         }
 
         private void QuestionsListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (QuestionsListBox.SelectedItem!=null)
+            if (QuestionsListBox.SelectedItem != null)
             {
 
                 Genel.Handle(() =>

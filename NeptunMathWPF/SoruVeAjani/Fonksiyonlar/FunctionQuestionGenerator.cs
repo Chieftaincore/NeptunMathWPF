@@ -15,7 +15,7 @@ namespace NeptunMathWPF.Fonksiyonlar
         internal abstract List<FunctionRepository> GenerateQuestion();
         protected abstract List<string> GenerateAnswer(string answer, int a, int b);
 
-        internal (string function, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunction(int rnd = -1)
+        internal (string questiontext, string latex, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunction(int rnd = -1)
         {
             // Rastgele fonksiyon tipi seç (Lineer, Karesel, Köklü, Mutlak, Üstel, Rasyonel)
             if(rnd==-1)
@@ -30,12 +30,14 @@ namespace NeptunMathWPF.Fonksiyonlar
             int denominator = 0;
             string denomsign = "";
             
-            string returnQuestion;
+            string returnLatex;
+            string returnQuestion = "";
             Func<double, double> returnFunc;
 
             switch (functionType)
             {
                 case FunctionType.Linear: // Lineer: f(x) = ax + b  >0<
+                    returnLatex = $"f(x) = {a}x {(b > 0 ? $"+ {b}" : "")}".Trim();
                     returnQuestion = $"f(x) = {a}x {(b > 0 ? $"+ {b}" : "")}".Trim();
                     returnFunc = x => a * x + b;
                     break;
@@ -44,17 +46,20 @@ namespace NeptunMathWPF.Fonksiyonlar
                     bool isNegative1 = random.Next(2) == 0;
                     bool isNegative2 = random.Next(2) == 0;
 
-                    returnQuestion = $"f(x) = {a}x^2 {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
+                    returnLatex = $"f(x) = {a}x^{{2}} {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
+                    returnLatex = $"f(x) = {a}x^2 {(isNegative1 ? $"- {b}x" : $"+ {b}x")} {(isNegative2 ? $"- {c}" : $"+ {c}")}";
                     returnFunc = x => (a * x * x) + ((isNegative1 ? -b : b) * x) + (isNegative2 ? -c : c);
                     break;
 
                 case FunctionType.Root: // Köklü: f(x) = √(ax + b)  >2<
                     b = random.Next(1, 5);
+                    returnLatex = $"f(x) = \\sqrt{{{a}x + {b}}}";
                     returnQuestion = $"f(x) = √({a}x + {b})";
                     returnFunc = x => a * x + b;
                     break;
 
                 case FunctionType.Absolute: // Mutlak: f(x) = |ax - b|  >3<
+                    returnLatex = $"f(x) = |{a}x - {b}|";
                     returnQuestion = $"f(x) = |{a}x - {b}|";
                     returnFunc = x => Math.Abs(a * x - b);
                     break;
@@ -62,6 +67,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Exponential: // Üstel: f(x) = a^(x ± b)  >4<
                     string operation = random.Next(2) == 0 ? "+" : "-";
                     b = random.Next(3);
+                    returnLatex = $"f(x) = {a}^{{x {operation} {b}}}";
                     returnQuestion = $"f(x) = {a}^(x {operation} {b})";
                     returnFunc = x => Math.Pow(a, operation == "+" ? x + b : x - b);
                     break;
@@ -69,13 +75,15 @@ namespace NeptunMathWPF.Fonksiyonlar
                 case FunctionType.Rational: // Rasyonel: f(x) = (ax + b)/(x ± c)  >5<
                     int denominatorOffset = random.Next(1, 4);
                     string denomSign = random.Next(2) == 0 ? "+" : "-";
-                    returnQuestion = $"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})";
+                    returnLatex = $"f(x) = \\frac{{{a}x + {b}}}{{x {denomSign} {denominatorOffset}}}";
+                    returnQuestion = $"f(x) = {a}x + {b}/x {denomSign} {denominatorOffset}";
                     returnFunc = x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset));
                     denominator = denominatorOffset;
                     denomsign = denomSign;
                     break;
 
                 default:
+                    returnLatex = "f(x) = x";
                     returnQuestion = "f(x) = x";
                     returnFunc = x => x;
                     break;
@@ -83,7 +91,7 @@ namespace NeptunMathWPF.Fonksiyonlar
 
             List<int> parameters = new List<int> { a, b, c };
 
-            return (returnQuestion, returnFunc, parameters, functionType,denominator,denomsign);
+            return (returnQuestion, returnLatex, returnFunc, parameters, functionType, denominator, denomsign);
 
         }
 

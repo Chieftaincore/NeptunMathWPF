@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataVis = System.Windows.Forms.DataVisualization;
 
 namespace NeptunMathWPF.Formlar
 {
@@ -23,7 +24,7 @@ namespace NeptunMathWPF.Formlar
         public FunctionsWPF()
         {
             InitializeComponent();
-
+            Chart1.Series[0].Points.Add(3, 0).AxisLabel = "asd";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -41,6 +42,7 @@ namespace NeptunMathWPF.Formlar
                     lblWrongs.Content += answer + "\n";
                 }
             }
+
         }
     }
 }

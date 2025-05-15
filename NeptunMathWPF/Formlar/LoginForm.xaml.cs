@@ -1,4 +1,7 @@
 ﻿using NeptunMathWPF;
+using NeptunMathWPF.Formlar;
+using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 
@@ -9,6 +12,7 @@ namespace LoginApp
         public LoginForm()
         {
             InitializeComponent();
+            CheckGeminiConfig();
         }
 
         private void GirisYap_Click(object sender, RoutedEventArgs e)
@@ -57,6 +61,16 @@ namespace LoginApp
             kayitFormu.Show();
             // İsteğe bağlı: Giriş formunu kapatmak isterseniz aşağıdaki satırı etkinleştirin
             // this.Close();
+        }
+
+        private void CheckGeminiConfig()
+        {
+
+
+            if (!File.Exists(Genel.geminiFilePath))
+            {
+                new GetAPIKeyPanelWPF().ShowDialog();   
+            }
         }
     }
 }

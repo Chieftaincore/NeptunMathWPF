@@ -230,7 +230,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
                 seciliSoru = new SoruCardModel(soru)
                 {
-                    LaTeX = soru.GetMetin(),
                     zaman = DateTime.Now,
                     kaynak = "Yerel"
                 };

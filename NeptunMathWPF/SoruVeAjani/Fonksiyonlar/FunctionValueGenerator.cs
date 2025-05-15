@@ -33,8 +33,9 @@ namespace NeptunMathWPF.Fonksiyonlar
             {
                 qst = new Question
                 {
-                    QuestionText = $"{function.function} fonksiyonu için f({x}) değeri nedir?".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
-                    Answer = (function.functionType == FunctionType.Root) ? GetClosestSquareRoot(result) : Math.Round(result, 2).ToString(),
+                    QuestionText = $"{function.questiontext} fonksiyonu için f({x}) değeri nedir?".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
+                    LatexText = $"{function.latex} \\text{{ fonksiyonu için }} f({x}) \\text{{ değeri nedir?}}".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
+                    Answer = (function.functionType == FunctionType.Root) ? GetClosestSquareRoot(result).Replace("√", "\\sqrt") : Math.Round(result, 2).ToString(),
                     WrongAnswers = (function.functionType == FunctionType.Root) ? GenerateAnswerRoot(result.ToString(), function.parameters[0], function.parameters[1]) : GenerateAnswer(result.ToString(), function.parameters[0], function.parameters[1])
                 };
             }
@@ -42,7 +43,8 @@ namespace NeptunMathWPF.Fonksiyonlar
             {
                 qst = new Question
                 {
-                    QuestionText = $"{function.function} fonksiyonu için f({x}) değeri nedir?".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
+                    QuestionText = $"{function.questiontext} fonksiyonu için f({x}) değeri nedir?".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
+                    LatexText = $"{function.latex} \\text{{ fonksiyonu için }} f({x}) \\text{{ değeri nedir?}}".Replace(" + 0", "").Replace("1x", "x").Replace(" - 0", "").Replace("+ 0x", "").Replace("- 0x", ""),
                     Answer = GetRationalValue((function.parameters[0] * x) + function.parameters[1], x + (function.denomsign == "+" ? function.denominator : -function.denominator)),
                     WrongAnswers = GenerateAnswerRational(((int)result).ToString(), function.parameters[0], function.parameters[1], function.denominator, function.denomsign)
                 };
@@ -56,7 +58,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                     b = function.parameters.ElementAt(1),
                     c = function.parameters.ElementAt(2),
                     x = x,
-                    question = function.function,
+                    question = function.questiontext,
                     functionType = function.functionType,
                     questionObject = qst
                 }
@@ -103,19 +105,19 @@ namespace NeptunMathWPF.Fonksiyonlar
 
             var temp = new List<string>
     {
-        SimplifySquareRoot(a * b),
-        SimplifySquareRoot(a * 1 + b),
-        SimplifySquareRoot((int)Math.Ceiling(correct)),
-        GetClosestSquareRoot(correct + random.Next(1, 50)),
-        GetClosestSquareRoot(correct - random.Next(1, 50)).ToString()
+        SimplifySquareRoot(a * b).Replace("√","\\sqrt"),
+        SimplifySquareRoot(a * 1 + b).Replace("√","\\sqrt"),
+        SimplifySquareRoot((int)Math.Ceiling(correct)).Replace("√","\\sqrt"),
+        GetClosestSquareRoot(correct + random.Next(1, 50)).Replace("√","\\sqrt"),
+        GetClosestSquareRoot(correct - random.Next(1, 50)).ToString().Replace("√","\\sqrt")
     };
 
             var extras = Enumerable
                 .Range(1, 6)
                 .SelectMany(offset => new[]
                 {
-            GetClosestSquareRoot(correct + offset).ToString(),
-            GetClosestSquareRoot(correct - offset).ToString()
+            GetClosestSquareRoot(correct + offset).ToString().Replace("√","\\sqrt"),
+            GetClosestSquareRoot(correct - offset).ToString().Replace("√","\\sqrt")
                 });
 
             List<string> tempList = temp.ToList();
@@ -123,7 +125,7 @@ namespace NeptunMathWPF.Fonksiyonlar
 
             var wrongs = tempList
             .Concat(extras)
-                .Where(w => w != GetClosestSquareRoot(correct))
+                .Where(w => w != GetClosestSquareRoot(correct).Replace("√", "\\sqrt"))
                 .Distinct()
                 .Take(4)
                 .ToList();

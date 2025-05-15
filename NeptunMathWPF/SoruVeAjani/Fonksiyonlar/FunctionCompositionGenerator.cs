@@ -22,30 +22,6 @@ namespace NeptunMathWPF.Fonksiyonlar
             var f = GetRandomFunctionFor_f();
             var g = GetRandomFunctionFor_g(x);
 
-            /*if (g.functionType != FunctionType.Root && f.functionType == FunctionType.Root)
-            {
-                while (true)
-                {
-                    g = GetRandomFunction();
-                    if (g.functionType == FunctionType.Root)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            if (g.functionType == FunctionType.Root && f.functionType == FunctionType.Root)
-            {
-                sqr = Math.Sqrt(g.func(x));
-                root = $"{f.function.Split('=')[1].Replace("x", GetClosestSquareRoot(sqr))}".Insert(3, ".");
-                MessageBox.Show(sqr.ToString() + " " + root);
-
-            }
-            else if (g.functionType == FunctionType.Root && f.functionType != FunctionType.Root)
-            {
-                sqr = Math.Sqrt(f.func(g.func(x)));
-                root = GetClosestSquareRoot(sqr);
-            }*/
 
             //rasyonel
             while (true)
@@ -62,16 +38,16 @@ namespace NeptunMathWPF.Fonksiyonlar
                             ratio = GetRationalValue((g.parameters[0] * x) + g.parameters[1], x - g.denominator);
 
 
-                        answ = f.function.Split('=')[1].Substitute("x", ratio).Simplify().ToString();
+                        answ = f.question.Split('=')[1].Substitute("x", ratio).Simplify().ToString();
                     }
                     else if (g.functionType != FunctionType.Rational && f.functionType == FunctionType.Rational)
                     {
-                        string xVar = g.function.Split('=')[1].Substitute("x", x).ToString();
-                        answ = f.function.Split('=')[1].Substitute("x", xVar).Simplify().ToString();
+                        string xVar = g.question.Split('=')[1].Substitute("x", x).ToString();
+                        answ = f.question.Split('=')[1].Substitute("x", xVar).Simplify().ToString();
                     }
                     break;
                 }
-                catch (AngouriMath.Core.Exceptions.UnhandledParseException)
+                catch (Exception)
                 {
                     f = GetRandomFunctionFor_f();
                     g = GetRandomFunctionFor_g(x);
@@ -81,7 +57,8 @@ namespace NeptunMathWPF.Fonksiyonlar
             double result = f.func(g.func(x));
             Question qst = new Question
             {
-                QuestionText = $"f(x) = {f.function.Split('=')[1]} ve g(x) = {g.function.Split('=')[1]} ise (f∘g)({x}) kaçtır?".Replace("- 0x", "").Replace("+ 0x", "").Replace(" + 0", "").Replace(" - 0", "").Replace("1x", "x"),
+                QuestionText = $"f(x) = {f.latex.Split('=')[1]} ve g(x) = {g.latex.Split('=')[1]} ise (f∘g)({x}) kaçtır?".Replace("- 0x", "").Replace("+ 0x", "").Replace(" + 0", "").Replace(" - 0", "").Replace("1x", "x"),
+                LatexText = $"{f.latex} \\text{{ ve }} {g.latex.Split('=')[1]} \\text{{ ise }} (f \\circ g)({x}) \\text{{ kaçtır?}}".Replace("- 0x", "").Replace("+ 0x", "").Replace(" + 0", "").Replace(" - 0", "").Replace("1x", "x"),
                 Answer = (f.functionType == FunctionType.Rational || g.functionType == FunctionType.Rational) ? answ : result.ToString(),
                 WrongAnswers = (f.functionType == FunctionType.Rational || g.functionType == FunctionType.Rational || f.functionType == FunctionType.Exponential || g.functionType == FunctionType.Exponential) ? GenerateAnswerRational(result, f.parameters[0], f.parameters[1], x, answ) : GenerateAnswer(Math.Round(result, 2).ToString(), f.parameters[0], f.parameters[1])
             };
@@ -93,7 +70,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                     b = f.parameters.ElementAt(1),
                     c = f.parameters.ElementAt(2),
                     x = x,
-                    question = f.function,
+                    question = f.latex,
                     functionType = f.functionType,
                     questionObject = qst
                 },
@@ -228,7 +205,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             return wrongs;
         }
 
-        private (string function, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunctionFor_f()
+        private (string question, string latex, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunctionFor_f()
         {
             var returnFunction = GetRandomFunction();
             if (returnFunction.functionType == FunctionType.Root || returnFunction.functionType == FunctionType.Quadratic || returnFunction.functionType == FunctionType.Exponential)
@@ -246,7 +223,7 @@ namespace NeptunMathWPF.Fonksiyonlar
             return returnFunction;
         }
 
-        private (string function, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunctionFor_g(int x)
+        private (string question, string latex, Func<double, double> func, List<int> parameters, FunctionType functionType, int denominator, string denomsign) GetRandomFunctionFor_g(int x)
         {
             var returnFunction = GetRandomFunction();
 
