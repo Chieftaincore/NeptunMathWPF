@@ -13,7 +13,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         
-        <Button x:Name="onaylaButton" Content="Onayla" HorizontalAlignment="Center" Margin="0,184,0,0" VerticalAlignment="Top" Height="60" Width="174" Click="onaylaButton_Click"/>
         <TextBox x:Name="apikeyTextBox" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="29"/>
         <Label Content="GEMINI API Key'iniz:" Margin="10,50" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         
