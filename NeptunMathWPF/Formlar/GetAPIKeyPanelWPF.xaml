@@ -6,16 +6,20 @@
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
         mc:Ignorable="d"
         Title="GetAPIKeyPanelWPF" Height="300" Width="420" Closed="Window_Closed">
-    <Grid>
+    
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="onaylaButton" Content="Onayla" HorizontalAlignment="Center" Margin="0,184,0,0" VerticalAlignment="Top" Height="60" Width="174" Click="onaylaButton_Click"/>
+        
         <TextBox x:Name="apikeyTextBox" HorizontalAlignment="Center" Margin="0,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" Height="29"/>
-        <Label Content="GEMINI API Key'iniz:" Margin="10,48,267,199"/>
-        <RadioButton x:Name="proRadioButton" Content="Pro Versiyon(Sahipseniz)" HorizontalAlignment="Left" Margin="27,145,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="flashRadioButton" Content="Flash Versiyon(Ücretsiz)" HorizontalAlignment="Left" Margin="227,145,0,0" VerticalAlignment="Top"/>
+        <Label Content="GEMINI API Key'iniz:" Margin="10,50" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
+        <RadioButton x:Name="proRadioButton" Content="Pro Versiyon(Sahipseniz)" Grid.Row="1" HorizontalAlignment="Left" Margin="27,0,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="flashRadioButton" Content="Flash Versiyon(Ücretsiz)" Grid.Row="1"  HorizontalAlignment="Left" Margin="227,0,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="onaylaButton" Content="Onayla" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Height="60" Width="174" Click="onaylaButton_Click"/>
 
     </Grid>
 </Window>

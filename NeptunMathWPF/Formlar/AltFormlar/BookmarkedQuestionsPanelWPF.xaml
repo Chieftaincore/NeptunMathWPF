@@ -46,9 +46,9 @@
       
         <GroupBox Header="Soru" Margin="6,248,14,10"/>
         
-        <Label x:Name="lblSoru" Content="" HorizontalAlignment="Left" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Top" Height="56" Width="747"/>
+        <TextBlock x:Name="lblSoru" Text="" Grid.Row="2" Grid.ColumnSpan="3" TextWrapping="Wrap" VerticalAlignment="Top" Height="56"/>
 
-        <UniformGrid Grid.ColumnSpan="3" Grid.Row="2" Margin="0,56,0,0">
+        <UniformGrid x:Name="Uniform" Grid.ColumnSpan="3" Grid.Row="2" Margin="0,56,0,0">
             
             <Label x:Name="lblA" Content="A)" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <Label x:Name="lblB" Content="B)" HorizontalAlignment="Left" VerticalAlignment="Top"/>

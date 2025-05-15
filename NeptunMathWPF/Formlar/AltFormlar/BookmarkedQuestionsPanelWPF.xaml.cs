@@ -89,37 +89,35 @@ namespace NeptunMathWPF.Formlar
             {
                 Genel.Handle(() =>
                 {
-                    lblA.Content = "A)";
-                    lblA.Foreground = new SolidColorBrush(Colors.Black);
-                    lblB.Content = "B)";
-                    lblB.Foreground = new SolidColorBrush(Colors.Black);
-                    lblC.Content = "C)";
-                    lblC.Foreground = new SolidColorBrush(Colors.Black);
-                    lblD.Content = "D)";
-                    lblD.Foreground = new SolidColorBrush(Colors.Black);
-                    lblE.Content = "E)";
-                    lblE.Foreground = new SolidColorBrush(Colors.Black);
+                    Uniform.Children.Clear();
 
                     string sorustr = QuestionsListBox.SelectedItem.ToString();
                     var soru = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.QUESTION_TEXT == sorustr).FirstOrDefault();
-                    lblSoru.Content = sorustr;
+                    lblSoru.Text = soru.QUESTION_TEXT;
                     List<string> answers = new List<string>();
+
+                    char optchar = 'A';
                     foreach (var item in soru.WRONG_ANSWERS.Split('#'))
                     {
                         if (!string.IsNullOrEmpty(item))
+                        {
                             answers.Add(item);
+                        }
                     }
                     answers.Add(soru.CORRECT_ANSWER);
                     Genel.Shuffle(answers);
 
-                    CheckTrueOrWrong(answers[0], lblA, soru.CORRECT_ANSWER);
-                    CheckTrueOrWrong(answers[1], lblB, soru.CORRECT_ANSWER);
-                    CheckTrueOrWrong(answers[2], lblC, soru.CORRECT_ANSWER);
-                    CheckTrueOrWrong(answers[3], lblD, soru.CORRECT_ANSWER);
-
-                    if (answers.Count > 4)
+                    for (int i = 0; i < answers.Count; i++)
                     {
-                        CheckTrueOrWrong(answers[4], lblE, soru.CORRECT_ANSWER);
+
+                        Label lbl = new Label();
+                        lbl.Foreground = new SolidColorBrush(Colors.Black);
+
+                        lbl.Content = $"{optchar})";
+                        Uniform.Children.Add(lbl);
+
+                        CheckTrueOrWrong(answers[i], lbl, soru.CORRECT_ANSWER);
+                        optchar++;
                     }
                 });
             }
