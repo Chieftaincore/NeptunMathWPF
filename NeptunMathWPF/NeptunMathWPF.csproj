@@ -241,6 +241,9 @@
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
+    <Compile Include="Formlar\RaporFormu.xaml.cs">
+      <DependentUpon>RaporFormu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SesIslemleri.cs" />
     <Compile Include="Models\Algorithma\AlgorithmaModel.cs" />
     <Compile Include="Models\Algorithma\ZorlukModel.cs" />
@@ -436,6 +439,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\TestPencereWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\RaporFormu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

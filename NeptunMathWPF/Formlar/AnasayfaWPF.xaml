@@ -9,7 +9,7 @@
             <RowDefinition Height="24*"/>
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="1*"/>
@@ -23,7 +23,6 @@
                         <GradientStop Color="SteelBlue"/>
                         <GradientStop Color="DarkBlue" Offset="1"/>
                     </LinearGradientBrush>
-                    
                 </StackPanel.Background>
 
                 <Image Source="/Kaynaklar/Resimler/logo.ico" Stretch="Uniform" VerticalAlignment="Top" Width="120" Margin="10,25,0,10" HorizontalAlignment="Center"/>
@@ -33,7 +32,11 @@
                 <Button Content="İstatistik" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
                 <Button Content="Kaydedilenler" Click="tusKaydedilenler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
-                
+
+                <Button Content="Raporlar" Click="tusRaporlar" Margin="4" Width="158" Padding="15" 
+                        FontSize="15" FontWeight="SemiBold" Background="AliceBlue" 
+                        FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
                 <Button Content="Bildirimler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand" Visibility="Collapsed"/>
 
                 <Button x:Name="tusAdminDebug" Content="Debug Menu" Click="tusDebugPenceresi" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
@@ -42,7 +45,7 @@
 
                 <Button Content="Ayarlar" Click="AyarlarFormu_Click" Margin="4,5,4,5" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="#FFC5D8F1" FontStyle="Italic" Foreground="Black" BorderBrush="Black" BorderThickness="1" Cursor="Hand"/>
 
-                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click"  Margin="4,5,4,5" Width="158" Padding="15" FontSize="14" FontWeight="SemiBold" Background="Firebrick" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
+                <Button Content="Oturumu Kapat" Click="OturumuKapat_Click" Margin="4,5,4,5" Width="158" Padding="15" FontSize="14" FontWeight="SemiBold" Background="Firebrick" FontStyle="Italic" Foreground="White" BorderBrush="DarkRed" BorderThickness="1" Cursor="Hand"/>
 
             </StackPanel>
         </ScrollViewer>
@@ -73,7 +76,6 @@
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Grid.RowSpan="2">
                             <ComboBox x:Name="cmbxSoruTurler" Height="35" Margin="30,10" FontSize="16" BorderBrush="Black" BorderThickness="5">
-
                             </ComboBox>
 
                             <Button Content="Konu Ekle" Margin="30,2,30,10" Cursor="Hand"
@@ -104,22 +106,13 @@
             <TabItem Header="Kullanici" Padding="8">
                
                 <StackPanel>
-                    
-                <Label x:Name="kKullaniciAdi" Margin="10,12" FontSize="20" FontWeight="Bold"/>
-
+                    <Label x:Name="kKullaniciAdi" Margin="10,12" FontSize="20" FontWeight="Bold"/>
                     <Label x:Name="kAd" Margin="10,8" FontSize="12"/>
-
                     <Label x:Name="kSoyAd" Margin="10,8" FontSize="12"/>
-                    
                     <Label x:Name="kYetki" Margin="10,8" FontSize="12"/>
-                    
                     <Label x:Name="kEmail" Margin="10,8" FontSize="12"/>
-                    
                 </StackPanel>
-                
             </TabItem>
-            
-            
         </TabControl>
     </Grid>
 </Window>
