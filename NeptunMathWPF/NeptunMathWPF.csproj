@@ -209,9 +209,6 @@
     <Compile Include="Formlar\AltFormlar\WPFControls\soruHavuzuUC.xaml.cs">
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Formlar\SoruNesneTestWPF.xaml.cs">
-      <DependentUpon>SoruNesneTestWPF.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LogLevel.cs" />
     <Compile Include="LOGS.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
@@ -431,10 +428,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Formlar\SoruNesneTestWPF.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
     <Page Include="Formlar\TestPencereWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -453,8 +446,6 @@
     <Content Include="Kaynaklar\Sesler\SesDogru5.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Kaynaklar\Sesler\SesYanlis4.wav" />
-    <Content Include="Kaynaklar\Sesler\SesYanlis5.wav" />
     <Content Include="Kaynaklar\Sesler\SesYanlis6.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -492,6 +483,9 @@
       <ProductName>.NET Framework 3.5 SP1 </ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kaynaklar\Resimler\Maskot\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

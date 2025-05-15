@@ -49,7 +49,7 @@
 
         <TabControl Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2">
 
-            <TabItem Header="Session" Background="AliceBlue" Padding="8">
+            <TabItem Header="Session" Padding="8">
 
                 <ScrollViewer>
                     <Grid Background="White">
@@ -67,7 +67,7 @@
 
                         <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
 
-                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="#253768" Foreground="White" BorderThickness="4" Click="tusStandartSession"/>
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3" Click="tusStandartSession"/>
 
                         </StackPanel>
 
@@ -77,12 +77,12 @@
                             </ComboBox>
 
                             <Button Content="Konu Ekle" Margin="30,2,30,10" Cursor="Hand"
-                                    Background="#253768" HorizontalAlignment="Right" Padding="10" Foreground="AliceBlue" FontStyle="Italic" FontWeight="SemiBold" Click="tusKonuEkle"/>
+                                    Background="WhiteSmoke" BorderBrush="Black" HorizontalAlignment="Right" Padding="10" BorderThickness="3" FontStyle="Italic" FontWeight="SemiBold" Click="tusKonuEkle"/>
 
                             <ListView x:Name="listKonu" BorderThickness="4" Margin="30 10" MinHeight="100" PreviewKeyDown="listKonu_PreviewKeyDown"/>
 
                             <Button Content="Aç"
-                                Background="#253768" Foreground="White" Margin="30,4,30,10" BorderThickness="4" Cursor="Hand"
+                                Background="WhiteSmoke" BorderBrush="Black"  Margin="30,4,30,10" BorderThickness="3" Cursor="Hand"
                                 FontSize="15" FontWeight="SemiBold" Padding="10" FontStyle="Italic" Click="tusOzelSession"/>
                         </StackPanel>
                     </Grid>
@@ -90,15 +90,18 @@
             </TabItem>
 
 
-            <TabItem Header="Hakkında" Background="AliceBlue" Padding="8" Visibility="Collapsed">
+            <TabItem Header="Hakkında" Padding="8">
                 <StackPanel Background="White">
                     <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Width="498" Height="313"/>
+                    
                     <TextBlock Text="Uygulamaya Hoş Geldiniz!" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="Lütfen bir seçenek belirleyin." HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
+                    <TextBlock Text="Matematik Uygulaması." HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
+                    
+                    
                 </StackPanel>
             </TabItem>
 
-            <TabItem Header="Kullanici" Background="AliceBlue" Padding="8">
+            <TabItem Header="Kullanici" Padding="8">
                
                 <StackPanel>
                     

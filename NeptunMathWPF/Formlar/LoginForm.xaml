@@ -2,11 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Giriş Ekranı" Height="400" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Border Background="#f0f4f8" CornerRadius="10" Padding="20">
+    <Border Background="#f0f4f8" CornerRadius="10" Padding="20,10,20,20">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -19,17 +17,17 @@
             </Grid.ColumnDefinitions>
 
             <!--<Label Content="*NEPTHUN MATH*" FontSize="20" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,0,0,20" Grid.Row="0"/>-->
-            <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Uniform" HorizontalAlignment="Center" Height="120" Grid.Row="0"/>
-            <TextBlock Text="Kullanıcı Adı:" Grid.Row="1" Margin="0,0,0,5"/>
+            <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Stretch="Uniform" HorizontalAlignment="Center" Height="150" Grid.Row="0"/>
+            <TextBlock Text="Kullanıcı Adı:" FontSize="13" Grid.Row="1" Margin="0,0,0,5"/>
             <TextBox x:Name="txtKullaniciAdi" MaxLength="30" Grid.Row="2" Padding="5" Margin="0,0,0,10"/>
 
-            <TextBlock Text="Şifre:" Grid.Row="3" Margin="0,0,0,5"/>
+            <TextBlock Text="Şifre:" FontSize="13" Grid.Row="3" Margin="0,0,0,5"/>
             <PasswordBox x:Name="txtSifre" MaxLength="50" Grid.Row="4" Padding="5" Margin="0,0,0,10"/>
 
             <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" Margin="0,10,0,5">
-                <Button Content="Giriş Yap" Height="35" Background="#4CAF50" Foreground="White" FontWeight="SemiBold"
+                <Button Content="Giriş Yap" Height="42" Background="#4CAF50" Foreground="White" FontWeight="SemiBold"
                         BorderBrush="#45a049" Click="GirisYap_Click" Cursor="Hand" Width="120" Margin="0,0,5,0"/>
-                <Button Content="Kayıt Ol" Height="35" Background="#2196F3" Foreground="White" FontWeight="SemiBold"
+                <Button Content="Kayıt Ol" Height="42" Background="#2196F3" Foreground="White" FontWeight="SemiBold"
                         BorderBrush="#1976D2" Click="KayitOl_Click" Cursor="Hand" Width="120" Margin="5,0,0,0"/>
             </StackPanel>
         </Grid>

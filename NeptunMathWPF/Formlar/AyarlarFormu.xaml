@@ -2,9 +2,9 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Ayarlar" Height="400" Width="400"
-        Background="DarkBlue">
+        Background="SteelBlue">
 
-    <Grid Background="GhostWhite" Margin="4">
+    <Grid Background="White" Margin="4,0,4,4">
         <StackPanel Margin="20">
 
             <Label Content="Uygulama Ayarları" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
@@ -13,8 +13,11 @@
             <GroupBox Header="Hesap Ayarları" Margin="0,0,0,15">
                 <StackPanel Margin="10" Orientation="Vertical" HorizontalAlignment="Stretch">
                     <!-- Butonları sağa yaslamak için HorizontalAlignment'ı Stretch yapıyoruz -->
-                    <Button Content="Kullanıcı Adını Sıfırla" Click="KullaniciAdiSifirla_Click" Width="200" Padding="5" Margin="0,0,0,10" HorizontalAlignment="Stretch"/>
-                    <Button Content="Şifreyi Sıfırla" Click="SifreSifirla_Click" Width="200" Margin="0,0,0,10" Padding="5" HorizontalAlignment="Stretch"/>
+                    <Button Content="Kullanıcı Adını Sıfırla" Click="KullaniciAdiSifirla_Click" Width="200" Margin="0,0,0,10" 
+                            Padding="8" FontStyle="Italic" HorizontalAlignment="Stretch" Background="LightSteelBlue" FontWeight="SemiBold" BorderBrush="black"/>
+
+                    <Button Content="Şifreyi Sıfırla" Click="SifreSifirla_Click" Width="200" Margin="0,0,0,10"
+                            Padding="8" FontStyle="Italic" HorizontalAlignment="Stretch" Background="LightSteelBlue" FontWeight="SemiBold" BorderBrush="black"/>
                 </StackPanel>
             </GroupBox>
 

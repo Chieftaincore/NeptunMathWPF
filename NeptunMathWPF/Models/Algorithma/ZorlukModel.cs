@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
@@ -8,7 +9,8 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
 
     /// <summary>
-    /// Ana Zorluk Model nesnesi diğer Zorluk Model Nesneleri için ortaklık içerir
+    /// Ana Zorluk Model nesnesi diğer Zorluk Model Nesneleri için ortaklık içerir, 
+    /// Soyut sınıftır.
     /// </summary>
     /// 
     public abstract class ZorlukModel
@@ -30,16 +32,37 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public int seviye { get; set; }
 
+        /// <summary>
+        /// Virtual Soru döndüren Metot, diğer kalıtım sınıfları kendi metotlarını çağırıp kendi türlerindeki 
+        /// soruları döndürürler.
+        /// </summary>
+        /// <param name="_seviye"></param>
+        /// <returns></returns>
         public virtual Soru SonrakiAlgorithma(int _seviye)
         {
-            List<Ifade> ifadeler = SoruAjani.CokluIfadeListesiOlustur(new List<SoruTerimleri.ifadeTurleri> { SoruTerimleri.ifadeTurleri.sayi, SoruTerimleri.ifadeTurleri.sayi });
+            List<Ifade> ifadeler = SoruAjani.CokluIfadeListesiOlustur(new List<ifadeTuru> { ifadeTuru.sayi, ifadeTuru.sayi });
 
             return SoruAjani.YerelSoruBirlestir(ifadeler, 5);
+        }
+
+        public ZorlukModel()
+        {
+          
         }
 
         public Soru SonrakiAlgorithma(Func<Soru> func)
         {
             return func.Invoke();
+        }
+
+
+        /// <summary>
+        /// Database'den seviye getirmek için
+        /// ama isteğe göre seçilmeyebilir
+        /// </summary>
+        public virtual void dbSeviyeGetir()
+        {
+            MessageBox.Show("DB TEST " + this.ToString());
         }
 
         public override string ToString()
@@ -89,7 +112,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
             switch (_seviye)
             {
-
                 case 1:
                     _liste = new List<ifadeTuru>()
                     {
@@ -98,17 +120,14 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                     };
                     break;
                 case 2:
-
                     _liste = new List<ifadeTuru>()
                     {
                         ifadeTuru.sayi,
                         ifadeTuru.sayi,
                         ifadeTuru.sayi,
                     };
-
                     break;
                 case 3:
-
                     _liste = new List<ifadeTuru>()
                     {
                         IfadeRNG(new ifadeTuru[] {ifadeTuru.sayi, ifadeTuru.kesir}),
@@ -124,7 +143,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                         IfadeRNG(new ifadeTuru[] {ifadeTuru.sayi, ifadeTuru.kesir}),
                     };
                     break;
-
                 case 5:
                     _liste = new List<ifadeTuru>()
                     {
@@ -133,7 +151,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                         IfadeRNG(new ifadeTuru[] {ifadeTuru.sayi, ifadeTuru.kesir}),
                     };
                     break;
-
                 case 6:
                     _liste = new List<ifadeTuru>()
                     {
@@ -193,6 +210,8 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             seviye = 3;
             min = 1;
             max = 9;
+
+            dbSeviyeGetir();
         }
 
         public override Soru SonrakiAlgorithma(int _seviye)
@@ -231,6 +250,8 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             seviye = 2;
             min = 1;
             max = 4;
+
+            dbSeviyeGetir();
         }
 
         public async Task SoruHazirla()

@@ -16,8 +16,13 @@
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                 <TextBlock Text="Yeni Şifre:" VerticalAlignment="Center" Margin="0,0,10,0"/>
                 <PasswordBox x:Name="yeniSifreTextBox" Width="200" MinHeight="25"/>
+              
             </StackPanel>
 
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Şifre Tekrar:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <PasswordBox x:Name="tekrarSifreTextBox" Width="200" MinHeight="25" Margin="0,0,10,0"/>
+            </StackPanel>
             <Button x:Name="sifreDegisButton" Content="Şifreyi Değiştir" Width="200" MinHeight="35" Click="sifreDegisButton_Click"/>
         </StackPanel>
     </Grid>

@@ -29,16 +29,22 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF
             {
                 if (eskiSifreTextBox.Password == aktifKullanici.sifre)
                 {
-
-                    Genel.Handle(() =>
+                    if (tekrarSifreTextBox.Password == yeniSifreTextBox.Password)
                     {
-                        Genel.ReloadEntity();
-                        var kullanici = Genel.dbEntities.USERS.Where(x => x.USERID == aktifKullanici.kullnId).FirstOrDefault();
-                        kullanici.PASSWORD = yeniSifreTextBox.Password;
-                        Genel.dbEntities.SaveChanges();
-                        aktifKullanici.sifre = kullanici.PASSWORD;
-                        MessageBox.Show("Şifre başarıyla değiştirildi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
-                    });
+                        Genel.Handle(() =>
+                        {
+                            Genel.ReloadEntity();
+                            var kullanici = Genel.dbEntities.USERS.Where(x => x.USERID == aktifKullanici.kullnId).FirstOrDefault();
+                            kullanici.PASSWORD = yeniSifreTextBox.Password;
+                            Genel.dbEntities.SaveChanges();
+                            aktifKullanici.sifre = kullanici.PASSWORD;
+                            MessageBox.Show("Şifre başarıyla değiştirildi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("Yeni Şifreleriniz Eşleşmiyor", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
                 else
                 {

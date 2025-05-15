@@ -82,7 +82,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand tusSoruMetaVeri { get; set; }
 
         #endregion
-
         public string IsSelected { get; set; }
 
         internal KeyEventHandler key;
@@ -120,7 +119,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 KomutlarInit();
 
                 OnPropertyChanged(nameof(DebugComboBoxTurler));
-
 
                 DebugIslemSoruEkle();
 

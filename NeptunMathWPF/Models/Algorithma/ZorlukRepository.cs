@@ -21,6 +21,11 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public Dictionary<soruTur,ZorlukModel> Zorluklar { get; set; }
 
+        /// <summary>
+        /// Parametreler ile gerekli ZorlukModelleri oluşturur, her soruTuru'ne göre ayrı bir
+        /// Zorluk Modeli oluşturur.
+        /// </summary>
+        /// <param name="turler"></param>
         public ZorlukRepository(List<soruTur> turler)
         {
             if(turler.Count > 0)
@@ -36,10 +41,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
                     if(turler.Contains(soruTur.fonksiyon))
                          Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
-
-         
                 }
-
 
                 if (turler.Contains(soruTur.limit))
                 {

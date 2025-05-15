@@ -45,11 +45,6 @@ namespace NeptunMathWPF
             Soru soru = SoruAjani.YerelSoruBirlestir(liste);
         }
 
-        private void SoruTestPaneliTikla(object sender, RoutedEventArgs e)
-        {
-            new SoruNesneTestWPF().ShowDialog();
-        }
-
         private void EtkilesimSayfasi_Click(object sender, RoutedEventArgs e)
         {
             (new EtkilesimPencereWPF(this)).Show();

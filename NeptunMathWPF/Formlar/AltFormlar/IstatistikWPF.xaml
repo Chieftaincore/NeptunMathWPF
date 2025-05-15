@@ -21,8 +21,16 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle Grid.ColumnSpan="2" Grid.Row="0" Fill="SteelBlue"/>
-        <Rectangle Grid.Column="2" Grid.Row="0" Fill="AliceBlue"/>
+        <Rectangle Grid.ColumnSpan="2" Grid.Row="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0">
+                    <GradientStop Color="SteelBlue" Offset="1"/>
+                    <GradientStop Color="DarkBlue"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        
+        <Rectangle Grid.Column="2" Grid.Row="0" Fill="LightSteelBlue"/>
 
         <ListBox x:Name="TopicsListBox" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Row="1" SelectionChanged="TopicsListBox_SelectionChanged"/>
         
