@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    class FonksiyonSoruCardModel 
+    public interface IStyleAnahtar
     {
+        string soruStyle { get; }
     }
+
 }

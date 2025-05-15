@@ -9,9 +9,21 @@ using System.Collections.ObjectModel;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
+
+    /// <summary>
+    /// Sayfada Alt Kısımda neler geleceğini eklemek içib
+    /// </summary>
     public class EtkilesimTemplateModel : DataTemplateSelector
     {
-        public DataTemplate SoruModu { get; set; }
+        //Şıklar LaTeX ve Kısa ise:
+        public DataTemplate SoruModuLaTeX { get; set; }
+
+        //Şıklar Uzun veya LaTeX değilse;
+        public DataTemplate SoruModuMetin { get; set; }
+
+        //Şıklar kilitlenmesi için
+        public DataTemplate SoruModuKilitli { get; set; }
+
         public DataTemplate Proompter { get; set; }
         public DataTemplate DialogModu { get; set; }
 
@@ -22,16 +34,19 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
             switch (view)
             {
-                case "SoruModu":
-                    return SoruModu;
+                case "SoruModuNormal":
+                    return SoruModuLaTeX;
+                case "SoruModuMetin":
+                    return SoruModuMetin;
                 case "Proompter":
                     return Proompter;
+                case "SoruModuKilitli":
+                    return SoruModuKilitli;
                 case "Dialog":
                     return DialogModu;
                 default:
-                    return base.SelectTemplate(item, container);
-            }
-            ;
+                    return SoruModuMetin;
+            };
         }
     }
 }

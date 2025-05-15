@@ -18,12 +18,14 @@ namespace NeptunMathWPF
             sayi,
             faktoriyel,
             kesir,
+            uslu
         }
 
         public enum soruTuru
         {
             islem,
             fonksiyon,
+            problem,
             limit,
             polinom,
             turev
@@ -34,7 +36,12 @@ namespace NeptunMathWPF
     //bu fonksiyonlara yerel loglama, try catch, hata dialogbox vs örnek gösterilebilir
     static class Genel
     {
+
+        static readonly Random random = new Random();
         static internal NEPTUN_DBEntities dbEntities = new NEPTUN_DBEntities();
+
+        public static string geminiFileName = "GEMINI.config";
+        public static string geminiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, geminiFileName);
 
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
 
@@ -49,7 +56,7 @@ namespace NeptunMathWPF
             catch (SqlException sqlEx)
             {
                 LogToDatabase(LogLevel.ERROR, $"{sqlEx.Message}\n{sqlEx.InnerException}\n{sqlEx.StackTrace}");
-                MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
             catch (FileNotFoundException fileEx)
@@ -65,11 +72,23 @@ namespace NeptunMathWPF
             }
             catch (Exception ex)
             {
-                LogToDatabase(LogLevel.WARNING, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
-                MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }   
+                LogToDatabase(LogLevel.ERROR, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
+                MessageBox.Show("Bir hata oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
-        internal static void ReloadEntity()
+
+        internal static async Task HandleAsync(Action action)
+        {
+            try
+            { action(); }
+            catch (Exception ex)
+            {
+                LogToDatabase(LogLevel.ERROR, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
+                MessageBox.Show("Problem yüklenirken hata oluştu!\nBağlantınızı kontrol edin veya bir yetkiliyle iletişime geçin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor
         {
             dbEntities = new NEPTUN_DBEntities();
         }
@@ -79,7 +98,10 @@ namespace NeptunMathWPF
             ReloadEntity();
 
             string level = enumLevel.ToString();
-            dbEntities.LOGS.Add(new LOGS
+            try
+            {
+
+                dbEntities.LOGS.Add(new LOGS
                 {
                     LOG_DATE = DateTime.Now,
                     USERID = kullnId,
@@ -87,11 +109,44 @@ namespace NeptunMathWPF
                     LOG_LEVEL = level
                 });
                 dbEntities.SaveChanges();
+            }
+            catch
+            {
+                //Veritabanına loglanamıyorsa txt dosyasına logla
+                try
+                {
+
+                    using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                    {
+                        string logMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}";
+                        writer.WriteLine(logMessage);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Loglama sırasında bir hata oluştu");
+                }
+            }
+
         }
 
-        public static void Shutdown()
+        public static void UygulamaKapat()
         {
             System.Environment.Exit(110);
+        }
+
+
+        public static void Shuffle<T>(this IList<T> list)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                T value = list[k];
+                list[k] = list[n];
+                list[n] = value;
+            }
         }
     }
 }

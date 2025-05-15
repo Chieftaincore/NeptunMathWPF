@@ -1,0 +1,92 @@
+﻿<Window x:Class="HesapMakinesi.HesapMakinesiWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hesap Makinesi" Height="500" Width="400" ResizeMode="CanMinimize"
+        FontWeight="Bold" FontSize="18">
+        
+    <!--Geçici Maximize Kapattım -Hüseyin -->
+    <Grid>
+        <!-- Grid satır tanımlamaları -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- İşlem kutusu için satır -->
+            <RowDefinition Height="Auto"/>
+            <!-- Sonuç kutusu için satır -->
+            <RowDefinition Height="*"/>
+            <!-- Butonlar için esnek alan -->
+        </Grid.RowDefinitions>
+
+        <!-- Kullanıcı girişleri için işlem kutusu -->
+        <TextBox x:Name="IslemKutusu" Grid.Row="0" Margin="10" Height="50"
+                 FontSize="24" HorizontalContentAlignment="Right"
+                 PreviewTextInput="IslemKutusu_PreviewTextInput"
+                 PreviewKeyDown="IslemKutusu_PreviewKeyDown"/>
+
+        <!-- Hesaplanan sonuçların gösterileceği salt okunur kutu -->
+        <TextBox x:Name="SonucKutusu" Grid.Row="1" Margin="10" Height="50"
+                 FontSize="24" HorizontalContentAlignment="Right"
+                 IsReadOnly="True" Background="AliceBlue"/>
+
+        <!-- Hesap makinesi butonları - 6 satır 4 sütun düzeninde -->
+        <UniformGrid Grid.Row="2" Rows="6" Columns="4" Margin="10">
+            <!-- 1. Satır -->
+            <Button Content="7" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="8" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="9" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="/" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+
+            <!-- 2. Satır -->
+            <Button Content="4" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="5" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="6" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="*" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+
+            <!-- 3. Satır -->
+            <Button Content="1" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="2" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="3" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="-" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+
+            <!-- 4. Satır -->
+            <Button Content="0" Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <Button Content="." Click="SayiButonu_Click" FontSize="18"
+                    Background="AliceBlue"/>
+            <!-- Ondalık ayracı butonu -->
+            <Button Content="+" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+            <Button Content="="  Click="EsittirButonu_Click" FontSize="18"
+                    Background="Black" Foreground="White"/>
+            <!-- Hesaplama butonu -->
+
+            <!-- 5. Satır - Özel işlem butonları -->
+            <Button Content="C" Click="TemizleButonu_Click" FontSize="18"
+                    Background="IndianRed"/>
+            <!-- Temizle butonu -->
+            <Button Content="!" Click="FaktoriyelButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+            <!-- Faktöriyel butonu -->
+            <Button Content="(" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+            <!-- Parantez aç -->
+            <Button Content=")" Click="OperatorButonu_Click" FontSize="18"
+                    Background="LightSteelBlue" FontWeight="Black"/>
+            <!-- Parantez kapat -->
+
+            <!-- Gizli buton (kullanılmıyor) -->
+            <Button Content="+" Click="OperatorButonu_Click" Grid.ColumnSpan="4" Visibility="Collapsed" FontSize="18"/>
+        </UniformGrid>
+    </Grid>
+</Window>

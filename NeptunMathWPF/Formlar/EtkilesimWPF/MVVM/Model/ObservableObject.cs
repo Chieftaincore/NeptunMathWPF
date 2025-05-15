@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
-    class ObservableObject : INotifyPropertyChanged
+    //GUI'de değişiklik için gerekli bir Nesne
+    internal class ObservableObject : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        //Bununla birlikte Değişimi MVVM'e ilan edebilirsiniz
         public void OnPropertyChanged([CallerMemberName] string propertyname = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyname));

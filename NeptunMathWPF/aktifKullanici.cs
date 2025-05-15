@@ -9,7 +9,12 @@ namespace NeptunMathWPF
     static class aktifKullanici
     {
         //KULLANICI ADI LOGİN PANEL YAPILDIĞINDA ORADAN ALINACAK!
-        public static string kullaniciAdi { get; set; } = "DENEME1";
-        public static int kullnId { get; set; } = Genel.dbEntities.USERS.Where(x => x.USERNAME == kullaniciAdi).Select(x => x.USERID).FirstOrDefault();
+        public static string kullaniciAdi { get; set; }
+        public static int kullnId { get; set; }
+        public static string isim { get; set; }
+        public static string soyisim { get; set; }
+        public static string email { get; set; }
+        public static string sifre { get; set; }
+        public static string yetki { get; set; }
     }
 }

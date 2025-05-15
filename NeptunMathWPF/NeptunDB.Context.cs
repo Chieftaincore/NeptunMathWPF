@@ -34,5 +34,7 @@ namespace NeptunMathWPF
         public virtual DbSet<USER_SCORES> USER_SCORES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
+        public virtual DbSet<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
+        public virtual DbSet<EXAM_SESSIONS> EXAM_SESSIONS { get; set; }
     }
 }

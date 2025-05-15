@@ -1,52 +1,166 @@
 ﻿using AngouriMath;
-using AngouriMath.Extensions;
-using HonkSharp.Functional;
 using NeptunMathWPF.Fonksiyonlar;
+using NeptunMathWPF.SoruVeAjani.Algorithma;
+using NeptunMathWPF.SoruVeAjani.Limit;
+using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
-using System.Data;
+using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-using static AngouriMath.MathS;
-using static AngouriMath.MathS.Numbers;
-
 namespace NeptunMathWPF.SoruVeAjani
 {
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
-    //Şuan da genel kullanım bir sistem hazırlanmaya çalışıyorum Bu yüzden nesne üstüne sistem kuracağım
-    //Kullandığım Terimler
-    //Parametre Aralık
-    //İfade = Sayı/Kesir gibi
-    //Arabirim = işlem veya matematik fonksiyonu
-    //Hedef hem karma hem de tekli tür Soru Yapabilecek bir sistem
 
+    /// <summary>
+    /// Farklı Soru TÜrlerini genel soru tipine döndüren statik Nesne
+    /// </summary>
     public static class SoruAjani
     {
+     
+        internal enum IslemAlttur
+        {
+            Karmasik,
+        }
+
+       
+        
         //Tamsayı Random Atma Aralığı
         //Yeni PARAMETRE olarak fikir Uygulanabilir
-        public static Dictionary<string, int[]> Araliklar = new Dictionary<string, int[]>
-        {
-            {"TAMSAYINORMAL", new int[] {2,50} }, {"TAMSAYIBOLME", new int[] {2,5} }, {"TAMSAYIYANILMA", new int[] {-30,30} },
-            {"FAKTORIYELNORMAL",new int[]{2,6}}, {"KESIRTAMCARPAN",new int[] {2,15} }, {"FAKTORIYELSAYI", new int[] { 2, 6 } },
-            {"USLUNORMAL",new int[]{1,12}}, {"USTAMCARPAN",new int[] {0,5} }
-        };
-
-        //Fonksiyon oluşturucu Generatörleri
-        public static List<FunctionQuestionGenerator> generators = new List<FunctionQuestionGenerator>
-        {
-            new FunctionValueGenerator(),
-            new FunctionCompositionGenerator(),
-            new InverseFunctionGenerator(),
-            new DomainRangeGenerator()
-        };
+        internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
 
         internal static Random random = new Random();
+       
+        internal static Soru RastgeleLimitSorusuOlustur()
+        {
+            LimitQuestion lim;
 
+            Array questionTypes = Enum.GetValues(typeof(LimitQuestionType));
+            LimitQuestionType currentQuestionType = (LimitQuestionType)questionTypes.GetValue(random.Next(questionTypes.Length));
+
+            switch (currentQuestionType)
+            {
+                case LimitQuestionType.CommonFactor:
+                    lim = LimitQuestionGenerator.GenerateCommonFactorQuestion();
+                    break;
+                case LimitQuestionType.FindCoefficients:
+                    lim = LimitQuestionGenerator.GenerateFindCoefficientsQuestion();
+                    break;
+                case LimitQuestionType.CoefficientExpression:
+                    lim = LimitQuestionGenerator.GenerateCoefficientExpressionQuestion();
+                    break;
+                default:
+                    lim = LimitQuestionGenerator.GenerateCommonFactorQuestion();
+                    break;
+            };
+            
+            // Doğru cevap ve şaşırtmacalar
+            List<string> options = new List<string>();
+
+            // 3 tane farklı yanlış şık oluştur
+            while (options.Count < 4)
+            {
+                double _wrong;
+                string wrongOption;
+
+                if (currentQuestionType == LimitQuestionType.CommonFactor)
+                {
+                    // Tam sayı şıklar oluştur (doğru cevaptan belirli uzaklıkta)
+                    _wrong = lim.Answer + random.Next(-10, 11);
+                    wrongOption = _wrong.ToString();
+                }
+                else
+                {
+                    // Katsayı sorularında daha küçük aralıkta şaşırtma cevaplar
+                    _wrong = lim.Answer + random.Next(-5, 6);
+                    wrongOption = _wrong.ToString();
+                }
+
+                // Aynı şık olmamasını sağla
+                if (!options.Contains(wrongOption) && Math.Abs(_wrong - lim.Answer) > 0.001)
+                {
+                    options.Add(wrongOption);
+                }
+            }
+            // Şıkları karıştır
+            options = options.OrderBy(x => random.Next()).ToList();
+
+            return new Soru(lim, options.ToArray())
+            {
+                AltTur = currentQuestionType
+            };
+        }
+
+        /// <summary>
+        /// Farklı Türlerde Fonksiyon Getirir
+        /// </summary>
+        /// <returns></returns>
+        public static Soru RastgeleFonksiyonSorusuOlustur()
+        {
+            GeneratedFunction generated = new GeneratedFunction();
+            Question question;
+
+            FunctionRepository rep = generated.repository[0];
+            question = rep.questionObject;
+
+            return new Soru(question, question.WrongAnswers.ToArray())
+            {
+                AltTur = rep.functionType
+            };
+        }
+
+        /// <summary>
+        /// Async Problem Sorusu GEMINI API'dan soru çeker, konu rastgele seçilir
+        /// </summary>
+        /// <returns></returns>
+        internal async static Task<Soru> ProblemSorusuOlustur()
+        {
+            //rastgele EnumType alması için
+            int le = Enum.GetValues(typeof(ProblemType)).Length;
+            int secilen = (new Random()).Next(0, le);
+
+            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, ProblemDifficulty.Zor);
+
+            return new Soru(ProblemSoru)
+            {
+                AltTur = (ProblemType)secilen
+            };
+        }
+
+        internal async static Task<Soru> ProblemSorusuOlustur(ProblemDifficulty zorluk)
+        {
+            //rastgele EnumType alması için
+            int le = Enum.GetValues(typeof(ProblemType)).Length;
+            int secilen = (new Random()).Next(0, le);
+
+            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, zorluk);
+
+            return new Soru(ProblemSoru)
+            {
+                AltTur = (ProblemType)secilen
+            };
+        }
+        /// <summary>
+        /// belirli soru döndürür
+        /// </summary>
+        /// <param name="problemTipi"> Problem Tipi ENUM</param>
+        /// <returns></returns>
+        internal async static Task<Soru> ProblemSorusuOlustur(ProblemType problemTipi, ProblemDifficulty zorluk)
+        {
+            //rastgele EnumType alması için
+            int le = Enum.GetValues(typeof(ProblemType)).Length;
+            int secilen = (new Random()).Next(0, le);
+
+            var ProblemSoru = await ProblemGenerator.GenerateProblem((ProblemType)secilen, zorluk);
+
+            return new Soru(ProblemSoru);
+        }
+
+        #region IfadeListeleri
         internal static List<Ifade> IfadeListesiOlustur(ifadeTuru ifadeTur, int ifadesayisi)
         {
             Random rng = new Random();
@@ -60,10 +174,15 @@ namespace NeptunMathWPF.SoruVeAjani
                         ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
                         break;
                     case ifadeTuru.faktoriyel:
-                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
+                        ifadeler.Add(new Faktoriyel(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
                         break;
                     case ifadeTuru.kesir:
-                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
+                        ifadeler.Add(new Kesir(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]),
+                                               rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
+                        break;
+                    case ifadeTuru.uslu:
+                        ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0], Araliklar["USLUNORMAL"][1]),
+                                               rng.Next(Araliklar["USTAMCARPAN"][0], Araliklar["USTAMCARPAN"][1])));
                         break;
                     default:
                         MessageBox.Show("BELİRSİZ IFADE Liste'ye eklenmedi");
@@ -78,126 +197,59 @@ namespace NeptunMathWPF.SoruVeAjani
             Random rng = new Random();
             List<Ifade> ifadeler = new List<Ifade>();
 
-            for (int i = 0; i < olusturulacak.Count; i++)
-            {
-                switch (olusturulacak[i])
+            Genel.Handle(() => {
+
+                for (int i = 0; i < olusturulacak.Count; i++)
                 {
-                    case ifadeTuru.sayi:
-                        ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
-                        break;
-                    case ifadeTuru.faktoriyel:
-                        ifadeler.Add(IfadeFaktoriyelUret(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
-                        break;
-                    case ifadeTuru.kesir:
-                        ifadeler.Add(IfadeKesirSayiUret(rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1])));
-                        break;
-                    default:
-                        break;
+                    switch (olusturulacak[i])
+                    {
+                        case ifadeTuru.sayi:
+                            ifadeler.Add(IfadeTamSayiUret(rng.Next(Araliklar["TAMSAYINORMAL"][0], Araliklar["TAMSAYINORMAL"][1])));
+                            break;
+                        case ifadeTuru.faktoriyel:
+                            ifadeler.Add(new Faktoriyel(rng.Next(Araliklar["FAKTORIYELSAYI"][0], Araliklar["FAKTORIYELSAYI"][1])));
+                            break;
+                        case ifadeTuru.kesir:
+
+                            int pay = rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
+
+                            int R = rng.Next(0, 1);
+
+                            if (R == 1)
+                            {
+                                int payda = pay * rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
+
+                                ifadeler.Add(new Kesir(pay, payda));
+                            }
+                            else
+                            {
+                                int payda;
+
+                                do
+                                {
+                                    payda = rng.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
+
+                                } while (payda == pay || payda == 0);
+
+                                ifadeler.Add(new Kesir(pay,payda));
+                            }
+
+                            break;
+                        case ifadeTuru.uslu:
+                            ifadeler.Add(new Uslu(rng.Next(Araliklar["USLUNORMAL"][0], Araliklar["USLUNORMAL"][1]),
+                                                  rng.Next(Araliklar["USTAMCARPAN"][0], Araliklar["USTAMCARPAN"][1])));
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
+            });
 
             return ifadeler;
         }
+        #endregion
 
-        //Fonksiyon sorusunu çoklu kullanıma dönüştürme ve secenekler eklemek için
-        //Birden fazla metota ayırabilirim -Hüseyin
-
-        //Burayı şimdilik yorum satırına aldım, kodları yenilediğim için düzeltilmesi gerekiyor.
-
-        internal static Soru RastgeleFonksiyonSorusuOlustur(int seceneksayisi = 4)
-        {
-            GeneratedFunction generated = new GeneratedFunction();
-            List<string> Secenekler = new List<string>();
-            Question question;
-
-            Func<string> dongu;
-
-            //Çoklu repository için hatırlatma
-            //if (generated.HasMultipleFunctions == false)
-            FunctionRepository rep = generated.repository[0];
-            question = rep.questionObject;
-
-            MessageBox.Show(question.Answer);
-
-            switch (generated.gen)
-            {
-                //case FunctionValueGenerator f:
-
-                //    break;
-                //case FunctionCompositionGenerator f:
-
-                //    break;
-                //case InverseFunctionGenerator f:
-
-                //    break;
-                case DomainRangeGenerator f:
-                    dongu = delegate ()
-                    {
-                        //ileride tanım kümesi yapıcı ve sonuç filtreleyici eklemeliyim  eklenmeli
-                        string[] ciktilar = { "Tüm Reel Sayılar", "Tanımsız", "Tüm reel sayılar, x ≠ -c", "Tüm reel sayılar, x ≠ c", "[1,+∞]",
-                            "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]","[Reel Sayılar - 0]"};
-
-                        string cikti = ciktilar[random.Next(0, ciktilar.Length - 1)];
-
-                        if (!Secenekler.Contains(cikti))
-                        {
-                            return cikti;
-                        }
-                        else
-                        {
-                            //hatalı olunca boş gönderip tekrar başlatacak
-                            return string.Empty;
-                        }
-                    };
-                    break;
-                default:
-                    dongu = delegate ()
-                    {
-                        double sonuc;
-                        string cikti;
-                        if (double.TryParse(question.Answer, out sonuc))
-                        {
-                            double rand = sonuc + random.Next(-10, 20);
-                            cikti = rand.ToString();
-                        }
-                        else
-                        {
-                            double rand = random.Next(10, 30);
-                            cikti = rand.ToString();
-                        }
-
-                        if (!Secenekler.Contains(cikti.ToString()))
-                        {
-                            return cikti.ToString();
-                        }
-                        else
-                        {
-                            //hatalı olunca boş gönderip tekrar başlatacak
-                            return string.Empty;
-                        }
-                    };
-                    break;
-            }
-
-            for (int i = 0; i < seceneksayisi;)
-            {
-                string cikti = dongu();
-
-                if (cikti != string.Empty && cikti != question.Answer)
-                {
-                    Secenekler.Add(cikti);
-                    i++;
-                }
-            }
-            return new Soru(question, Secenekler.ToArray());
-        }
-
-
-        //Bunlarla Neyi Hedefliyorum 
-        //Temiz ve Daha iyi Oluşturucu || Daha iyisi YAKINDA™
-
-        //Aynı zamanda karma soru yapıcı yapmalıyız (aynı soruda Kesir + Faktoriyel + Tamsayı) gibi farklı tür ifadeler aynı soruda yer alabilmeli
-        //Daha iyisi için yollar var yakında yapılabileceğini ümit ediyorum -Hüseyin
+        #region YerelIslemSorusuOlusturucular
 
         public static Soru YerelSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, Action<String> araeleman = null)
         {
@@ -205,17 +257,20 @@ namespace NeptunMathWPF.SoruVeAjani
             string ajanLOG = string.Empty;
 
             string latex = string.Empty;
+            Enum _enum = AltTurGetir(ifadeler);
 
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
-            
+
             Genel.Handle(() =>
             {
-                ifadeTuru Tur = ifadeler[0].TurGetir();
+                Collection<ifadeTuru> turler = new Collection<ifadeTuru>();
 
                 Random rng = new Random();
+
                 for (int i = 0; i < ifadeler.Count; i++)
                 {
+                    turler.Add(ifadeler[i].TurGetir());
 
                     if (araeleman == null)
                     {
@@ -237,16 +292,14 @@ namespace NeptunMathWPF.SoruVeAjani
 
                                     latex += $"\\frac{{{bolunen}}}{{{bolen}}}";
                                     ajanLOG += $"Bölünen EK eklendi :: {ifadeler[i].getir()} | {i + 1}'e EK | [{ifadeler[i + 1].getir()} kaldırıldı] \n";
-
-                                    
                                 }
                                 else
                                 {
                                     if (ifadeler[i].TurGetir() == ifadeTuru.kesir)
                                     {
-                                        MessageBox.Show("DEBUG : silindi ");
+                                        //MessageBox.Show("DEBUG : silindi ");
                                         islemString += ifadeler[i].getir() + '/';
-                                        latex += ifadeler[i].LaTeXString + '/';
+                                        latex +=$"\\frac{{{ifadeler[i].LaTeXString}}}{{";
 
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
@@ -255,32 +308,86 @@ namespace NeptunMathWPF.SoruVeAjani
                                     if (ifadeler[i].TurGetir() == ifadeTuru.faktoriyel)
                                     {
                                         islemString += ifadeler[i].getir() + " / ";
-                                        latex += ifadeler[i].LaTeXString + "/";
+                                        latex += $"\\frac{{{ifadeler[i].LaTeXString}}}{{";
 
                                         ajanLOG += $"Faktoriyel Eklendi :: {ifadeler[i].getir()}";
-
                                         alindi = true;
+                                    }
+
+                                    if (ifadeler[i].TurGetir() == ifadeTuru.uslu)
+                                    {
+                                        //Üslü sayılarda bazen uçuk sayılar çıkabiliyor tekrar gözden geçirilmelidir, şu ana kadar büyük yanlış sonuçlar çıkmadı
+
+                                        int temel = ((Uslu)ifadeler[i]).temel;
+                                        int kuvvet = ((Uslu)ifadeler[i]).kuvvet;
+
+                                        int mode = rng.Next(0,1);
+                                      
+                                        int itemel;
+                                        int ikuvvet;
+
+                                        switch (mode)
+                                        {
+                                            case 0:
+
+                                                itemel = temel;
+                                                ikuvvet = Math.Abs(kuvvet - rng.Next( 1, kuvvet));
+
+                                                islemString += $"({temel}^{kuvvet})/({itemel}^{ikuvvet})";
+                                                latex += $"\\frac{{{temel}^{kuvvet}}}{{{itemel}^{ikuvvet}}}";
+
+                                                break;
+                                            case 1:
+
+                                                ikuvvet = kuvvet;
+                                                itemel = temel + rng.Next(-10, 12);
+
+                                                islemString += $"({temel}^{kuvvet})/({itemel}^{ikuvvet})";
+                                                latex += $"\\frac{{{temel}^{kuvvet}}}{{{itemel}^{ikuvvet}}}";
+
+                                                break;
+                                            case 2:
+                                                //iyi bir formul bulunca ekleyeceğim
+                                                break;
+                                        }
+
+                                        int r = rng.Next(0, 10);
                                     }
                                 }
 
-                                if (i < ifadeler.Count - 1 && !alindi)
+                                if (i < ifadeler.Count - 1)
                                 {
-                                    char ekleme = KarakterDondur(new char[] { '-', '+' });
-                                    islemString += ekleme;
-                                    latex += ekleme;
 
+                                    if (alindi)
+                                    {
+                                        i++;
+
+                                        islemString += ifadeler[i].getir();
+                                        latex += $"{ifadeler[i].LaTeXString}}}";
+
+                                        alindi = false;
+                                    }
+
+                                    if (!alindi)
+                                    {
+                                        char ekleme = KarakterDondur(new char[] { '-', '+' });
+                                        islemString += ekleme;
+                                        latex += ekleme;
+
+                                        continue;
+                                    }
                                 }
-                                
+
                                 continue;
                             }
                             else
                             {
                                 islemString += ifadeler[i].getir();
                                 latex += ifadeler[i].LaTeXString;
-                   
+
                                 islemString += dortislem;
 
-                                if(dortislem == '*')
+                                if (dortislem == '*')
                                 {
                                     latex += "\\cdot";
                                 }
@@ -344,27 +451,38 @@ namespace NeptunMathWPF.SoruVeAjani
                 {
                     Entity randEntity;
 
-                    if (Tur == ifadeTuru.sayi)
+                    if (!turler.Contains(ifadeTuru.kesir) && !(sonuc.Stringize()).Contains('/'))
                     {
+                       
                         randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
                     }
                     else
                     {
                         sonuc = sonuc.Simplify();
 
-                        if (Tur == ifadeTuru.kesir)
+                        if ((sonuc.Stringize()).Contains('/'))
                         {
-                            int rastg = random.Next(-2, 2);
-                            randEntity = sonuc + ((sonuc / 3) * rastg);
+                           
+                            int rastg = random.Next(-2, 4);
+
+                            if (rastg != 0)
+                            {
+                                randEntity = sonuc + ((sonuc / 3) * rastg);
+                            }
+                            else
+                            {
+                                randEntity = sonuc - (sonuc / 2);
+                            }
                         }
                         else
                         {
                             int r;
-                            
+
                             r = random.Next(20, 126);
                             randEntity = (sonuc + r);
                         }
                     }
+
                     randEntity = randEntity.EvalNumerical();
 
                     if (!diger.Contains(randEntity) && randEntity != sonuc)
@@ -375,7 +493,10 @@ namespace NeptunMathWPF.SoruVeAjani
                 }
             });
             //Nesnenin Olusutğu AN;
-            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
+            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray())
+            {
+                AltTur = _enum
+            };
 
             //PARAMETRELER ve Olusturucu LOGU
             ajanLOG += "PARAMETRELER \n";
@@ -390,100 +511,32 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
-        //YEDEK GELİŞTİRİLİYOR Yeni Deneme daha iyi yollar için arama denemesi
-        //Henüz tuşlara bağlanmadı
-        public static Soru YeniSoruBirlestir(List<Ifade> ifadeler, int seceneksayisi = 4, List<AraIslem> islemler = null)
+
+        /// <summary>
+        /// içindeki ifadelere göre tek içeren veya çoklu içeren altkonu geri gönderir
+        /// çoklularda özel adlandırmlar yer alır
+        /// </summary>
+        /// <returns></returns>
+        /// 
+        internal static Enum AltTurGetir(List<Ifade> ifadeler)
         {
-            string ajanLOG = string.Empty;
+            List<ifadeTuru> ozgunler = new List<ifadeTuru>();
 
-            string islemString = string.Empty;
-            string LaTeXString = string.Empty;
-
-            Entity sonuc = 0;
-            List<Entity> diger = new List<Entity>();
-
-            Genel.Handle(() =>
+            foreach(Ifade i in ifadeler)
             {
-                Random rng = new Random();
-                for (int i = 0; i < ifadeler.Count; i++)
-                {
-                    if (i < islemler.Count)
-                    {
-                        if (!islemler[i].OzelYapiGetir())
-                        {
-                            islemString += ifadeler[i].getir();
-                            ajanLOG += $"{ifadeler[i].TurGetir()} Eklendi :: {ifadeler[i].getir()}";
+                if (!ozgunler.Contains(i.TurGetir()))
+                    ozgunler.Add(i.TurGetir());
+            }
 
-                            islemString += islemler[i].IslemGetir();
-                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
-                        }
-                        else
-                        {
-                            string Ozel = islemler[i].OzelYapiCalistir(ifadeler[i]);
-                            islemString += Ozel;
-                            ajanLOG += $"işlem :: {islemler[i].IslemGetir()} eklendi \n";
-                        }
-
-                        LaTeXString += islemler[i].LaTeXGetir();
-                    }
-                    else
-                    {
-                        if(i < 4)
-                        {
-                            char ekislem = KarakterDondur(new char[] { '+', '-', '*' });
-
-                            islemString += ifadeler[i].getir();
-                            islemString += ekislem;
-
-                            if(ekislem == '*')
-                            {
-                                LaTeXString += " \\cdot ";
-                            }
-                            else
-                            {
-                                LaTeXString += ekislem;
-                            }
-                        }
-                    }
-                }
-                for (int i = 0; i < seceneksayisi - 1;)
-                {
-                    Entity randEntity;
-                    int.TryParse(sonuc.Stringize(), out int s);
-
-                    if ((s % 1) == 0)
-                    {
-                        randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
-                    }
-                    else
-                    {
-                        sonuc = sonuc.Simplify();
-
-                        int rastg = random.Next(-2, 2);
-                        randEntity = sonuc + ((sonuc / 3) * rastg);
-                    }
-                    randEntity = randEntity.EvalNumerical();
-
-                    if (!diger.Contains(randEntity) && randEntity != sonuc)
-                    {
-                        i++;
-                        diger.Add(randEntity);
-                    }
-                }
-            });
-
-            Entity entity = islemString;
-            sonuc = entity.EvalNumerical();
-
-            ajanLOG += $"{islemString}\n";
-            ajanLOG += $"{sonuc}\n";
-
-            Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray());
-            soru.SetLaTexMetin(LaTeXString);
-
-            return soru;
+            if (ozgunler.Count == 1)
+            {
+                return ozgunler[0];
+            }
+        
+            return IslemAlttur.Karmasik;
         }
 
+        #endregion
 
         //Ifade oluştruma yöntemleri
         #region Ifadeler 
@@ -492,13 +545,8 @@ namespace NeptunMathWPF.SoruVeAjani
             int payda = pay * random.Next(Araliklar["KESIRTAMCARPAN"][0], Araliklar["KESIRTAMCARPAN"][1]);
             string LaTex = $"\\frac{{{pay}}}{{{payda}}}";
             string islem = $"({pay}/{payda})";
-            Ifade ifadeNesne = new Ifade(islem, LaTex, ifadeTuru.kesir);
-            return ifadeNesne;
-        }
 
-        public static Ifade IfadeFaktoriyelUret(int sayi)
-        {
-            return new Faktoriyel(sayi);
+            return new Ifade(islem, LaTex, ifadeTuru.kesir);
         }
 
         public static Ifade IfadeTamSayiUret(int sayi)
@@ -510,17 +558,104 @@ namespace NeptunMathWPF.SoruVeAjani
 
         #endregion 
 
-        //Seçilelerden Rastgele char döndür
+        /// <summary>
+        ///  aralarından rastgele karakter dödürür
+        /// </summary>
         public static char KarakterDondur(char[] charlar)
         {
             Random rng = new Random();
 
             return charlar[rng.Next(0, charlar.Length)];
         }
-    }
 
-    //Nesneler okuma koyaylığı için farklı bir Dosya'yw aktarılmışdır -Hüseyin
+
+        #region eskiFonksiyonKodununOnemliKismi
+        //Bazı yazdığım FUNC<> mantığını saklıyorum tekrar kullanmam gereken yer kalırsa referans alacağım -Hüseyin
+        //  
+        //        ...
+                   
+        //        switch (generated.gen)
+        //        {
+        //            //case FunctionValueGenerator f:
+
+        //            //    break;
+        //            //case FunctionCompositionGenerator f:
+
+        //            //    break;
+        //            //case InverseFunctionGenerator f:
+
+        //            //    break;
+        //            case DomainRangeGenerator f:
+        //                dongu = delegate ()
+        //                {
+        //                    //ileride tanım kümesi yapıcı ve sonuç filtreleyici eklemeliyim  eklenmeli
+        //                    string[] ciktilar = { "Tüm reel Sayılar", "Tanımsız", "Tüm reel sayılar, x ≠ -c", "Tüm reel sayılar, x ≠ c", "[1,+∞]",
+        //                        "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]","[Reel Sayılar - 0]"};
+
+        //                    string cikti = ciktilar[random.Next(0, ciktilar.Length - 1)];
+
+        //                    if (!Secenekler.Contains(cikti))
+        //                    {
+        //                        return cikti;
+        //                    }
+        //                    else
+        //                    {
+        //                        //hatalı olunca boş gönderip tekrar başlatacak
+        //                        return string.Empty;
+        //                    }
+        //                };
+        //                break;
+        //            default:
+
+        //                if (question.Answer != "∞")
+        //                {
+        //                    dongu = delegate ()
+        //                    {
+        //                        double sonuc;
+        //                        string cikti;
+        //                        if (double.TryParse(question.Answer, out sonuc))
+        //                        {
+        //                            double rand = sonuc + random.Next(-10, 20);
+        //                            cikti = rand.ToString();
+        //                        }
+        //                        else
+        //                        {
+        //                            double rand = random.Next(10, 30);
+        //                            cikti = rand.ToString();
+        //                        }
+
+        //                        if (!Secenekler.Contains(cikti.ToString()))
+        //                        {
+        //                            return cikti.ToString();
+        //                        }
+        //                        else
+        //                        {
+        //                            //hatalı olunca boş gönderip tekrar başlatacak
+        //                            return string.Empty;
+        //                        }
+        //                    };
+        //                }
+        //                else
+        //                {
+        //                    //Sonsuz gelirse
+        //                    dongu = delegate ()
+        //                    {
+        //                        double sonuc = random.Next(10, 20);
+        //                        string cikti = sonuc.ToString();
+
+        //                        return cikti;
+        //                    };
+        //                }
+
+        //                break;
+        //        }
+
+        //      ...
+
+        #endregion
+    }
+    //Nesneler okuma koyaylığı için farklı bir Dosya'ya aktarılmışdır -Hüseyin
     //Nesneler SoruVeAjanı->Ifade.cs' içindedir
 }
 
-    
+

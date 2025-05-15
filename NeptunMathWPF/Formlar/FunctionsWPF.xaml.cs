@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using DataVis = System.Windows.Forms.DataVisualization;
 
 namespace NeptunMathWPF.Formlar
 {
@@ -23,16 +24,25 @@ namespace NeptunMathWPF.Formlar
         public FunctionsWPF()
         {
             InitializeComponent();
+            Chart1.Series[0].Points.Add(3, 0).AxisLabel = "asd";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            lblWrongs.Content = "";
             GeneratedFunction function = new GeneratedFunction();
+
             foreach (var item in function.repository)
             {
                 lblQuestion.Content = item.questionObject.QuestionText;
                 lblAnswer.Content = item.questionObject.Answer;
+                var a = item.questionObject.WrongAnswers;
+                foreach (var answer in a)
+                {
+                    lblWrongs.Content += answer + "\n";
+                }
             }
+
         }
     }
 }

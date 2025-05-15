@@ -2,38 +2,111 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:Controls="clr-namespace:WpfMath.Controls;assembly=WpfMath">
 
-    <DataTemplate x:Key="SeceneklerDataTemplate">
-        <Grid>
+    <DataTemplate x:Key="SeceneklerLaTeXTemplate">
+        <Grid Margin="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <ItemsControl Background="AliceBlue" ItemsSource="{Binding DataContext.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
-                      Grid.Row="0">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <RadioButton GroupName="AktifSecenekler" IsChecked="{Binding IsSelected, Mode=TwoWay}" FontSize="12" Margin="20,5,5,5">
-                            <Controls:FormulaControl Formula="{Binding .}"/>
-                        </RadioButton>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <Button Grid.Row="1" Content="Cevapla"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+                <ItemsControl Background="White" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
+                          Grid.Row="0">
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton GroupName="AktifSecenekler" 
+                                 Command="{Binding DataContext.SecimDegistir, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                 CommandParameter="{Binding .}"
+                                 FontSize="12" Margin="30,50,30,50">
+
+                                <Controls:FormulaControl Formula="{Binding .}"/>
+
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <!-- ORTALAM İÇİN HorizontalAlignment="Center" Doldurma için HorizontalAlignment="Left" veya "Strech" -->
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" IsItemsHost="True"> 
+                                
+                            </StackPanel>
+                                
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+                
+            </ScrollViewer>
+            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" FontStyle="Italic" BorderThickness="2"
+                    Command="{Binding DataContext.SoruCevapla, Mode=TwoWay ,RelativeSource={RelativeSource AncestorType=Window}}"/>
         </Grid>
     </DataTemplate>
 
-    <DataTemplate x:Key="Proompter">
+    <DataTemplate x:Key="SeceneklerNormalTemplate">
+        <Grid Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ItemsControl Background="White" ItemsSource="{Binding DataContext.secenekler.secenekler, RelativeSource={RelativeSource AncestorType=Window}}"
+                  Grid.Row="0">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton GroupName="AktifSecenekler" 
+                                 Command="{Binding DataContext.SecimDegistir, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                 CommandParameter="{Binding .}"
+                                 FontSize="11" Margin="20,5,5,5">
+
+                                <Label Content="{Binding .}" FontSize="15" FontStyle="Italic"/>
+
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <Button Grid.Row="1" Content="Cevapla" Background="AliceBlue" FontStyle="Italic" BorderThickness="2"
+                Command="{Binding DataContext.SoruCevapla, Mode=TwoWay ,RelativeSource={RelativeSource AncestorType=Window}}"/>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SeceneklerKilitliTemplate">
+
         <Grid>
+            <Label Content="Bu Soruyu Zaten Cevapladınız"
+                   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic"/>
+        </Grid>
+
+    </DataTemplate>
+    
+    
+    
+    <DataTemplate x:Key="Proompter">
+        <Grid Margin="2">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Label Content="Proomptlayıcı" FontSize="8"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-            <TextBox Text="NOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPTNOTHOUGHTONLYPROOMPT"
+         
+            <Label Content="LLM Prompt/Soru Sorma" FontSize="10"/>
+
+            <TextBox Text="Prompt Buraya"
                                  MaxLength="400"
-                                 Grid.Row="1"/>
+                                 Grid.Row="1"
+                                 FontSize="20"
+                                 Grid.ColumnSpan="2"/>
+
+            <Button Content="Gönder" Grid.Column="1" Grid.Row="2"/> 
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="NEPTUN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="NEPTUN_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BOOKMARKED_QUESTIONS">
           <Key>
             <PropertyRef Name="BOOKMARK_ID" />
@@ -13,10 +13,37 @@
           <Property Name="USERID" Type="int" Nullable="false" />
           <Property Name="TOPIC_ID" Type="int" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="CORRECT_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="nvarchar(max)" />
+          <Property Name="LATEX_TEXT" Type="nvarchar(max)" />
+          <Property Name="CORRECT_ANSWER" Type="nvarchar" MaxLength="40" />
+          <Property Name="WRONG_ANSWERS" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="EXAM_SESSION_DETAILS">
+          <Key>
+            <PropertyRef Name="EXAM_DETAIL_ID" />
+          </Key>
+          <Property Name="EXAM_DETAIL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EXAM_ID" Type="int" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LATEX_TEXT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CORRECT_ANSWER" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="USERS_ANSWER" Type="nvarchar" MaxLength="40" />
+          <Property Name="WRONG_ANSWERS" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ISCORRECT" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EXAM_SESSIONS">
+          <Key>
+            <PropertyRef Name="EXAM_ID" />
+          </Key>
+          <Property Name="EXAM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERID" Type="int" Nullable="false" />
+          <Property Name="EXAM_TITLE" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="QUESTION_COUNT" Type="int" Nullable="false" />
+          <Property Name="CORRECT_COUNT" Type="int" Nullable="false" />
+          <Property Name="INCORRECT_COUNT" Type="int" Nullable="false" />
+          <Property Name="SCORE" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FEEDBACK">
           <Key>
@@ -47,10 +74,10 @@
           <Property Name="POOL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TOPIC_ID" Type="int" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="CORRECT_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="nvarchar(max)" />
+          <Property Name="LATEX_TEXT" Type="nvarchar(max)" />
+          <Property Name="CORRECT_ANSWER" Type="nvarchar" MaxLength="40" />
+          <Property Name="WRONG_ANSWERS" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="SUBTOPICS">
           <Key>
@@ -97,11 +124,11 @@
           <Property Name="USERID" Type="int" Nullable="false" />
           <Property Name="TOPIC_ID" Type="int" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="int" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="varchar(max)" Nullable="false" />
-          <Property Name="ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="USERS_ANSWER" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="nvarchar(max)" />
+          <Property Name="LATEX_TEXT" Type="nvarchar(max)" />
+          <Property Name="ANSWER" Type="nvarchar" MaxLength="40" />
+          <Property Name="USERS_ANSWER" Type="nvarchar" MaxLength="40" />
+          <Property Name="WRONG_ANSWERS" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <Association Name="FK__BOOKMARKE__SUBTO__4F7CD00D">
           <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
@@ -135,6 +162,54 @@
               <PropertyRef Name="USERID" />
             </Principal>
             <Dependent Role="BOOKMARKED_QUESTIONS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__EXAM___60A75C0F">
+          <End Role="EXAM_SESSIONS" Type="Self.EXAM_SESSIONS" Multiplicity="1" />
+          <End Role="EXAM_SESSION_DETAILS" Type="Self.EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXAM_SESSIONS">
+              <PropertyRef Name="EXAM_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="EXAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__SUBTO__628FA481">
+          <End Role="SUBTOPICS" Type="Self.SUBTOPICS" Multiplicity="1" />
+          <End Role="EXAM_SESSION_DETAILS" Type="Self.EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__TOPIC__619B8048">
+          <End Role="TOPICS" Type="Self.TOPICS" Multiplicity="1" />
+          <End Role="EXAM_SESSION_DETAILS" Type="Self.EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__USERI__5DCAEF64">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="EXAM_SESSIONS" Type="Self.EXAM_SESSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSIONS">
               <PropertyRef Name="USERID" />
             </Dependent>
           </ReferentialConstraint>
@@ -273,6 +348,8 @@
         </Association>
         <EntityContainer Name="NEPTUN_DBModelStoreContainer">
           <EntitySet Name="BOOKMARKED_QUESTIONS" EntityType="Self.BOOKMARKED_QUESTIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXAM_SESSION_DETAILS" EntityType="Self.EXAM_SESSION_DETAILS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXAM_SESSIONS" EntityType="Self.EXAM_SESSIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FEEDBACK" EntityType="Self.FEEDBACK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOGS" EntityType="Self.LOGS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QUESTION_POOL" EntityType="Self.QUESTION_POOL" Schema="dbo" store:Type="Tables" />
@@ -292,6 +369,22 @@
           <AssociationSet Name="FK__BOOKMARKE__USERI__4D94879B" Association="Self.FK__BOOKMARKE__USERI__4D94879B">
             <End Role="USERS" EntitySet="USERS" />
             <End Role="BOOKMARKED_QUESTIONS" EntitySet="BOOKMARKED_QUESTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__EXAM___60A75C0F" Association="Self.FK__EXAM_SESS__EXAM___60A75C0F">
+            <End Role="EXAM_SESSIONS" EntitySet="EXAM_SESSIONS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__SUBTO__628FA481" Association="Self.FK__EXAM_SESS__SUBTO__628FA481">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__TOPIC__619B8048" Association="Self.FK__EXAM_SESS__TOPIC__619B8048">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__USERI__5DCAEF64" Association="Self.FK__EXAM_SESS__USERI__5DCAEF64">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="EXAM_SESSIONS" EntitySet="EXAM_SESSIONS" />
           </AssociationSet>
           <AssociationSet Name="FK__FEEDBACK__USERID__4222D4EF" Association="Self.FK__FEEDBACK__USERID__4222D4EF">
             <End Role="USERS" EntitySet="USERS" />
@@ -351,10 +444,10 @@
           <Property Name="USERID" Type="Int32" Nullable="false" />
           <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__BOOKMARKE__SUBTO__4F7CD00D" FromRole="BOOKMARKED_QUESTIONS" ToRole="SUBTOPICS" />
           <NavigationProperty Name="TOPICS" Relationship="Self.FK__BOOKMARKE__TOPIC__4E88ABD4" FromRole="BOOKMARKED_QUESTIONS" ToRole="TOPICS" />
           <NavigationProperty Name="USERS" Relationship="Self.FK__BOOKMARKE__USERI__4D94879B" FromRole="BOOKMARKED_QUESTIONS" ToRole="USERS" />
@@ -390,10 +483,10 @@
           <Property Name="POOL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CORRECT_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__QUESTION___SUBTO__4AB81AF0" FromRole="QUESTION_POOL" ToRole="SUBTOPICS" />
           <NavigationProperty Name="TOPICS" Relationship="Self.FK__QUESTION___TOPIC__49C3F6B7" FromRole="QUESTION_POOL" ToRole="TOPICS" />
         </EntityType>
@@ -409,6 +502,7 @@
           <NavigationProperty Name="TOPICS" Relationship="Self.FK__SUBTOPICS__TOPIC__46E78A0C" FromRole="SUBTOPICS" ToRole="TOPICS" />
           <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__SUBTO__59063A47" FromRole="SUBTOPICS" ToRole="USER_SCORES" />
           <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__SUBTO__5441852A" FromRole="SUBTOPICS" ToRole="WRONG_ANSWERED_QUESTIONS" />
+          <NavigationProperty Name="EXAM_SESSION_DETAILS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__SUBTO__628FA481" FromRole="SUBTOPICS" ToRole="EXAM_SESSION_DETAILS" />
         </EntityType>
         <EntityType Name="TOPICS">
           <Key>
@@ -421,6 +515,7 @@
           <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__SUBTOPICS__TOPIC__46E78A0C" FromRole="TOPICS" ToRole="SUBTOPICS" />
           <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__TOPIC__5812160E" FromRole="TOPICS" ToRole="USER_SCORES" />
           <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__TOPIC__534D60F1" FromRole="TOPICS" ToRole="WRONG_ANSWERED_QUESTIONS" />
+          <NavigationProperty Name="EXAM_SESSION_DETAILS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__TOPIC__619B8048" FromRole="TOPICS" ToRole="EXAM_SESSION_DETAILS" />
         </EntityType>
         <EntityType Name="USER_SCORES">
           <Key>
@@ -451,6 +546,7 @@
           <NavigationProperty Name="LOGS" Relationship="Self.FK__LOGS__USERID__3C69FB99" FromRole="USERS" ToRole="LOGS" />
           <NavigationProperty Name="USER_SCORES" Relationship="Self.FK__USER_SCOR__USERI__571DF1D5" FromRole="USERS" ToRole="USER_SCORES" />
           <NavigationProperty Name="WRONG_ANSWERED_QUESTIONS" Relationship="Self.FK__WRONG_ANS__WRONG__52593CB8" FromRole="USERS" ToRole="WRONG_ANSWERED_QUESTIONS" />
+          <NavigationProperty Name="EXAM_SESSIONS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__USERI__5DCAEF64" FromRole="USERS" ToRole="EXAM_SESSIONS" />
         </EntityType>
         <EntityType Name="WRONG_ANSWERED_QUESTIONS">
           <Key>
@@ -460,11 +556,11 @@
           <Property Name="USERID" Type="Int32" Nullable="false" />
           <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
           <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
-          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USERS_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LATEX_TEXT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="USERS_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="WRONG_ANSWERS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SUBTOPICS" Relationship="Self.FK__WRONG_ANS__SUBTO__5441852A" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="SUBTOPICS" />
           <NavigationProperty Name="TOPICS" Relationship="Self.FK__WRONG_ANS__TOPIC__534D60F1" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="TOPICS" />
           <NavigationProperty Name="USERS" Relationship="Self.FK__WRONG_ANS__WRONG__52593CB8" FromRole="WRONG_ANSWERED_QUESTIONS" ToRole="USERS" />
@@ -703,7 +799,105 @@
             <End Role="USERS" EntitySet="USERS" />
             <End Role="WRONG_ANSWERED_QUESTIONS" EntitySet="WRONG_ANSWERED_QUESTIONS" />
           </AssociationSet>
+          <EntitySet Name="EXAM_SESSION_DETAILS" EntityType="NEPTUN_DBModel.EXAM_SESSION_DETAILS" />
+          <EntitySet Name="EXAM_SESSIONS" EntityType="NEPTUN_DBModel.EXAM_SESSIONS" />
+          <AssociationSet Name="FK__EXAM_SESS__EXAM___60A75C0F" Association="NEPTUN_DBModel.FK__EXAM_SESS__EXAM___60A75C0F">
+            <End Role="EXAM_SESSIONS" EntitySet="EXAM_SESSIONS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__SUBTO__628FA481" Association="NEPTUN_DBModel.FK__EXAM_SESS__SUBTO__628FA481">
+            <End Role="SUBTOPICS" EntitySet="SUBTOPICS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__TOPIC__619B8048" Association="NEPTUN_DBModel.FK__EXAM_SESS__TOPIC__619B8048">
+            <End Role="TOPICS" EntitySet="TOPICS" />
+            <End Role="EXAM_SESSION_DETAILS" EntitySet="EXAM_SESSION_DETAILS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__EXAM_SESS__USERI__5DCAEF64" Association="NEPTUN_DBModel.FK__EXAM_SESS__USERI__5DCAEF64">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="EXAM_SESSIONS" EntitySet="EXAM_SESSIONS" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="EXAM_SESSION_DETAILS">
+          <Key>
+            <PropertyRef Name="EXAM_DETAIL_ID" />
+          </Key>
+          <Property Name="EXAM_DETAIL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EXAM_ID" Type="Int32" Nullable="false" />
+          <Property Name="TOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="SUBTOPIC_ID" Type="Int32" Nullable="false" />
+          <Property Name="QUESTION_TEXT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LATEX_TEXT" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CORRECT_ANSWER" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="USERS_ANSWER" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="WRONG_ANSWERS" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ISCORRECT" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EXAM_SESSIONS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__EXAM___60A75C0F" FromRole="EXAM_SESSION_DETAILS" ToRole="EXAM_SESSIONS" />
+          <NavigationProperty Name="SUBTOPICS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__SUBTO__628FA481" FromRole="EXAM_SESSION_DETAILS" ToRole="SUBTOPICS" />
+          <NavigationProperty Name="TOPICS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__TOPIC__619B8048" FromRole="EXAM_SESSION_DETAILS" ToRole="TOPICS" />
+        </EntityType>
+        <EntityType Name="EXAM_SESSIONS">
+          <Key>
+            <PropertyRef Name="EXAM_ID" />
+          </Key>
+          <Property Name="EXAM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERID" Type="Int32" Nullable="false" />
+          <Property Name="EXAM_TITLE" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="QUESTION_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="CORRECT_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="INCORRECT_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="SCORE" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EXAM_SESSION_DETAILS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__EXAM___60A75C0F" FromRole="EXAM_SESSIONS" ToRole="EXAM_SESSION_DETAILS" />
+          <NavigationProperty Name="USERS" Relationship="NEPTUN_DBModel.FK__EXAM_SESS__USERI__5DCAEF64" FromRole="EXAM_SESSIONS" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK__EXAM_SESS__EXAM___60A75C0F">
+          <End Type="NEPTUN_DBModel.EXAM_SESSIONS" Role="EXAM_SESSIONS" Multiplicity="1" />
+          <End Type="NEPTUN_DBModel.EXAM_SESSION_DETAILS" Role="EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXAM_SESSIONS">
+              <PropertyRef Name="EXAM_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="EXAM_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__SUBTO__628FA481">
+          <End Type="NEPTUN_DBModel.SUBTOPICS" Role="SUBTOPICS" Multiplicity="1" />
+          <End Type="NEPTUN_DBModel.EXAM_SESSION_DETAILS" Role="EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SUBTOPICS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="SUBTOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__TOPIC__619B8048">
+          <End Type="NEPTUN_DBModel.TOPICS" Role="TOPICS" Multiplicity="1" />
+          <End Type="NEPTUN_DBModel.EXAM_SESSION_DETAILS" Role="EXAM_SESSION_DETAILS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TOPICS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSION_DETAILS">
+              <PropertyRef Name="TOPIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__EXAM_SESS__USERI__5DCAEF64">
+          <End Type="NEPTUN_DBModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="NEPTUN_DBModel.EXAM_SESSIONS" Role="EXAM_SESSIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USERID" />
+            </Principal>
+            <Dependent Role="EXAM_SESSIONS">
+              <PropertyRef Name="USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -814,6 +1008,35 @@
                 <ScalarProperty Name="ANSWER" ColumnName="ANSWER" />
                 <ScalarProperty Name="USERS_ANSWER" ColumnName="USERS_ANSWER" />
                 <ScalarProperty Name="WRONG_ANSWERS" ColumnName="WRONG_ANSWERS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXAM_SESSION_DETAILS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.EXAM_SESSION_DETAILS">
+              <MappingFragment StoreEntitySet="EXAM_SESSION_DETAILS">
+                <ScalarProperty Name="ISCORRECT" ColumnName="ISCORRECT" />
+                <ScalarProperty Name="WRONG_ANSWERS" ColumnName="WRONG_ANSWERS" />
+                <ScalarProperty Name="USERS_ANSWER" ColumnName="USERS_ANSWER" />
+                <ScalarProperty Name="CORRECT_ANSWER" ColumnName="CORRECT_ANSWER" />
+                <ScalarProperty Name="LATEX_TEXT" ColumnName="LATEX_TEXT" />
+                <ScalarProperty Name="QUESTION_TEXT" ColumnName="QUESTION_TEXT" />
+                <ScalarProperty Name="SUBTOPIC_ID" ColumnName="SUBTOPIC_ID" />
+                <ScalarProperty Name="TOPIC_ID" ColumnName="TOPIC_ID" />
+                <ScalarProperty Name="EXAM_ID" ColumnName="EXAM_ID" />
+                <ScalarProperty Name="EXAM_DETAIL_ID" ColumnName="EXAM_DETAIL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXAM_SESSIONS">
+            <EntityTypeMapping TypeName="NEPTUN_DBModel.EXAM_SESSIONS">
+              <MappingFragment StoreEntitySet="EXAM_SESSIONS">
+                <ScalarProperty Name="SCORE" ColumnName="SCORE" />
+                <ScalarProperty Name="INCORRECT_COUNT" ColumnName="INCORRECT_COUNT" />
+                <ScalarProperty Name="CORRECT_COUNT" ColumnName="CORRECT_COUNT" />
+                <ScalarProperty Name="QUESTION_COUNT" ColumnName="QUESTION_COUNT" />
+                <ScalarProperty Name="EXAM_TITLE" ColumnName="EXAM_TITLE" />
+                <ScalarProperty Name="USERID" ColumnName="USERID" />
+                <ScalarProperty Name="EXAM_ID" ColumnName="EXAM_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

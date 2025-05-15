@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar"
+        xmlns:wf="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
         mc:Ignorable="d"
         Title="FunctionsWPF" Height="450" Width="800">
     <Grid>
@@ -12,6 +13,23 @@
         <Label Content="Cevap:" HorizontalAlignment="Left" Margin="115,199,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblQuestion" Content="" HorizontalAlignment="Left" Margin="231,151,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblAnswer" Content="" HorizontalAlignment="Left" Margin="231,199,0,0" VerticalAlignment="Top"/>
-
+        <Label Content="Yanlışlar:" HorizontalAlignment="Left" Margin="105,253,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblWrongs" Content="" HorizontalAlignment="Left" Margin="231,253,0,0" VerticalAlignment="Top"/>
+        <Grid Margin="400,199,0,20" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="19*"/>
+                <RowDefinition Height="39*"/>
+            </Grid.RowDefinitions>
+            <WindowsFormsHost>
+                <wf:Chart x:Name="Chart1">
+                    <wf:Chart.Series>
+                        <wf:Series ChartType="Column"/>
+                    </wf:Chart.Series>
+                    <wf:Chart.ChartAreas>
+                        <wf:ChartArea/>
+                    </wf:Chart.ChartAreas>
+                </wf:Chart>
+            </WindowsFormsHost>
+        </Grid>
     </Grid>
 </Window>
