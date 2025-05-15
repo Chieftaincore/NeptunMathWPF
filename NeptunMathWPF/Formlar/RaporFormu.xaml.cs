@@ -1,16 +1,12 @@
 ﻿using System.Windows;
-using System.Collections.ObjectModel; // ObservableCollection için
-using System.Linq; // LINQ için
+using System.Collections.ObjectModel;
+using System.Linq;
 using DataVis = System.Windows.Forms.DataVisualization;
 
 namespace AnasayfaWPF
 {
-    /// <summary>
-    /// RaporFormu.xaml etkileşim mantığı
-    /// </summary>
     public partial class RaporFormu : Window
     {
-        // Örnek veriler için ObservableCollection'lar (gerçek uygulamada veritabanından gelecektir)
         public ObservableCollection<string> Konular { get; set; }
         public ObservableCollection<string> Oturumlar { get; set; }
 
@@ -18,7 +14,6 @@ namespace AnasayfaWPF
         {
             InitializeComponent();
 
-            // Örnek veri yükleme (gerçek uygulamada veritabanı veya API'den gelecektir)
             Konular = new ObservableCollection<string>
             {
                 "Matematik - Cebir",
@@ -37,13 +32,10 @@ namespace AnasayfaWPF
                 "Oturum #4 (2024-01-20)"
             };
 
-            // Başlangıçta listbox'ı konularla doldurabiliriz veya boş bırakabiliriz
-            // lstRaporVerileri.ItemsSource = Konular; // Varsayılan olarak konuları göster
 
             btnGenelDegerlendirme_Click(null, null); 
         }
 
-        // Ana Sayfaya Geri Dön Butonu
         private void GeriDon_Click(object sender, RoutedEventArgs e)
         {
             this.Close(); 
@@ -51,7 +43,6 @@ namespace AnasayfaWPF
 
         }
 
-        // Genel Değerlendirme Butonu Click Olayı
         private void btnGenelDegerlendirme_Click(object sender, RoutedEventArgs e)
         {
 
@@ -72,19 +63,15 @@ namespace AnasayfaWPF
 
             lstRaporVerileri.ItemsSource = Konular;
 
-            MessageBox.Show("Konu Bazlı rapor için konular listelendi.");
         }
 
-        // Oturum Bazlı Buton Click Olayı
         private void btnOturumBazli_Click(object sender, RoutedEventArgs e)
         {
 
             lstRaporVerileri.ItemsSource = Oturumlar;
 
-            MessageBox.Show("Oturum Bazlı rapor için oturumlar listelendi.");
         }
 
-        // True/False Buton Click Olayı
         private void btnTrueFalse_Click(object sender, RoutedEventArgs e)
         {
 
@@ -94,17 +81,7 @@ namespace AnasayfaWPF
                 "Yanlış Cevaplar: 75"
             };
 
-            MessageBox.Show("Doğru/Yanlış Dağılımı raporu yüklendi.");
         }
 
-        // İPUCU: ListBox'tan bir öğe seçildiğinde grafik güncellemek isterseniz:
-        // private void lstRaporVerileri_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        // {
-        //     if (lstRaporVerileri.SelectedItem != null)
-        //     {
-        //         string selectedItem = lstRaporVerileri.SelectedItem.ToString();
-        //         // selectedItem'a göre grafiği güncelleme mantığı buraya gelecek.
-        //     }
-        // }
     }
 }

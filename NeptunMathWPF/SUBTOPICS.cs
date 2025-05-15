@@ -21,6 +21,7 @@ namespace NeptunMathWPF
             this.QUESTION_POOL = new HashSet<QUESTION_POOL>();
             this.USER_SCORES = new HashSet<USER_SCORES>();
             this.WRONG_ANSWERED_QUESTIONS = new HashSet<WRONG_ANSWERED_QUESTIONS>();
+            this.EXAM_SESSION_DETAILS = new HashSet<EXAM_SESSION_DETAILS>();
         }
     
         public int SUBTOPIC_ID { get; set; }
@@ -36,5 +37,7 @@ namespace NeptunMathWPF
         public virtual ICollection<USER_SCORES> USER_SCORES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
     }
 }

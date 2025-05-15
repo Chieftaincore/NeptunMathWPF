@@ -168,6 +168,12 @@
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
     <Compile Include="DBQuestionRepository.cs" />
+    <Compile Include="EXAM_SESSIONS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EXAM_SESSION_DETAILS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="FEEDBACK.cs">
       <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>

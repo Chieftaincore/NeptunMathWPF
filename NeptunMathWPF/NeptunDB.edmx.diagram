@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="eb9d69962a824d91a37a206d8ab79a87" Name="Diagram1">
+      <Diagram DiagramId="eb9d69962a824d91a37a206d8ab79a87" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="NEPTUN_DBModel.BOOKMARKED_QUESTIONS" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
         <EntityTypeShape EntityType="NEPTUN_DBModel.FEEDBACK" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
         <EntityTypeShape EntityType="NEPTUN_DBModel.LOGS" Width="1.5" PointX="3" PointY="14.625" IsExpanded="true" />
@@ -28,6 +28,12 @@
         <AssociationConnector Association="NEPTUN_DBModel.FK__WRONG_ANS__TOPIC__534D60F1" ManuallyRouted="false" />
         <AssociationConnector Association="NEPTUN_DBModel.FK__USER_SCOR__USERI__571DF1D5" ManuallyRouted="false" />
         <AssociationConnector Association="NEPTUN_DBModel.FK__WRONG_ANS__WRONG__52593CB8" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.EXAM_SESSION_DETAILS" Width="1.5" PointX="9" PointY="2.5" />
+        <EntityTypeShape EntityType="NEPTUN_DBModel.EXAM_SESSIONS" Width="1.5" PointX="6.75" PointY="12.875" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__EXAM_SESS__EXAM___60A75C0F" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__EXAM_SESS__SUBTO__628FA481" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__EXAM_SESS__TOPIC__619B8048" />
+        <AssociationConnector Association="NEPTUN_DBModel.FK__EXAM_SESS__USERI__5DCAEF64" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
