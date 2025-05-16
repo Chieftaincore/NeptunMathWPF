@@ -24,7 +24,6 @@ namespace NeptunMathWPF.Formlar
         {
             InitializeComponent();
             LoadTopics();
-            LoadSubtopics();
             LoadListBox();
         }
 
@@ -40,7 +39,8 @@ namespace NeptunMathWPF.Formlar
         {
             Genel.Handle(() =>
             {
-                subtopicComboBox.ItemsSource = Genel.dbEntities.SUBTOPICS.Select(x => x.SUBTOPIC).ToList();
+                string topic = topicComboBox.SelectedItem.ToString();
+                subtopicComboBox.ItemsSource = Genel.dbEntities.SUBTOPICS.Where(x => x.TOPICS.TOPIC == topic).Select(x => x.SUBTOPIC).ToList();
             });
         }
 
@@ -103,6 +103,14 @@ namespace NeptunMathWPF.Formlar
                         MessageBox.Show("Bu veriye bağlı veriler bulunuyor!");
                     }
                 });
+            }
+        }
+
+        private void topicComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (topicComboBox.SelectedIndex != -1)
+            {
+                LoadSubtopics();
             }
         }
     }
