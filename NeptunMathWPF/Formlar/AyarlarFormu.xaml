@@ -37,7 +37,8 @@
         <GroupBox Header="API Ayarları" Margin="20,197,20,20"/>
         <Button x:Name="editApiUrlButton" Content="Düzenle" HorizontalAlignment="Left" Margin="252,226,0,0" VerticalAlignment="Top" Height="30" Width="66" Click="editApiUrlButton_Click"/>
         <ComboBox x:Name="apiUrlComboBox" HorizontalAlignment="Left" Margin="90,230,0,0" VerticalAlignment="Top" Width="136" IsEnabled="False"/>
-        <Button x:Name="saveButton" Content="Kaydet" HorizontalAlignment="Center" Margin="0,310,0,0" VerticalAlignment="Top" Height="35" Width="94" Click="saveButton_Click"/>
+       
+        <Button x:Name="saveButton" Content="Kaydet" HorizontalAlignment="Stretch" Margin="64,310,64,0" VerticalAlignment="Top" Height="35" Click="saveButton_Click"/>
         <Label Content="Model:" HorizontalAlignment="Left" Margin="36,228,0,0" VerticalAlignment="Top"/>
         <Label Content="API Key:" HorizontalAlignment="Left" Margin="33,267,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="apikeyTextBox" HorizontalAlignment="Left" Margin="90,267,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="264" Height="24" IsEnabled="False"/>

@@ -106,11 +106,18 @@
             <TabItem Header="Kullanici" Padding="8">
                
                 <StackPanel>
-                    <Label x:Name="kKullaniciAdi" Margin="10,12" FontSize="20" FontWeight="Bold"/>
-                    <Label x:Name="kAd" Margin="10,8" FontSize="12"/>
-                    <Label x:Name="kSoyAd" Margin="10,8" FontSize="12"/>
-                    <Label x:Name="kYetki" Margin="10,8" FontSize="12"/>
-                    <Label x:Name="kEmail" Margin="10,8" FontSize="12"/>
+                    <Label x:Name="kKullaniciAdi" Content="[@KULLANICIADI]" Margin="10,12" FontSize="24" FontWeight="Bold"/>
+                    <Label x:Name="kAd" Content="[AD]" Margin="10,8" FontSize="12"/>
+                    <Label x:Name="kSoyAd" Content="[SOYAD]" Margin="10,8" FontSize="12"/>
+                    <Label x:Name="kYetki" Content="[YETKI]" Margin="10,8" FontSize="12"/>
+                    <Label x:Name="kEmail" Content="[EMAIL]" Margin="10,8" FontSize="12"/>
+
+                    <Button Content="Raporlar" Click="tusRaporlar"
+                            Padding="10" Margin="10,0" HorizontalAlignment="Left" Background="LightSteelBlue" FontStyle="Italic"/>
+                    
+                    <Button Content="Ayarlar" Click="AyarlarFormu_Click"
+                            Padding="10" Margin="10,0" HorizontalAlignment="Left" Background="LightSteelBlue" FontStyle="Italic"/>
+
                 </StackPanel>
             </TabItem>
         </TabControl>

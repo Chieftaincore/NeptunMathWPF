@@ -9,16 +9,14 @@ using System.Windows;
 
 namespace NeptunMathWPF.SoruVeAjani.Algorithma
 {
-
     using soruTur = SoruTerimleri.soruTuru;
 
     /// <summary>
     /// etkileşim sayfası için algorithma nesnesi
-    /// kullanıcıya göre veya özel algorithma oluşturulması
-    /// 
+    /// kullanıcıya göre veya parametreli algorithma oluşturulmasını sağlar
     /// </summary>
-    class AlgorithmaModel
-    {
+    public class AlgorithmaModel
+    {   
         /// <summary>
         /// Seçili soru türlerindendi tanımlanmazsa random bütün soru türlerinden seçer
         /// </summary>
@@ -28,21 +26,22 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         public List<Soru> Bekleyen = new List<Soru>();
         public Func<Soru> SonrakiAlgorithma { get; set; }
 
+        //Ek Değişkenler
+        public bool DinamikSeviye { get; set; }
+        
+
         public AlgorithmaModel(List<soruTur> turler)
         {
             SoruTurleri = turler;
 
             repo = new ZorlukRepository(turler);
         }
+
         public AlgorithmaModel(soruTur[] turler)
         {
             SoruTurleri = turler.ToList();
 
             repo = new ZorlukRepository(turler.ToList());
-        }
-        public AlgorithmaModel()
-        {
-
         }
 
         public Soru Sonraki()
@@ -68,8 +67,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             }
             else
             {
-                //MessageBox.Show("Geri Döndürdü","ASYNC");
-
                 Soru soru = Bekleyen.Last();
 
                 Bekleyen.Remove(Bekleyen.Last());
@@ -80,8 +77,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public async Task ProblemArkaSoruAsync()
         {
-           // MessageBox.Show("ASYNC Tetiklendi"," ASYNC tetiklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-
             Bekleyen.Add(await ((ProblemSoruZorlukModel)repo.Zorluklar[soruTur.problem]).SoruHazirla(repo.Zorluklar[soruTur.problem].seviye));
 
             MessageBox.Show("ASYNC Problem Eklendi", " ASYNC eklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
@@ -96,12 +91,14 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public void ModelSeviyeArtır(soruTur tur)
         {
-            repo.Zorluklar[tur].seviyeArttır();
+            if(DinamikSeviye)
+              repo.Zorluklar[tur].seviyeArttır();
         }
 
         public void ModelSeviyeAzalt(soruTur tur)
         {
-            repo.Zorluklar[tur].seviyeAzalt();
+            if (DinamikSeviye)
+                repo.Zorluklar[tur].seviyeAzalt();
         }
 
         public bool RepoDenetim(soruTur tur)
@@ -114,4 +111,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             return false;
         }
     }
+
+
 }

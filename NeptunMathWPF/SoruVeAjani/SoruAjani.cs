@@ -15,25 +15,37 @@ using System.Windows.Controls;
 namespace NeptunMathWPF.SoruVeAjani
 {
     using ifadeTuru = SoruTerimleri.ifadeTurleri;
+    using SoruTuru = SoruTerimleri.soruTuru;
 
     /// <summary>
     /// Farklı Soru TÜrlerini genel soru tipine döndüren statik Nesne
     /// </summary>
     public static class SoruAjani
     {
-     
-        internal enum IslemAlttur
+        /// <summary>
+        /// Özel ve Karışık soru türleri içindir
+        /// eğer her potansiyel IslemAlttürünü getirmek için EnumIslemSoruları()'nı çağırın;
+        /// </summary>
+        private enum IslemAlttur
         {
             Karmasik,
         }
-
-       
-        
+   
         //Tamsayı Random Atma Aralığı
         //Yeni PARAMETRE olarak fikir Uygulanabilir
         internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
 
         internal static Random random = new Random();
+
+        public static List<Enum> IslemAltturleri()
+        {
+            List<Enum> Altturler = new List<Enum>();
+
+            Altturler.AddRange(Enum.GetValues(typeof(IslemAlttur)).Cast<Enum>());
+            Altturler.AddRange(Enum.GetValues(typeof(ifadeTuru)).Cast<Enum>());
+
+            return Altturler;
+        }
        
         internal static Soru RastgeleLimitSorusuOlustur()
         {
@@ -112,6 +124,76 @@ namespace NeptunMathWPF.SoruVeAjani
                 AltTur = rep.functionType
             };
         }
+
+        #region VeriTabaniSorulari
+
+        /// <summary>
+        /// Veritabanından Rastgele bir soru türü getiren fonksiyon, eğer her türden soru yoksa
+        /// Daha güvenli bir versiyonu olan parametreli halini kullanın
+        /// </summary>
+        /// <returns></returns>
+        public static Soru RastgeleVeriTabanıSorusuGetir()
+        {
+            try
+            {
+                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
+                DBQuestionRepository VTrepo;
+                Soru _soru;
+
+                int i = Enum.GetValues(typeof(SoruTuru)).Length;
+                SoruTuru tur = (SoruTuru)new Random().Next(0, i);
+                Enum alttur = AltturGetir(tur);
+
+                VTrepo = new DBQuestionRepository(tur.ToString(), alttur.ToString());
+
+                _soru = new Soru(VTrepo, tur)
+                {
+                    AltTur = alttur
+                };
+
+                return _soru;
+            }
+            catch
+            {
+                MessageBox.Show("THROW","throw");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="turler">Veritabanı </param>
+        /// <returns></returns>
+        public static Soru RastgeleVeriTabanıSorusuGetir(SoruTuru[] turler)
+        {
+            try
+            {
+                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
+                DBQuestionRepository VTrepo;
+                Soru _soru;
+
+                int i = turler.Length;
+                SoruTuru tur = turler[new Random().Next(0, i)];
+                Enum alttur = AltturGetir(tur);
+
+                VTrepo = new DBQuestionRepository(tur.ToString(), alttur.ToString());
+
+                _soru = new Soru(VTrepo, tur)
+                {
+                    AltTur = alttur
+                };
+
+                return _soru;
+            }
+            catch
+            {
+                MessageBox.Show("THROW", "throw");
+                throw;
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Async Problem Sorusu GEMINI API'dan soru çeker, konu rastgele seçilir
@@ -257,7 +339,7 @@ namespace NeptunMathWPF.SoruVeAjani
             string ajanLOG = string.Empty;
 
             string latex = string.Empty;
-            Enum _enum = AltTurGetir(ifadeler);
+            Enum _enum = IslemAltTurGetir(ifadeler);
 
             Entity sonuc = 0;
             List<Entity> diger = new List<Entity>();
@@ -511,6 +593,40 @@ namespace NeptunMathWPF.SoruVeAjani
             return soru;
         }
 
+        /// <summary>
+        /// Genel Alttür Getirme
+        /// </summary>
+        /// <param name="_Konu">Enum tipi Konu getir</param>
+        internal static Enum AltturGetir(Enum _Konu)
+        {
+            Random RNG = new Random();
+
+            switch (_Konu)
+            {
+                case SoruTuru.islem:
+                    List<Enum> e = IslemAltturleri();
+
+                    return e[RNG.Next(e.Count)]; 
+
+                case SoruTuru.fonksiyon:
+                    int Fcount = Enum.GetNames(typeof(FunctionType)).Length;
+                 
+                    return (FunctionType)RNG.Next(0, Fcount) ;
+
+                case SoruTuru.problem:
+                    int Pcount = Enum.GetNames(typeof(ProblemType)).Length;
+
+                    return (ProblemType)RNG.Next(0, Pcount);
+   
+                case SoruTuru.limit:
+                    int Lcount = Enum.GetNames(typeof(ProblemType)).Length;
+
+                    return (LimitQuestionType)RNG.Next(0, Lcount);
+   
+                default:
+                    return IslemAlttur.Karmasik;
+            }
+        }
 
         /// <summary>
         /// içindeki ifadelere göre tek içeren veya çoklu içeren altkonu geri gönderir
@@ -518,7 +634,7 @@ namespace NeptunMathWPF.SoruVeAjani
         /// </summary>
         /// <returns></returns>
         /// 
-        internal static Enum AltTurGetir(List<Ifade> ifadeler)
+        internal static Enum IslemAltTurGetir(List<Ifade> ifadeler)
         {
             List<ifadeTuru> ozgunler = new List<ifadeTuru>();
 

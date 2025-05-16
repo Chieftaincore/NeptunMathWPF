@@ -77,17 +77,6 @@ namespace NeptunMathWPF
             }
         }
 
-        internal static async Task HandleAsync(Action action)
-        {
-            try
-            { action(); }
-            catch (Exception ex)
-            {
-                LogToDatabase(LogLevel.ERROR, $"{ex.Message}\n{ex.InnerException}\n{ex.StackTrace}");
-                MessageBox.Show("Problem yüklenirken hata oluştu!\nBağlantınızı kontrol edin veya bir yetkiliyle iletişime geçin.", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
         internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor
         {
             dbEntities = new NEPTUN_DBEntities();
@@ -100,7 +89,6 @@ namespace NeptunMathWPF
             string level = enumLevel.ToString();
             try
             {
-
                 dbEntities.LOGS.Add(new LOGS
                 {
                     LOG_DATE = DateTime.Now,
@@ -115,7 +103,6 @@ namespace NeptunMathWPF
                 //Veritabanına loglanamıyorsa txt dosyasına logla
                 try
                 {
-
                     using (StreamWriter writer = new StreamWriter(logFilePath, true))
                     {
                         string logMessage = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {message}";
@@ -134,7 +121,6 @@ namespace NeptunMathWPF
         {
             System.Environment.Exit(110);
         }
-
 
         public static void Shuffle<T>(this IList<T> list)
         {

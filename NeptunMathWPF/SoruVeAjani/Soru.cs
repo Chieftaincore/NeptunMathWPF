@@ -59,12 +59,23 @@ namespace NeptunMathWPF
             this.Sonuc = sonuc;
         }
 
+        public Soru(DBQuestionRepository _Question, soruTuru _SoruTuru)
+        {
+            SoruTuru = _SoruTuru;
+            LatexMetin = _Question.LATEX_TEXT;
+            IslemMetin = _Question.QUESTION_TEXT;
+
+            secenekler = _Question.WRONG_ANSWERS;
+            Sonuc = _Question.CORRECT_ANSWER;
+        }
+
         public Soru(LimitQuestion _limit, string[] _secenekler)
         {
             SoruTuru = soruTuru.limit;
 
             LatexMetin = _limit.QuestionLaTeX;
             IslemMetin = _limit.QuestionText;
+
             Sonuc = _limit.Answer.ToString();
             secenekler = _secenekler.ToList();
         }
