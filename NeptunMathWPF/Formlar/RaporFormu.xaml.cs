@@ -2,36 +2,22 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using DataVis = System.Windows.Forms.DataVisualization;
+using NeptunMathWPF;
+using System.Data.Entity;
+using System;
 
 namespace AnasayfaWPF
 {
+    public enum lbType
+    {
+        oturumbazli
+    }
     public partial class RaporFormu : Window
     {
-        public ObservableCollection<string> Konular { get; set; }
-        public ObservableCollection<string> Oturumlar { get; set; }
-
+        lbType lbtype;
         public RaporFormu()
         {
             InitializeComponent();
-
-            Konular = new ObservableCollection<string>
-            {
-                "Matematik - Cebir",
-                "Matematik - Geometri",
-                "Fizik - Mekanik",
-                "Fizik - Elektrik",
-                "Kimya - Organik",
-                "Kimya - İnorganik"
-            };
-
-            Oturumlar = new ObservableCollection<string>
-            {
-                "Oturum #1 (2024-01-15)",
-                "Oturum #2 (2024-01-16)",
-                "Oturum #3 (2024-01-18)",
-                "Oturum #4 (2024-01-20)"
-            };
-
 
             btnGenelDegerlendirme_Click(null, null); 
         }
@@ -46,42 +32,53 @@ namespace AnasayfaWPF
         private void btnGenelDegerlendirme_Click(object sender, RoutedEventArgs e)
         {
 
-            lstRaporVerileri.ItemsSource = new ObservableCollection<string>
-            {
-                "Genel Başarı Oranı: %85",
-                "Toplam Çözülen Soru: 500",
-                "Doğru Cevap: 425",
-                "Yanlış Cevap: 75"
-            };
 
-            Chart1.Series[0].Points.Add(3.2, 4).AxisLabel = "DENEME";
         }
 
 
         private void btnKonuBazli_Click(object sender, RoutedEventArgs e)
         {
+            lbtype = lbType.oturumbazli;
+            lstRaporVerileri.Items.Clear();
+            var topicids = Genel.dbEntities.EXAM_SESSION_DETAILS.Select(x => x.TOPIC_ID).Distinct().ToList();
 
-            lstRaporVerileri.ItemsSource = Konular;
-
+            foreach (var topicid in topicids)
+            {
+                MessageBox.Show(topicid.ToString());
+                string topic = Genel.dbEntities.TOPICS.Where(x => x.TOPIC_ID == topicid).Select(x => x.TOPIC).FirstOrDefault();
+                lstRaporVerileri.Items.Add(topic);
+            }
         }
 
         private void btnOturumBazli_Click(object sender, RoutedEventArgs e)
         {
-
-            lstRaporVerileri.ItemsSource = Oturumlar;
-
+           
         }
 
         private void btnTrueFalse_Click(object sender, RoutedEventArgs e)
         {
 
-            lstRaporVerileri.ItemsSource = new ObservableCollection<string>
-            {
-                "Doğru Cevaplar: 425",
-                "Yanlış Cevaplar: 75"
-            };
 
         }
 
+        private void lstRaporVerileri_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            Chart1.Series[0].Points.Clear();
+            if (lbtype==lbType.oturumbazli)
+            {
+                string topic = lstRaporVerileri.SelectedItem.ToString();
+                int topicid = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == topic).Select(x => x.TOPIC_ID).FirstOrDefault();
+                var subtopics = Genel.dbEntities.SUBTOPICS.Where(x => x.TOPIC_ID == topicid).Select(x => x.SUBTOPIC_ID).ToList();
+
+                foreach (var subtopicid in subtopics)
+                {
+                    int count = Genel.dbEntities.EXAM_SESSION_DETAILS.Where(x => x.SUBTOPIC_ID == subtopicid).Count();
+                    int correct = Genel.dbEntities.EXAM_SESSION_DETAILS.Where(x => x.SUBTOPIC_ID == subtopicid && x.ISCORRECT==true).Count();
+                    int incorrect = count - correct;
+
+                    Chart1.Series[0].Points.Add(count, 0).AxisLabel = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC_ID == subtopicid).Select(x => x.SUBTOPIC).FirstOrDefault();
+                }
+            }
+        }
     }
 }

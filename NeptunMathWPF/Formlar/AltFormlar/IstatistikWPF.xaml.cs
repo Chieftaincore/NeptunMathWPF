@@ -36,7 +36,7 @@ namespace NeptunMathWPF.Formlar
                     {
                         string subtopic = SubtopicsListBox.SelectedItem.ToString();
                         int subtopicid = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
-                        lblYanlisCount.Content = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid).Count();
+                        lblYanlisCount.Content = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid && x.USERID==aktifKullanici.kullnId).Count();
                     }
                 }
                 catch (System.NullReferenceException)
@@ -50,7 +50,6 @@ namespace NeptunMathWPF.Formlar
             {
                 try
                 {
-                    // YAZDIRMAK İÇİN
                     TopicsListBox.ItemsSource = Genel.dbEntities.TOPICS.Select(x => x.TOPIC).ToList();
                 }
                 catch (System.NullReferenceException) { }
@@ -78,7 +77,7 @@ namespace NeptunMathWPF.Formlar
                     string subtopic = SubtopicsListBox.SelectedItem.ToString();
                     var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
 
-                    QuestionsListBox.ItemsSource = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
+                    QuestionsListBox.ItemsSource = Genel.dbEntities.WRONG_ANSWERED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId && x.USERID==aktifKullanici.kullnId).Select(x => x.QUESTION_TEXT).ToList();
                 }
             });
         }

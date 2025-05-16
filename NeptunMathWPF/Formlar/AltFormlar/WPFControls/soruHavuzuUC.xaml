@@ -17,7 +17,7 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <ComboBox x:Name="topicComboBox" HorizontalAlignment="Left" Margin="94,24,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
+        <ComboBox x:Name="topicComboBox" HorizontalAlignment="Left" Margin="94,24,0,0" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="topicComboBox_SelectionChanged"/>
         <Label Content="Konu" HorizontalAlignment="Left" Margin="12,22,0,0" VerticalAlignment="Top" Height="26" Width="37"/>
         <ComboBox x:Name="subtopicComboBox" HorizontalAlignment="Left" Margin="94,55,0,0" VerticalAlignment="Top" Width="120" Height="22"/>
         <Label Content="Alt Konu" HorizontalAlignment="Left" Margin="12,53,0,0" VerticalAlignment="Top" Height="26" Width="55"/>
