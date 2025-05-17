@@ -76,7 +76,7 @@ namespace NeptunMathWPF.Fonksiyonlar
                     int denominatorOffset = random.Next(1, 4);
                     string denomSign = random.Next(2) == 0 ? "+" : "-";
                     returnLatex = $"f(x) = \\frac{{{a}x + {b}}}{{x {denomSign} {denominatorOffset}}}";
-                    returnQuestion = $"f(x) = {a}x + {b}/x {denomSign} {denominatorOffset}";
+                    returnQuestion = $"f(x) = ({a}x + {b})/(x {denomSign} {denominatorOffset})";
                     returnFunc = x => (a * x + b) / (x + (denomSign == "+" ? denominatorOffset : -denominatorOffset));
                     denominator = denominatorOffset;
                     denomsign = denomSign;
