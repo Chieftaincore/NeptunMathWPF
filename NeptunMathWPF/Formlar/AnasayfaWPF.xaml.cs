@@ -5,7 +5,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using LoginApp;
 using NeptunMathWPF;
-using NeptunMathWPF.Formlar; // LoginApp namespace'ini ekledik
+using NeptunMathWPF.Formlar;
+using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
+using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model; // LoginApp namespace'ini ekledik
 
 namespace AnasayfaWPF
 {
@@ -171,6 +173,29 @@ namespace AnasayfaWPF
         private void Window_Closed(object sender, EventArgs e)
         {
             Genel.UygulamaKapat();
+        }
+
+        private void tusSinavSession(object sender, RoutedEventArgs e)
+        {
+
+            TestEtkilesimMVM testMVVM = new TestEtkilesimMVM();
+
+   
+
+            EtkilesimPencereWPF _test =
+
+             new EtkilesimPencereWPF(this)
+             {
+                 DataContext = testMVVM
+
+             };
+
+            _test.Show();
+            _test.TimerPartner.Visibility = Visibility.Visible;
+            _test.TimerPartner.IsEnabled = true;
+
+            this.Hide();
+        
         }
     }
 }

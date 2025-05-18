@@ -5,6 +5,7 @@ using NeptunMathWPF.SoruVeAjani.Limit;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -130,8 +131,6 @@ namespace NeptunMathWPF.SoruVeAjani
         /// <returns></returns>
         public static Soru RastgeleVeriTabanıSorusuGetir()
         {
-            try
-            {
                 //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
                 DBQuestionRepository VTrepo;
                 Soru _soru;
@@ -148,12 +147,6 @@ namespace NeptunMathWPF.SoruVeAjani
                 };
 
                 return _soru;
-            }
-            catch
-            {
-                MessageBox.Show("THROW","throw");
-                throw;
-            }
         }
 
         /// <summary>
@@ -176,6 +169,43 @@ namespace NeptunMathWPF.SoruVeAjani
                 VTrepo = new DBQuestionRepository(tur.ToString(), alttur.ToString());
 
                 _soru = new Soru(VTrepo, tur)
+                {
+                    AltTur = alttur
+                };
+
+                return _soru;
+            }
+            catch
+            {
+                MessageBox.Show("THROW", "throw");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// VeriTabanı havuzunda hangi soru türlerinin uygun olduğunu kontrol edebilmek için
+        /// </summary>
+        /// <returns></returns>
+        public static DataTable HavuzSoruTuruDenetimi()
+        {
+
+
+            return new DataTable();
+        }
+
+
+        public static Soru Deneme()
+        {
+            try
+            {
+                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
+                DBQuestionRepository VTrepo;
+                Soru _soru;
+
+                Enum alttur = LimitQuestionType.CoefficientExpression;
+                VTrepo = new DBQuestionRepository(SoruTuru.limit.ToString(), alttur.ToString());
+
+                _soru = new Soru(VTrepo, SoruTuru.limit)
                 {
                     AltTur = alttur
                 };

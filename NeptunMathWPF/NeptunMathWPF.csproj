@@ -205,6 +205,7 @@
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ZamanlayiciModel.cs" />
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\TestEtkilesimMVM.cs" />
     <Compile Include="Formlar\GetAPIKeyPanelWPF.xaml.cs">
       <DependentUpon>GetAPIKeyPanelWPF.xaml</DependentUpon>
     </Compile>
@@ -461,6 +462,10 @@
     <Page Include="Themes\SoruSeceneklerCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ZamanlayiciCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

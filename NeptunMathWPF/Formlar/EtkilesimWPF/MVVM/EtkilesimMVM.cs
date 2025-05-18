@@ -48,7 +48,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         #endregion
 
         //SoruListesini Belirliyor Görünen Soru Modelleri Koleksiyonu
-        bool algodurum = true;
+        internal bool algodurum = true;
         public AlgorithmaModel Algorithma { get; set; }
         public bool APIvar { get; set; }
         public ObservableCollection<SoruCardModel> Sorular { get; set; }
@@ -69,9 +69,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         //sonraki sorunun ne geleceğini belirleyen algorithma için
         public Func<Soru> sonrakiSoruAlgorithmasi { get; set; }
         public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
-
-        //içinde model var ise zamanlama yapar
-        internal ZamanlayiciModel Zamanlayici { get; set; }
 
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
@@ -96,7 +93,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 if (_seciliTur != value)
                 {
                     _seciliTur = value;
-                    OnPropertyChanged(nameof(seciliTur));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -129,6 +126,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
+
+
         //Bitmedi
         internal void IlkEkleme()
         {
@@ -138,7 +137,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 {
                     if (Algorithma.repo.Zorluklar.Count == 1 && Algorithma.repo.Zorluklar.ContainsKey(soruTuru.problem))
                     {
-
+                        DebugIslemSoruEkle();
                     }
 
                     Algorithma.Sonraki();
@@ -338,7 +337,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             return tur;
         }
 
-        private void SeciliSoruCevapla(object o)
+        internal virtual void SeciliSoruCevapla(object o)
         {
             Genel.Handle(() =>
             {
@@ -394,7 +393,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         }
 
         #region VeriTabani
-        private void AddWrongQuestionToDB()
+        internal void AddWrongQuestionToDB()
         {
             Genel.Handle(() =>
             {
@@ -612,6 +611,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
             DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
+            DebugHavuzSoruEkle = new RelayCommand(o => tusDBSoruGetir());
             AlgorithmaCheck = new RelayCommand(o => AlgorithmaChecki());
         }
 
@@ -628,7 +628,21 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         internal void tusDBSoruGetir()
         {
+            Soru soru = SoruAjani.RastgeleVeriTabanıSorusuGetir();
 
+            seciliSoru = new SoruCardModel(soru)
+            {
+                LaTeX = soru.LatexMetin,
+                zaman = DateTime.Now,
+                kaynak = "Veritabanı"
+            };
+
+            seciliTur = seciliSoru.SoruTuruStyleTemplate();
+
+            Sorular.Add(seciliSoru);
+
+            OnPropertyChanged(nameof(secenekler));
+            OnPropertyChanged();
         }
 
         internal void tusDBSoruIsaretle(object o)

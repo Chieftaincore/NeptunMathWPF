@@ -13,9 +13,7 @@
         Title="Etkilesim Penceresi" Height="900" Width="1600">
 
 
-    <Window.DataContext>
-        <mvvm:EtkilesimMVM/>
-    </Window.DataContext>
+
 
     <Window.Resources>
 
@@ -23,6 +21,7 @@
                                   SoruModuLaTeX="{StaticResource SeceneklerLaTeXTemplate}"
                                   SoruModuMetin="{StaticResource SeceneklerNormalTemplate}"
                                   SoruModuKilitli="{StaticResource SeceneklerKilitliTemplate}"
+                                  TestBitti="{StaticResource TestSinavSonuTemplate}"
                                   Proompter="{StaticResource Proompter}"/>
 
         <model:SoruCardSelector x:Key="SoruStyleTemplateModel"
@@ -60,6 +59,13 @@
         <Image Source="/Kaynaklar/Resimler/logo.ico" Grid.Column="2" HorizontalAlignment="Center" Height="142" Margin="0,20" VerticalAlignment="Top"/>
 
 
+        <ContentControl x:Name="TimerPartner" ContentTemplate="{StaticResource TimerTemplate}" Content="{Binding Zamanlayici}" Height="100" Width="200"
+                        Grid.Column="2" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        
+        
+        <!--<Label x:Name="TimerPartner" Content="{Binding timerpartner ,FallbackValue='[OH:NO]'}" IsEnabled="False" Visibility="Collapsed"
+               FontStyle="Italic" FontWeight="Bold" FontSize="30" 
+               Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
 
         <!--Allta Command Binding kısmında MVVM'le komut ekleniyor-->
         <Expander x:Name="MenuExpander" Grid.RowSpan="3">
@@ -119,7 +125,7 @@
                     <StackPanel>
                         
                     <Button x:Name="tusVeriTabaniSoru" Content="Veritabanından Soru Getir" Background="AliceBlue" 
-                            Height="32" Margin="5,10,5,10" Command=""/>
+                            Height="32" Margin="5,10,5,10" Command="{Binding DebugHavuzSoruEkle}"/>
 
                     <ComboBox Margin="5,10"/>
                         

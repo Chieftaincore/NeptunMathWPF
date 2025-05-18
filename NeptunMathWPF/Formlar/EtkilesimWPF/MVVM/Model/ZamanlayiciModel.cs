@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
@@ -11,15 +8,52 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
     /// Zamanlayıcı eklemek için kullanılır.
     /// Constructorında zamanı ve zaman bitiminde olacak fonksiyonu yazınız
     /// </summary>
-    class ZamanlayiciModel
+    class ZamanlayiciModel : ObservableObject
     {
-        System.Timers.Timer timer;
 
-        public ZamanlayiciModel( double sure, Task timeout)
+        DispatcherTimer Zamanlayici;
+
+        internal TimeSpan _Sure;
+
+
+        private string _goruntu;
+        public string goruntu { get => _goruntu;
+            set {
+                if (_goruntu != value) 
+                { 
+                    _goruntu = value; 
+                    OnPropertyChanged(nameof(goruntu));
+                    OnPropertyChanged();
+                } 
+            }
+        }
+
+
+        public ZamanlayiciModel(double dakika)
         {
-            timer = new Timer(sure);
-            timer.Start();
+            OnPropertyChanged();
+            _Sure = TimeSpan.FromMinutes(dakika);
 
+            Zamanlayici = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                goruntu = _Sure.ToString("c");
+  
+
+                if (_Sure == TimeSpan.Zero)
+                {
+                    ZamanBitti();
+                    Zamanlayici.Stop();
+                }
+
+                _Sure = _Sure.Add(TimeSpan.FromSeconds(-1));
+
+            }, Application.Current.Dispatcher);
+
+        }
+
+        private void ZamanBitti()
+        {
+            MessageBox.Show("Zaman bitti");
         }
 
     }

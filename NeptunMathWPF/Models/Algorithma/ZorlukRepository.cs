@@ -59,7 +59,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             }
         }
 
-        public ZorlukRepository(HashSet<ZorlukModel> _modellHash)
+        public ZorlukRepository(List<ZorlukModel> _modellHash)
         {
             Genel.Handle(() =>
             {

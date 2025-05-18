@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <DataTemplate x:Key="TimerTemplate">
+        <StackPanel>
+            <Label Content="{Binding goruntu ,FallbackValue='[OH:NO]'}" IsEnabled="True"
+                 FontStyle="Italic" FontWeight="Bold" FontSize="30" 
+                 Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

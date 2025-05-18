@@ -26,7 +26,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         public DataTemplate Proompter { get; set; }
         public DataTemplate DialogModu { get; set; }
-
+        public DataTemplate TestBitti { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -42,6 +42,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                     return Proompter;
                 case "SoruModuKilitli":
                     return SoruModuKilitli;
+                case "TestBitti":
+                    return TestBitti;
                 case "Dialog":
                     return DialogModu;
                 default:

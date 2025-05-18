@@ -18,11 +18,18 @@ namespace NeptunMathWPF.Formlar
         Window Onceki;
         public EtkilesimPencereWPF()
         {
+            if(this.DataContext == null)
+                this.DataContext = new EtkilesimMVM();
+
             InitializeComponent();
+
         }
 
         public EtkilesimPencereWPF(Window _onceki)
         {
+            if (this.DataContext == null)
+                this.DataContext = new EtkilesimMVM();
+
             InitializeComponent();
 
             Onceki = _onceki;
@@ -30,13 +37,15 @@ namespace NeptunMathWPF.Formlar
 
         public EtkilesimPencereWPF(Window _onceki, SoruTerimleri.soruTuru[] Turler)
         {
-            InitializeComponent();
+            if (this.DataContext == null)
+                this.DataContext = new EtkilesimMVM();
 
+            InitializeComponent();
+            
             ((EtkilesimMVM)this.DataContext).Algorithma = new AlgorithmaModel(turler: Turler);
 
             Onceki = _onceki;
         }
-
 
         private void HesapMakinesi_Click(object sender, RoutedEventArgs e)
         {

@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Themes/SoruCard.xaml"/>
                 <ResourceDictionary Source="/Themes/SoruSeceneklerCard.xaml"/>
+                <ResourceDictionary Source="/Themes/ZamanlayiciCard.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

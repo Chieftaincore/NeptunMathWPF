@@ -200,5 +200,9 @@ namespace AnasayfaWPF
             });
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
