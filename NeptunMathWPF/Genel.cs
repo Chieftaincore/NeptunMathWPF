@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -53,7 +56,8 @@ namespace NeptunMathWPF
         ***********************/
         {
             try { action(); }
-            catch (SqlException sqlEx)
+            catch (Exception sqlEx) when
+            (sqlEx is SqlException || sqlEx is System.Data.Entity.Core.EntityException || sqlEx is DbUpdateException || sqlEx is EntityException)
             {
                 LogToDatabase(LogLevel.ERROR, $"{sqlEx.Message}\n{sqlEx.InnerException}\n{sqlEx.StackTrace}");
                 MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -133,6 +137,27 @@ namespace NeptunMathWPF
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+        public static DataTable ToDataTable<T>(this IList<T> data)
+        {
+            PropertyDescriptorCollection props =
+                TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+            for (int i = 0; i < props.Count; i++)
+            {
+                PropertyDescriptor prop = props[i];
+                table.Columns.Add(prop.Name, prop.PropertyType);
+            }
+            object[] values = new object[props.Count];
+            foreach (T item in data)
+            {
+                for (int i = 0; i < values.Length; i++)
+                {
+                    values[i] = props[i].GetValue(item);
+                }
+                table.Rows.Add(values);
+            }
+            return table;
         }
     }
 }

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -220,6 +221,25 @@ namespace NeptunMathWPF.SoruVeAjani
         }
 
         #endregion
+
+        internal static DataTable GetQuestionPoolDataTable()
+        {
+            var list = Genel.dbEntities.QUESTION_POOL.GroupBy(x => new
+            {
+                x.TOPIC_ID,
+                x.SUBTOPIC_ID,
+                x.TOPICS.TOPIC,
+                x.SUBTOPICS.SUBTOPIC
+            }).Select(x => new
+            {
+                TOPIC = x.Key.TOPIC,
+                SUBTOPIC = x.Key.SUBTOPIC,
+                Soru_Sayısı = x.Count()
+            }).ToList();
+
+            DataTable dataTable = list.ToDataTable();
+            return dataTable;
+        }
 
         /// <summary>
         /// Async Problem Sorusu GEMINI API'dan soru çeker, konu rastgele seçilir
