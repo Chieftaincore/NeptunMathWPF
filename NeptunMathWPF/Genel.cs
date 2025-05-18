@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -55,7 +56,8 @@ namespace NeptunMathWPF
         ***********************/
         {
             try { action(); }
-            catch (SqlException sqlEx)
+            catch (Exception sqlEx) when
+            (sqlEx is SqlException || sqlEx is System.Data.Entity.Core.EntityException || sqlEx is DbUpdateException || sqlEx is EntityException)
             {
                 LogToDatabase(LogLevel.ERROR, $"{sqlEx.Message}\n{sqlEx.InnerException}\n{sqlEx.StackTrace}");
                 MessageBox.Show("Veritabanı bağlantısında bir sorun oluştu!", "Hata", MessageBoxButton.OK, MessageBoxImage.Error);
