@@ -6,11 +6,14 @@ using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -111,6 +114,25 @@ namespace NeptunMathWPF.SoruVeAjani
             {
                 AltTur = rep.functionType
             };
+        }
+
+        internal static DataTable GetQuestionPoolDataTable()
+        {
+            var list = Genel.dbEntities.QUESTION_POOL.GroupBy(x => new
+            {
+                x.TOPIC_ID,
+                x.SUBTOPIC_ID,
+                x.TOPICS.TOPIC,
+                x.SUBTOPICS.SUBTOPIC
+            }).Select(x => new
+            {
+                TOPIC = x.Key.TOPIC,
+                SUBTOPIC = x.Key.SUBTOPIC,
+                Soru_Sayısı = x.Count()
+            }).ToList();
+
+            DataTable dataTable = list.ToDataTable();
+            return dataTable;
         }
 
         /// <summary>
