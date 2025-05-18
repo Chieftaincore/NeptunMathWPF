@@ -12,7 +12,6 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Data;
 using NeptunMathWPF.SoruVeAjani.Algorithma;
-using System.Windows.Controls;
 
 namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 {
@@ -26,6 +25,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
     /// </summary>
     class EtkilesimMVM : ObservableObject
     {
+
         //Debug Tools: Geliştirme de denemeler için
         #region Debug
         public string[] DebugComboBoxTurler { get; set; }
@@ -56,13 +56,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         public SeceneklerModel secenekler
         {
-
             get => seciliSoru.NesneSecenekler;
         }
 
         public string seciliSecenek
         {
-
             get => secenekler.secilideger;
 
             set { secenekler.secilideger = value; }
@@ -71,6 +69,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         //sonraki sorunun ne geleceğini belirleyen algorithma için
         public Func<Soru> sonrakiSoruAlgorithmasi { get; set; }
         public HesapMakinesiModel hesap { get; set; } = new HesapMakinesiModel();
+
+        //içinde model var ise zamanlama yapar
+        internal ZamanlayiciModel Zamanlayici { get; set; }
+
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
         public ICommand PDFciktiAl { get; set; }
@@ -267,7 +269,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             Genel.Handle(() =>
             {
-                if (File.Exists("GEMINI.config"))
+                if (File.Exists(Genel.geminiFilePath))
                 {
                     if (APIOperations.GetGeminiApiKey() != null && APIOperations.GetGeminiApiKey() != string.Empty)
                     {
@@ -574,8 +576,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             if (!String.IsNullOrEmpty(cmBxSecilen))
             {
-                ifadeTuru tur;
-                Enum.TryParse<ifadeTuru>(cmBxSecilen, out tur);
+                Enum.TryParse<ifadeTuru>(cmBxSecilen, out ifadeTuru tur);
 
                 CokluIfadeTurlerListColl.Add(tur);
             }
@@ -611,14 +612,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             DebugCokluIfadeEkle = new RelayCommand(o => CokluIfadeListBoxEkle());
             DebugLatexsizPDFOlustur = new RelayCommand(o => PDFlatexsizCiktiAl());
             DebugLimitSoruOlustur = new RelayCommand(o => DebugLimitSoruEkle());
-            AlgorithmaCheck = new RelayCommand(o => AlgorithmaChecki(o));
+            AlgorithmaCheck = new RelayCommand(o => AlgorithmaChecki());
         }
 
         /// <summary>
         /// Debug Algorithma kapatma/açma tuşu
         /// </summary>
-        /// <param name="o"></param>
-        internal void AlgorithmaChecki(object o)
+        internal void AlgorithmaChecki()
         {
             bool durum = algodurum;
             algodurum = !durum;

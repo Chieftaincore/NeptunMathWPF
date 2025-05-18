@@ -2,15 +2,13 @@
 using NeptunMathWPF.Fonksiyonlar;
 using NeptunMathWPF.SoruVeAjani.Algorithma;
 using NeptunMathWPF.SoruVeAjani.Limit;
-using Org.BouncyCastle.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
+
 
 namespace NeptunMathWPF.SoruVeAjani
 {
@@ -30,9 +28,7 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             Karmasik,
         }
-   
-        //Tamsayı Random Atma Aralığı
-        //Yeni PARAMETRE olarak fikir Uygulanabilir
+
         internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
 
         internal static Random random = new Random();
@@ -683,92 +679,6 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return charlar[rng.Next(0, charlar.Length)];
         }
-
-
-        #region eskiFonksiyonKodununOnemliKismi
-        //Bazı yazdığım FUNC<> mantığını saklıyorum tekrar kullanmam gereken yer kalırsa referans alacağım -Hüseyin
-        //  
-        //        ...
-                   
-        //        switch (generated.gen)
-        //        {
-        //            //case FunctionValueGenerator f:
-
-        //            //    break;
-        //            //case FunctionCompositionGenerator f:
-
-        //            //    break;
-        //            //case InverseFunctionGenerator f:
-
-        //            //    break;
-        //            case DomainRangeGenerator f:
-        //                dongu = delegate ()
-        //                {
-        //                    //ileride tanım kümesi yapıcı ve sonuç filtreleyici eklemeliyim  eklenmeli
-        //                    string[] ciktilar = { "Tüm reel Sayılar", "Tanımsız", "Tüm reel sayılar, x ≠ -c", "Tüm reel sayılar, x ≠ c", "[1,+∞]",
-        //                        "[-∞,1]", "Karmaşık Sayılar","[11,∞]","[9,∞]","[Reel Sayılar - 0]"};
-
-        //                    string cikti = ciktilar[random.Next(0, ciktilar.Length - 1)];
-
-        //                    if (!Secenekler.Contains(cikti))
-        //                    {
-        //                        return cikti;
-        //                    }
-        //                    else
-        //                    {
-        //                        //hatalı olunca boş gönderip tekrar başlatacak
-        //                        return string.Empty;
-        //                    }
-        //                };
-        //                break;
-        //            default:
-
-        //                if (question.Answer != "∞")
-        //                {
-        //                    dongu = delegate ()
-        //                    {
-        //                        double sonuc;
-        //                        string cikti;
-        //                        if (double.TryParse(question.Answer, out sonuc))
-        //                        {
-        //                            double rand = sonuc + random.Next(-10, 20);
-        //                            cikti = rand.ToString();
-        //                        }
-        //                        else
-        //                        {
-        //                            double rand = random.Next(10, 30);
-        //                            cikti = rand.ToString();
-        //                        }
-
-        //                        if (!Secenekler.Contains(cikti.ToString()))
-        //                        {
-        //                            return cikti.ToString();
-        //                        }
-        //                        else
-        //                        {
-        //                            //hatalı olunca boş gönderip tekrar başlatacak
-        //                            return string.Empty;
-        //                        }
-        //                    };
-        //                }
-        //                else
-        //                {
-        //                    //Sonsuz gelirse
-        //                    dongu = delegate ()
-        //                    {
-        //                        double sonuc = random.Next(10, 20);
-        //                        string cikti = sonuc.ToString();
-
-        //                        return cikti;
-        //                    };
-        //                }
-
-        //                break;
-        //        }
-
-        //      ...
-
-        #endregion
     }
     //Nesneler okuma koyaylığı için farklı bir Dosya'ya aktarılmışdır -Hüseyin
     //Nesneler SoruVeAjanı->Ifade.cs' içindedir

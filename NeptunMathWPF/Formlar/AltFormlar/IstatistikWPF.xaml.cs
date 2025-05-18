@@ -109,7 +109,6 @@ namespace NeptunMathWPF.Formlar
 
                     for(int i=0; i<answers.Count; i++)
                     {
-              
                         Label lbl = new Label();
                         lbl.Foreground = new SolidColorBrush(Colors.Black);
 
@@ -119,16 +118,6 @@ namespace NeptunMathWPF.Formlar
                         CheckTrueOrWrong(answers[i], lbl, soru.ANSWER, soru.USERS_ANSWER);
                         optchar++;
                     }
-                    
-                    //CheckTrueOrWrong(answers[0], lblA, soru.ANSWER, soru.USERS_ANSWER);
-                    //CheckTrueOrWrong(answers[1], lblB, soru.ANSWER, soru.USERS_ANSWER);
-                    //CheckTrueOrWrong(answers[2], lblC, soru.ANSWER, soru.USERS_ANSWER);
-                    //CheckTrueOrWrong(answers[3], lblD, soru.ANSWER, soru.USERS_ANSWER);
-
-                    //if (answers.Count > 4)
-                    //{
-                    //    CheckTrueOrWrong(answers[4], lblE, soru.ANSWER, soru.USERS_ANSWER);
-                    //}
                 });
             }
         }

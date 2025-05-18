@@ -71,10 +71,19 @@
                         <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Top">
 
                             <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3" Click="tusStandartSession"/>
+                            <TextBlock Text="Algorithmik şekilde orta seviye -işlem soruları ve temel düzey fonksiyon- soruları çöz" TextWrapping="Wrap" FontSize="9" Margin="4"/>
 
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Test Deneyimi" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3"/>
+                            <TextBlock Text="*test deneyimi puanlı sorular ile rapor haızrlar" FontSize="9" TextWrapping="Wrap" Margin="4"/>
+
+                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Sınav Session Deneyimi" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3"/>
+                            <TextBlock Text="*sınav ise süreli bir zamanda raporlu test sunar (*süre sınırından dolayı yapay zeka kapalıdır)" TextWrapping="Wrap" Margin="4" FontSize="9"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1" Grid.Row="1" Margin="5,5,5,5" Grid.RowSpan="2">
+
+                            <Label Content="Özelleştirilebilir Deneyim" Margin="4,5" FontWeight="SemiBold" FontStyle="Italic"/>
+
                             <ComboBox x:Name="cmbxSoruTurler" Height="35" Margin="30,10" FontSize="16" BorderBrush="Black" BorderThickness="5">
                             </ComboBox>
 
@@ -97,7 +106,7 @@
                     <Image Source="/Kaynaklar/Resimler/Neptun Math.png" Width="498" Height="313"/>
                     
                     <TextBlock Text="Uygulamaya Hoş Geldiniz!" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="Matematik Uygulaması." HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
+                    <TextBlock Text="Matematik Uygulaması." TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="12" Foreground="#555"/>
                     
                     
                 </StackPanel>

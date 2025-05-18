@@ -29,7 +29,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         internal Func<Soru> Algorithma;
 
         internal bool DinamikSeviye = true;
-
+        public bool veritabanidahil { get; set; }
         public int seviye { get; set; }
 
         /// <summary>
@@ -57,12 +57,12 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
 
         /// <summary>
-        /// Database'den seviye getirmek için
+        /// Database'den kullanıcının seviye getirmek için
         /// ama isteğe göre seçilmeyebilir
         /// </summary>
         public virtual void dbSeviyeGetir()
         {
-            MessageBox.Show("DB TEST " + this.ToString());
+                
         }
 
         public override string ToString()

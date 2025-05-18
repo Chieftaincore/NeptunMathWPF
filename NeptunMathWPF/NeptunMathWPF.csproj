@@ -203,6 +203,7 @@
     <Compile Include="Formlar\AltFormlar\WPFControls\konuEkleUC.xaml.cs">
       <DependentUpon>konuEkleUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\ZamanlayiciModel.cs" />
     <Compile Include="Formlar\GetAPIKeyPanelWPF.xaml.cs">
       <DependentUpon>GetAPIKeyPanelWPF.xaml</DependentUpon>
     </Compile>
@@ -296,7 +297,7 @@
     <Compile Include="SoruVeAjani\Limit\LimitQuizViewModel.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitRelayCommand.cs" />
     <Compile Include="SoruVeAjani\Limit\LimitQuestionType.cs" />
-    <Compile Include="SoruVeAjani\PDFLatexYineleyici.cs" />
+    <Compile Include="Models\PDFLatexYineleyici.cs" />
     <Compile Include="SoruVeAjani\Problemler\ProblemRepository.cs" />
     <Compile Include="SoruVeAjani\Soru.cs" />
     <Compile Include="Formlar\TestPencereWPF.xaml.cs">

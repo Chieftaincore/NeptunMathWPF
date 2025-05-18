@@ -26,9 +26,6 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         public List<Soru> Bekleyen = new List<Soru>();
         public Func<Soru> SonrakiAlgorithma { get; set; }
 
-        //Ek Değişkenler
-        public bool DinamikSeviye { get; set; }
-        
 
         public AlgorithmaModel(List<soruTur> turler)
         {
@@ -42,6 +39,15 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             SoruTurleri = turler.ToList();
 
             repo = new ZorlukRepository(turler.ToList());
+        }
+
+        /// <summary>
+        /// önceden oluşturulmuş, varsayılan dışı Zorluk modelleri için Algorithma model oluşturucu
+        /// </summary>
+        /// <param name="_modeller">Önceden oluşturulmuş ZorlukModelleri eklemek için</param>
+        public AlgorithmaModel(List<ZorlukModel> _modeller)
+        {
+
         }
 
         public Soru Sonraki()
@@ -91,14 +97,12 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
 
         public void ModelSeviyeArtır(soruTur tur)
         {
-            if(DinamikSeviye)
               repo.Zorluklar[tur].seviyeArttır();
         }
 
         public void ModelSeviyeAzalt(soruTur tur)
         {
-            if (DinamikSeviye)
-                repo.Zorluklar[tur].seviyeAzalt();
+              repo.Zorluklar[tur].seviyeAzalt();
         }
 
         public bool RepoDenetim(soruTur tur)

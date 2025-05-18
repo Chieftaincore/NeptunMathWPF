@@ -35,12 +35,9 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
                 if (turler.Contains(soruTur.islem))
                     Zorluklar.Add(soruTur.islem, new IslemSoruZorlukModel());
 
-                if (turler.Contains(soruTur.fonksiyon) || turler.Contains(soruTur.limit))
+                if (turler.Contains(soruTur.fonksiyon))
                 {
-                    FonksiyonelSoruZorlukModel fonksmodel = new FonksiyonelSoruZorlukModel();
-
-                    if(turler.Contains(soruTur.fonksiyon))
-                         Zorluklar.Add(soruTur.fonksiyon, fonksmodel);
+                    Zorluklar.Add(soruTur.fonksiyon, new FonksiyonelSoruZorlukModel());
                 }
 
                 if (turler.Contains(soruTur.limit))
@@ -62,5 +59,23 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
             }
         }
 
+        public ZorlukRepository(HashSet<ZorlukModel> _modellHash)
+        {
+            Genel.Handle(() =>
+            {
+                foreach (ZorlukModel zorlukModel in _modellHash)
+                {
+                    if (!Zorluklar.ContainsKey(zorlukModel.soruTuru))
+                    {
+                        Zorluklar.Add(zorlukModel.soruTuru, zorlukModel);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Aynı Soru Türünde birden fazla Zorluk Modeli oluşturuldu fazladan olan model Algorithmaya eklenmedi", "Zorluk Model ve Repo Uyumzusluğu",
+                            MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    }
+                }
+            });
+        }
     }
 }

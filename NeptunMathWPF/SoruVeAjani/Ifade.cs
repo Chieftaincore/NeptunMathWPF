@@ -21,12 +21,6 @@ namespace NeptunMathWPF.SoruVeAjani
         internal string IslemString { get; set; }
         public virtual string LaTeXString { get; set; }
 
-
-        public Ifade()
-        {
-
-        }
-
         public Ifade(string islem, string LaTeX, ifadeTuru tur)
         {
             IslemString = islem;
@@ -38,20 +32,6 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             IslemString = Sayi.ToString();
             LaTeXString = LaTeX;
-            Tur = tur;
-        }
-
-        public Ifade(int Sayi)
-        {
-            IslemString = Sayi.ToString();
-            LaTeXString = Sayi.ToString();
-            Tur = ifadeTuru.sayi;
-        }
-
-        public Ifade(int Sayi, ifadeTuru tur)
-        {
-            IslemString = Sayi.ToString();
-            LaTeXString = Sayi.ToString();
             Tur = tur;
         }
 
@@ -111,7 +91,6 @@ namespace NeptunMathWPF.SoruVeAjani
     {
         private string Islem;
         private string LaTeX;
-
 
         //Araişlem özel yapılandırma istiyorsa
         //Fonksiyonun önceki Ifadeye erişimi var ifadeye göre özel döndürebilir

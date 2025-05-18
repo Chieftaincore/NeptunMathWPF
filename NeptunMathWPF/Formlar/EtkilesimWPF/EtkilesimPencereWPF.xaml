@@ -108,13 +108,28 @@
 
                 <Button x:Name="tusLatexsizPDF" Content="Latexsiz PDF Oluştur" Background="AliceBlue"
                         Height="32" Margin="5,10,5,10" Command="{Binding DebugLatexsizPDFOlustur}"/>
-                
+
                 <Button x:Name="tusLimitSoruOlustur" Content="Limit Soru Oluştur" Background="AliceBlue"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugLimitSoruOlustur}"/>
-                
+
                 <Button x:Name="tusTurevSoruOlustur" Content="Türev Soru Oluştur" Background="AliceBlue" Visibility="Collapsed"
                     Height="32" Margin="5,10,5,10" Command="{Binding DebugTurevSorusuOlustur}"/>
-                
+
+                <Expander Header="Veritabanı Soruları">
+                    <StackPanel>
+                        
+                    <Button x:Name="tusVeriTabaniSoru" Content="Veritabanından Soru Getir" Background="AliceBlue" 
+                            Height="32" Margin="5,10,5,10" Command=""/>
+
+                    <ComboBox Margin="5,10"/>
+                        
+                    <ComboBox Margin="5,2,5,10"/>
+
+                    <Button Content="Konulu Soru Getir" Background="AliceBlue"
+                            Height="32" Margin="5,10"/>
+                        
+                    </StackPanel>
+                </Expander>
             </StackPanel>
         </Expander>
 

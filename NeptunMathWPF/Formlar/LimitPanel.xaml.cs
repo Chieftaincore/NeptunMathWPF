@@ -125,6 +125,7 @@ namespace NeptunMathWPF.Formlar
                     FontSize = 14,
                     Tag = option
                 };
+
                 optionsPanel.Children.Add(radioButton);
                 optionLetter++;
             }
