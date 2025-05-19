@@ -1,0 +1,63 @@
+﻿<Window x:Class="NeptunMathWPF.Formlar.AltFormlar.OzelMenuEtkilesimWPF"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar.AltFormlar"
+        mc:Ignorable="d"
+        Title="OzelEtkilesimSinavWPF" Background="DarkBlue" Closed="Window_Closed"
+        Height="500" MinHeight="500" MinWidth="320" Width="600">
+    
+    <Grid Margin="0,0,0,10" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="154"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="82"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.RowSpan="2">
+            <StackPanel>
+                
+                <Label Content="Başlık" FontWeight="Bold"/>
+
+                <TextBox x:Name="txtboxBaslik" Margin="20,10" Padding="4" BorderThickness="4"/>
+
+                <Label Content="Konular" FontWeight="Bold"/>
+
+                <ComboBox x:Name="cmbxSoruTurler" Height="35" Margin="20,10" FontSize="16" BorderBrush="Black" BorderThickness="5"/>
+
+                <Button Content="Konu Ekle" Click="KonuEkle" Margin="30,2,30,10" Cursor="Hand"
+                        Background="WhiteSmoke" BorderBrush="Black" HorizontalAlignment="Right" Padding="8" BorderThickness="3" FontStyle="Italic" FontWeight="Bold" Foreground="Black"/>
+
+                <ListView x:Name="listKonu" BorderThickness="4" Margin="20 10" MinHeight="90" PreviewKeyDown="listKonu_PreviewKeyDown"/>
+
+                <Label Content="Soru Sayısı" FontWeight="Bold"/>
+
+                <TextBox x:Name="txtboxSoru" PreviewTextInput="SayiGozleyici" TextChanged="SoruSayisiDegisken"
+                         Margin="20,10" Padding="4" BorderThickness="4" HorizontalAlignment="Left" Width="80"/>
+
+                <Label Content="Süre (otomatik)" FontWeight="Bold"/>
+
+                <TextBox x:Name="txtboxSure" Margin="20,10" IsReadOnly="True" HorizontalAlignment="Left" HorizontalContentAlignment="Center" BorderThickness="4" Width="80" Padding="4"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Rectangle Grid.Column="1" Grid.RowSpan="2">
+            <Rectangle.Fill>
+                <LinearGradientBrush>
+                    <GradientStop Color="DarkBlue" Offset="1"/>
+                    <GradientStop Color="SteelBlue"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Button Content="Özel Session Aç" Click="SessionAc"
+                Margin="10,5" Grid.Row="1" Grid.Column="1" 
+                FontStyle="Italic" FontSize="14" FontWeight="SemiBold"
+                Background="AliceBlue" BorderThickness="3" BorderBrush="DarkBlue"/>
+    </Grid>
+</Window>

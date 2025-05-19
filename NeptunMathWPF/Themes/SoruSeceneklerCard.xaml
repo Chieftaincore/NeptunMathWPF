@@ -90,7 +90,7 @@
             <Label Content="Test Sonu Bitirmek için tıklayın"
                    HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontStyle="Italic"/>
 
-            <Button Grid.Row="1" Content="Bitir" Background="AliceBlue" FontSize="16" FontStyle="Italic"/>
+            <Button Grid.Row="1" Content="Bitir" Command="{Binding DataContext.TestBitir, RelativeSource={RelativeSource AncestorType=Window}}" Background="AliceBlue" FontSize="16" FontStyle="Italic"/>
         </Grid>
     </DataTemplate>
     

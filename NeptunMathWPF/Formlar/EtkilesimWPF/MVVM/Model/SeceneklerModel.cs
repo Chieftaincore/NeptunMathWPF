@@ -11,6 +11,14 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 {
     class SeceneklerModel : ObservableObject
     {
+        public enum CevapDurum
+        {
+            Bos,
+            Dogru,
+            Yanlis
+        }
+
+        public CevapDurum CevaplanmaDurumu { get; set; } = CevapDurum.Bos;
 
         public readonly string dogrusesDosyaYolu = @"Kaynaklar\Sesler\SesDogru5.wav";
         public readonly string yanlissesDosyaYolu = @"Kaynaklar\Sesler\SesYanlis6.wav";
@@ -46,11 +54,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
             if (secilideger == dogrusecenek)
             {
                 SesIslemleri.sesOynat(dogrusesDosyaYolu);
+
+                CevaplanmaDurumu = CevapDurum.Dogru;
+
                 return true;
             }
             else
             {
                 SesIslemleri.sesOynat(yanlissesDosyaYolu);
+
+                CevaplanmaDurumu = CevapDurum.Yanlis;
+
                 return false;
             }
         }    

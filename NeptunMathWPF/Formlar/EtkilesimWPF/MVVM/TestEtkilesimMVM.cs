@@ -3,6 +3,7 @@ using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -17,8 +18,11 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         DateTime BaslangicZaman;
 
         internal int SoruSayisi;
-        public ZamanlayiciModel Zamanlayici { get; set; } = new ZamanlayiciModel(1);
+        public ZamanlayiciModel Zamanlayici { get; set; }
+
         public ICommand TestBitir { get; set; }
+
+        public string Baslik { get; set; }
 
         public bool SureDevam { get {
                 return Zamanlayici._Sure > TimeSpan.Zero;
@@ -27,9 +31,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         bool TestKilitlendi;
 
-        public TestEtkilesimMVM()
+        public TestEtkilesimMVM(int _Sorusayisi)
         {
-            SoruSayisi = 10;
+            SoruSayisi = _Sorusayisi;
             BaslangicZaman = DateTime.Now;
 
             //Gemini API bağlımı kontrol etmek için.
@@ -130,7 +134,26 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         internal void SessionBitir()
         {
+            int _sorusayisi = Sorular.Count;
 
+            int _dogru = 0;
+
+            int _yanlis = 0;
+
+            foreach (SoruCardModel ScM in Sorular)
+            {
+                if(ScM.NesneSecenekler.CevaplanmaDurumu == SeceneklerModel.CevapDurum.Dogru)
+                {
+                    _dogru++;
+                }
+                else
+                {
+                    if (ScM.NesneSecenekler.CevaplanmaDurumu == SeceneklerModel.CevapDurum.Yanlis)
+                        _yanlis++;
+                }
+            }
+           
+            MessageBox.Show($"Test Bitti {Baslik} \rSoru Sayisi : {_sorusayisi} \rDogru Sayisi : {_dogru}\rYanlis Sayisi : {_yanlis}" ,"Test Bitti");
         }
     }
 }

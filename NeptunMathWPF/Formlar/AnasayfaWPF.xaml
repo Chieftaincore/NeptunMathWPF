@@ -73,9 +73,6 @@
                             <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Session" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3" Click="tusStandartSession"/>
                             <TextBlock Text="Algorithmik şekilde orta seviye -işlem soruları ve temel düzey fonksiyon- soruları çöz" TextWrapping="Wrap" FontSize="9" Margin="4"/>
 
-                            <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Standart Test Deneyimi" IsEnabled="False" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3"/>
-                            <TextBlock Text="*test deneyimi puanlı sorular ile rapor haızrlar" FontSize="9" TextWrapping="Wrap" Margin="4"/>
-
                             <Button Height="80" Margin="10" FontWeight="SemiBold" FontStyle="Italic" FontSize="15" Content="Sınav Session Deneyimi" Cursor="Hand" Background="WhiteSmoke" BorderBrush="Black" BorderThickness="3" Click="tusSinavSession"/>
                             <TextBlock Text="*sınav ise süreli bir zamanda raporlu test sunar (*süre sınırından dolayı yapay zeka kapalıdır)" TextWrapping="Wrap" Margin="4" FontSize="9"/>
                         </StackPanel>
