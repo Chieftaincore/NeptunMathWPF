@@ -15,8 +15,8 @@ using System.Windows.Automation.Peers;
 
 namespace NeptunMathWPF
 {
-
     using soruTuru = SoruTerimleri.soruTuru;
+
     public class Soru
     {
         public soruTuru SoruTuru { get; }
@@ -85,6 +85,15 @@ namespace NeptunMathWPF
 
             secenekler = _Question.WRONG_ANSWERS;
             Sonuc = _Question.CORRECT_ANSWER;
+        }
+
+        public Soru(string islem, string LaTeX, string sonuc, List<string> _secenekler)
+        {
+            LatexMetin = LaTeX;
+            IslemMetin = islem;
+
+            secenekler = _secenekler;
+            Sonuc = sonuc;
         }
 
         public Soru(LimitQuestion _limit, string[] _secenekler)

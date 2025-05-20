@@ -184,6 +184,9 @@
     <Compile Include="Formlar\AltFormlar\BookmarkedQuestionsPanelWPF.xaml.cs">
       <DependentUpon>BookmarkedQuestionsPanelWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\AltFormlar\OturumSoruGosterWPF.xaml.cs">
+      <DependentUpon>OturumSoruGosterWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\AltFormlar\OzelMenuEtkilesimWPF.xaml.cs">
       <DependentUpon>OzelMenuEtkilesimWPF.xaml</DependentUpon>
     </Compile>
@@ -378,6 +381,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Formlar\AltFormlar\OturumSoruGosterWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Formlar\AltFormlar\OzelMenuEtkilesimWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -459,6 +466,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\RaporFormu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\RaporSoruCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

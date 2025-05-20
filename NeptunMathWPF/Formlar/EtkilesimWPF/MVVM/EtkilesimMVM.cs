@@ -36,7 +36,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand DebugCokluIfadeSil { get; set; }
         public ICommand DebugIslemEkleKomut { get; set; }
         public ICommand SeciliTurDegistir { get; set; }
-        public ICommand SecimDegistir { get; set; }
         public ICommand HesapMakinesiGosterGizle { get; set; }
         public ICommand DebugFonksiyonSoruOlustur { get; set; }
         public ICommand DebugLimitSoruOlustur { get; set; }
@@ -73,6 +72,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand SoruSec { get; set; }
         public ICommand SoruCevapla { get; set; }
         public ICommand PDFciktiAl { get; set; }
+        public ICommand SecimDegistir { get; set; }
 
         #region SoruiciEylemler 
 
@@ -214,7 +214,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-        public void SoruCardSec(object o)
+        public virtual void SoruCardSec(object o)
         {
             Genel.Handle(() =>
             {

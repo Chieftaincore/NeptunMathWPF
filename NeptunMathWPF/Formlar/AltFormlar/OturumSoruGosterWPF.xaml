@@ -1,0 +1,38 @@
+﻿<Window x:Class="NeptunMathWPF.Formlar.AltFormlar.OturumSoruGosterWPF"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NeptunMathWPF.Formlar.AltFormlar"
+        xmlns:mvvm="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM"
+        xmlns:model="clr-namespace:NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model"
+        mc:Ignorable="d"
+        Background="LightSteelBlue"
+        Title="Oturumdaki Sorular" Height="450" Width="600">
+
+    <Window.Resources>
+        <local:RaporCardSelector x:Key="RaporCardSelectorTemp"
+                                  LaTeXStyle="{StaticResource RaporCard}"
+                                  MetinStyle="{StaticResource RaporCardMetin}"/>
+    </Window.Resources>
+
+    <Grid Background="White" Margin="5">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="367*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="{Binding title, FallbackValue='VERİ YOK'}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="19"/>
+
+        <ScrollViewer PreviewMouseWheel="ScrollViewer_PreviewMouseWheel" Grid.Row="1" Grid.RowSpan="2">
+
+            <ListView x:Name="listViewSorular" ItemsSource="{Binding Sorular}" ItemContainerStyleSelector="{StaticResource RaporCardSelectorTemp}"/>
+
+        </ScrollViewer>
+
+
+
+    </Grid>
+</Window>

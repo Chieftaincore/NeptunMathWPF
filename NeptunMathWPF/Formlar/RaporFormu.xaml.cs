@@ -8,6 +8,8 @@ using System;
 using GenericTensor.Functions;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
+using NeptunMathWPF.Formlar.AltFormlar;
+using System.Windows.Controls;
 
 namespace AnasayfaWPF
 {
@@ -100,6 +102,7 @@ namespace AnasayfaWPF
                 lbtype = lbType.konubazli;
                 lstRaporVerileri.Items.Clear();
                 var topicids = Genel.dbEntities.EXAM_SESSION_DETAILS.Select(x => x.TOPIC_ID).Distinct().ToList();
+                labelList.Content = "Konular";
 
                 foreach (var topicid in topicids)
                 {
@@ -113,9 +116,9 @@ namespace AnasayfaWPF
         {
             Genel.Handle(() =>
             {
-
                 lbtype = lbType.oturumbazli;
                 lstRaporVerileri.Items.Clear();
+                labelList.Content = "Oturumlar (çift tıkla)";
 
                 var examList = Genel.dbEntities.EXAM_SESSIONS.Where(x => x.USERID == aktifKullanici.kullnId).OrderByDescending(x => x.EXAM_ID).Select(x => x.EXAM_TITLE).ToList();
                 foreach (var exam in examList)
@@ -217,6 +220,16 @@ namespace AnasayfaWPF
         private void Window_Closed(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void TusListRaporVerileriCiftTikla(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListBox _sender = (ListBox)sender;
+
+            if(lbtype == lbType.oturumbazli)
+            {
+                new OturumSoruGosterWPF((string)_sender.SelectedValue).ShowDialog();
+            }
         }
     }
 }
