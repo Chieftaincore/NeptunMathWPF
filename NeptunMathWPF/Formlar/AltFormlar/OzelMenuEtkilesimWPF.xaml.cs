@@ -90,11 +90,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                     Baslik = baslik
                 };
 
-                EtkilesimPencereWPF _test =
-                 new EtkilesimPencereWPF(Onceki)
-                 {
-                     DataContext = testMVVM
-                 };
+                EtkilesimPencereWPF _test = new EtkilesimPencereWPF(testMVVM, Onceki);
 
                 _test.Show();
                 _test.TimerPartner.Visibility = Visibility.Visible;
