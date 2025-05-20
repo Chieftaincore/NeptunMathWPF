@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using static NeptunMathWPF.SoruTerimleri;
 
@@ -18,10 +19,12 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         internal int SoruSayisi;
 
         ZamanlayiciModel _zamanlayici;
-        public ZamanlayiciModel Zamanlayici { get => _zamanlayici; 
-            set 
+        public ZamanlayiciModel Zamanlayici
+        {
+            get => _zamanlayici;
+            set
             {
-                if (_zamanlayici != value) 
+                if (_zamanlayici != value)
                 {
                     _zamanlayici = value;
                     Zamanlayici.ZamanBittiEvent += ZamanBittiKilitle;
@@ -33,18 +36,23 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         public ICommand TestBitir { get; set; }
         public string Baslik { get; set; }
 
-        public bool SureDevam { get {
+        public bool SureDevam
+        {
+            get
+            {
                 return Zamanlayici._Sure > TimeSpan.Zero;
             }
         }
 
-        public override string seciliTur { 
-            
+        public override string seciliTur
+        {
+
             get => base.seciliTur;
 
-            set { 
-                if(!TestKilitlendi)
-                base.seciliTur = value; 
+            set
+            {
+                if (!TestKilitlendi)
+                    base.seciliTur = value;
             }
         }
 
@@ -100,10 +108,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                         }
                         else
                         {
-                            MessageBox.Show("Son Soru","Atlanamaz",MessageBoxButton.OK,MessageBoxImage.Hand);
+                            MessageBox.Show("Son Soru", "Atlanamaz", MessageBoxButton.OK, MessageBoxImage.Hand);
                         }
                     }
-                        
+
                     return;
                 }
 
@@ -130,7 +138,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                         AddWrongQuestionToDB();
                     }
                 }
-                
+
                 if (Sorular.Last() != seciliSoru)
                 {
                     int i = Sorular.IndexOf(seciliSoru);
@@ -166,7 +174,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             seciliTur = "TestBitti";
 
             OnPropertyChanged(nameof(seciliTur));
-        } 
+        }
 
         internal void SessionBitir()
         {
@@ -178,7 +186,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
             foreach (SoruCardModel ScM in Sorular)
             {
-                if(ScM.NesneSecenekler.CevaplanmaDurumu == SeceneklerModel.CevapDurum.Dogru)
+                if (ScM.NesneSecenekler.CevaplanmaDurumu == SeceneklerModel.CevapDurum.Dogru)
                 {
                     _dogru++;
                 }
@@ -188,8 +196,51 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                         _yanlis++;
                 }
             }
-           
-            MessageBox.Show($"Test Bitti {Baslik} \rSoru Sayisi : {_sorusayisi} \rDogru Sayisi : {_dogru}\rYanlis Sayisi : {_yanlis}\r Başlangıç : {BaslangicZaman}" ,"test bitti");
+
+            MessageBox.Show($"Test Bitti {Baslik} \rSoru Sayisi : {_sorusayisi} \rDogru Sayisi : {_dogru}\rYanlis Sayisi : {_yanlis}\r Başlangıç : {BaslangicZaman}", "test bitti");
+
+            //DB KAYIT
+            Genel.Handle(() =>
+            {
+                Genel.dbEntities.EXAM_SESSIONS.Add(new EXAM_SESSIONS()
+                {
+                    USERID = aktifKullanici.kullnId,
+                    EXAM_TITLE = Baslik,
+                    // EXAM_DATE = BaslangicZaman,
+                    // END_DATE = DateTime.Now,
+                    CORRECT_COUNT = _dogru,
+                    INCORRECT_COUNT = _yanlis,
+                    QUESTION_COUNT = _sorusayisi,
+                    SCORE = _dogru * 100 / _sorusayisi,
+                });
+
+                foreach (SoruCardModel scm in Sorular)
+                {
+                    string wrongs = "";
+                    foreach (var secenek in scm.NesneSecenekler.secenekler)
+                    {
+                        if (secenek != scm.NesneSecenekler.DogruSecenekGetir())
+                            wrongs += secenek + "#";
+                    }
+                    string soruturu = scm.soru.SoruTuru.ToString();
+                    string sorualtturu = scm.soru.AltTur.ToString();
+                    int topicId = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == soruturu).Select(x => x.TOPIC_ID).FirstOrDefault();
+                    int subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == sorualtturu).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
+                    Genel.dbEntities.EXAM_SESSION_DETAILS.Add(new EXAM_SESSION_DETAILS()
+                    {
+                        EXAM_SESSIONS = Genel.dbEntities.EXAM_SESSIONS.Local.Last(),
+                        QUESTION_TEXT = scm.soru.IslemMetin,
+                        LATEX_TEXT = scm.soru.LatexMetin,
+                        CORRECT_ANSWER = scm.NesneSecenekler.DogruSecenekGetir(),
+                        WRONG_ANSWERS = wrongs,
+                        USERS_ANSWER = scm.NesneSecenekler.secilideger,
+                        ISCORRECT = scm.NesneSecenekler.CevaplanmaDurumu == SeceneklerModel.CevapDurum.Dogru ? true : false,
+                        TOPIC_ID = topicId,
+                        SUBTOPIC_ID = subtopicId,
+                    });
+                }
+                Genel.dbEntities.SaveChanges();
+            });
         }
 
         private void ZamanBittiKilitle(object sender, EventArgs e)
