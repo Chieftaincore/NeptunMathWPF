@@ -25,7 +25,8 @@ namespace AnasayfaWPF
         {
             InitializeComponent();
 
-            btnGenelDegerlendirme_Click(null, null);
+            Chart1.Series.Clear();
+            Chart1.Series.Add("BOŞ");
 
             #region ChartStyle
             Chart1.BackColor = Color.White;
@@ -75,9 +76,13 @@ namespace AnasayfaWPF
                         x.EXAM_TITLE
                     }).ToList();
 
+                    int sayac = 0;
                     foreach (var exam in examList)
                     {
                         Chart1.Series[0].Points.Add(exam.SCORE, 0).AxisLabel = exam.EXAM_TITLE;
+                        sayac++;
+                        if (sayac > 14)
+                            break;
                     }
 
                 }
@@ -203,6 +208,15 @@ namespace AnasayfaWPF
             });
         }
 
+        private System.Collections.Generic.List<EXAM_SESSION_DETAILS> GetQuestions(string title)
+        {
+            System.Collections.Generic.List<EXAM_SESSION_DETAILS> examEntities = new System.Collections.Generic.List<EXAM_SESSION_DETAILS>();
+            Genel.Handle(() =>
+            {
+                examEntities = Genel.dbEntities.EXAM_SESSION_DETAILS.Where(x => x.EXAM_SESSIONS.EXAM_TITLE == title && x.EXAM_SESSIONS.USERID == aktifKullanici.kullnId).ToList();
+            });
+            return examEntities;
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
             this.Close();
