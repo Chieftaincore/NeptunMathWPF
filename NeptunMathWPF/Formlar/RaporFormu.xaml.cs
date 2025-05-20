@@ -67,7 +67,7 @@ namespace AnasayfaWPF
                     Chart1.Series[0].ChartType = DataVis.Charting.SeriesChartType.Line;
                     Chart1.Series[0].BorderWidth = 4;
                     Chart1.ChartAreas[0].AxisY.Maximum = 100;
-                        
+
                     var examList = Genel.dbEntities.EXAM_SESSIONS.Where(x => x.USERID == aktifKullanici.kullnId).Select(x => new
                     {
                         x.SCORE,
@@ -201,6 +201,15 @@ namespace AnasayfaWPF
             });
         }
 
+        private System.Collections.Generic.List<EXAM_SESSION_DETAILS> GetQuestions(string title)
+        {
+            System.Collections.Generic.List<EXAM_SESSION_DETAILS> examEntities = new System.Collections.Generic.List<EXAM_SESSION_DETAILS>();
+            Genel.Handle(() =>
+            {
+                examEntities = Genel.dbEntities.EXAM_SESSION_DETAILS.Where(x => x.EXAM_SESSIONS.EXAM_TITLE == title && x.EXAM_SESSIONS.USERID == aktifKullanici.kullnId).ToList();
+            });
+            return examEntities;
+        }
         private void Window_Closed(object sender, EventArgs e)
         {
             this.Close();
