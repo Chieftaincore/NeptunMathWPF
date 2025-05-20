@@ -17,6 +17,8 @@ namespace AnasayfaWPF
 
         public List<SoruTerimleri.soruTuru> OzelSessionTurler = new List<SoruTerimleri.soruTuru>();
 
+        bool oturumkapat = false;
+
         public AnaSayfa()
         {
             InitializeComponent();
@@ -77,6 +79,7 @@ namespace AnasayfaWPF
             LoginForm loginForm = new LoginForm();
             loginForm.Show();
 
+            oturumkapat = true;
             // Ana sayfayı kapat
             this.Close();
         }
@@ -97,8 +100,6 @@ namespace AnasayfaWPF
             // ve rapor formu kapatıldığında ana sayfa otomatik olarak tekrar etkinleşir.
             raporPenceresi.ShowDialog();
         }
-
-
 
         private void tusStandartSession(object sender, RoutedEventArgs e)
         {
@@ -173,6 +174,7 @@ namespace AnasayfaWPF
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            if(!oturumkapat)
             Genel.UygulamaKapat();
         }
 

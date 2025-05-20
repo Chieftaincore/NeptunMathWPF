@@ -86,6 +86,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         internal KeyEventHandler key;
 
         private string _seciliTur;
+        private bool disposedValue;
+
         public virtual string seciliTur
         {
             get => _seciliTur; set
@@ -828,5 +830,4 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
     }
-
 }

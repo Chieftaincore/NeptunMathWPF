@@ -104,7 +104,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                 || (listKonu.Items.Count > 1 && OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem)))
             {
                 //Test etmek için 1'e düşürdüm arttırmadıysam arttırın -Hüseyin
-                if (_dakika > 0 && _soruSayisi >= 1)
+                if (_dakika > 0 && _soruSayisi >= 5)
                 {
                     return true;
                 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HonkSharp.Fluency;
+using System;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -34,11 +35,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
         {
             OnPropertyChanged();
             _Sure = TimeSpan.FromMinutes(dakika);
-
+            
             Zamanlayici = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
             {
                 goruntu = _Sure.ToString("c");
-  
 
                 if (_Sure == TimeSpan.Zero)
                 {
@@ -49,6 +49,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 _Sure = _Sure.Add(TimeSpan.FromSeconds(-1));
 
             }, Application.Current.Dispatcher);
+
+           
 
         }
 

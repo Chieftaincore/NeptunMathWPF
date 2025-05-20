@@ -196,8 +196,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             SessionSonuIsaretle();
 
-            MessageBox.Show("Test Kilitlendi","Kilitlendi", MessageBoxButton.OK, MessageBoxImage.Information);
-
             TestKilitlendi = true;
         }
     }
