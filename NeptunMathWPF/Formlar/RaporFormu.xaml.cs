@@ -74,9 +74,13 @@ namespace AnasayfaWPF
                         x.EXAM_TITLE
                     }).ToList();
 
+                    int sayac = 0;
                     foreach (var exam in examList)
                     {
                         Chart1.Series[0].Points.Add(exam.SCORE, 0).AxisLabel = exam.EXAM_TITLE;
+                        sayac++;
+                        if (sayac > 14)
+                            break;
                     }
 
                 }
