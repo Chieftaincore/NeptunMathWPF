@@ -469,6 +469,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\RaporSoruCard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\SoruCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
