@@ -41,7 +41,7 @@ namespace NeptunMathWPF
     {
 
         static readonly Random random = new Random();
-        static internal NEPTUN_DBEntities dbEntities = new NEPTUN_DBEntities();
+        static internal NeptunDBEntities dbEntities = new NeptunDBEntities();
 
         public static string geminiFileName = "GEMINI.config";
         public static string geminiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, geminiFileName);
@@ -83,7 +83,7 @@ namespace NeptunMathWPF
 
         internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor
         {
-            dbEntities = new NEPTUN_DBEntities();
+            dbEntities = new NeptunDBEntities();
         }
         internal static void LogToDatabase(Enum enumLevel, string message)
         {

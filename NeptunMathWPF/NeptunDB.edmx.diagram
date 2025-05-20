@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bc241c67c3974076b4bb46cf012ee765" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.BOOKMARKED_QUESTIONS" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EXAM_SESSION_DETAILS" Width="1.5" PointX="5.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.EXAM_SESSIONS" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.FEEDBACK" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.LOGS" Width="1.5" PointX="3" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.QUESTION_POOL" Width="1.5" PointX="3.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.SUBTOPICS" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.sysdiagrams" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.TOPICS" Width="1.5" PointX="1.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USER_SCORES" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.USERS" Width="1.5" PointX="0.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.WRONG_ANSWERED_QUESTIONS" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK__BOOKMARKE__SUBTO__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__BOOKMARKE__TOPIC__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__BOOKMARKE__USERI__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__EXAM_SESS__EXAM___60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__EXAM_SESS__SUBTO__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__EXAM_SESS__TOPIC__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__EXAM_SESS__USERI__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__FEEDBACK__USERID__4222D4EF" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__LOGS__USERID__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__QUESTION___SUBTO__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__QUESTION___TOPIC__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__SUBTOPICS__TOPIC__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__USER_SCOR__SUBTO__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__WRONG_ANS__SUBTO__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__USER_SCOR__TOPIC__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__WRONG_ANS__TOPIC__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__USER_SCOR__USERI__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK__WRONG_ANS__WRONG__52593CB8" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -165,7 +165,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BOOKMARKED_QUESTIONS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBQuestionRepository.cs" />
+    <Compile Include="EXAM_SESSIONS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EXAM_SESSION_DETAILS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FEEDBACK.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\AltFormlar\ApiTest.xaml.cs">
       <DependentUpon>ApiTest.xaml</DependentUpon>
     </Compile>
@@ -216,12 +228,33 @@
       <DependentUpon>soruHavuzuUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="LogLevel.cs" />
+    <Compile Include="LOGS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Models.cs" />
+    <Compile Include="NeptunDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NeptunDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NeptunDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>NeptunDB.edmx</DependentUpon>
+    </Compile>
     <Compile Include="ProblemGenerator.cs" />
     <Compile Include="QuestionPoolRepository.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
     <Compile Include="Formlar\RaporFormu.xaml.cs">
       <DependentUpon>RaporFormu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QUESTION_POOL.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
     </Compile>
     <Compile Include="SesIslemleri.cs" />
     <Compile Include="Models\Algorithma\AlgorithmaModel.cs" />
@@ -281,6 +314,24 @@
     <Compile Include="SoruVeAjani\Turev\TurevQuestionType.cs" />
     <Compile Include="SoruVeAjani\Turev\TurevAnaCalısanYer.cs" />
     <Compile Include="SoruVeAjani\Turev\TurevBeniOku.cs" />
+    <Compile Include="SUBTOPICS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TOPICS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USERS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="USER_SCORES.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WRONG_ANSWERED_QUESTIONS.cs">
+      <DependentUpon>NeptunDB.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -300,6 +351,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="NeptunDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>NeptunDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="NeptunDB.edmx.diagram">
+      <DependentUpon>NeptunDB.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="pdflatexBatch.bat" />
     <None Include="Properties\Settings.settings">
@@ -421,8 +479,22 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="NeptunDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NeptunDB.edmx</DependentUpon>
+      <LastGenOutput>NeptunDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="NeptunDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>NeptunDB.edmx</DependentUpon>
+      <LastGenOutput>NeptunDB.cs</LastGenOutput>
+    </Content>
     <Content Include="NEPTUN_DB.mdf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NEPTUN_DB_log.ldf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>NEPTUN_DB.mdf</DependentUpon>
     </Content>
     <Resource Include="Kaynaklar\Resimler\logo.ico" />
     <Content Include="Kaynaklar\Sesler\SesDogru5.wav">
