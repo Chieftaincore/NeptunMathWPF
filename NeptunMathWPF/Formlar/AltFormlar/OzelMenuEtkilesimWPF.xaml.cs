@@ -2,6 +2,7 @@
 using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,6 +75,12 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                     baslik = txtboxBaslik.Text;
                 }
 
+                if (Genel.dbEntities.EXAM_SESSIONS.Where(x => x.EXAM_TITLE == baslik && x.USERID == aktifKullanici.kullnId).Select(x => x.EXAM_ID).FirstOrDefault() != 0)
+                {
+                    MessageBox.Show("Bu isimlendirmeye sahip bir sınavınız bulunuyor!", "UYARI!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
                 AlgorithmaModel algorithma = new AlgorithmaModel(OzelSessionTurler.ToArray());
 
                 TestEtkilesimMVM testMVVM = new TestEtkilesimMVM(_soruSayisi)
@@ -100,7 +107,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
 
         private bool Kosullar()
         {
-            if ((listKonu.Items.Count > 0 && !OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem)) 
+            if ((listKonu.Items.Count > 0 && !OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem))
                 || (listKonu.Items.Count > 1 && OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem)))
             {
                 //Test etmek için 1'e düşürdüm arttırmadıysam arttırın -Hüseyin
@@ -154,7 +161,8 @@ namespace NeptunMathWPF.Formlar.AltFormlar
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            if (Onceki != null){
+            if (Onceki != null)
+            {
                 Onceki.Show();
             }
 
