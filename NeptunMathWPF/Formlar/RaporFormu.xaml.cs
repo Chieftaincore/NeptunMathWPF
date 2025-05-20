@@ -95,6 +95,7 @@ namespace AnasayfaWPF
                 lbtype = lbType.konubazli;
                 lstRaporVerileri.Items.Clear();
                 var topicids = Genel.dbEntities.EXAM_SESSION_DETAILS.Select(x => x.TOPIC_ID).Distinct().ToList();
+                labelList.Content = "Konular";
 
                 foreach (var topicid in topicids)
                 {
@@ -108,9 +109,9 @@ namespace AnasayfaWPF
         {
             Genel.Handle(() =>
             {
-
                 lbtype = lbType.oturumbazli;
                 lstRaporVerileri.Items.Clear();
+                labelList.Content = "Oturumlar";
 
                 var examList = Genel.dbEntities.EXAM_SESSIONS.Where(x => x.USERID == aktifKullanici.kullnId).OrderByDescending(x => x.EXAM_ID).Select(x => x.EXAM_TITLE).ToList();
                 foreach (var exam in examList)
@@ -203,6 +204,14 @@ namespace AnasayfaWPF
         private void Window_Closed(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void TusListRaporVerileriCiftTikla(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if(lbtype == lbType.oturumbazli)
+            {
+
+            }
         }
     }
 }

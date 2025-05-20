@@ -124,4 +124,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
             TabRenk = color;
         }
     }
+
+
 }

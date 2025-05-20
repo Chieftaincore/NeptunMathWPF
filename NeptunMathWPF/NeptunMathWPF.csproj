@@ -184,6 +184,9 @@
     <Compile Include="Formlar\AltFormlar\BookmarkedQuestionsPanelWPF.xaml.cs">
       <DependentUpon>BookmarkedQuestionsPanelWPF.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Formlar\AltFormlar\OturumSoruGosterWPF.xaml.cs">
+      <DependentUpon>OturumSoruGosterWPF.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Formlar\AltFormlar\OzelMenuEtkilesimWPF.xaml.cs">
       <DependentUpon>OzelMenuEtkilesimWPF.xaml</DependentUpon>
     </Compile>
@@ -375,6 +378,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Formlar\AltFormlar\dbTestWPF.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Formlar\AltFormlar\OturumSoruGosterWPF.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
