@@ -150,7 +150,6 @@
 
             <ListView x:Name="DialogListView" ItemsSource="{Binding Sorular}" 
                       ItemContainerStyleSelector="{StaticResource SoruStyleTemplateModel}"/>
-
         </ScrollViewer>
 
         <ContentControl x:Name="EtkilesimPanel"

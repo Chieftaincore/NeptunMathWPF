@@ -46,7 +46,7 @@ namespace NeptunMathWPF
             List<int> ids = Genel.dbEntities.QUESTION_POOL.Where(x => x.TOPICS.TOPIC == topic && x.SUBTOPICS.SUBTOPIC == subtopic).Select(x => x.POOL_ID).ToList();
 
             Random rnd = new Random();
-            int randomSayi = rnd.Next(ids.Count);
+            int randomSayi = rnd.Next(0,ids.Count);
             return ids[randomSayi];
         }
     }

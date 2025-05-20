@@ -1,9 +1,7 @@
-﻿using HonkSharp.Fluency;
-using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
+﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model;
 using NeptunMathWPF.SoruVeAjani.Algorithma;
 using System;
 using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -18,10 +16,21 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         DateTime BaslangicZaman;
 
         internal int SoruSayisi;
-        public ZamanlayiciModel Zamanlayici { get; set; }
+
+        ZamanlayiciModel _zamanlayici;
+        public ZamanlayiciModel Zamanlayici { get => _zamanlayici; 
+            set 
+            {
+                if (_zamanlayici != value) 
+                {
+                    _zamanlayici = value;
+                    Zamanlayici.ZamanBittiEvent += ZamanBittiKilitle;
+                    OnPropertyChanged(nameof(Zamanlayici));
+                }
+            }
+        }
 
         public ICommand TestBitir { get; set; }
-
         public string Baslik { get; set; }
 
         public bool SureDevam { get {
@@ -29,7 +38,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-        bool TestKilitlendi;
+        public override string seciliTur { 
+            
+            get => base.seciliTur;
+
+            set { 
+                if(!TestKilitlendi)
+                base.seciliTur = value; 
+            }
+        }
+
+        internal bool TestKilitlendi = false;
 
         public TestEtkilesimMVM(int _Sorusayisi)
         {
@@ -70,8 +89,21 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             {
                 if (string.IsNullOrEmpty(seciliSoru.NesneSecenekler.secilideger))
                 {
-                    MessageBox.Show("Herhangi bir cevap değeri alınmadı, Cevap Seçtiğinizden emin olun", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Stop);
 
+                    if (algodurum && !TestKilitlendi)
+                    {
+                        if (Sorular.Count < SoruSayisi && algodurum)
+                        {
+                            MessageBox.Show("Soru Atlandı", "Cevap Seçilmedi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            AlgorithmaSoruEkle();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Son Soru","Atlanamaz",MessageBoxButton.OK,MessageBoxImage.Hand);
+                        }
+                    }
+                        
                     return;
                 }
 
@@ -112,9 +144,10 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 seciliTur = seciliSoru.SoruTuruStyleTemplate();
                 OnPropertyChanged(nameof(seciliTur));
 
+
                 if (SonSoruCheck())
                 {
-                    if(Sorular.Count < SoruSayisi)
+                    if (Sorular.Count < SoruSayisi)
                     {
                         if (algodurum)
                             AlgorithmaSoruEkle();
@@ -124,12 +157,15 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                         SessionSonuIsaretle();
                     }
                 }
+
             });
         }
 
         internal void SessionSonuIsaretle()
         {
             seciliTur = "TestBitti";
+
+            OnPropertyChanged(nameof(seciliTur));
         } 
 
         internal void SessionBitir()
@@ -153,7 +189,16 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 }
             }
            
-            MessageBox.Show($"Test Bitti {Baslik} \rSoru Sayisi : {_sorusayisi} \rDogru Sayisi : {_dogru}\rYanlis Sayisi : {_yanlis}" ,"Test Bitti");
+            MessageBox.Show($"Test Bitti {Baslik} \rSoru Sayisi : {_sorusayisi} \rDogru Sayisi : {_dogru}\rYanlis Sayisi : {_yanlis}\r Başlangıç : {BaslangicZaman}" ,"test bitti");
+        }
+
+        private void ZamanBittiKilitle(object sender, EventArgs e)
+        {
+            SessionSonuIsaretle();
+
+            MessageBox.Show("Test Kilitlendi","Kilitlendi", MessageBoxButton.OK, MessageBoxImage.Information);
+
+            TestKilitlendi = true;
         }
     }
 }

@@ -60,7 +60,8 @@ namespace NeptunMathWPF.Formlar.AltFormlar
 
         private void SessionAc(object sender, RoutedEventArgs e)
         {
-
+            Genel.Handle(() =>
+            {
                 if (Kosullar() == false)
                     return;
 
@@ -83,7 +84,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                 };
 
                 EtkilesimPencereWPF _test =
-                 new EtkilesimPencereWPF(this)
+                 new EtkilesimPencereWPF(Onceki)
                  {
                      DataContext = testMVVM
                  };
@@ -92,8 +93,8 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                 _test.TimerPartner.Visibility = Visibility.Visible;
                 _test.TimerPartner.IsEnabled = true;
 
-                this.Hide();
-
+                Hide();
+            });
         }
 
 
@@ -102,7 +103,8 @@ namespace NeptunMathWPF.Formlar.AltFormlar
             if ((listKonu.Items.Count > 0 && !OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem)) 
                 || (listKonu.Items.Count > 1 && OzelSessionTurler.Contains(SoruTerimleri.soruTuru.problem)))
             {
-                if (_dakika > 0 && _soruSayisi >= 5)
+                //Test etmek için 1'e düşürdüm arttırmadıysam arttırın -Hüseyin
+                if (_dakika > 0 && _soruSayisi >= 1)
                 {
                     return true;
                 }

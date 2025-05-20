@@ -13,6 +13,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         DispatcherTimer Zamanlayici;
 
+        public event EventHandler ZamanBittiEvent;
+
         internal TimeSpan _Sure;
 
 
@@ -27,7 +29,6 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 } 
             }
         }
-
 
         public ZamanlayiciModel(double dakika)
         {
@@ -51,10 +52,9 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
 
         }
 
-        private void ZamanBitti()
+        public void ZamanBitti()
         {
-            MessageBox.Show("Zaman bitti");
+            ZamanBittiEvent?.Invoke(this, EventArgs.Empty);
         }
-
     }
 }

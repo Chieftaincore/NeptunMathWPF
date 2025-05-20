@@ -20,7 +20,25 @@ namespace NeptunMathWPF
     public class Soru
     {
         public soruTuru SoruTuru { get; }
-        public Enum AltTur { get; set; }
+
+
+        // Veri Tabanından gelen sorular için _AltTurS yerel veya yapayzeka'ya yerelden oluşturulmuşlar için _AltturE'yi kullanın
+        public string _AltTurS { get; set; }
+        public Enum _AltTurE { get; set; }
+
+        public string AltTur { get
+            {
+                if (string.IsNullOrEmpty(_AltTurS))
+                {
+                    return _AltTurE.ToString();
+                }
+                else
+                {
+                    return _AltTurS;
+                }
+            }
+        }
+
         public string IslemMetin { get; set; }
         public string LatexMetin { get; set; }
 

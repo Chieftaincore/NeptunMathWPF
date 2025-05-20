@@ -86,7 +86,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         internal KeyEventHandler key;
 
         private string _seciliTur;
-        public string seciliTur
+        public virtual string seciliTur
         {
             get => _seciliTur; set
             {
@@ -181,6 +181,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                 OnPropertyChanged();
             });
         }
+
+
 
         public async Task ProblemEkle()
         {
@@ -395,12 +397,12 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         #region VeriTabani
         internal void AddWrongQuestionToDB()
         {
-            Genel.Handle(() =>
+            Genel.Handle((Action)(() =>
             {
                 Genel.ReloadEntity();
 
                 string soruTur = seciliSoru.Tur.ToString();
-                string soruAltTur = seciliSoru.soru.AltTur.ToString();
+                string soruAltTur = seciliSoru.soru._AltTurE.ToString();
                 var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
 
                 // null kontrol (eğer db'de veri yoksa veriyi ekle)
@@ -447,17 +449,17 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     WRONG_ANSWERS = wrongAnswers
                 });
                 Genel.dbEntities.SaveChanges();
-            });
+            }));
         }
 
         private void BookmarkQuestionToDB(SoruCardModel model)
         {
-            Genel.Handle(() =>
+            Genel.Handle((Action)(() =>
             {
                 Genel.ReloadEntity();
 
                 string soruTur = model.Tur.ToString();
-                string soruAltTur = model.soru.AltTur.ToString();
+                string soruAltTur = model.soru._AltTurE.ToString();
                 var topic = Genel.dbEntities.TOPICS.FirstOrDefault(x => x.TOPIC == soruTur);
 
                 // null kontrol (eğer db'de veri yoksa veriyi ekle)
@@ -503,7 +505,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     WRONG_ANSWERS = wrongAnswers
                 });
                 Genel.dbEntities.SaveChanges();
-            });
+            }));
         }
 
         private void FeedbackToDB(SoruCardModel scm)

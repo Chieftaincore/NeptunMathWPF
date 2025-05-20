@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,11 +28,14 @@ namespace NeptunMathWPF.SoruVeAjani
         private enum IslemAlttur
         {
             Karmasik,
+            Veritabanı
         }
 
         internal static Dictionary<string, int[]> Araliklar { get => ZorlukRepository.Araliklar; }
 
         internal static Random random = new Random();
+
+        internal static DataTable UygunSoruHavuzlari;
 
         public static List<Enum> IslemAltturleri()
         {
@@ -101,7 +103,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return new Soru(lim, options.ToArray())
             {
-                AltTur = currentQuestionType
+                _AltTurE = currentQuestionType
             };
         }
 
@@ -119,7 +121,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return new Soru(question, question.WrongAnswers.ToArray())
             {
-                AltTur = rep.functionType
+                _AltTurE = rep.functionType
             };
         }
 
@@ -132,46 +134,48 @@ namespace NeptunMathWPF.SoruVeAjani
         /// <returns></returns>
         public static Soru RastgeleVeriTabanıSorusuGetir()
         {
-                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
-                DBQuestionRepository VTrepo;
-                Soru _soru;
+            DataTable dt = HavuzSoruTuruDenetimi();
 
-                int i = Enum.GetValues(typeof(SoruTuru)).Length;
-                SoruTuru tur = (SoruTuru)new Random().Next(0, i);
-                Enum alttur = AltturGetir(tur);
+            DBQuestionRepository VTrepo;
+            Soru _soru;
 
-                VTrepo = new DBQuestionRepository(tur.ToString(), alttur.ToString());
+            int i = new Random().Next(0, (dt.Rows.Count - 1));
 
-                _soru = new Soru(VTrepo, tur)
-                {
-                    AltTur = alttur
-                };
+            string _tur = dt.Rows[i][0].ToString();
+           
+            //MessageBox.Show(_tur, "Rastgele Veritabanı");
+            string _alttur = dt.Rows[i][1].ToString();
 
-                return _soru;
+            SoruTuru tur = (SoruTuru)Enum.Parse(typeof(SoruTuru), _tur);
+            
+            VTrepo = new DBQuestionRepository(_tur, _alttur);
+
+            _soru = new Soru(VTrepo, tur)
+            {
+                _AltTurS = _alttur
+            };
+
+            return _soru;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="turler">Veritabanı </param>
-        /// <returns></returns>
+
+        //Henüz HavuSoruTuruDenetimi ile birleştirilmedi
         public static Soru RastgeleVeriTabanıSorusuGetir(SoruTuru[] turler)
         {
             try
             {
-                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
                 DBQuestionRepository VTrepo;
                 Soru _soru;
 
                 int i = turler.Length;
-                SoruTuru tur = turler[new Random().Next(0, i)];
+                SoruTuru tur = turler[new Random().Next(0, i - 1)];
                 Enum alttur = AltturGetir(tur);
 
                 VTrepo = new DBQuestionRepository(tur.ToString(), alttur.ToString());
 
                 _soru = new Soru(VTrepo, tur)
                 {
-                    AltTur = alttur
+                    _AltTurE = alttur
                 };
 
                 return _soru;
@@ -189,37 +193,17 @@ namespace NeptunMathWPF.SoruVeAjani
         /// <returns></returns>
         public static DataTable HavuzSoruTuruDenetimi()
         {
-
-
-            return new DataTable();
-        }
-
-
-        public static Soru Deneme()
-        {
-            try
+            if(UygunSoruHavuzlari == null)
             {
-                //Rastgele döndüren yaptım ama boş olmayanları nasıl anlayacağımı çözemedim henüz?
-                DBQuestionRepository VTrepo;
-                Soru _soru;
+                UygunSoruHavuzlari = GetQuestionPoolDataTable();
 
-                Enum alttur = LimitQuestionType.CoefficientExpression;
-                VTrepo = new DBQuestionRepository(SoruTuru.limit.ToString(), alttur.ToString());
-
-                _soru = new Soru(VTrepo, SoruTuru.limit)
-                {
-                    AltTur = alttur
-                };
-
-                return _soru;
+                return UygunSoruHavuzlari;
             }
-            catch
+            else
             {
-                MessageBox.Show("THROW", "throw");
-                throw;
+                return UygunSoruHavuzlari;
             }
         }
-
         #endregion
 
         internal static DataTable GetQuestionPoolDataTable()
@@ -255,7 +239,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return new Soru(ProblemSoru)
             {
-                AltTur = (ProblemType)secilen
+                _AltTurE = (ProblemType)secilen
             };
         }
 
@@ -269,7 +253,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return new Soru(ProblemSoru)
             {
-                AltTur = (ProblemType)secilen
+                _AltTurE = (ProblemType)secilen
             };
         }
         /// <summary>
@@ -623,7 +607,7 @@ namespace NeptunMathWPF.SoruVeAjani
             //Nesnenin Olusutğu AN;
             Soru soru = new Soru(islem: islemString, sonuc.ToString(), diger.ToArray())
             {
-                AltTur = _enum
+                _AltTurE = _enum
             };
 
             //PARAMETRELER ve Olusturucu LOGU

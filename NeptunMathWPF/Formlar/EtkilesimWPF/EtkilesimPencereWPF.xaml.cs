@@ -22,7 +22,6 @@ namespace NeptunMathWPF.Formlar
                 this.DataContext = new EtkilesimMVM();
 
             InitializeComponent();
-
         }
 
         public EtkilesimPencereWPF(Window _onceki)
