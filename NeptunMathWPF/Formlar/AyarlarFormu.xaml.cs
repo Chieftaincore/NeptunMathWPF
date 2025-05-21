@@ -50,22 +50,29 @@ namespace AnasayfaWPF
         {
             bool deger = apiUrlComboBox.IsEnabled;
             apiUrlComboBox.IsEnabled = !deger;
+            apikeyTextBox.IsEnabled = !deger;
         }
 
         private async void saveButton_Click(object sender, RoutedEventArgs e)
         {
             if (apiUrlComboBox.IsEnabled == true)
             {
-                if (!APIOperations.GetGeminiBaseUrl().Contains(apiUrlComboBox.SelectedItem.ToString().ToLower()))
-                {
+                    string baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
 
-                    string baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
+                    var deneme1 = await APIOperations.CallGeminiApiTypedAsync("Selam", apikeyTextBox.Text, baseApiUrl);
+                    if (deneme1 == null)
+                    {
+                        MessageBox.Show("Doğru API Key Girin!", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
                     if (apiUrlComboBox.SelectedIndex == 0)
                     {
                         saveButton.IsEnabled = false;
                         saveButton.Content = "Lütfen bekleyin...";
-                        var deneme = await APIOperations.CallGeminiApiTypedAsync("Selam", apikeyTextBox.Text, baseApiUrl);
-                        if (deneme == null)
+                        var deneme2 = await APIOperations.CallGeminiApiTypedAsync("Selam", apikeyTextBox.Text, baseApiUrl);
+                        if (deneme2 == null)
                         {
                             MessageBox.Show("API Key'iniz bu modeli desteklemiyor!", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning);
                             saveButton.IsEnabled = true;
@@ -80,13 +87,7 @@ namespace AnasayfaWPF
                     }
                     else return;
 
-                    UpdateGeminiBaseUrl(Genel.geminiFilePath, baseApiUrl);
-
-                }
-                else
-                {
-                    MessageBox.Show("Zaten bu modeli kullanıyorsunuz!", "UYARI!");
-                }
+                    UpdateGeminiConfig(Genel.geminiFilePath, apikeyTextBox.Text, baseApiUrl);
             }
             else
             {
@@ -94,61 +95,121 @@ namespace AnasayfaWPF
             }
         }
 
-        void UpdateGeminiBaseUrl(string filePath, string newUrl)
+
+        void UpdateGeminiConfig(string filePath, string newApiKey, string newBaseUrl)
         {
-            if (!File.Exists(filePath))
+            Genel.Handle(() =>
             {
-                MessageBox.Show("Config dosyası bulunamadı.", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
 
-            try
-            {
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("Config dosyası bulunamadı.");
+                    return;
+                }
+
                 XDocument doc = XDocument.Load(filePath);
-
                 XElement appSettings = doc.Root.Element("appSettings");
 
                 if (appSettings != null)
                 {
-                    XElement baseUrlElement = null;
-
-                    foreach (XElement el in appSettings.Elements("add"))
-                    {
-                        if ((string)el.Attribute("key") == "GeminiBaseUrl")
-                        {
-                            baseUrlElement = el;
-                            break;
-                        }
-                    }
-
-                    if (baseUrlElement != null)
-                    {
-                        baseUrlElement.SetAttributeValue("value", newUrl);
-                        MessageBox.Show("Model güncellendi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
-                        saveButton.IsEnabled = true;
-                        saveButton.Content = "Kaydet";
-                    }
-                    else
-                    {
-                        // Eğer key yoksa ekle
-                        appSettings.Add(new XElement("add",
-                            new XAttribute("key", "GeminiBaseUrl"),
-                            new XAttribute("value", newUrl)));
-                        MessageBox.Show("Model Eklendi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
+                    UpdateOrAddSetting(appSettings, "GeminiApiKey", newApiKey);
+                    UpdateOrAddSetting(appSettings, "GeminiBaseUrl", newBaseUrl);
 
                     doc.Save(filePath);
+                    MessageBox.Show("Başarıyla güncellendi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("<appSettings> etiketi bulunamadı.", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Hasarlı config dosyası!", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
-            catch (Exception ex)
-            {
-                Genel.LogToDatabase(LogLevel.ERROR, ex.Message);
-                MessageBox.Show("Hata oluştu!", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
+            });
         }
+
+        void UpdateOrAddSetting(XElement appSettings, string key, string value)
+        {
+            Genel.Handle(() =>
+            {
+
+                XElement element = null;
+
+                foreach (XElement el in appSettings.Elements("add"))
+                {
+                    if ((string)el.Attribute("key") == key)
+                    {
+                        element = el;
+                        break;
+                    }
+                }
+
+                if (element != null)
+                {
+                    element.SetAttributeValue("value", value);
+                }
+                else
+                {
+                    appSettings.Add(new XElement("add",
+                        new XAttribute("key", key),
+                        new XAttribute("value", value)));
+                }
+            });
+        }
+
+        //void UpdateGeminiBaseUrl(string filePath, string newUrl)
+        //{
+        //    if (!File.Exists(filePath))
+        //    {
+        //        MessageBox.Show("Config dosyası bulunamadı.", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        XDocument doc = XDocument.Load(filePath);
+
+        //        XElement appSettings = doc.Root.Element("appSettings");
+
+        //        if (appSettings != null)
+        //        {
+        //            XElement baseUrlElement = null;
+
+        //            foreach (XElement el in appSettings.Elements("add"))
+        //            {
+        //                if ((string)el.Attribute("key") == "GeminiBaseUrl")
+        //                {
+        //                    baseUrlElement = el;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (baseUrlElement != null)
+        //            {
+        //                baseUrlElement.SetAttributeValue("value", newUrl);
+        //                MessageBox.Show("Model güncellendi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+        //                saveButton.IsEnabled = true;
+        //                saveButton.Content = "Kaydet";
+        //            }
+        //            else
+        //            {
+        //                // Eğer key yoksa ekle
+        //                appSettings.Add(new XElement("add",
+        //                    new XAttribute("key", "GeminiBaseUrl"),
+        //                    new XAttribute("value", newUrl)));
+        //                MessageBox.Show("Model Eklendi.", "INFO", MessageBoxButton.OK, MessageBoxImage.Information);
+        //            }
+
+        //            doc.Save(filePath);
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("<appSettings> etiketi bulunamadı.", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Genel.LogToDatabase(LogLevel.ERROR, ex.Message);
+        //        MessageBox.Show("Hata oluştu!", "HATA!", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
     }
 }
