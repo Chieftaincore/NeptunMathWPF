@@ -250,6 +250,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="NeptunDbEntities.Extensions.cs" />
     <Compile Include="ProblemGenerator.cs" />
     <Compile Include="QuestionPoolRepository.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />

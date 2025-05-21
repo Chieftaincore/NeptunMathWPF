@@ -13,6 +13,15 @@ namespace LoginApp
         {
             InitializeComponent();
             CheckGeminiConfig();
+
+            if (!File.Exists(Genel.dbPath))
+            {
+                string currentDir = AppDomain.CurrentDomain.BaseDirectory;
+                string sourceDb = Path.Combine(currentDir, "NEPTUN_DB.mdf");
+
+                Directory.CreateDirectory(Genel.dbDirectory);
+                File.Copy(sourceDb, Genel.dbPath);
+            }
         }
 
         private void GirisYap_Click(object sender, RoutedEventArgs e)
