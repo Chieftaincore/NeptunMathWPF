@@ -18,6 +18,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
 
         internal int SoruSayisi;
 
+        public event EventHandler TestBittiEvent;
+
         ZamanlayiciModel _zamanlayici;
         public ZamanlayiciModel Zamanlayici
         {
@@ -186,6 +188,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
         {
             seciliTur = "TestBitti";
 
+            Zamanlayici.Dur();
+
             OnPropertyChanged(nameof(seciliTur));
         }
 
@@ -253,6 +257,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     });
                 }
                 Genel.dbEntities.SaveChanges();
+
+                TestBittiEvent?.Invoke(this, EventArgs.Empty);
             });
         }
 

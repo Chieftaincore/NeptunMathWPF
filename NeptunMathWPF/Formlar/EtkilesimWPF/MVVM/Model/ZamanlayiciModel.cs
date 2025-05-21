@@ -49,10 +49,13 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM.Model
                 _Sure = _Sure.Add(TimeSpan.FromSeconds(-1));
 
             }, Application.Current.Dispatcher);
-
-           
-
         }
+
+        public void Dur()
+        {
+            Zamanlayici.Stop();
+        }
+
 
         public void ZamanBitti()
         {

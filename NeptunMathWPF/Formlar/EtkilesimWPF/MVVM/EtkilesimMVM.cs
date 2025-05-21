@@ -501,8 +501,8 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
                     USERID = aktifKullanici.kullnId,
                     TOPICS = topic,
                     SUBTOPICS = subtopic,
-                    QUESTION_TEXT = seciliSoru.soru.IslemMetin,
-                    LATEX_TEXT = seciliSoru.LaTeX,
+                    QUESTION_TEXT = model.soru.IslemMetin,
+                    LATEX_TEXT = model.LaTeX,
                     CORRECT_ANSWER = answer,
                     WRONG_ANSWERS = wrongAnswers
                 });

@@ -16,6 +16,9 @@ namespace NeptunMathWPF.Formlar
     public partial class EtkilesimPencereWPF : Window
     {
         Window Onceki;
+
+
+
         public EtkilesimPencereWPF()
         {
             if(this.DataContext == null)
@@ -30,6 +33,35 @@ namespace NeptunMathWPF.Formlar
                 this.DataContext = new EtkilesimMVM();
 
             InitializeComponent();
+
+            Genel.Handle(() =>
+            {
+                if (DataContext.GetType() == typeof(TestEtkilesimMVM))
+                {
+                    MessageBox.Show("EventEklendi");
+
+                    ((TestEtkilesimMVM)this.DataContext).TestBittiEvent += TestBitti;
+                }
+            });
+
+            Onceki = _onceki;
+        }
+
+        internal EtkilesimPencereWPF(EtkilesimMVM MVVM, Window _onceki)
+        {
+            this.DataContext = MVVM;
+
+            InitializeComponent();
+
+            Genel.Handle(() =>
+            {
+                if (DataContext.GetType() == typeof(TestEtkilesimMVM))
+                {
+                    MessageBox.Show("EventEklendi");
+
+                    ((TestEtkilesimMVM)this.DataContext).TestBittiEvent += TestBitti;
+                }
+            });
 
             Onceki = _onceki;
         }
@@ -80,6 +112,11 @@ namespace NeptunMathWPF.Formlar
             {
                 Genel.UygulamaKapat();
             }
+        }
+
+        private void TestBitti(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void DialogScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)

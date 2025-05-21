@@ -127,13 +127,6 @@
                     <Button x:Name="tusVeriTabaniSoru" Content="Veritabanından Soru Getir" Background="AliceBlue" 
                             Height="32" Margin="5,10,5,10" Command="{Binding DebugHavuzSoruEkle}"/>
 
-                    <ComboBox Margin="5,10"/>
-                        
-                    <ComboBox Margin="5,2,5,10"/>
-
-                    <Button Content="Konulu Soru Getir" Background="AliceBlue"
-                            Height="32" Margin="5,10"/>
-                        
                     </StackPanel>
                 </Expander>
             </StackPanel>
