@@ -29,13 +29,14 @@
 
                 <Label Content="NeptunMath" FontSize="16" FontWeight="Bold" FontStyle="Italic" Foreground="White" Margin="0,4,0,20" HorizontalAlignment="Center"/>
 
-                <Button Content="İstatistik" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
-
-                <Button Content="Kaydedilenler" Click="tusKaydedilenler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
                 <Button Content="Raporlar" Click="tusRaporlar" Margin="4" Width="158" Padding="15" 
                         FontSize="15" FontWeight="SemiBold" Background="AliceBlue" 
                         FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Kaydedilenler" Click="tusKaydedilenler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
+
+                <Button Content="Yanlışlar" Click="tusIstatistik" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand"/>
 
                 <Button Content="Bildirimler" Margin="4" Width="158" Padding="15" FontSize="15" FontWeight="SemiBold" Background="AliceBlue" FontStyle="Italic" BorderThickness="1" Cursor="Hand" Visibility="Collapsed"/>
 
