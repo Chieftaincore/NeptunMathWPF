@@ -13,10 +13,10 @@ namespace NeptunMathWPF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NEPTUN_DBEntities : DbContext
+    public partial class Neptun_DBEntities : DbContext
     {
-        public NEPTUN_DBEntities()
-            : base("name=NEPTUN_DBEntities")
+        public Neptun_DBEntities()
+            : base("name=Neptun_DBEntities")
         {
         }
     
@@ -26,15 +26,15 @@ namespace NeptunMathWPF
         }
     
         public virtual DbSet<BOOKMARKED_QUESTIONS> BOOKMARKED_QUESTIONS { get; set; }
+        public virtual DbSet<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
+        public virtual DbSet<EXAM_SESSIONS> EXAM_SESSIONS { get; set; }
         public virtual DbSet<FEEDBACK> FEEDBACK { get; set; }
         public virtual DbSet<LOGS> LOGS { get; set; }
         public virtual DbSet<QUESTION_POOL> QUESTION_POOL { get; set; }
         public virtual DbSet<SUBTOPICS> SUBTOPICS { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TOPICS> TOPICS { get; set; }
-        public virtual DbSet<USER_SCORES> USER_SCORES { get; set; }
         public virtual DbSet<USERS> USERS { get; set; }
         public virtual DbSet<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
-        public virtual DbSet<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
-        public virtual DbSet<EXAM_SESSIONS> EXAM_SESSIONS { get; set; }
     }
 }

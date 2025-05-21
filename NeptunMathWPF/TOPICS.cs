@@ -18,11 +18,10 @@ namespace NeptunMathWPF
         public TOPICS()
         {
             this.BOOKMARKED_QUESTIONS = new HashSet<BOOKMARKED_QUESTIONS>();
+            this.EXAM_SESSION_DETAILS = new HashSet<EXAM_SESSION_DETAILS>();
             this.QUESTION_POOL = new HashSet<QUESTION_POOL>();
             this.SUBTOPICS = new HashSet<SUBTOPICS>();
-            this.USER_SCORES = new HashSet<USER_SCORES>();
             this.WRONG_ANSWERED_QUESTIONS = new HashSet<WRONG_ANSWERED_QUESTIONS>();
-            this.EXAM_SESSION_DETAILS = new HashSet<EXAM_SESSION_DETAILS>();
         }
     
         public int TOPIC_ID { get; set; }
@@ -31,14 +30,12 @@ namespace NeptunMathWPF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BOOKMARKED_QUESTIONS> BOOKMARKED_QUESTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QUESTION_POOL> QUESTION_POOL { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SUBTOPICS> SUBTOPICS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<USER_SCORES> USER_SCORES { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WRONG_ANSWERED_QUESTIONS> WRONG_ANSWERED_QUESTIONS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EXAM_SESSION_DETAILS> EXAM_SESSION_DETAILS { get; set; }
     }
 }
