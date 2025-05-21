@@ -46,7 +46,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
             return Altturler;
         }
-       
+
         internal static Soru RastgeleLimitSorusuOlustur()
         {
             LimitQuestion lim;
@@ -68,8 +68,9 @@ namespace NeptunMathWPF.SoruVeAjani
                 default:
                     lim = LimitQuestionGenerator.GenerateCommonFactorQuestion();
                     break;
-            };
-            
+            }
+            ;
+
             // Doğru cevap ve şaşırtmacalar
             List<string> options = new List<string>();
 
@@ -134,27 +135,31 @@ namespace NeptunMathWPF.SoruVeAjani
         /// <returns></returns>
         public static Soru RastgeleVeriTabanıSorusuGetir()
         {
-            DataTable dt = HavuzSoruTuruDenetimi();
-
-            DBQuestionRepository VTrepo;
-            Soru _soru;
-
-            int i = new Random().Next(0, (dt.Rows.Count - 1));
-
-            string _tur = dt.Rows[i][0].ToString();
-           
-            //MessageBox.Show(_tur, "Rastgele Veritabanı");
-            string _alttur = dt.Rows[i][1].ToString();
-
-            SoruTuru tur = (SoruTuru)Enum.Parse(typeof(SoruTuru), _tur);
-            
-            VTrepo = new DBQuestionRepository(_tur, _alttur);
-
-            _soru = new Soru(VTrepo, tur)
+            Soru _soru = new Soru();
+            Genel.Handle(() =>
             {
-                _AltTurS = _alttur
-            };
 
+                DataTable dt = HavuzSoruTuruDenetimi();
+
+                DBQuestionRepository VTrepo;
+
+                int i = new Random().Next(0, (dt.Rows.Count - 1));
+
+                string _tur = dt.Rows[i][0].ToString();
+
+                //MessageBox.Show(_tur, "Rastgele Veritabanı");
+                string _alttur = dt.Rows[i][1].ToString();
+
+                SoruTuru tur = (SoruTuru)Enum.Parse(typeof(SoruTuru), _tur);
+
+                VTrepo = new DBQuestionRepository(_tur, _alttur);
+
+                _soru = new Soru(VTrepo, tur)
+                {
+                    _AltTurS = _alttur
+                };
+
+            });
             return _soru;
         }
 
@@ -183,7 +188,7 @@ namespace NeptunMathWPF.SoruVeAjani
             catch
             {
                 MessageBox.Show("THROW", "throw");
-                throw;
+                return null;
             }
         }
 
@@ -193,7 +198,7 @@ namespace NeptunMathWPF.SoruVeAjani
         /// <returns></returns>
         public static DataTable HavuzSoruTuruDenetimi()
         {
-            if(UygunSoruHavuzlari == null)
+            if (UygunSoruHavuzlari == null)
             {
                 UygunSoruHavuzlari = GetQuestionPoolDataTable();
 
@@ -309,7 +314,8 @@ namespace NeptunMathWPF.SoruVeAjani
             Random rng = new Random();
             List<Ifade> ifadeler = new List<Ifade>();
 
-            Genel.Handle(() => {
+            Genel.Handle(() =>
+            {
 
                 for (int i = 0; i < olusturulacak.Count; i++)
                 {
@@ -343,7 +349,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
                                 } while (payda == pay || payda == 0);
 
-                                ifadeler.Add(new Kesir(pay,payda));
+                                ifadeler.Add(new Kesir(pay, payda));
                             }
 
                             break;
@@ -411,7 +417,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                     {
                                         //MessageBox.Show("DEBUG : silindi ");
                                         islemString += ifadeler[i].getir() + '/';
-                                        latex +=$"\\frac{{{ifadeler[i].LaTeXString}}}{{";
+                                        latex += $"\\frac{{{ifadeler[i].LaTeXString}}}{{";
 
                                         ajanLOG += $"Kesir Eklendi :: {ifadeler[i].getir()}";
                                         alindi = true;
@@ -433,8 +439,8 @@ namespace NeptunMathWPF.SoruVeAjani
                                         int temel = ((Uslu)ifadeler[i]).temel;
                                         int kuvvet = ((Uslu)ifadeler[i]).kuvvet;
 
-                                        int mode = rng.Next(0,1);
-                                      
+                                        int mode = rng.Next(0, 1);
+
                                         int itemel;
                                         int ikuvvet;
 
@@ -443,8 +449,8 @@ namespace NeptunMathWPF.SoruVeAjani
                                             case 0:
 
                                                 itemel = temel;
-                                                
-                                                if(kuvvet > 1)
+
+                                                if (kuvvet > 1)
                                                 {
                                                     ikuvvet = Math.Abs(kuvvet - rng.Next(1, kuvvet));
                                                 }
@@ -452,7 +458,7 @@ namespace NeptunMathWPF.SoruVeAjani
                                                 {
                                                     ikuvvet = Math.Abs(kuvvet - 1);
                                                 }
-                                                
+
 
                                                 islemString += $"({temel}^{kuvvet})/({itemel}^{ikuvvet})";
                                                 latex += $"\\frac{{{temel}^{kuvvet}}}{{{itemel}^{ikuvvet}}}";
@@ -574,7 +580,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
                     if (!turler.Contains(ifadeTuru.kesir) && !(sonuc.Stringize()).Contains('/'))
                     {
-                       
+
                         randEntity = sonuc + rng.Next(Araliklar["TAMSAYIYANILMA"][0], Araliklar["TAMSAYIYANILMA"][1]);
                     }
                     else
@@ -583,7 +589,7 @@ namespace NeptunMathWPF.SoruVeAjani
 
                         if ((sonuc.Stringize()).Contains('/'))
                         {
-                           
+
                             int rastg = random.Next(-2, 4);
 
                             if (rastg != 0)
@@ -645,23 +651,23 @@ namespace NeptunMathWPF.SoruVeAjani
                 case SoruTuru.islem:
                     List<Enum> e = IslemAltturleri();
 
-                    return e[RNG.Next(e.Count)]; 
+                    return e[RNG.Next(e.Count)];
 
                 case SoruTuru.fonksiyon:
                     int Fcount = Enum.GetNames(typeof(FunctionType)).Length;
-                 
-                    return (FunctionType)RNG.Next(0, Fcount) ;
+
+                    return (FunctionType)RNG.Next(0, Fcount);
 
                 case SoruTuru.problem:
                     int Pcount = Enum.GetNames(typeof(ProblemType)).Length;
 
                     return (ProblemType)RNG.Next(0, Pcount);
-   
+
                 case SoruTuru.limit:
                     int Lcount = Enum.GetNames(typeof(ProblemType)).Length;
 
                     return (LimitQuestionType)RNG.Next(0, Lcount);
-   
+
                 default:
                     return IslemAlttur.Karmasik;
             }
@@ -677,7 +683,7 @@ namespace NeptunMathWPF.SoruVeAjani
         {
             List<ifadeTuru> ozgunler = new List<ifadeTuru>();
 
-            foreach(Ifade i in ifadeler)
+            foreach (Ifade i in ifadeler)
             {
                 if (!ozgunler.Contains(i.TurGetir()))
                     ozgunler.Add(i.TurGetir());
@@ -687,7 +693,7 @@ namespace NeptunMathWPF.SoruVeAjani
             {
                 return ozgunler[0];
             }
-        
+
             return IslemAlttur.Karmasik;
         }
 

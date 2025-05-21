@@ -53,6 +53,10 @@ namespace NeptunMathWPF
         //Constructor baslatici sınıf'ile türe göre islem generatör, sql çekiş veya yapay zekaya yönlendirilecektir
 
         //İşlem Sorusu
+        public Soru()
+        {
+
+        }
         public Soru(string islem, string sonuc, Entity[] secenekler)
         {
 
