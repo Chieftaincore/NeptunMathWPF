@@ -1,9 +1,6 @@
-﻿using NeptunMathWPF.Formlar.EtkilesimWPF.MVVM;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -92,7 +89,7 @@ namespace NeptunMathWPF.SoruVeAjani.Algorithma
         {
             Bekleyen.Add(await ((ProblemSoruZorlukModel)repo.Zorluklar[soruTur.problem]).SoruHazirla(repo.Zorluklar[soruTur.problem].seviye));
 
-            MessageBox.Show("ASYNC Problem Eklendi", " ASYNC eklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+            //MessageBox.Show("ASYNC Problem Sorusu Bekleyenlere Eklendi", "ASYNC eklendi", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         public Soru Sonraki(soruTur tur)

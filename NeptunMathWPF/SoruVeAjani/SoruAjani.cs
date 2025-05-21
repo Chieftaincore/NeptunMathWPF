@@ -443,7 +443,16 @@ namespace NeptunMathWPF.SoruVeAjani
                                             case 0:
 
                                                 itemel = temel;
-                                                ikuvvet = Math.Abs(kuvvet - rng.Next( 1, kuvvet));
+                                                
+                                                if(kuvvet > 1)
+                                                {
+                                                    ikuvvet = Math.Abs(kuvvet - rng.Next(1, kuvvet));
+                                                }
+                                                else
+                                                {
+                                                    ikuvvet = Math.Abs(kuvvet - 1);
+                                                }
+                                                
 
                                                 islemString += $"({temel}^{kuvvet})/({itemel}^{ikuvvet})";
                                                 latex += $"\\frac{{{temel}^{kuvvet}}}{{{itemel}^{ikuvvet}}}";

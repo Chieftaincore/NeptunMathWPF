@@ -57,8 +57,6 @@ namespace NeptunMathWPF.Formlar
             {
                 if (DataContext.GetType() == typeof(TestEtkilesimMVM))
                 {
-                    MessageBox.Show("EventEklendi");
-
                     ((TestEtkilesimMVM)this.DataContext).TestBittiEvent += TestBitti;
                 }
             });

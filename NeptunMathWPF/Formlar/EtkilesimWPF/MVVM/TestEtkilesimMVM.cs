@@ -93,6 +93,29 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             });
         }
 
+        internal override void tusDBSoruBildir(object o)
+        {
+            Genel.Handle(() => {
+
+                SoruCardModel _model = (SoruCardModel)o;
+
+                if (!TestKilitlendi && Sorular.Count < SoruSayisi && seciliSoru == Sorular.Last())
+                {
+                    base.tusDBSoruBildir(o);
+                }
+                else
+                {
+                    if(Sorular.Count >= SoruSayisi && seciliSoru == Sorular.Last())
+                    {
+                        SessionSonuIsaretle();
+
+                        FeedbackToDB(_model);
+                        SoruMetaVeri(_model, "Bildirilen");
+                    }
+                }
+            });
+        }
+
         internal override void SeciliSoruCevapla(object o)
         {
             Genel.Handle(() =>

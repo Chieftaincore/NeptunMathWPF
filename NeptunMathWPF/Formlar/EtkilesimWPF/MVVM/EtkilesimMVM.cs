@@ -510,7 +510,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }));
         }
 
-        private void FeedbackToDB(SoruCardModel scm)
+        internal void FeedbackToDB(SoruCardModel scm)
         {
             if (!string.IsNullOrEmpty(aktifKullanici.kullaniciAdi))
             {
@@ -662,12 +662,15 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             }
         }
 
-        internal void tusDBSoruBildir(object o)
+        internal virtual void tusDBSoruBildir(object o)
         {
             SoruCardModel _model = (SoruCardModel)o;
 
             FeedbackToDB(_model);
             SoruMetaVeri(_model, "Bildirilen");
+
+            if (algodurum)
+                AlgorithmaSoruEkle();
         }
 
         internal void tusSoruMetaBilgi(object o)
@@ -677,7 +680,7 @@ namespace NeptunMathWPF.Formlar.EtkilesimWPF.MVVM
             SoruMetaVeri(_model);
         }
 
-        private void SoruMetaVeri(SoruCardModel _model, string EK = "")
+        internal void SoruMetaVeri(SoruCardModel _model, string EK = "")
         {
             if (_model.kilitlendi || aktifKullanici.yetki == "admin")
             {

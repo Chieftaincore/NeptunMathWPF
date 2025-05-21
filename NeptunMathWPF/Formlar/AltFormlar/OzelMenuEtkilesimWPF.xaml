@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NeptunMathWPF.Formlar.AltFormlar"
         mc:Ignorable="d"
-        Title="OzelEtkilesimSinavWPF" Background="DarkBlue" Closed="Window_Closed"
+        Title="Ozel Etkilesim Sayfasi Açma" Background="DarkBlue" Closed="Window_Closed"
         Height="500" MinHeight="500" MinWidth="320" Width="600">
     
     <Grid Margin="0,0,0,10" Background="White">

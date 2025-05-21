@@ -45,6 +45,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
         {
             Genel.Handle(() =>
             {
+                if(cmbxSoruTurler.SelectedItem != null) { 
                 var ek = cmbxSoruTurler.SelectedItem;
 
                 SoruTerimleri.soruTuru _tur;
@@ -56,6 +57,7 @@ namespace NeptunMathWPF.Formlar.AltFormlar
                 }
 
                 listKonu.Items.Refresh();
+                }
             });
         }
 
