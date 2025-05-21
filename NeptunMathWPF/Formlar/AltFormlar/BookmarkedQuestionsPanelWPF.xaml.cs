@@ -35,7 +35,7 @@ namespace NeptunMathWPF.Formlar
                     {
                         string subtopic = SubtopicsListBox.SelectedItem.ToString();
                         int subtopicid = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
-                        lblKaydedilenCount.Content = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid).Count();
+                        lblKaydedilenCount.Content = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicid && x.USERID==aktifKullanici.kullnId).Count();
                     }
                 }
                 catch (System.NullReferenceException)
@@ -60,7 +60,8 @@ namespace NeptunMathWPF.Formlar
         {
             try
             {
-                int topicid = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == TopicsListBox.SelectedItem).Select(x => x.TOPIC_ID).FirstOrDefault();
+                string topic = TopicsListBox.SelectedItem.ToString();
+                int topicid = Genel.dbEntities.TOPICS.Where(x => x.TOPIC == topic).Select(x => x.TOPIC_ID).FirstOrDefault();
                 SubtopicsListBox.ItemsSource = Genel.dbEntities.SUBTOPICS.Where(x => x.TOPIC_ID == topicid).Select(x => x.SUBTOPIC).ToList();
                 QuestionsListBox.ItemsSource = null;
             }
@@ -78,7 +79,7 @@ namespace NeptunMathWPF.Formlar
                     string subtopic = SubtopicsListBox.SelectedItem.ToString();
                     var subtopicId = Genel.dbEntities.SUBTOPICS.Where(x => x.SUBTOPIC == subtopic).Select(x => x.SUBTOPIC_ID).FirstOrDefault();
 
-                    QuestionsListBox.ItemsSource = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId).Select(x => x.QUESTION_TEXT).ToList();
+                    QuestionsListBox.ItemsSource = Genel.dbEntities.BOOKMARKED_QUESTIONS.Where(x => x.SUBTOPIC_ID == subtopicId && x.USERID==aktifKullanici.kullnId).Select(x => x.QUESTION_TEXT).ToList();
                 }
             });
         }

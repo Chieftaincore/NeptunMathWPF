@@ -1,5 +1,6 @@
 ﻿using NeptunMathWPF;
 using System;
+using System.Linq;
 using System.Windows;
 
 namespace AnasayfaWPF
@@ -23,6 +24,12 @@ namespace AnasayfaWPF
                 string isim = KayitIsimTxt.Text.Trim();
                 string soyisim = KayitSoyisimTxt.Text.Trim();
                 string yetki = "Kullanıcı";
+
+                if(Genel.dbEntities.USERS.Where(x=>x.USERNAME==kullaniciAdi).Count()!=0)
+                {
+                    MessageBox.Show("Bu kullanıcı adı zaten kayıtlı!", "UYARI!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
                 if (string.IsNullOrEmpty(kullaniciAdi) || string.IsNullOrEmpty(sifre) || string.IsNullOrEmpty(eposta) || string.IsNullOrEmpty(isim) || string.IsNullOrEmpty(soyisim))
                 {

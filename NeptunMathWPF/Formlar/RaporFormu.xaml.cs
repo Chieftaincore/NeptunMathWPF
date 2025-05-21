@@ -10,6 +10,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Drawing;
 using NeptunMathWPF.Formlar.AltFormlar;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace AnasayfaWPF
 {
@@ -101,7 +102,17 @@ namespace AnasayfaWPF
 
                 lbtype = lbType.konubazli;
                 lstRaporVerileri.Items.Clear();
-                var topicids = Genel.dbEntities.EXAM_SESSION_DETAILS.Select(x => x.TOPIC_ID).Distinct().ToList();
+                var examids = Genel.dbEntities.EXAM_SESSIONS.Where(x => x.USERID == aktifKullanici.kullnId).Select(x => x.EXAM_ID).ToList();
+                HashSet<int> topicids = new HashSet<int>();
+
+                foreach (var examid in examids)
+                {
+                    var hlist = Genel.dbEntities.EXAM_SESSION_DETAILS.Where(x => x.EXAM_ID == examid).Select(x => x.TOPIC_ID).Distinct().ToHashSet();
+                    foreach (var item in hlist)
+                    {
+                        topicids.Add(item);
+                    }
+                }
                 labelList.Content = "Konular";
 
                 foreach (var topicid in topicids)
@@ -224,12 +235,15 @@ namespace AnasayfaWPF
 
         private void TusListRaporVerileriCiftTikla(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ListBox _sender = (ListBox)sender;
-
-            if(lbtype == lbType.oturumbazli)
+            Genel.Handle(() =>
             {
-                new OturumSoruGosterWPF((string)_sender.SelectedValue).ShowDialog();
-            }
+                ListBox _sender = (ListBox)sender;
+
+                if (lbtype == lbType.oturumbazli && lstRaporVerileri.SelectedItems.Count > 0)
+                {   
+                    new OturumSoruGosterWPF((string)_sender.SelectedValue).ShowDialog();
+                }
+            });
         }
     }
 }

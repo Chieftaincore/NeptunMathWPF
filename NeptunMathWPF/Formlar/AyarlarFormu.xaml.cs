@@ -64,7 +64,7 @@ namespace AnasayfaWPF
                     {
                         saveButton.IsEnabled = false;
                         saveButton.Content = "Lütfen bekleyin...";
-                        var deneme = await APIOperations.CallGeminiApiTypedAsync(baseApiUrl);
+                        var deneme = await APIOperations.CallGeminiApiTypedAsync("Selam", apikeyTextBox.Text, baseApiUrl);
                         if (deneme == null)
                         {
                             MessageBox.Show("API Key'iniz bu modeli desteklemiyor!", "UYARI", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -76,7 +76,7 @@ namespace AnasayfaWPF
                     }
                     else if (apiUrlComboBox.SelectedIndex == 1)
                     {
-                        baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent";
+                        baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
                     }
                     else return;
 
