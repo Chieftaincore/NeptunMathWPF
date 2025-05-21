@@ -57,7 +57,7 @@ namespace AnasayfaWPF
         {
             if (apiUrlComboBox.IsEnabled == true)
             {
-                    string baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+                    string baseApiUrl = Genel.baseUrlFlash;
 
                     var deneme1 = await APIOperations.CallGeminiApiTypedAsync("Selam", apikeyTextBox.Text, baseApiUrl);
                     if (deneme1 == null)
@@ -66,7 +66,7 @@ namespace AnasayfaWPF
                         return;
                     }
 
-                    baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
+                    baseApiUrl = Genel.baseUrlPro;
                     if (apiUrlComboBox.SelectedIndex == 0)
                     {
                         saveButton.IsEnabled = false;
@@ -83,7 +83,7 @@ namespace AnasayfaWPF
                     }
                     else if (apiUrlComboBox.SelectedIndex == 1)
                     {
-                        baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+                        baseApiUrl = Genel.baseUrlFlash;
                     }
                     else return;
 

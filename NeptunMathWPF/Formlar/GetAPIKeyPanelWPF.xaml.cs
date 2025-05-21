@@ -42,12 +42,12 @@ namespace NeptunMathWPF.Formlar
 
         private async Task CreateGeminiConfig()
         {
-            string baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+            string baseApiUrl = Genel.baseUrlFlash;
 
             if (flashRadioButton.IsChecked == true) { }
             else if (proRadioButton.IsChecked == true)
             {
-                baseApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
+                baseApiUrl = Genel.baseUrlPro;
             }
             else
             {

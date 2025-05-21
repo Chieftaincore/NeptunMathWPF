@@ -45,6 +45,8 @@ namespace NeptunMathWPF
 
         public static string geminiFileName = "GEMINI.config";
         public static string geminiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, geminiFileName);
+        public static string baseUrlFlash = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent";
+        public static string baseUrlPro = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-preview-05-06:generateContent";
 
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
 
