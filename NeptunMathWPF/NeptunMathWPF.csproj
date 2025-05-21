@@ -247,6 +247,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>NeptunDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="NeptunDbEntities.Extensions.cs" />
     <Compile Include="ProblemGenerator.cs" />
     <Compile Include="QuestionPoolRepository.cs" />
     <Compile Include="Formlar\EtkilesimWPF\MVVM\Model\SeceneklerModel.cs" />
@@ -496,19 +497,23 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>NEPTUN_DB.mdf</DependentUpon>
     </Content>
-    <Resource Include="Kaynaklar\Resimler\logo.ico" />
+    <Resource Include="Kaynaklar\Resimler\logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Kaynaklar\Sesler\SesDogru5.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Kaynaklar\Sesler\SesYanlis6.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Kaynaklar\Resimler\Neptun Math.png" />
+    <Resource Include="Kaynaklar\Resimler\Neptun Math.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Kaynaklar\Sesler\SesDogru1.wav" />
     <Content Include="Kaynaklar\Sesler\SesDogru2.wav" />
     <Content Include="Kaynaklar\Sesler\SesDogru3.wav" />

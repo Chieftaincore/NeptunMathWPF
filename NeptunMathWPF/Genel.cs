@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.IO;
@@ -41,12 +42,28 @@ namespace NeptunMathWPF
     {
 
         static readonly Random random = new Random();
-        static internal NeptunDBEntities dbEntities = new NeptunDBEntities();
 
         public static string geminiFileName = "GEMINI.config";
         public static string geminiFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, geminiFileName);
 
         private static readonly string logFilePath = "app_log.txt"; // Hata loglaması için path
+
+        public static string dbDirectory = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+    "NeptunMath"
+);
+        public static string dbPath = Path.Combine(dbDirectory, "NEPTUN_DB.mdf");
+
+        private static string connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security=True;MultipleActiveResultSets=True;";
+
+        private static EntityConnectionStringBuilder builder = new EntityConnectionStringBuilder
+        {
+            Provider = "System.Data.SqlClient",
+            ProviderConnectionString = connectionString,
+            Metadata = @"res://*/NeptunDB.csdl|res://*/NeptunDB.ssdl|res://*/NeptunDB.msl"
+        };
+
+        public static NeptunDB dbEntities = new NeptunDB(builder.ToString());
 
         internal static void Handle(Action action) //Hata yönetimi için hazır try-catch blokları
         /***********************
@@ -83,7 +100,11 @@ namespace NeptunMathWPF
 
         internal static void ReloadEntity() //Bazı durumlarda hatalarla karşılaşmamak için dbcontext'i new'lemek gerekiyor
         {
-            dbEntities = new NeptunDBEntities();
+            dbEntities = new NeptunDB(builder.ToString());
+            using (var context = new NeptunDB(builder.ToString()))
+            {
+                // Veritabanı işlemleri
+            }
         }
         internal static void LogToDatabase(Enum enumLevel, string message)
         {

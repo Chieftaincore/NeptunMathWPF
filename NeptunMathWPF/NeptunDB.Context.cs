@@ -13,10 +13,10 @@ namespace NeptunMathWPF
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class NeptunDBEntities : DbContext
+    public partial class NeptunDB : DbContext
     {
-        public NeptunDBEntities()
-            : base("name=NeptunDBEntities")
+        public NeptunDB()
+            : base("name=NeptunDB")
         {
         }
     

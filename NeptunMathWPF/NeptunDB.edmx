@@ -834,7 +834,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="NeptunDBEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="NeptunDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BOOKMARKED_QUESTIONS" EntityType="Self.BOOKMARKED_QUESTIONS" />
           <EntitySet Name="EXAM_SESSION_DETAILS" EntityType="Self.EXAM_SESSION_DETAILS" />
           <EntitySet Name="EXAM_SESSIONS" EntityType="Self.EXAM_SESSIONS" />
@@ -925,7 +925,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="NeptunDBEntities">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="NeptunDB">
           <EntitySetMapping Name="BOOKMARKED_QUESTIONS">
             <EntityTypeMapping TypeName="Model.BOOKMARKED_QUESTIONS">
               <MappingFragment StoreEntitySet="BOOKMARKED_QUESTIONS">
